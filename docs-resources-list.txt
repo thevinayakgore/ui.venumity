@@ -1,0 +1,80 @@
+---------------------------------------------
+## DOCS DETAILS -
+---------------------------------------------
+🚀 GETTING STARTED
+├── Introduction
+├── What is Venumity UI ?
+├── Quick Start (5-min setup)
+├── Installation Guide
+├── Project Setup
+└── Core Concepts
+---------------------------------------------
+## RESOURCES DETAILS -
+---------------------------------------------
+⚡ FRAMEWORK GUIDES
+├── Next.js
+├── Vite
+├── Vue
+├── Angular
+├── Astro
+├── SvelteKit
+├── Gatsby
+├── TanStack Ecosystem
+└── Laravel
+
+🎨 STYLING TOOLS
+├── Tailwind CSS
+├── Bootstrap
+├── Material UI
+├── CSS Preprocessors
+├── Styled Components
+└── Chakra UI
+
+✨ ANIMATION LIBRARIES
+├── Framer Motion
+├── GSAP
+├── Three.js
+├── Spline
+├── Rive
+├── Anime.js
+├── React Spring
+└── Auto Animate
+
+📊 STATE MANAGEMENT
+├── Zustand
+├── Redux Toolkit
+├── React Query
+├── Context API
+└── Jotai/Valtio
+
+🛠️ DEVELOPMENT
+├── CLI Commands
+├── VS Code Extension
+├── Copy-Paste Snippets
+├── Live Preview
+├── AI Tools Integration
+└── Component Generator
+
+⚡ PERFORMANCE
+├── Bundle Optimization
+├── Lazy Loading
+├── Server Components
+├── Edge Runtime
+├── Caching Strategies
+└── Monitoring
+
+🔍 SEO & ANALYTICS
+├── SEO Components
+├── Meta Tags
+├── Structured Data
+├── Performance Tracking
+└── Analytics Integration
+
+🚀 DEPLOYMENT
+├── Vercel/Netlify
+├── Docker Setup
+├── CI/CD Pipeline
+├── Monitoring
+└── Error Tracking
+---------------------------------------------
+---------------------------------------------	

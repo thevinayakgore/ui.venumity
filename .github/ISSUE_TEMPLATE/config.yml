@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://ui.venumity.com/docs
+    about: Check our documentation for answers
+  - name: Discussions
+    url: https://github.com/thevinayakgore/ui.venumity/discussions
+    about: For general questions and discussions

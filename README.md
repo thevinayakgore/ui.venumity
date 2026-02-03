@@ -1,11 +1,11 @@
-# <img src="./logo.png" width="30" style="vertical-align: middle; margin-bottom: 5px;" /> **Venu<span style="color:orange">mity</span> UI** 🎉
+# <img src="./public/logo.png" width="30" style="vertical-align: middle; margin-top: 5px;" /> Venu<span style="color:orange">mity</span> UI 🎉
 
 Add **Venu<span style="color:orange">mity</span> UI** components to your projects.
 
 **Latest Components Library for Modern Web Development.**  
 Beautiful, production-ready components you can copy and paste directly into your projects.
 
-![Venumity UI banner](./venumity-banner.png)
+![Venumity UI banner](./public/banner.png)
 
 ## ⚡ Why Venu<span style="color:orange">mity</span> UI ?
 
@@ -238,6 +238,6 @@ Start using **Venu<span style="color:orange">mity</span> UI** today and experien
 
 **Venu<span style="color:orange">mity</span> UI ⚡️** - Accelerate your development with production-ready components. Start building beautiful interfaces in minutes, not hours.
 
-*Follow on - [GitHub](https://github.com/thevinayakgore/ui.venumity) • [Twitter](https://twitter.com/thevinayakgore) • [Instagram](https://twitter.com/thevinayakgore) • [LinkedIn](https://twitter.com/thevinayakgore) • [Facebook](https://twitter.com/thevinayakgore)*
+*Follow on - [GitHub](https://github.com/thevinayakgore/ui.venumity) • [Twitter](https://twitter.com/thevinayakgore) • [Instagram](https://twitter.com/thevinayakgore) • [LinkedIn](https://twitter.com/thevinayakgore)*
 
 **🔔 Subscribe channel - [YouTube](https://www.youtube.com/@TheVinayakGore)**

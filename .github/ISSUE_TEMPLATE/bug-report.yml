@@ -1,0 +1,144 @@
+name: Bug Report
+description: File a bug report
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible.
+
+  - type: dropdown
+    id: component-category
+    attributes:
+      label: Component Category
+      description: Which category does this bug relate to?
+      options:
+        - Not specific
+        - Feedbacks
+        - Layout
+        - Forms
+        - Navigation
+        - Data Display
+        - Others
+    validations:
+      required: true
+
+  - type: input
+    id: component-subcategory
+    attributes:
+      label: Component Subcategory
+      description: Which specific component type?
+      placeholder: e.g., Alert, Button, Card
+    validations:
+      required: false
+
+  - type: input
+    id: component-name
+    attributes:
+      label: Component Name
+      description: Full name of the component
+      placeholder: e.g., Standard Alert, Primary Button
+    validations:
+      required: false
+
+  - type: input
+    id: component-path
+    attributes:
+      label: Component Path
+      description: Path to the component in the registry
+      placeholder: e.g., feedbacks/alert/standard-alert
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the bug
+      placeholder: Describe what the bug is...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: A clear description of what you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: A clear description of what happened instead.
+    validations:
+      required: true
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL
+      description: URL where the bug occurred (if applicable)
+      placeholder: https://ui.venumity.com/components/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Add screenshots or screen recordings if applicable
+      placeholder: |
+        You can:
+        - Upload images directly
+        - Paste image URLs
+        - Link to screen recordings
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Information about your environment
+      placeholder: |
+        - OS: [e.g., macOS, Windows, Linux]
+        - Browser: [e.g., Chrome, Safari, Firefox]
+        - Version: [e.g., 120]
+        - Device: [e.g., Desktop, iPhone 15]
+        - Screen Size: [e.g., 1920x1080]
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here.
+      placeholder: Any other details, workarounds, or related issues?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/thevinayakgore/ui.venumity/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
