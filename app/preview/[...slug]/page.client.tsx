@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import {
-  getComponentByPath,
-  findComponentBySlugPath,
-  COMPONENTS,
-} from "@/registry/components";
+import { COMPONENTS } from "@/registry/components";
 import { toKebabCase } from "@/utils/slug-kebab";
 import ComponentPreview from "@/app/components/content/preview";
 import NotFound from "@/app/components/not-found";
 import { Button } from "@/components/ui/button";
+import {
+  findComponentBySlugPath,
+  getComponentByPath,
+} from "@/registry/component-utils";
 
 interface PreviewClientProps {
   slugPath: string;
@@ -140,7 +140,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           onClick={() =>
             setTheme(mounted && theme === "dark" ? "light" : "dark")
           }
-          className="cursor-pointer"
+          className="cursor-pointer bg-foreground/5 border rounded"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

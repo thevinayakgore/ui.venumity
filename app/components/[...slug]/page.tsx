@@ -4,7 +4,7 @@ import {
   getSubcategory,
   isSubcategoryPath,
   getCategorySubcategoryFromPath,
-} from "@/registry/components";
+} from "@/registry/component-utils";
 import PageClient from "./page.client";
 
 export const dynamic = "force-dynamic";

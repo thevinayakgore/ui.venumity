@@ -2,10 +2,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { fetchComponentCode } from "@/utils/api-client";
 import { toKebabCase } from "@/utils/slug-kebab";
-import { COMPONENTS, ComponentSubcategory } from "@/registry/components";
+import { COMPONENTS } from "@/registry/components";
 import Overview from "../content/overview";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { ComponentSubcategory } from "@/registry/component-utils";
 
 interface ComponentItemData {
   itemName: string;

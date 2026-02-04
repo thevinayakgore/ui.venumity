@@ -1,328 +1,245 @@
----------------------------------------------
-# Feedbacks
----------------------------------------------	
-  - Alert
-  - Alert banner
-  - Confirmation dialog
-  - Inline message
-  - Modal alert
-  - Slide-in alert
-  - Snackbar
-  - Status badge
-  - Toast
-  - Notification bell
-  - Notification popup
----------------------------------------------
+-----------------------------------
+# AI
+-----------------------------------
+  - AI chat widget
+  - AI command bar
+  - AI status dot
+  - AI suggestion pills
+  - AI summary card
+-----------------------------------
 # Avatars
----------------------------------------------	
-  - Avatar
-  - Avatar group
+-----------------------------------
+  - Avatar stack
   - Avatar with status
+  - Creator stats
   - Profile card
-  - Profile skeleton
   - Profile tooltip
-  - User badge
-  - User stats
-  - Profile link card
----------------------------------------------
+  - User avatar
+-----------------------------------
 # Badges
----------------------------------------------	
-  - Badge
-  - Badge group
+-----------------------------------
   - Count badge
+  - Discount badge
   - Icon badge
-  - Notification badge
   - Pill badge
   - Status badge
-  - Tag
-  - Interactive tag
-  - Discount badge
-  - Inline badge
-  - Text badge
----------------------------------------------
+  - Tag chip
+-----------------------------------
 # Buttons
----------------------------------------------	
-  - Button
-  - Button group
+-----------------------------------
+  - Floating action button
   - Ghost button
   - Icon button
   - Loading button
-  - Outline button
-  - Primary button
-  - Secondary button
-  - Split button
-  - Toggle button
-  - Floating action button
-  - Follow button
-  - Like button
-  - Share button
-  - Wishlist button
   - Magnetic button
-  - Neon button
-  - Ripple effect button
+  - Neon glow button
   - Press feedback button
----------------------------------------------
+  - Primary button
+  - Ripple button
+-----------------------------------
+# Calendar
+-----------------------------------
+  - App calendar
+  - Date timeline slider
+  - Event scheduler
+  - Inline calendar
+-----------------------------------
 # Cards
----------------------------------------------	
-  - Card
+-----------------------------------
+  - AI summary card
+  - Content card
   - Feature card
-  - Hover card
-  - Image card
-  - Interactive card
+  - Glass morphic card
+  - Hover reveal card
   - Pricing card
   - Product card
   - Stats card
-  - Data card
-  - Media card
-  - Glass morphic card
-  - Tilt parallax card
-  - Hover reveal card
   - Swipe dismiss card
-  - AI content summary card
----------------------------------------------
-# Data Visualization
----------------------------------------------	
+  - Tilt parallax card
+-----------------------------------
+# Charts
+-----------------------------------
   - Area chart
   - Bar chart
+  - Calendar heatmap
   - Donut chart
   - Line chart
-  - Pie chart
   - Progress chart
   - Radar chart
   - Scatter chart
   - Sparkline
-  - Calendar heatmap
----------------------------------------------
-# Form Controls
----------------------------------------------	
-  - Input
-  - Input group
-  - Email input
-  - Floating label input
-  - Masked input
-  - Number input
-  - Password input
-  - Search input
-  - Textarea
-  - Checkbox
+-----------------------------------
+# Commerce
+-----------------------------------
+  - Cart mini drawer
+  - Checkout form
+  - Offer banner
+  - Payment methods strip
+  - Pricing section
+  - Product grid
+  - Product quick view
+-----------------------------------
+# Controls
+-----------------------------------
+  - Brightness slider
+  - Playback speed slider
+  - Volume slider
+-----------------------------------
+# Dashboards
+-----------------------------------
+  - Analytics overview
+  - Dashboard widget grid
+  - KPI strip
+  - Performance section
+  - Revenue widget
+-----------------------------------
+# Feedback
+-----------------------------------
+  - Alert banner
+  - Inline notice
+  - Notification bell
+  - Slide-in toast
+  - Snackbar
+  - Status chip
+  - Toast
+-----------------------------------
+# Futuristic
+-----------------------------------
+  - Aurora gradient section
+  - Cyber nav bar
+  - Floating stats orb
+  - Hologram panel
+  - Matrix background
+-----------------------------------
+# Inputs
+-----------------------------------
   - Checkbox group
-  - Custom checkbox
-  - Radio button
-  - Radio group
-  - Switch
-  - Toggle switch
-  - Multi-state toggle
-  - Slider
-  - Range slider
-  - Multi-thumb slider
-  - Step slider
-  - Circular slider
   - Color picker
   - Emoji picker
----------------------------------------------
-# Selection
----------------------------------------------	
-  - Dropdown
-  - Async select
-  - Combobox
-  - Country select
-  - Filterable select
-  - Multi-select
-  - Option group
-  - Searchable dropdown
-  - Tag select
-  - Date picker
-  - Date range picker
-  - Multi date picker
-  - Time picker
----------------------------------------------
-# Navigation
----------------------------------------------	
-  - Breadcrumbs
-  - Menu
-  - Horizontal menu
-  - Vertical menu
-  - Collapsible menu
-  - Context menu
-  - Floating menu
-  - Sidebar
-  - Navbar
-  - Footer
-  - Pagination
-  - Tabs
-  - Stepper
-  - Anchor links
-  - Scroll spy
----------------------------------------------
-# Modals
----------------------------------------------	
-  - Modal
-  - Alert modal
-  - Confirmation modal
-  - Drawer
-  - Form modal
-  - Fullscreen modal
-  - Popover
-  - Slide-over panel
-  - Tooltip
-  - Lightbox
----------------------------------------------
-# Layout
----------------------------------------------	
+  - Floating label field
+  - Number field
+  - Password field
+  - Radio group
+  - Range slider
+  - Search field
+  - Text field
+  - Textarea
+  - Toggle switch
+-----------------------------------
+# Layouts
+-----------------------------------
   - Container
-  - Grid layout
   - Flex layout
-  - Masonry layout
+  - Masonry grid
   - Responsive grid
   - Sidebar layout
   - Split layout
-  - Stack
----------------------------------------------
-# Media
----------------------------------------------	
-  - Image
-  - Video player
-  - Video thumbnail
-  - Audio player
-  - Animated GIF player
-  - Carousel
-  - Gallery
-  - Timeline
-  - Tree view
----------------------------------------------
+  - Stack layout
+-----------------------------------
 # Loading
----------------------------------------------	
-  - Spinner
-  - Skeleton loader
+-----------------------------------
+  - Button loader
+  - Inline loader
+  - Page loader
   - Progress bar
   - Progress circle
-  - Pulse loader
-  - Wave loader
-  - Page loader
-  - Inline loader
-  - Button loader
----------------------------------------------
-# Dashboard
----------------------------------------------	
-  - Analytics panel
-  - Finance dashboard
-  - KPI cards
-  - Performance chart
-  - Revenue widget
-  - Sales tracker
-  - User metrics
-  - Dashboard widgets
----------------------------------------------
-# Calendar
----------------------------------------------	
-  - Calendar
-  - Inline calendar
-  - Event scheduler
-  - Timeline slider
-  - Date dropdown
-  - Clock picker
----------------------------------------------
-# Typography
----------------------------------------------	
-  - Heading
-  - Paragraph
-  - Highlighted text
-  - Blockquote
-  - Code snippet
-  - Label
-  - Inline text
----------------------------------------------
-# Social
----------------------------------------------	
-  - Comment box
-  - Reaction picker
-  - Social badge
-  - Social feed
-  - Social links
-  - Social icon
----------------------------------------------
-# Commerce
----------------------------------------------	
-  - Pricing card
-  - Product card
-  - Product grid
-  - Checkout form
-  - Offer banner
-  - Payment options
-  - Shopping cart
----------------------------------------------
-# Settings
----------------------------------------------	
-  - Settings panel
-  - Preference form
-  - Toggle settings
-  - User preferences panel
----------------------------------------------
-# Utility
----------------------------------------------	
-  - Calendar heatmap
-  - Color picker
-  - Emoji picker
-  - Floating action panel
-  - Multi-step form
-  - Notification bell
-  - Progress tracker
-  - Rating stars
+  - Skeleton block
+  - Spinner
+-----------------------------------
+# Media
+-----------------------------------
+  - Audio player
+  - Carousel
+  - Media gallery
+  - Responsive image
+  - Timeline
+  - Video player
+-----------------------------------
+# Micro
+-----------------------------------
+  - Draggable chip
+  - Hover micro card
+  - Reaction micro menu
+  - Swipe-to-act row
+-----------------------------------
+# Modals
+-----------------------------------
+  - Confirm modal
+  - Drawer
+  - Lightbox
+  - Modal dialog
+  - Popover
+  - Slide-over panel
+  - Tooltip
+-----------------------------------
+# Navigation
+-----------------------------------
+  - Anchor links
+  - Breadcrumbs
+  - Footer
+  - Navbar
+  - Pagination
   - Scroll spy
-  - Utility widgets
----------------------------------------------
-# Page Sections
----------------------------------------------	
-  - Hero section
-  - About section
-  - Features section
-  - Stats section
-  - Testimonials section
-  - Team section
-  - Pricing section
+  - Sidebar
+  - Stepper
+  - Tabs
+-----------------------------------
+# Sections
+-----------------------------------
+  - 404 page
   - Blog section
   - Contact section
+  - CTA strip
+  - Error state
   - FAQ section
-  - CTA section
-  - Gallery section
+  - Features section
+  - Hero section
   - Newsletter section
-  - Error page
-  - 404 page
----------------------------------------------
-# Futuristic UI
----------------------------------------------	
-  - Glass morphic card
-  - Neon button
-  - Hologram panel
-  - Cyber navigation bar
-  - Matrix background widget
-  - Aurora gradient section
-  - Floating stats orb
-  - Magnetic button
-  - Tilt parallax card
----------------------------------------------
-# Micro-interactions
----------------------------------------------	
-  - Hover reveal card
-  - Press feedback button
-  - Ripple effect button
-  - Magnetic icon
-  - Draggable chip
-  - Swipe dismiss card
-  - Reaction micro menu
----------------------------------------------
-# AI Components
----------------------------------------------	
-  - AI command bar
-  - AI chat widget
-  - AI suggestion pill
-  - AI content summary card
-  - AI status indicator
----------------------------------------------
-# Volume
----------------------------------------------	
-  - Volume slider
-  - Brightness slider
-  - Speed slider
----------------------------------------------	
----------------------------------------------	
+  - Stats section
+  - Team section
+  - Testimonials section
+-----------------------------------
+# Selects
+-----------------------------------
+  - Async select
+  - Combobox select
+  - Date picker
+  - Date range picker
+  - Multi-select
+  - Select dropdown
+  - Tag select
+  - Time picker
+-----------------------------------
+# Settings
+-----------------------------------
+  - Account preferences
+  - Notification settings
+  - Settings panel
+  - Toggle row
+-----------------------------------
+# Social
+-----------------------------------
+  - Activity feed
+  - Comment box
+  - Reaction picker
+  - Social profile badge
+  - Social share bar
+-----------------------------------
+# Typography
+-----------------------------------
+  - Body text
+  - Code block
+  - Heading set
+  - Highlight text
+  - Inline code tag
+  - Quote block
+-----------------------------------
+# Utility
+-----------------------------------
+  - Floating action panel
+  - Multi-step form
+  - Progress tracker
+  - Rating stars
+  - Utility dock
+-----------------------------------
+-----------------------------------

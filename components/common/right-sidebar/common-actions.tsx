@@ -10,7 +10,7 @@ import {
   getComponentDisplayName,
   getCategorySubcategoryFromPath,
   isSubcategoryPath,
-} from "@/registry/components";
+} from "@/registry/component-utils";
 import { gitRepo } from "@/lib/brand";
 
 export default function CommonActions() {

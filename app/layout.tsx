@@ -20,16 +20,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: brandName,
   description:
-    "A growing collection of clean, reusable UI components built for modern web applications. Explore components, previews, templates, and resources to build better interfaces.",
+    "Venumity UI is an open-source React and Next.js UI component library with beautiful, production-ready, fully responsive components and templates. Build modern, professional web applications faster with MIT licensed, developer-friendly UI and learning resources.",
 
   keywords: [
-    "UI components",
-    "React UI",
-    "component library",
-    "design system",
-    "frontend UI",
-    "web components",
-    "Next.js UI",
+    "Venumity",
+    "Venumity UI",
+    "open source UI components",
+    "React UI components",
+    "Next.js UI library",
+    "Tailwind CSS components",
+    "Framer Motion components",
+    "MIT licensed UI library",
+    "frontend component library",
+    "design system components",
+    "responsive UI components",
+    "developer friendly UI",
+    "modern web app UI",
+    "open source design system",
+    "React templates",
+    "Next.js templates",
+    "UI resources for web developers",
+    "free React components",
+    "copy paste UI components",
+    "production ready UI kit",
   ],
 
   authors: [{ name: brandName }],
@@ -55,32 +68,32 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    url: website || "http://localhost:3000",
-    title: `${brandName} – UI Components for Modern Web Apps`,
+    url: website,
+    title: `${brandName} – Open Source React & Next.js UI Component Library`,
     description:
-      "Explore reusable UI components, previews, templates, and resources to build clean and consistent web interfaces.",
+      "Open-source, MIT licensed React and Next.js UI components, templates, and resources. Build modern, responsive, production-ready interfaces faster with Venumity UI.",
     siteName: brandName,
     images: [
       {
         url: "/logo.png",
         width: 1000,
         height: 1000,
-        alt: `${brandName} UI`,
+        alt: `${brandName} UI – Open Source React Components`,
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: `${brandName} – UI Components`,
+    title: `${brandName} – Open Source React UI Components`,
     description:
-      "Reusable UI components and previews for modern frontend development.",
-    images: ["/logo.png"],
+      "MIT licensed, developer-friendly React and Next.js UI components, templates, and resources to build modern web apps faster.",
+    images: ["/logo.png", "/favicon.ico"],
     creator: `@${handle}`,
   },
 
   alternates: {
-    canonical: website || "http://localhost:3000",
+    canonical: website,
   },
 
   other: {

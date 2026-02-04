@@ -10,9 +10,9 @@ export const FAQDATA = [
       "🌱 Yes ! This is completely open-source. We welcome all contributions - no contribution is too small. Join us on GitHub to help improve the library.",
   },
   {
-    question: "How can I contribute to the project ?",
+    question: "Can I use these in commercial projects ?",
     answer:
-      "🤝 You can contribute via GitHub pull requests, report issues, suggest features, or improve documentation.",
+      "✅ Yes ! Free components are MIT licensed - use in unlimited personal, commercial projects.",
   },
   {
     question: "What features do components include ?",
@@ -20,14 +20,44 @@ export const FAQDATA = [
       "🎨 All components have dark + light mode, fully responsive, TypeScript support, accessibility features, and are ready-to-use.",
   },
   {
+    question: "Are components mobile-responsive ?",
+    answer:
+      "📱 Yes ! All components follow mobile-first design principles and work perfectly across all device sizes and seamless.",
+  },
+  {
+    question: "Is TypeScript must required ?",
+    answer:
+      "📘 No, but recommended ! Components work with both TypeScript and JavaScript. Full type definitions provided for TS users.",
+  },
+  {
     question: "Can I use components with AI tools ?",
     answer:
       "🤖 Absolutely ! Components work with AI tools like V0, Lovable, ChatGPT, Claude, Gemini, Perplexity, GitHub Copilot, Windsurf, and Replit.",
   },
   {
+    question: "Can I customize styles and animations ?",
+    answer:
+      "🎛️ Yes ! All components are built with Tailwind and Framer Motion, so you can easily tweak colors, layouts, and animations to match your brand.",
+  },
+  {
     question: "Are there templates available ?",
     answer:
       "📁 Yes ! Navigate to Templates page for starter templates (free + paid) - perfect for kickstarting your projects with best practices.",
+  },
+  {
+    question: "How often is the library updated ?",
+    answer:
+      "🔄 Regular updates with new components, bug fixes, and feature enhancements. Follow our GitHub for latest releases.",
+  },
+  {
+    question: "How do I get support or report issues for components ?",
+    answer:
+      "🆘 Contact via - GitHub Issues, Social Media or Email (thevinayakgore@gmail.com).",
+  },
+  {
+    question: "How can I contribute to the project ?",
+    answer:
+      "🤝 You can contribute via GitHub pull requests, report issues, suggest features, or improve documentation.",
   },
   {
     question: "Will there be a CLI tool ?",
@@ -43,35 +73,5 @@ export const FAQDATA = [
     question: "What's the benefit of sharing components ?",
     answer:
       "🌍 Sharing helps to grow our community, brings more contributors, and creates better results for everyone. Your support matters !",
-  },
-  {
-    question: "Are components mobile-responsive ?",
-    answer:
-      "📱 Yes ! All components follow mobile-first design principles and work perfectly across all device sizes and seamless.",
-  },
-  {
-    question: "Do you have premium components ?",
-    answer:
-      "⭐ Currently we don't have premium components on this site. However, you can get premium components at pro.venumity.com - premium includes advanced features and upgraded designs.",
-  },
-  {
-    question: "How often is the library updated ?",
-    answer:
-      "🔄 Regular updates with new components, bug fixes, and feature enhancements. Follow our GitHub for latest releases.",
-  },
-  {
-    question: "Can I use these in commercial projects ?",
-    answer:
-      "✅ Yes ! Free components are MIT licensed - use in unlimited personal/commercial projects. Premium components from pro.venumity.com have separate licensing.",
-  },
-  {
-    question: "Is TypeScript must required ?",
-    answer:
-      "📘 No, but recommended ! Components work with both TypeScript and JavaScript. Full type definitions provided for TS users.",
-  },
-  {
-    question: "How do I get support or report issues for components ?",
-    answer:
-      "🆘 Contact via - GitHub Issues, Social Media or Email (thevinayakgore@gmail.com).",
   },
 ];

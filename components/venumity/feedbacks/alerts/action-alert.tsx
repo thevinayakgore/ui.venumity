@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import {
   AlertTriangle,
   CheckCircle,
@@ -7,6 +8,8 @@ import {
   ListFilterPlus,
   CircleX,
 } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 // Action Alert
 function ActionAlert({
@@ -14,89 +17,109 @@ function ActionAlert({
 }: {
   type?: "success" | "warning" | "error" | "info" | "list";
 }) {
+  const [visible, setVisible] = useState(true);
+  if (!visible) return null;
   const typeConfig = {
     success: {
-      bg: "bg-green-500/20",
-      border: "border-green-500/50",
-      text: "text-green-500",
-      button: "bg-green-500 hover:bg-green-600",
       icon: CheckCircle,
+      className: "border-green-500/40 bg-green-500/5 text-green-500",
+      action: "bg-green-600 hover:bg-green-700",
     },
     warning: {
-      bg: "bg-yellow-400/20",
-      border: "border-yellow-400/60",
-      text: "text-yellow-500",
-      button: "bg-yellow-400 hover:bg-yellow-500",
       icon: AlertTriangle,
+      className: "border-yellow-500/40 bg-yellow-500/5 text-yellow-500",
+      action: "bg-yellow-600 hover:bg-yellow-700",
     },
     error: {
-      bg: "bg-red-500/20",
-      border: "border-red-500/50",
-      text: "text-red-500",
-      button: "bg-red-500 hover:bg-red-600",
       icon: CircleX,
+      className: "border-red-500/40 bg-red-500/5 text-red-500",
+      action: "bg-red-600 hover:bg-red-700",
     },
     info: {
-      bg: "bg-blue-500/20",
-      border: "border-blue-500/50",
-      text: "text-blue-500",
-      button: "bg-blue-500 hover:bg-blue-600",
       icon: Info,
+      className: "border-blue-500/40 bg-blue-500/5 text-blue-500",
+      action: "bg-blue-600 hover:bg-blue-700",
     },
     list: {
-      bg: "bg-muted/30",
-      border: "border-border",
-      text: "text-foreground",
-      button: "bg-purple-500 hover:bg-purple-600",
       icon: ListFilterPlus,
+      className: "border-muted-foreground/30 bg-muted/40 text-foreground",
+      action: "bg-primary hover:bg-primary/90",
     },
   };
 
   const config = typeConfig[type];
   const Icon = config.icon;
 
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const handleConfirm = () => {
+    // future side-effects can go here
+    setVisible(false);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className={`p-4 rounded-md border ${config.bg} ${config.border} backdrop-blur-sm w-full`}
+      className="w-full"
     >
-      <div
-        className={`flex flex-wrap gap-3 ${
-          type === "list" ? "items-start" : "items-center"
-        } justify-between w-full`}
+      <Alert
+        className={`${config.className} relative flex flex-wrap items-center justify-between gap-4 backdrop-blur-sm`}
       >
-        <div className={`flex items-start gap-3 ${config.text}`}>
-          <Icon className="size-5 " />
-          <div className="">
-            <p className="text-base md:text-lg font-semibold leading-none">
+        <div className="flex items-start gap-3">
+          <Icon className="size-4 mt-0.5" />
+          <div>
+            <AlertTitle className="text-sm md:text-base font-medium">
               Action Required
-            </p>
+            </AlertTitle>
+
             {type !== "list" ? (
-              <p className="text-sm text-foreground opacity-80 mt-1">
-                Please confirm this action
-              </p>
+              <AlertDescription className="text-sm opacity-80">
+                Please confirm this action.
+              </AlertDescription>
             ) : (
-              <ul className="text-sm text-muted-foreground mt-2 list-disc pl-3 space-y-1">
-                <li>First required step.</li>
-                <li>Second confirmation needed.</li>
-                <li>Check assumptions carefully.</li>
-                <li>Proceed only when sure.</li>
-              </ul>
+              <AlertDescription>
+                <ul className="mt-2 list-disc pl-4 space-y-1 text-sm opacity-80">
+                  <li>First required step.</li>
+                  <li>Second confirmation needed.</li>
+                  <li>Check assumptions carefully.</li>
+                  <li>Proceed only when sure.</li>
+                </ul>
+              </AlertDescription>
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            className={`cursor-pointer px-6 py-2 rounded-sm ${config.button} text-white font-medium text-sm hover:scale-105 transition-all duration-500`}
-          >
-            Confirm
-          </button>
-          <button className="cursor-pointer px-6 py-2 rounded-sm border bg-white text-black font-medium text-sm hover:scale-105 transition-all duration-500">
-            Cancel
-          </button>
-        </div>
-      </div>
+
+        {type !== "list" ? (
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={handleConfirm}
+              className={`${config.action} text-white`}
+            >
+              Confirm
+            </Button>
+            <Button size="sm" variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          <div className="absolute top-5 right-4 flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={handleConfirm}
+              className={`${config.action} text-white`}
+            >
+              Confirm
+            </Button>
+            <Button size="sm" variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
+        )}
+      </Alert>
     </motion.div>
   );
 }

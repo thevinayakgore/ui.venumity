@@ -4,8 +4,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
 import { DOCS_DATA } from "@/registry/site/docs";
-import { COMPONENTS, getLucideIcon } from "@/registry/components";
+import { COMPONENTS } from "@/registry/components";
 import { toKebabCase } from "@/utils/slug-kebab";
+import { getLucideIcon } from "@/registry/component-utils";
 
 export default function LeftSidebar() {
   const pathname = usePathname();
@@ -67,7 +68,7 @@ export default function LeftSidebar() {
           })}
 
           {/* --------------------------- COMPONENTS --------------------------- */}
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col w-full">
             {[...COMPONENTS]
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((category) => {

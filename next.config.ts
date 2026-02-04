@@ -7,11 +7,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
-        pathname: "/images/**",
-      },
-      {
-        protocol: "https",
         hostname: "img.youtube.com",
       },
       {
@@ -19,9 +14,6 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 

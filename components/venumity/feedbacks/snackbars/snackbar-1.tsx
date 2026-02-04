@@ -9,8 +9,9 @@ import {
   Loader2,
   X,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-type SnackbarType = "success" | "info" | "warning" | "error" | "loading";
+type SnackbarType = "success" | "info" | "loading";
 
 interface Snackbar {
   id: string;
@@ -37,16 +38,6 @@ const snackbarTypes: {
     type: "info",
     bg: "bg-linear-to-tl from-blue-500 to-blue-400",
     actionLabel: "View",
-  },
-  {
-    type: "warning",
-    bg: "bg-linear-to-tl from-yellow-500 to-yellow-400",
-    actionLabel: "Read More",
-  },
-  {
-    type: "error",
-    bg: "bg-linear-to-tl from-red-500 to-red-400",
-    actionLabel: "Cancel",
   },
   {
     type: "loading",
@@ -86,17 +77,17 @@ export default function Snackbar1() {
   const hideSnackbar = useCallback(() => setSnackbar(null), []);
 
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-6 py-7 md:py-14 max-w-7xl w-full h-full">
+    <main className="grid grid-cols-1 items-center justify-center m-auto gap-4 py-7 md:py-14">
       {/* Buttons to Trigger */}
       {snackbarTypes.map(({ type, bg }) => (
-        <button
+        <Button
           key={type}
           onClick={() => showSnackbar(type, `This is a ${type} message.`)}
-          className={`py-3 text-sm md:text-base font-medium cursor-pointer rounded-sm text-white bg-linear-to-tl ${bg} hover:scale-105 transition-all duration-500 w-60`}
+          className={`p-6 cursor-pointer text-white bg-linear-to-tl ${bg} hover:scale-105 transition-all duration-500`}
           type="button"
         >
           Show {type.charAt(0).toUpperCase() + type.slice(1)}
-        </button>
+        </Button>
       ))}
 
       {/* Snackbar Container */}

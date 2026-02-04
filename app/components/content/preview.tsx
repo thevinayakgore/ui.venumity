@@ -110,5 +110,9 @@ export default function ComponentPreview({
     );
   }
 
-  return <Component />;
+  return (
+    <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full h-full">
+      <Component />
+    </main>
+  );
 }

@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { toast } from "sonner";
+import { COMPONENTS } from "@/registry/components";
 import {
-  COMPONENTS,
   getSubcategoryTags,
   getSubcategoryTechs,
-} from "@/registry/components";
+} from "@/registry/component-utils";
 
 const LEFT_WORDS = [
   "Tech",
@@ -106,7 +106,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
     >
       <div className="relative flex flex-col p-4 bg-background border rounded-md w-full h-full">
         <div className="flex justify-between items-start">
-          <h2 className="text-xl font-normal whitespace-nowrap truncate leading-none">
+          <h2 className="text-xl font-normal whitespace-nowrap truncate">
             {card.title}
           </h2>
           <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 type Direction = "top" | "bottom" | "left" | "right";
 
@@ -83,26 +84,19 @@ export default function Popup2() {
   const currentDirection = directions.find((d) => d.dir === direction)!;
 
   return (
-    <>
-      {/* Basic Popup 2 */}
-      <motion.main
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center m-auto gap-6 p-6 sm:p-10 md:py-14 max-w-7xl w-full h-full"
-      >
-        <div className="grid grid-cols-2 gap-4 items-center justify-center m-auto">
-          {directions.map(({ dir, label, gradient }) => (
-            <button
-              key={dir}
-              onClick={() => openPopup(dir)}
-              className={`px-10 py-4 cursor-pointer text-sm md:text-base text-white font-medium rounded-sm hover:shadow-lg hover:scale-105 transition-all duration-500 bg-linear-to-tl ${gradient} w-52`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </motion.main>
-
+    <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 sm:p-10 md:py-14 max-w-7xl w-full h-full">
+      <div className="grid grid-cols-2 gap-4 items-center justify-center m-auto">
+        {directions.map(({ dir, label, gradient }) => (
+          <Button
+            key={dir}
+            size="lg"
+            onClick={() => openPopup(dir)}
+            className={`p-6 cursor-pointer text-white font-medium hover:shadow-lg hover:scale-105 transition-all duration-500 bg-linear-to-tl ${gradient}`}
+          >
+            {label} Side
+          </Button>
+        ))}
+      </div>
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -112,22 +106,22 @@ export default function Popup2() {
             exit="hidden"
           >
             <motion.div
-              className={`bg-linear-to-tr ${currentDirection.bg} backdrop-blur-[2px] border ${currentDirection.borderColor} rounded-lg shadow-xl/10 max-w-lg w-full p-7`}
+              className={`bg-linear-to-tr ${currentDirection.bg} backdrop-blur-[2px] border ${currentDirection.borderColor} rounded-lg shadow-xl/10 max-w-100! w-full p-6`}
               variants={variants[direction]}
               initial="hidden"
               animate="visible"
               exit="exit"
             >
               <h2
-                className={`text-lg md:text-2xl font-medium ${currentDirection.textColor} mb-2`}
+                className={`text-sm md:text-base font-medium ${currentDirection.textColor} mb-2`}
               >
                 Confirmation
               </h2>
-              <p className="mt-2 mb-8 text-base md:text-lg">
+              <p className="mt-2 mb-4 text-sm">
                 Are you sure you want to proceed ?
                 <br />
-                <span className="block mt-2">
-                  <span>Direction :</span>{" "}
+                <span className="block mt-2 text-sm">
+                  <span>Direction -</span>{" "}
                   <span
                     className={`font-semibold ${currentDirection.textColor}`}
                   >
@@ -135,24 +129,27 @@ export default function Popup2() {
                   </span>
                 </span>
               </p>
-              <div className="flex gap-4 mt-6 text-sm md:text-base font-medium">
-                <button
+              <div className="flex gap-4 text-sm md:text-base font-medium">
+                <Button
+                  size="lg"
+                  variant="outline"
                   onClick={closePopup}
-                  className="flex-1 cursor-pointer rounded-sm px-6 py-3 bg-foreground text-secondary hover:scale-105 transition-all duration-500"
+                  className="flex-1 p-6 cursor-pointer"
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
+                  size="lg"
                   onClick={closePopup}
-                  className={`flex-1 cursor-pointer rounded-sm px-6 py-3 bg-linear-to-tl ${currentDirection.gradient} text-white hover:scale-105 transition-all duration-500`}
+                  className={`flex-1 p-6 cursor-pointer bg-linear-to-tl ${currentDirection.gradient} text-white`}
                 >
                   Confirm
-                </button>
+                </Button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </main>
   );
 }
