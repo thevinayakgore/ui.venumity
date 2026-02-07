@@ -82,23 +82,53 @@ export const COMPONENTS = createComponents([
   {
     category: "Sections",
     icon: "layout-grid",
-    tags: ["ui", "sections", "layout", "frontend", "website"],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
+    tags: [
+      "ui-components",
+      "web-sections",
+      "landing-page",
+      "frontend-blocks",
+      "responsive-design",
+    ],
+    techs: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
     subcategories: [
       {
         name: "FAQ",
         description:
-          "Frequently Asked Questions sections designed to clearly present common queries, improve user clarity, and reduce support friction.",
-        tags: ["faq", "accordion", "help", "support", "content"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+          "Accessible, SEO-friendly FAQ sections featuring smooth accordion transitions to resolve customer queries and improve UX.",
+        tags: [
+          "faq-component",
+          "accordion",
+          "customer-support",
+          "schema-markup",
+          "collapsible",
+        ],
+        techs: [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Lucide React",
+        ],
         items: [{ itemName: "FAQ 1" }],
       },
       {
         name: "Testimonials",
         description:
-          "Testimonial sections designed to showcase user feedback and social proof.",
-        tags: ["testimonials", "feedback", "social-proof", "content"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+          "Conversion-optimized testimonial sections designed to build brand authority and showcase social proof through various layouts.",
+        tags: [
+          "social-proof",
+          "user-reviews",
+          "trust-signals",
+          "carousel",
+          "grid-layout",
+        ],
+        techs: [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Framer Motion",
+        ],
         items: [
           { itemName: "Minimal Testimonial" },
           { itemName: "Social Testimonial" },
@@ -112,15 +142,33 @@ export const COMPONENTS = createComponents([
   {
     category: "Layouts",
     icon: "layout-template",
-    tags: ["ui", "sections", "layout", "frontend", "website"],
+    tags: [
+      "app-shell",
+      "dashboard-layout",
+      "structure",
+      "ux-architecture",
+      "frontend",
+    ],
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Sidebars",
         description:
-          "Sidebar components that provide navigation and additional context within a layout.",
-        tags: ["sidebar", "navigation", "layout", "ui"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+          "Highly functional navigation sidebars featuring collapsible states, mobile responsiveness, and nested routing support.",
+        tags: [
+          "admin-panel",
+          "vertical-nav",
+          "collapsible-sidebar",
+          "dashboard-ui",
+          "drawer",
+        ],
+        techs: [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Lucide React",
+        ],
         items: [{ itemName: "Sidebar 1" }],
       },
     ],
@@ -128,16 +176,211 @@ export const COMPONENTS = createComponents([
   {
     category: "Navigations",
     icon: "send",
-    tags: ["ui", "sections", "layout", "frontend", "website"],
+    tags: [
+      "site-navigation",
+      "header-footer",
+      "menus",
+      "ux-design",
+      "internal-links",
+    ],
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Footers",
         description:
-          "Footer components that provide navigation and additional context at the bottom of a layout.",
-        tags: ["footer", "navigation", "layout", "ui"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
+        tags: [
+          "footer-section",
+          "sitemap",
+          "bottom-nav",
+          "legal-links",
+          "branding",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Footer" }],
+      },
+    ],
+  },
+  {
+    category: "Commerce",
+    icon: "indian-rupee",
+    tags: [
+      "ecommerce-ui",
+      "saas-blocks",
+      "conversion",
+      "sales-funnel",
+      "pricing",
+    ],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "Pricing Tables",
+        description:
+          "SaaS-ready pricing tables designed to highlight features, compare plans, and drive subscription conversions.",
+        tags: [
+          "pricing-plans",
+          "comparison-table",
+          "subscription-ui",
+          "cta-blocks",
+          "feature-list",
+        ],
+        techs: [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Framer Motion",
+        ],
+        items: [{ itemName: "Pricing Table 1" }],
+      },
+    ],
+  },
+  {
+    category: "Charts",
+    icon: "chart-pie",
+    tags: [
+      "data-visualization",
+      "analytics",
+      "dashboard-charts",
+      "infographics",
+      "d3-js",
+    ],
+    techs: ["React", "TypeScript", "Tailwind CSS", "Recharts"],
+    subcategories: [
+      {
+        name: "Area Charts",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Area Chart" },
+          { itemName: "Gradient Area Chart" },
+          { itemName: "Multi Area Chart" },
+          { itemName: "Percent Area Chart" },
+          { itemName: "Spline Area Chart" },
+          { itemName: "Stacked Area Chart" },
+        ],
+      },
+      {
+        name: "Bar Charts",
+        description:
+          "Compare categorical data with precision using vertical, horizontal, and stacked bar chart components.",
+        tags: ["bar-graph", "comparison-chart", "histogram", "data-analytics"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Bar Chart" },
+          { itemName: "Grouped Bar Chart" },
+          { itemName: "Horizontal Bar Chart" },
+          { itemName: "Mixed Bar Chart" },
+          { itemName: "Stacked Bar Chart" },
+        ],
+      },
+      {
+        name: "Custom Charts",
+        description:
+          "Niche data visualizations like Bullet and Gauge charts for specialized KPI monitoring and performance tracking.",
+        tags: ["kpi-dashboard", "gauge-chart", "bullet-graph", "custom-viz"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [{ itemName: "Bullet Chart" }, { itemName: "Gauge Chart" }],
+      },
+      {
+        name: "Doughnut Charts",
+        description:
+          "Clean, circular visualizations with a central cutout, perfect for displaying percentage breakdowns and ratios.",
+        tags: ["donut-chart", "percentage-viz", "radial-graph", "segment-data"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Doughnut Chart" },
+          { itemName: "Semi-Doughnut Chart" },
+        ],
+      },
+      {
+        name: "Line Charts",
+        description:
+          "High-performance line graphs for tracking continuous data points and identifying cyclical patterns in datasets.",
+        tags: ["line-graph", "time-series", "pattern-analysis", "data-points"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Area Line Chart" },
+          { itemName: "Basic Line Chart" },
+        ],
+      },
+      {
+        name: "Pie Charts",
+        description:
+          "Classic proportional charts used to represent numerical proportions and categorical distribution at a glance.",
+        tags: [
+          "pie-graph",
+          "proportional-data",
+          "data-distribution",
+          "segments",
+        ],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Pie Chart" },
+          { itemName: "Donut Pie Chart" },
+        ],
+      },
+      {
+        name: "Progress Graphs",
+        description:
+          "Visual indicators for task completion, loading states, and goal attainment using circular and linear progress bars.",
+        tags: [
+          "progress-bar",
+          "status-indicator",
+          "goal-tracking",
+          "loading-ui",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
+        items: [
+          { itemName: "Circular Progress Graph" },
+          { itemName: "Multiple Progress Bar" },
+        ],
+      },
+      {
+        name: "Radar Charts",
+        description:
+          "Spider-style charts for multivariate data comparison, ideal for skill analysis and feature benchmarking.",
+        tags: [
+          "radar-chart",
+          "spider-graph",
+          "multivariate-analysis",
+          "skill-map",
+        ],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Radar Chart" },
+          { itemName: "Filled Radar Chart" },
+        ],
+      },
+      {
+        name: "Scatter Plots",
+        description:
+          "Highly detailed charts for identifying correlations and distribution patterns between two or more variables.",
+        tags: [
+          "scatter-plot",
+          "dot-chart",
+          "correlation-analysis",
+          "statistical-viz",
+        ],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Scatter Plot" },
+          { itemName: "3D Scatter Plot" },
+        ],
+      },
+      {
+        name: "Sparklines",
+        description:
+          "Compact, lightweight charts designed to fit within dashboards or text to show general trends without axes.",
+        tags: ["sparkline", "mini-chart", "inline-viz", "micro-analytics"],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Area Sparkline" },
+          { itemName: "Bar Sparkline" },
+          { itemName: "Mini Line Sparkline" },
+        ],
       },
     ],
   },

@@ -51,7 +51,7 @@
   - Feature card
   - Glass morphic card
   - Hover reveal card
-  - Pricing card
+  - Pricing cards
   - Product card
   - Stats card
   - Swipe dismiss card
@@ -75,7 +75,7 @@
   - Checkout form
   - Offer banner
   - Payment methods strip
-  - Pricing section
+  - Pricing Tables
   - Product grid
   - Product quick view
 -----------------------------------

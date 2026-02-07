@@ -1,0 +1,56 @@
+"use client";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from "recharts";
+
+const pieData = [
+  { name: "Group A", value: 400, color: "hsl(24 100% 55%)" },
+  { name: "Group B", value: 300, color: "hsl(220 90% 56%)" },
+  { name: "Group C", value: 300, color: "hsl(142 76% 36%)" },
+  { name: "Group D", value: 200, color: "hsl(45 93% 58%)" },
+];
+
+export default function BasicPieChart() {
+  return (
+    <main className="flex flex-col items-center justify-center m-auto p-5 border rounded-md overflow-hidden max-w-6xl w-full h-130">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={pieData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={({ name, percent }) =>
+              `${name}: ${(percent * 100).toFixed(0)}%`
+            }
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            strokeWidth={2}
+            stroke="white"
+          >
+            {pieData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              padding: "10px 15px",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              border: "1px solid white",
+              borderRadius: "7px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+              backdropFilter: "blur(3px)",
+            }}
+          />
+          <Legend verticalAlign="bottom" height={36} iconType="circle" />
+        </PieChart>
+      </ResponsiveContainer>
+    </main>
+  );
+}

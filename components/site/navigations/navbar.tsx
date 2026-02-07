@@ -43,7 +43,7 @@ export default function Navbar() {
   return (
     <>
       <main className="relative flex items-center justify-center m-auto w-full">
-        <div className="fixed top-0 z-100 flex items-center justify-center m-auto bg-background border-b w-full">
+        <div className="fixed top-0 z-1000! transform-gpu! flex items-center justify-center m-auto bg-background border-b w-full">
           <nav className="flex items-center justify-between m-auto py-2 px-10 max-w-360 2xl:border-x-2 border-dashed w-full">
             <div className="flex items-center m-auto w-full">
               {/* Logo & Desktop Navigation */}

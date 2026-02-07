@@ -254,10 +254,6 @@ html {
   transform: translateY(0) !important;
 }
 
-/* ==========================================================================
-   ANIMATION: GRADIENT & SHIMMER EFFECTS
-   Background motion and shimmer utilities
-   ========================================================================== */
 @keyframes gradient {
   0%,
   100% {
@@ -273,10 +269,6 @@ html {
   animation: gradient 3s ease infinite;
 }
 
-/* ==========================================================================
-   ANIMATION: ROTATION HELPERS
-   Slow and decorative spin effects
-   ========================================================================== */
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -303,10 +295,6 @@ html {
   animation: spin-slower 30s linear infinite;
 }
 
-/* ==========================================================================
-   ANIMATION: CELL RIPPLE
-   Micro-interaction feedback animation
-   ========================================================================== */
 @keyframes cell-ripple {
   0% {
     opacity: 0.4;
@@ -319,10 +307,6 @@ html {
   }
 }
 
-/* ==========================================================================
-   ANIMATION: GRID / SWEEP / HOLOGRAPHIC EFFECTS
-   Background motion and visual polish
-   ========================================================================== */
 @keyframes gridMove {
   0% {
     transform: translateY(0px);
@@ -351,10 +335,6 @@ html {
   }
 }
 
-/* ==========================================================================
-   ANIMATION: RAINBOW TEXT
-   Animated gradient text effects
-   ========================================================================== */
 @keyframes rainbow {
   0% {
     background-position: 0%;
@@ -364,10 +344,6 @@ html {
   }
 }
 
-/* ==========================================================================
-   ANIMATION: BUTTON SHIMMER
-   Call-to-action highlight animation
-   ========================================================================== */
 @keyframes vnm-shimmer {
   0% {
     transform: translateX(-100%);
@@ -386,10 +362,6 @@ html {
   animation: vnm-shimmer 1.2s ease-in-out infinite;
 }
 
-/* ==========================================================================
-   ANIMATION: WIGGLE
-   Attention-grabbing icon/button motion
-   ========================================================================== */
 @keyframes wiggle {
   0% {
     transform: rotate(0deg);
@@ -411,10 +383,6 @@ html {
   }
 }
 
-/* ==========================================================================
-   ANIMATION: AURORA BACKGROUND
-   Large ambient animated gradient backgrounds
-   ========================================================================== */
 @keyframes aurora {
   0% {
     background-position: 0% 50%;
@@ -573,5 +541,34 @@ html {
       background: radial-gradient(circle at 50% 0%, #045ab1, var(--primary));
       transform: translateX(calc((var(--gap) * 2) + 100%)) rotate(-225deg);
     }
+  }
+}
+
+/* ===== Animation Presets ===== */
+.animate-rotate-3d {
+  animation: rotate3d 8s linear infinite;
+}
+
+.animate-energy-flow {
+  animation: energy-flow 4s linear infinite;
+  background-size: 200% 100%;
+}
+
+/* ===== Keyframes ===== */
+@keyframes rotate3d {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes energy-flow {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
   }
 }

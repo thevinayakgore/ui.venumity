@@ -138,9 +138,9 @@ export default function ComponentPreview({
     <main className="relative flex items-center justify-center m-auto w-full h-full">
       <Button
         size="icon"
-        variant="ghost"
+        variant="secondary"
         onClick={handleRefresh} // Use the new handleRefresh function
-        className={`absolute top-2 right-2 ${!pathname.startsWith("/components") && "hidden"} cursor-pointer text-muted-foreground/80 hover:text-foreground transition-all duration-500 rounded-sm`}
+        className={`absolute top-2 right-2 z-500! transform-gpu bg-foreground/10! backdrop-blur-3xl ${!pathname.startsWith("/components") && "hidden"} cursor-pointer transition-all duration-500 rounded-sm`}
         title="Refresh preview"
       >
         <RotateCcw />

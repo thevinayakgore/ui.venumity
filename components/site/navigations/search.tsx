@@ -342,14 +342,14 @@ export function Search({ isOpen, onClose }: SearchProps) {
               </div>
 
               {/* Results Container */}
-              <div className="flex flex-col justify-start overflow-y-auto text-center p-5 w-full h-full">
+              <div className="flex flex-col justify-start overflow-y-auto text-center w-full h-full">
                 {isLoading ? (
                   <div className="flex flex-col items-center justify-center text-muted-foreground w-full h-full">
                     <div className="animate-spin rounded-full size-10 border-2 border-primary border-t-transparent mb-4" />
                     <p className="text-sm">Searching across all content...</p>
                   </div>
                 ) : results.length > 0 ? (
-                  <div className="space-y-2 text-start w-full">
+                  <div className="space-y-2 text-start p-5 w-full">
                     {results.map((result, index) =>
                       renderResultItem(result, index),
                     )}
@@ -371,7 +371,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-4 text-start w-full h-full overflow-y-auto">
+                  <div className="flex flex-col gap-4 p-5 text-start w-full h-full overflow-y-auto">
                     {[...COMPONENTS]
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((category) => (

@@ -77,15 +77,18 @@ export default function StandardFooter() {
           <div className="space-y-6 lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3">
               <Image
-                src="https://i.postimg.cc/j5dW4vFd/{brandName}.webp"
+                src="/logo.png"
                 alt="Logo"
                 width={200}
                 height={200}
                 className="size-10"
               />
-              <span className="text-xl font-semibold">{brandName}</span>
+              <span className="flex items-center text-3xl font-bold">
+                <span>Venu</span>
+                <span className="text-primary mr-2">mity</span> UI
+              </span>
             </Link>
-            <p className="text-muted-foreground max-w-md">
+            <p className="text-sm text-muted-foreground max-w-md">
               Building innovative solutions for modern businesses. Fast,
               reliable, and scalable.
             </p>
@@ -97,7 +100,7 @@ export default function StandardFooter() {
                     size="icon"
                     variant="outline"
                     asChild
-                    className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-500 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md"
+                    className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-500 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
                   >
                     <Link href={href}>
                       <Icon className="h-4 w-4" />
@@ -109,7 +112,7 @@ export default function StandardFooter() {
                 variant="outline"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-1000 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md"
+                className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-1000 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
               >
                 {theme === "dark" ? (
                   <Sun className="h-4 w-4" />
@@ -124,7 +127,7 @@ export default function StandardFooter() {
               className="w-full max-w-md space-y-3"
             >
               <label htmlFor="email" className="block text-sm font-medium">
-                Subscribe to our newsletter
+                Subscribe to newsletter
               </label>
               <div className="relative w-full">
                 <Input
@@ -136,7 +139,7 @@ export default function StandardFooter() {
                 />
                 <Button
                   type="submit"
-                  className="absolute top-1.5 right-1.5 cursor-pointer transition-all duration-1000 hover:px-10"
+                  className="absolute top-1.5 right-1.5 cursor-pointer transition-all duration-1000 hover:px-10 rounded-sm"
                 >
                   Subscribe
                 </Button>
@@ -151,21 +154,21 @@ export default function StandardFooter() {
           </div>
 
           {/* Navigation Links */}
-          <div className="grid w-full grid-cols-2 items-start justify-between gap-8 px-5 lg:col-span-3">
+          <div className="lg:col-span-3 grid grid-cols-2 gap-5 w-full">
             {(["product", "company", "resources", "legal"] as const).map(
               (section) => (
                 <div key={section} className="w-full">
-                  <h3 className="border-primary mb-4 -ml-5 border-l-2 pl-5 text-sm font-semibold tracking-wider uppercase">
+                  <h3 className="border-primary mb-3 -ml-3 border-l-2 pl-3 text-sm font-semibold tracking-wider uppercase">
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-1">
                     {data().navigation[section].map((item) => (
                       <li key={item.name}>
                         <Link
                           href={item.href}
-                          className="group text-muted-foreground hover:text-foreground decoration-primary -ml-5 inline-flex items-center gap-2 underline-offset-8 transition-all duration-500 hover:pl-5 hover:underline"
+                          className="group text-sm text-muted-foreground hover:text-foreground decoration-primary -ml-6 inline-flex items-center gap-2 underline-offset-8 transition-all duration-500 hover:pl-5 hover:underline"
                         >
-                          <ArrowDownLeft className="text-primary rotate-225 opacity-30 transition-all duration-500 group-hover:scale-150 group-hover:opacity-100 sm:group-hover:rotate-225 md:rotate-0" />
+                          <ArrowDownLeft className="size-5 text-primary rotate-225 opacity-0 transition-all duration-500 group-hover:scale-120 group-hover:opacity-100 sm:group-hover:rotate-225 md:rotate-0" />
                           {item.name}
                         </Link>
                       </li>
@@ -178,14 +181,14 @@ export default function StandardFooter() {
         </div>
 
         {/* Bottom Section */}
-        <div className="relative text-muted-foreground flex flex-col items-center justify-between m-auto gap-4 p-6 md:p-10 text-xs md:flex-row md:text-sm w-full">
+        <div className="relative text-muted-foreground/70 flex flex-col items-center justify-between m-auto gap-4 p-4 md:p-6 md:px-10 text-xs md:flex-row md:text-sm w-full">
           <div className="absolute top-0 left-0 animate-rotate-3d h-px w-full bg-linear-to-r from-transparent via-primary to-transparent" />
           <span>
             &copy; {currentYear} {brandName} | All rights reserved
           </span>
           <div className="flex items-center gap-4">
             {data().bottomLinks.map(({ href, label }) => (
-              <Link key={href} href={href} className="hover:text-foreground">
+              <Link key={href} href={href} className="hover:text-foreground transition-all duration-500">
                 {label}
               </Link>
             ))}
@@ -193,7 +196,7 @@ export default function StandardFooter() {
         </div>
       </footer>
 
-      {/* Animations */}
+      {/* Animations -> Add this code in globals.css page */}
       <style jsx>{`
         /* ===== Animation Presets ===== */
         .animate-rotate-3d {

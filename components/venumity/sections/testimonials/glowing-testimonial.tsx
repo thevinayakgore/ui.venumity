@@ -18,14 +18,15 @@ export default function GlowingTestimonial() {
         </div>
 
         <div className="mt-8 flex items-center justify-between p-2 bg-white/15 rounded-full">
-          <div className="flex items-center">
+          <div className="relative flex items-center">
             <Image
               src="/vinu.jpg"
               alt={authorName}
               width={500}
               height={500}
-              className="size-12 border-2 border-white rounded-full object-cover"
+              className="size-12 z-10 border-2 border-white rounded-full object-cover"
             />
+            <div className="absolute inset-0 top-1.5 left-1.5 bg-white z-0 animate-ping rounded-full size-9" />
             <div className="ml-3">
               <h3 className="text-lg font-semibold">{authorName}</h3>
               <p className="text-sm opacity-70 font-medium">
