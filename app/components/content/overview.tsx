@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Fullscreen } from "lucide-react";
-import CodeBlock from "@/components/common/code-block";
+import CodeBlock from "@/components/site/common/code-block";
 import ComponentPreview from "./preview";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { OpenTools } from "./open-tools";

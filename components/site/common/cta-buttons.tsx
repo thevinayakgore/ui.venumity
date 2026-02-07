@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { ArrowRight, SquareArrowOutUpRight } from "lucide-react";
 
 const CTA_CONFIG = [

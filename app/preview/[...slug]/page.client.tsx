@@ -132,15 +132,38 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
   if (!mounted) return null;
 
   return (
-    <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full">
-      <nav className="fixed top-2 right-10">
+    <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
+      <nav className="fixed top-2 right-10 z-10000! transform-gpu! flex items-center gap-2">
+        <Button
+          size="icon"
+          variant="secondary"
+          onClick={() => window.location.reload()}
+          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+          title="Refresh preview"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4.5"
+          >
+            <path d="M21 12a9 9 0 1 1 -3 -6.7" />
+            <path d="M21 3v6h-6" />
+          </svg>
+        </Button>
         <Button
           size="icon"
           variant="secondary"
           onClick={() =>
             setTheme(mounted && theme === "dark" ? "light" : "dark")
           }
-          className="cursor-pointer bg-foreground/5 border rounded"
+          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +186,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           </svg>
         </Button>
       </nav>
-      <section className="flex items-center justify-center m-auto overflow-auto w-full min-h-screen">
+      <section className="w-full h-full">
         {componentPath && (
           <ComponentPreview
             category={componentData.category}

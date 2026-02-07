@@ -1,10 +1,10 @@
 // app/resources/layout.client.tsx
 "use client";
 import { usePathname } from "next/navigation";
-import LeftResources from "@/components/common/left-sidebar/resources";
+import LeftResources from "@/components/site/common/left-sidebar/resources";
 import { ResourceCategory } from "@/registry/resources";
 import { ResourcesProvider } from "@/contexts/resources";
-import RightSidebar from "@/components/common/right-sidebar";
+import RightSidebar from "@/components/site/common/right-sidebar";
 
 export default function ContentLayoutClient({
   children,

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Bug, PencilLine, WandSparkles } from "lucide-react";
-import SharePage from "@/components/navigations/share-page";
+import SharePage from "@/components/site/navigations/share-page";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {

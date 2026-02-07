@@ -443,7 +443,7 @@ export function SearchTrigger() {
     <>
       <Button
         variant="secondary"
-        className="relative group flex items-center justify-start px-2! text-muted-foreground hover:text-foreground hover:border-foreground/30 cursor-pointer bg-foreground/5 border rounded w-28 hover:w-62 max-w-62 overflow-hidden transition-all duration-500"
+        className="relative group flex items-center justify-start px-2! text-muted-foreground hover:text-foreground hover:border-foreground/30 cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded w-28 hover:w-62 max-w-62 overflow-hidden transition-all duration-500"
         onClick={() => setIsSearchOpen(true)}
       >
         <SearchIcon className="size-4 shrink-0" />

@@ -1,7 +1,7 @@
 "use client";
-import LeftSidebar from "@/components/common/left-sidebar/sidebar";
-import RightSidebar from "@/components/common/right-sidebar/right-sidebar";
-import { BottomFooter } from "@/components/navigations/footer";
+import LeftSidebar from "@/components/site/common/left-sidebar/sidebar";
+import RightSidebar from "@/components/site/common/right-sidebar/right-sidebar";
+import { BottomFooter } from "@/components/site/navigations/footer";
 
 export default function ContentLayout({
   children,

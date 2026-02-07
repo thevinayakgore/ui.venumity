@@ -2,12 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Quote } from "lucide-react";
-import { BorderBeam } from "../ui/border-beam";
 import { motion } from "motion/react";
-import { GridLineHorizontal, GridLineVertical } from "../utility/grid-lines";
 import { authorName, brandName, handle, portfolio } from "@/lib/brand";
+import {
+  GridLineHorizontal,
+  GridLineVertical,
+} from "@/components/utility/grid-lines";
 import CTAButtons from "../common/cta-buttons";
-import { Separator } from "../ui/separator";
+import { Separator } from "@/components/ui/separator";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const GRADIENTS_12 = [
   "linear-gradient(270deg, #6366f1, #8b5cf6)",

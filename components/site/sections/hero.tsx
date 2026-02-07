@@ -1,17 +1,17 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { WordAnimate } from "../ui/word-animate";
-import { BorderBeam } from "../ui/border-beam";
-import { InfiniteMovingText } from "../ui/infinite-moving-text";
-import { HeroMovingCards } from "../ui/hero-moving-cards";
 import { WORDS, TEXT } from "@/registry/site/hero";
-import { Camera } from "../utility/camera";
 import {
   CategoryCard,
   getCategoryCards,
   type CategoryCard as CategoryCardType,
 } from "@/app/components/page";
+import { WordAnimate } from "@/components/ui/word-animate";
+import { InfiniteMovingText } from "@/components/ui/infinite-moving-text";
+import { Camera } from "@/components/utility/camera";
+import { HeroMovingCards } from "@/components/ui/hero-moving-cards";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const AnimatedText = ({
   text,

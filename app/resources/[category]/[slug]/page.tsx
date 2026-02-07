@@ -6,7 +6,7 @@ import { readFileSync, existsSync, statSync } from "fs";
 import { join } from "path";
 import { ChevronLeft, ChevronRight, Wrench } from "lucide-react";
 import { website } from "@/lib/brand";
-import { MarkdownRenderer } from "@/components/common/markdown-renderer";
+import { MarkdownRenderer } from "@/components/site/common/markdown-renderer";
 import { formatDate } from "@/utils/format-date"; // Import from utils
 import { Button } from "@/components/ui/button";
 

@@ -1,5 +1,5 @@
-import Hero from "@/components/sections/hero";
-import CTA from "@/components/sections/home-cta";
+import Hero from "@/components/site/sections/hero";
+import CTA from "@/components/site/sections/home-cta";
 import FAQ from "./faq/page";
 
 const page = () => {

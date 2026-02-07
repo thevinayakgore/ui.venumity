@@ -128,13 +128,13 @@
 -----------------------------------
 # Layouts
 -----------------------------------
-  - Container
-  - Flex layout
-  - Masonry grid
-  - Responsive grid
-  - Sidebar layout
-  - Split layout
-  - Stack layout
+  - Containers
+  - Flex layouts
+  - Masonry grids
+  - Responsive grids
+  - Sidebars
+  - Split layouts
+  - Stacks
 -----------------------------------
 # Loading
 -----------------------------------
@@ -172,16 +172,15 @@
   - Slide-over panel
   - Tooltip
 -----------------------------------
-# Navigation
+# Navigations
 -----------------------------------
   - Anchor links
   - Breadcrumbs
-  - Footer
-  - Navbar
-  - Pagination
+  - Footers
+  - Navbars
+  - Paginations
   - Scroll spy
-  - Sidebar
-  - Stepper
+  - Steppers
   - Tabs
 -----------------------------------
 # Sections
@@ -197,7 +196,7 @@
   - Newsletter section
   - Stats section
   - Team section
-  - Testimonials section
+  - Testimonials
 -----------------------------------
 # Selects
 -----------------------------------

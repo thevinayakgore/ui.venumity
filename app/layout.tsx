@@ -4,8 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/utility/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { brandName, handle, website } from "@/lib/brand";
-import Navbar from "@/components/navigations/navbar";
-import Footer from "@/components/navigations/footer";
+import Navbar from "@/components/site/navigations/navbar";
+import Footer from "@/components/site/navigations/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

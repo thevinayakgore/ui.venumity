@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { Linkedin, Instagram } from "lucide-react";
-import { Button } from "../ui/button";
 import { username } from "@/lib/brand";
+import { Button } from "@/components/ui/button";
 
 export const socialLinks = [
   {

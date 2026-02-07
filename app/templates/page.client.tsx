@@ -8,7 +8,7 @@ import { Folder, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RectangleGoggles, WandSparkles } from "lucide-react";
-import CTASection from "@/components/sections/cta-section";
+import CTASection from "@/components/site/sections/cta-section";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
 import { TEMPLATES, type LucideIconName } from "@/registry/site/templates";
 import { toKebabCase } from "@/utils/slug-kebab";

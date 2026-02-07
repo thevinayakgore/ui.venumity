@@ -387,9 +387,9 @@ export function MarkdownRenderer({
               </span>
             </div>
           </div>
-          <span className="text-xs text-center opacity-30">
-            For educational purposes only, we do not claim it to be original,
-            refer to official documentation for details.
+          <span className="text-xs italic text-center opacity-30">
+            ^For educational purposes only, we do not claim it to be original or accurate,
+            refer to official docs for details.^
           </span>
         </div>
       )}

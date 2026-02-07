@@ -147,7 +147,7 @@ export default function PageClient({
         <header className="mb-6 pb-6 border-b border-dashed w-full">
           <div className="flex items-center justify-between w-full">
             <h1 className="text-3xl md:text-4xl font-bold capitalize tracking-tight leading-none opacity-90">
-              {pathInfo.subcategory.replace(/-/g, " ")}
+              {subcategoryData?.name ?? pathInfo.subcategory.replace(/-/g, " ")}
             </h1>
             {subcategoryData?.techs && (
               <div className="flex items-center flex-wrap gap-1 h-full">

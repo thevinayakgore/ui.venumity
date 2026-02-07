@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CalendarClock } from "lucide-react";
 import { LEGAL_PAGES, LegalPage as LegalPageType } from "@/registry/site/legal";
-import { MarkdownRenderer } from "@/components/common/markdown-renderer";
+import { MarkdownRenderer } from "@/components/site/common/markdown-renderer";
 import { readFileSync, existsSync, statSync } from "fs";
 import { join } from "path";
 import { formatDate } from "@/utils/format-date";

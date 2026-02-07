@@ -8,8 +8,8 @@ import {
   StepForward,
 } from "lucide-react";
 import { brandName } from "@/lib/brand";
-import { GridLineHorizontal, GridLineVertical } from "../utility/grid-lines";
-import { Camera } from "../utility/camera";
+import { Camera } from "@/components/utility/camera";
+import { GridLineHorizontal, GridLineVertical } from "@/components/utility/grid-lines";
 
 export function BrandSticker({ scale }: { scale?: string }) {
   return (

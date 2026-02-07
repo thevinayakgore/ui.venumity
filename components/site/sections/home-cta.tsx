@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "motion/react";
 import { Star, Rocket } from "lucide-react";
-import { BorderBeam } from "../ui/border-beam";
 import CTAButtons from "../common/cta-buttons";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 function AxisGrid({ size, position }: { size: string; position: string }) {
   return (

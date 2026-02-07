@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { authorName, brandName } from "@/lib/brand";
 import { usePathname } from "next/navigation";
-import SocialMedia from "../sections/social-media";
+import SocialMedia from "../../site/sections/social-media";
 import { useEffect, useState } from "react";
 import { COMPANY_SECTION } from "./navbar";
 import { TEMPLATES } from "@/registry/site/templates";

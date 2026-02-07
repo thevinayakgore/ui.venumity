@@ -89,7 +89,7 @@ export default function Navbar() {
                   asChild
                   size="icon"
                   variant="secondary"
-                  className="cursor-pointer bg-foreground/5 border rounded"
+                  className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
                 >
                   <Link
                     href={gitRepo}
@@ -110,7 +110,7 @@ export default function Navbar() {
                   onClick={() =>
                     setTheme(mounted && theme === "dark" ? "light" : "dark")
                   }
-                  className="cursor-pointer bg-foreground/5 border rounded"
+                  className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

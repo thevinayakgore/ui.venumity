@@ -11,7 +11,7 @@ import {
 import { COMPONENTS } from "@/registry/components";
 import { readFileSync, existsSync, statSync } from "fs";
 import { join } from "path";
-import { MarkdownRenderer } from "@/components/common/markdown-renderer";
+import { MarkdownRenderer } from "@/components/site/common/markdown-renderer";
 import { formatDate } from "@/utils/format-date"; // Import from utils
 
 // Helper function to read markdown content and get last modified time

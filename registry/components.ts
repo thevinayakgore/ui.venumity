@@ -79,6 +79,68 @@ export const COMPONENTS = createComponents([
       },
     ],
   },
+  {
+    category: "Sections",
+    icon: "layout-grid",
+    tags: ["ui", "sections", "layout", "frontend", "website"],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "FAQ",
+        description:
+          "Frequently Asked Questions sections designed to clearly present common queries, improve user clarity, and reduce support friction.",
+        tags: ["faq", "accordion", "help", "support", "content"],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [{ itemName: "FAQ 1" }],
+      },
+      {
+        name: "Testimonials",
+        description:
+          "Testimonial sections designed to showcase user feedback and social proof.",
+        tags: ["testimonials", "feedback", "social-proof", "content"],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [
+          { itemName: "Minimal Testimonial" },
+          { itemName: "Social Testimonial" },
+          { itemName: "Standard Testimonial" },
+          { itemName: "Glowing Testimonial" },
+          { itemName: "Carousel Testimonial" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Layouts",
+    icon: "layout-template",
+    tags: ["ui", "sections", "layout", "frontend", "website"],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "Sidebars",
+        description:
+          "Sidebar components that provide navigation and additional context within a layout.",
+        tags: ["sidebar", "navigation", "layout", "ui"],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [{ itemName: "Sidebar 1" }],
+      },
+    ],
+  },
+  {
+    category: "Navigations",
+    icon: "send",
+    tags: ["ui", "sections", "layout", "frontend", "website"],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "Footers",
+        description:
+          "Footer components that provide navigation and additional context at the bottom of a layout.",
+        tags: ["footer", "navigation", "layout", "ui"],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [{ itemName: "Standard Footer" }],
+      },
+    ],
+  },
   // Example of another category:
   // {
   //   category: "Forms",

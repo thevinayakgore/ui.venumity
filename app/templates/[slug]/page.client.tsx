@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import CTASection from "@/components/sections/cta-section";
+import CTASection from "@/components/site/sections/cta-section";
 import Overview from "./overview";
 import { TemplateData } from "@/registry/site/templates";
 import Image from "next/image";
