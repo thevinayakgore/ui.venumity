@@ -1,18 +1,29 @@
 "use client";
-import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
 
-export default function InlineLoaderBasic() {
+import { motion } from "framer-motion";
+
+export default function BasicInlineLoader() {
   return (
-    <motion.main 
-      initial={{ opacity: 0, scale: 0.6 }} 
-      animate={{ opacity: 1, scale: 1 }} 
-      className="flex flex-col items-center justify-center m-auto gap-8 p-4 sm:p-6 lg:p-8 xl:p-10 max-w-7xl w-full h-full"
-    >
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-        <Loader2 className="w-4 h-4 animate-spin text-blue-500 dark:text-blue-400" />
-        <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">Loading data...</span>
+    <div className="max-w-xl m-auto space-y-5">
+      <p className="text-sm text-foreground w-full">
+        <span className="text-lg font-medium">AI</span> can now write, see,
+        hear, and reason together - modern multimodal AI systems can understand
+        text, images, audio, and video at the same time, letting them do things
+        like diagnose medical images while reading patient notes and listening
+        to doctor instructions in one unified model 🤯 and also can...
+      </p>
+      {/* Line loader */}
+      <div className="relative h-1 overflow-hidden rounded-full bg-foreground/10 w-full">
+        <motion.div
+          className="absolute left-0 top-0 h-full w-1/2 rounded-full bg-linear-to-l from-transparent via-primary/80 to-transparent"
+          animate={{ x: ["-100%", "250%"] }}
+          transition={{
+            duration: 1.3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </div>
-    </motion.main>
+    </div>
   );
 }

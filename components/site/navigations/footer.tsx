@@ -60,7 +60,7 @@ export const BottomFooter = () => {
       <div className="flex items-center text-sm">
         <p className="flex items-center gap-2">
           © {new Date().getFullYear()}{" "}
-          <span className="flex items-center font-bold! stackSans text-foreground!">
+          <span className="flex items-center font-semibold text-foreground">
             <span>{brandName.slice(0, 4)}</span>
             <span className="text-primary">{brandName.slice(4, 8)}</span>
             <span className="ml-1">{brandName.slice(8, 12)}</span>

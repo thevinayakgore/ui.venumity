@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -10,7 +11,7 @@ export default function ProgressBarAnimated() {
     if (!isLoading) return;
 
     const interval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => {
@@ -22,7 +23,7 @@ export default function ProgressBarAnimated() {
         return prev + 1;
       });
     }, 50);
-    
+
     return () => clearInterval(interval);
   }, [isLoading]);
 
@@ -32,60 +33,60 @@ export default function ProgressBarAnimated() {
   };
 
   return (
-    <motion.main 
-      initial={{ opacity: 0, scale: 0.6 }} 
-      animate={{ opacity: 1, scale: 1 }} 
-      className="flex flex-col items-center justify-center m-auto gap-8 p-4 sm:p-6 lg:p-8 xl:p-10 max-w-7xl w-full h-full"
-    >
-      <div className="w-full max-w-lg space-y-10">
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-              Download Progress
-            </span>
-            <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-              {Math.round(progress)}%
-            </span>
-          </div>
-          
-          <div className="relative">
-            <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-linear-to-r from-green-400 to-blue-500 dark:from-green-500 dark:to-blue-600"
-                style={{ width: `${progress}%` }}
-                transition={{ duration: 0.1 }}
-              />
-            </div>
-            
+    <main className="w-full max-w-xl space-y-5">
+      <section className="w-full">
+        <div className="flex justify-between items-center text-xl">
+          <span className="font-semibold">Download Progress</span>
+          <motion.span
+            animate={{ scale: progress > 50 ? 0.02 * Math.round(progress) : 1 }}
+            className={`italic ${
+              progress === 0
+                ? "text-foreground/30"
+                : progress > 90
+                  ? "text-lime-500"
+                  : progress > 75
+                    ? "text-green-500"
+                    : progress > 50
+                      ? "text-emerald-500"
+                      : progress > 25
+                        ? "text-teal-500"
+                        : ""
+            }`}
+          >
+            {Math.round(progress)}%
+          </motion.span>
+        </div>
+
+        <div className="relative my-5">
+          <div className="w-full h-2 bg-foreground/10 rounded-full overflow-hidden">
             <motion.div
-              className="absolute top-1/2 w-6 h-6 bg-white dark:bg-gray-900 border-2 border-blue-500 dark:border-blue-400 rounded-full shadow-lg"
-              style={{ left: `${progress}%` }}
-              animate={{
-                y: [-10, 0, -10],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              className="bg-linear-to-r from-yellow-400 to-primary rounded-full h-full"
+              style={{ width: `${progress}%` }}
+              transition={{ duration: 0.1 }}
             />
           </div>
-          
-          <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 px-2">
-            <span>Start</span>
-            <span>Halfway</span>
-            <span>Complete</span>
-          </div>
+
+          <motion.div
+            className="absolute -top-1/2 left-0 -ml-3 size-4 bg-background border-2 border-primary rounded-full shadow-lg"
+            style={{ left: `${progress}%` }}
+          />
         </div>
-        
-        <button
-          onClick={startLoading}
-          disabled={isLoading}
-          className="w-full bg-linear-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 dark:from-green-600 dark:to-blue-600 dark:hover:from-green-700 dark:hover:to-blue-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 disabled:opacity-70"
-        >
-          {isLoading ? "Downloading..." : "Start Download"}
-        </button>
-      </div>
-    </motion.main>
+
+        <div className="flex justify-between text-xs italic opacity-50">
+          <span>Start</span>
+          <span>Halfway</span>
+          <span>Complete</span>
+        </div>
+      </section>
+
+      <Button
+        variant="outline"
+        onClick={startLoading}
+        disabled={isLoading}
+        className="p-5 bg-accent cursor-pointer border-2 text-sm font-medium rounded-full w-40"
+      >
+        {isLoading ? "Downloading..." : "Start Download"}
+      </Button>
+    </main>
   );
 }

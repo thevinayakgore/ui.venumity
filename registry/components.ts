@@ -404,10 +404,70 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Button Loader" },
-          { itemName: "Animated Button Loader" },
           { itemName: "Outline Button Loader" },
-          { itemName: "Standard Button Loader" },
-          { itemName: "Premium Button Loader" },
+          { itemName: "Animated Button Loader" },
+          { itemName: "Shiny Button Loader" },
+        ],
+      },
+      {
+        name: "Custom Loaders",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Loader" },
+          { itemName: "Simple Round Loader" },
+          { itemName: "Gradient Loader" },
+          { itemName: "Grid Loader" },
+          { itemName: "Wave Loader" },
+        ],
+      },
+      {
+        name: "Inline Loaders",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Inline Loader" },
+          { itemName: "Pulse Inline Loader" },
+          { itemName: "Text Inline Loader" },
+        ],
+      },
+      {
+        name: "Page Loaders",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Centered Page Loader" },
+          { itemName: "Full Page Loader" },
+          { itemName: "Logo Page Loader" },
+        ],
+      },
+      {
+        name: "Progress Bars",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Progress Bar" },
+          { itemName: "Animated Progress Bar" },
+          { itemName: "Segmented Progress Bar" },
+        ],
+      },
+      {
+        name: "Pulse Loaders",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Pulse Loader" },
+          { itemName: "Multi Pulse Loader" },
         ],
       },
     ],

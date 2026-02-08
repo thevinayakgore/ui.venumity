@@ -1,34 +1,36 @@
 "use client";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-export default function InlineLoaderText() {
+export default function TextInlineLoader() {
   const [dots, setDots] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDots(prev => prev.length >= 3 ? "" : prev + ".");
-    }, 500);
+      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
+    }, 400);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <motion.main 
-      initial={{ opacity: 0, scale: 0.6 }} 
-      animate={{ opacity: 1, scale: 1 }} 
-      className="flex flex-col items-center justify-center m-auto gap-8 p-4 sm:p-6 lg:p-8 xl:p-10 max-w-7xl w-full h-full"
-    >
-      <div className="inline-flex items-center gap-1 px-3 py-1.5">
-        <span className="text-gray-600 dark:text-gray-400 font-medium">Processing</span>
-        <motion.span 
-          className="text-blue-500 dark:text-blue-400 font-bold min-w-[24px]"
-          animate={{ opacity: [0.5, 1, 0.5] }}
+    <div className="max-w-xl m-auto space-y-1 text-sm text-foreground">
+      <p>
+        <span className="text-lg font-medium">
+          Venu<span className="text-primary">mity</span>
+        </span>{" "}
+        is a modern UI system built to deliver fast, elegant, and
+        production-ready, fully responsive components. This reduces development
+        time and inspires to build faster with the reading materials to upskill
+        and grow in web dev field and also
+        <motion.span
+          className="text-base leading-none text-primary font-bold ml-0.5"
+          animate={{ opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 1, repeat: Infinity }}
         >
           {dots}
         </motion.span>
-      </div>
-    </motion.main>
+      </p>
+    </div>
   );
 }
