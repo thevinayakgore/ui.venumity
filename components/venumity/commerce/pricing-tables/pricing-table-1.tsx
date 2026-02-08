@@ -163,24 +163,12 @@ export default function PricingTable1() {
           className={cn(
             "group relative overflow-hidden border-6 transition-all duration-300 hover:shadow-xl rounded-3xl!",
             highlighted
-              ? "border-primary/80 bg-linear-to-t from-primary/20 via-primary/10 to-background"
+              ? "border-primary/80 bg-linear-to-t from-primary/40 via-primary/10 to-background"
               : "border-border hover:border-primary/80",
           )}
         >
-          <CardHeader className="text-center">
-            <div className="flex items-center justify-center mt-5 mb-3">
-              <div
-                className={cn(
-                  "p-4 size-15 rounded-2xl transition-all duration-300",
-                  highlighted
-                    ? "bg-linear-to-br from-yellow-400 to-primary text-white shadow-lg"
-                    : "bg-foreground/5 text-yellow-400 dark:text-primary group-hover:bg-linear-to-br group-hover:from-yellow-400 group-hover:to-primary group-hover:text-white! transition-all duration-500",
-                )}
-              >
-                {plan.icon}
-              </div>
-            </div>
-            <CardTitle className="text-xl sm:text-2xl font-bold">
+          <CardHeader className="text-center mt-6">
+            <CardTitle className="text-xl sm:text-4xl font-medium">
               {plan.name}
             </CardTitle>
             <CardDescription className="text-sm">
@@ -191,13 +179,9 @@ export default function PricingTable1() {
           <CardContent className="px-4 sm:px-6">
             <div className="text-center mb-6 p-10 rounded-xl bg-primary/5 border-2 border-primary">
               <div className="flex items-baseline justify-center gap-1">
-                <span className="text-3xl font-semibold">
-                  $
-                </span>
+                <span className="text-3xl font-semibold">$</span>
                 <span className="text-4xl sm:text-7xl font-bold">{price}</span>
-                <span className="text-sm font-medium ml-1">
-                  /{period}
-                </span>
+                <span className="text-sm font-medium ml-1">/{period}</span>
               </div>
               {isAnnualValue && (
                 <p className="text-xs mt-2">
@@ -209,23 +193,15 @@ export default function PricingTable1() {
               )}
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-semibold text-sm mb-3">
-                  CORE FEATURES
-                </h4>
-                <ul className="space-y-1">
-                  {plan.features.map((feature) => (
-                    <PricingFeature key={feature} feature={feature} />
-                  ))}
-                </ul>
-              </div>
+            <div className="space-y-6">
+              <ul className="space-y-1">
+                {plan.features.map((feature) => (
+                  <PricingFeature key={feature} feature={feature} />
+                ))}
+              </ul>
 
               {plan.extraFeatures.length > 0 && (
-                <div className="pt-4 border-t border-border/50">
-                  <h4 className="font-semibold text-sm mb-3">
-                    EXTRA BENEFITS
-                  </h4>
+                <div className="pt-6 border-t border-dashed border-primary/70">
                   <ul className="space-y-1">
                     {plan.extraFeatures.map((feature) => (
                       <PricingFeature key={feature} feature={feature} />
@@ -258,7 +234,7 @@ export default function PricingTable1() {
   };
 
   return (
-    <main className="flex flex-col text-center gap-10 p-6 md:p-10 overflow-auto w-full h-full">
+    <main className="flex flex-col text-center p-6 md:p-10 overflow-auto w-full h-full">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
         <span className="bg-linear-to-br from-yellow-400 to-primary bg-clip-text text-transparent">
           Simple Pricing
@@ -267,7 +243,7 @@ export default function PricingTable1() {
         <span className="text-foreground">For Every Business</span>
       </h1>
 
-      <div className="relative inline-flex items-center justify-center m-auto bg-muted/50 rounded-full w-fit">
+      <div className="relative inline-flex items-center justify-center m-auto bg-muted/50 mt-5 mb-10 rounded-full w-fit">
         <button
           onClick={() => onToggle()}
           className={cn(

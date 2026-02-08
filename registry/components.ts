@@ -1,6 +1,5 @@
 import { createComponents } from "./component-utils";
 
-// Updated to include folder paths (auto-generated) with icon support
 export const COMPONENTS = createComponents([
   {
     category: "Feedbacks",
@@ -152,6 +151,47 @@ export const COMPONENTS = createComponents([
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
+        name: "Cards",
+        description:
+          "Card-based layout components designed to structure content into visually distinct, reusable sections for dashboards and applications.",
+        tags: [
+          "card-layout",
+          "dashboard-cards",
+          "content-structure",
+          "ui-layout",
+          "responsive-layout",
+        ],
+        techs: [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Framer Motion",
+        ],
+        items: [
+          { itemName: "Interactive Card" },
+          { itemName: "Luxury Card" },
+        ],
+      },
+      {
+        name: "Containers",
+        description:
+          "Container layout components that define page width, spacing, alignment, and content boundaries for consistent application structure.",
+        tags: [
+          "container",
+          "page-layout",
+          "content-wrapper",
+          "responsive-container",
+          "ui-structure",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [
+          { itemName: "Basic Container" },
+          { itemName: "Standard Container" },
+          { itemName: "Premium Container" },
+        ],
+      },
+      {
         name: "Sidebars",
         description:
           "Highly functional navigation sidebars featuring collapsible states, mobile responsiveness, and nested routing support.",
@@ -167,7 +207,7 @@ export const COMPONENTS = createComponents([
           "Tailwind CSS",
           "TypeScript",
           "Shadcn UI",
-          "Lucide React",
+          "Lucid React",
         ],
         items: [{ itemName: "Sidebar 1" }],
       },
@@ -277,25 +317,6 @@ export const COMPONENTS = createComponents([
         ],
       },
       {
-        name: "Custom Charts",
-        description:
-          "Niche data visualizations like Bullet and Gauge charts for specialized KPI monitoring and performance tracking.",
-        tags: ["kpi-dashboard", "gauge-chart", "bullet-graph", "custom-viz"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [{ itemName: "Bullet Chart" }, { itemName: "Gauge Chart" }],
-      },
-      {
-        name: "Doughnut Charts",
-        description:
-          "Clean, circular visualizations with a central cutout, perfect for displaying percentage breakdowns and ratios.",
-        tags: ["donut-chart", "percentage-viz", "radial-graph", "segment-data"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Doughnut Chart" },
-          { itemName: "Semi-Doughnut Chart" },
-        ],
-      },
-      {
         name: "Line Charts",
         description:
           "High-performance line graphs for tracking continuous data points and identifying cyclical patterns in datasets.",
@@ -320,22 +341,6 @@ export const COMPONENTS = createComponents([
         items: [
           { itemName: "Basic Pie Chart" },
           { itemName: "Donut Pie Chart" },
-        ],
-      },
-      {
-        name: "Progress Graphs",
-        description:
-          "Visual indicators for task completion, loading states, and goal attainment using circular and linear progress bars.",
-        tags: [
-          "progress-bar",
-          "status-indicator",
-          "goal-tracking",
-          "loading-ui",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
-        items: [
-          { itemName: "Circular Progress Graph" },
-          { itemName: "Multiple Progress Bar" },
         ],
       },
       {
@@ -376,11 +381,7 @@ export const COMPONENTS = createComponents([
           "Compact, lightweight charts designed to fit within dashboards or text to show general trends without axes.",
         tags: ["sparkline", "mini-chart", "inline-viz", "micro-analytics"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Area Sparkline" },
-          { itemName: "Bar Sparkline" },
-          { itemName: "Mini Line Sparkline" },
-        ],
+        items: [{ itemName: "Area Sparkline" }, { itemName: "Bar Sparkline" }],
       },
     ],
   },
@@ -399,9 +400,9 @@ export const COMPONENTS = createComponents([
       {
         name: "Button Loaders",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+          "Loading indicators embedded inside buttons to communicate in‑progress actions such as submissions or async operations.",
+        tags: ["button-loader", "loading-state", "async-action", "ui-feedback"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         items: [
           { itemName: "Basic Button Loader" },
           { itemName: "Outline Button Loader" },
@@ -412,9 +413,14 @@ export const COMPONENTS = createComponents([
       {
         name: "Custom Loaders",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+          "Standalone loading animations designed for flexible use across pages, cards, and sections.",
+        tags: [
+          "custom-loader",
+          "loading-animation",
+          "progress-indicator",
+          "ui-feedback",
+        ],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         items: [
           { itemName: "Basic Loader" },
           { itemName: "Simple Round Loader" },
@@ -426,8 +432,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Inline Loaders",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+          "Inline loading indicators used within text or compact UI areas to represent background processing.",
+        tags: ["inline-loader", "micro-loader", "text-loader", "non-blocking"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Inline Loader" },
@@ -438,9 +444,14 @@ export const COMPONENTS = createComponents([
       {
         name: "Page Loaders",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+          "Full-page loading components used during route changes, initial app load, or critical blocking operations.",
+        tags: [
+          "page-loader",
+          "full-screen-loader",
+          "route-loading",
+          "blocking-ui",
+        ],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         items: [
           { itemName: "Centered Page Loader" },
           { itemName: "Full Page Loader" },
@@ -450,9 +461,14 @@ export const COMPONENTS = createComponents([
       {
         name: "Progress Bars",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+          "Linear and segmented progress bar components used to visualize task completion and loading progress.",
+        tags: [
+          "progress-bar",
+          "loading-progress",
+          "status-indicator",
+          "completion-ui",
+        ],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         items: [
           { itemName: "Basic Progress Bar" },
           { itemName: "Animated Progress Bar" },
@@ -462,9 +478,9 @@ export const COMPONENTS = createComponents([
       {
         name: "Pulse Loaders",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+          "Pulse-based loading animations designed to subtly indicate activity or waiting states.",
+        tags: ["pulse-loader", "activity-indicator", "loading-animation"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         items: [
           { itemName: "Basic Pulse Loader" },
           { itemName: "Multi Pulse Loader" },

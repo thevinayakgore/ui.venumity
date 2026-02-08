@@ -164,7 +164,7 @@ export default function PageClient({
                       alt={tech}
                       width={100}
                       height={100}
-                      className="object-contain rounded-[3px] w-full h-full"
+                      className="object-cover rounded-[3px] w-full h-full"
                     />
                   </div>
                 ))}

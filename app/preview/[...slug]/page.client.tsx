@@ -133,30 +133,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
 
   return (
     <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
-      <nav className="fixed top-2 right-10 z-10000! transform-gpu! flex items-center gap-2">
-        <Button
-          size="icon"
-          variant="secondary"
-          onClick={() => window.location.reload()}
-          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
-          title="Refresh preview"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-4.5"
-          >
-            <path d="M21 12a9 9 0 1 1 -3 -6.7" />
-            <path d="M21 3v6h-6" />
-          </svg>
-        </Button>
+      <nav className="fixed top-3 right-3 z-10000! transform-gpu! flex flex-col items-center gap-2">
         <Button
           size="icon"
           variant="secondary"
@@ -183,6 +160,29 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
             <path d="M12 9l4.65 -4.65" />
             <path d="M12 14.3l7.37 -7.37" />
             <path d="M12 19.6l8.85 -8.85" />
+          </svg>
+        </Button>
+        <Button
+          size="icon"
+          variant="secondary"
+          onClick={() => window.location.reload()}
+          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+          title="Refresh preview"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4.5"
+          >
+            <path d="M21 12a9 9 0 1 1 -3 -6.7" />
+            <path d="M21 3v6h-6" />
           </svg>
         </Button>
       </nav>
