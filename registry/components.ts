@@ -384,6 +384,34 @@ export const COMPONENTS = createComponents([
       },
     ],
   },
+  {
+    category: "Spinners",
+    icon: "loader",
+    tags: [
+      "spinner",
+      "loading",
+      "progress-indicator",
+      "ui-element",
+      "animation",
+    ],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "Button Loaders",
+        description:
+          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
+        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Button Loader" },
+          { itemName: "Animated Button Loader" },
+          { itemName: "Outline Button Loader" },
+          { itemName: "Standard Button Loader" },
+          { itemName: "Premium Button Loader" },
+        ],
+      },
+    ],
+  },
   // Example of another category:
   // {
   //   category: "Forms",
