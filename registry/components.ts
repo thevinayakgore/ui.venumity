@@ -10,8 +10,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Alerts",
         description:
-          "Alert UI components designed to deliver clear, immediate, and accessible feedback for system states, user actions, warnings, errors, and important application notifications.",
-        tags: ["alert", "notifications", "banner", "action", "animated"],
+          "Alert UI components for modern web design, delivering clear, immediate, and accessible feedback for system states, user actions, warnings, errors, and important notifications. Highly responsive, interactive, and optimized for frontend UX, dashboards, and web applications. Improve user engagement, accessibility, and overall performance in your visual design with these essential notification elements.",
+        tags: ["alert", "notification", "banner", "action", "animated"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
           { itemName: "Standard Alert" },
@@ -24,7 +24,7 @@ export const COMPONENTS = createComponents([
       {
         name: "Popups",
         description:
-          "Popup and modal UI components created to capture user attention for confirmations, forms, alerts, and critical interactions without navigating away from the current context.",
+          "Popup and modal UI components for interactive, responsive web design, capturing user attention for confirmations, forms, alerts, and critical interactions. Essential for modern frontend UX, interactive dashboards, and high-converting web apps. Seamlessly integrate popups for better engagement, usability, and conversion optimization in your UI projects.",
         tags: ["popup", "modal", "overlay", "interactive"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [{ itemName: "Popup 1" }, { itemName: "Popup 2" }],
@@ -32,7 +32,7 @@ export const COMPONENTS = createComponents([
       {
         name: "Modal Alerts",
         description:
-          "Modal-based alert components intended for high-priority messages that require explicit user acknowledgment or confirmation before proceeding.",
+          "Modal-based alert UI components for high-priority, interactive messages requiring user acknowledgment. Modern, accessible, and essential for responsive web applications, dashboards, and frontend UX. Enhance user workflows, ensure important actions are noticed, and maintain seamless, visually appealing interactions.",
         tags: ["modal", "critical", "confirmation", "blocking"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [{ itemName: "Standard Modal Alert" }],
@@ -40,7 +40,7 @@ export const COMPONENTS = createComponents([
       {
         name: "Snackbars",
         description:
-          "Snackbar UI components used to display brief, temporary, and auto-dismissable feedback related to user actions or background system events.",
+          "Snackbar UI components for visual, brief, and auto-dismissable feedback on user actions or system events. Lightweight, highly responsive, and optimized for modern frontend UX, interactive dashboards, and high-performance web apps. Improve notification delivery and user experience with these essential UI elements.",
         tags: ["snackbar", "temporary", "action", "nonblocking"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [{ itemName: "Snackbar 1" }, { itemName: "Snackbar 2" }],
@@ -48,7 +48,7 @@ export const COMPONENTS = createComponents([
       {
         name: "Toasts",
         description:
-          "Toast notification components optimized for lightweight, time-based feedback that informs users without interrupting their workflow.",
+          "Toast notification UI components for lightweight, time-based feedback. Nonintrusive, interactive, and ideal for modern responsive web and dashboard design. Enhance frontend performance, user engagement, and web app usability with visually appealing, accessible toasts.",
         tags: ["toast", "feedback", "ephemeral", "nonintrusive"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [{ itemName: "Toast 1" }],
@@ -64,8 +64,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Status Badges",
         description:
-          "Status badge components designed to visually communicate system states, progress, priorities, and user or connection statuses at a glance.",
-        tags: ["status", "system", "connection", "priority"],
+          "Status badge UI components for visual, responsive communication of system states, progress, priorities, and user statuses. Essential for modern web and dashboard interfaces, analytics, and interactive applications. Improve visual hierarchy, UX, and real-time feedback with these dynamic UI elements.",
+        tags: ["status", "system", "connection", "priority", "user"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
           { itemName: "Basic Status Badge" },
@@ -93,14 +93,8 @@ export const COMPONENTS = createComponents([
       {
         name: "FAQ",
         description:
-          "Accessible, SEO-friendly FAQ sections featuring smooth accordion transitions to resolve customer queries and improve UX.",
-        tags: [
-          "faq-component",
-          "accordion",
-          "customer-support",
-          "schema-markup",
-          "collapsible",
-        ],
+          "Accessible, SEO-friendly FAQ UI components with smooth accordion transitions for interactive support sections. Perfect for modern web design, improving UX, and increasing engagement in responsive layouts. Enhance your site’s support, SEO ranking, and frontend performance with these well-structured FAQ blocks.",
+        tags: ["faq", "accordion", "support", "schema", "collapsible"],
         techs: [
           "Next.js",
           "Tailwind CSS",
@@ -113,14 +107,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Testimonials",
         description:
-          "Conversion-optimized testimonial sections designed to build brand authority and showcase social proof through various layouts.",
-        tags: [
-          "social-proof",
-          "user-reviews",
-          "trust-signals",
-          "carousel",
-          "grid-layout",
-        ],
+          "Conversion-optimized testimonial UI components for modern web projects. Showcase social proof, build brand authority, and utilize responsive layouts for enhanced UX, frontend design, and interactive user engagement. Boost trust and credibility in your web apps and landing pages with visually appealing testimonial blocks.",
+        tags: ["testimonial", "social", "reviews", "trust", "carousel"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
           { itemName: "Minimal Testimonial" },
@@ -147,28 +135,16 @@ export const COMPONENTS = createComponents([
       {
         name: "Cards",
         description:
-          "Card-based layout components designed to structure content into visually distinct, reusable sections for dashboards and applications.",
-        tags: [
-          "card-layout",
-          "dashboard-cards",
-          "content-structure",
-          "ui-layout",
-          "responsive-layout",
-        ],
+          "Card-based UI layout components for visually distinct, reusable sections. Perfect for dashboards, responsive web design, and modern frontend applications. Achieve modular layouts, improved content organization, and interactive visual design for web apps and analytics dashboards.",
+        tags: ["card", "dashboard", "content", "layout", "responsive"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Interactive Card" }, { itemName: "Luxury Card" }],
       },
       {
         name: "Containers",
         description:
-          "Container layout components that define page width, spacing, alignment, and content boundaries for consistent application structure.",
-        tags: [
-          "container",
-          "page-layout",
-          "content-wrapper",
-          "responsive-container",
-          "ui-structure",
-        ],
+          "Container UI layout components for defining page width, spacing, alignment, and content boundaries. Responsive, modern, and essential for frontend structure, performance optimization, and visual consistency in web applications. Enhance your layouts with scalable, flexible container blocks.",
+        tags: ["container", "page", "wrapper", "responsive", "structure"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [
           { itemName: "Basic Container" },
@@ -179,14 +155,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Sidebars",
         description:
-          "Highly functional navigation sidebars featuring collapsible states, mobile responsiveness, and nested routing support.",
-        tags: [
-          "admin-panel",
-          "vertical-nav",
-          "collapsible-sidebar",
-          "dashboard-ui",
-          "drawer",
-        ],
+          "Functional navigation sidebar UI components with collapsible states, mobile responsiveness, and nested routing. Modern, interactive, and optimized for web dashboards, analytics, and responsive layouts. Improve navigation, user workflow, and visual design in your web apps with these flexible sidebar patterns.",
+        tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
         techs: [
           "Next.js",
           "Tailwind CSS",
@@ -213,28 +183,16 @@ export const COMPONENTS = createComponents([
       {
         name: "Footers",
         description:
-          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
-        tags: [
-          "footer-section",
-          "sitemap",
-          "bottom-nav",
-          "legal-links",
-          "branding",
-        ],
+          "Professional footer UI components for modern web design and frontend projects. Multi-column layouts, social links, and newsletter integration for enhanced site depth, branding, SEO, and user experience. Optimize your site’s bottom navigation, legal, and branding sections with responsive, visually appealing footers.",
+        tags: ["footer", "sitemap", "bottom", "legal", "branding"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Footer" }],
       },
       {
         name: "Floating Menus",
         description:
-          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
-        tags: [
-          "footer-section",
-          "sitemap",
-          "bottom-nav",
-          "legal-links",
-          "branding",
-        ],
+          "Floating menu UI components for interactive, responsive navigation in modern web design. Enable quick access, improved frontend UX, and seamless integration for dashboards, web apps, and interactive user flows. Enhance usability and visual navigation with dynamic floating menus.",
+        tags: ["menu", "dock", "speed", "radial", "navigation"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [
           { itemName: "Dock Menu" },
@@ -245,14 +203,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Menu",
         description:
-          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
-        tags: [
-          "footer-section",
-          "sitemap",
-          "bottom-nav",
-          "legal-links",
-          "branding",
-        ],
+          "Menu UI components for modern web navigation, including dropdowns, mega menus, and command palettes. Interactive, responsive, and efficient for frontend UX, web apps, and dashboard navigation. Improve accessibility, performance, and visual design with advanced menu solutions.",
+        tags: ["menu", "dropdown", "mega", "nav", "command"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [
           { itemName: "Dropdown Menu" },
@@ -264,14 +216,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Navbars",
         description:
-          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
-        tags: [
-          "footer-section",
-          "sitemap",
-          "bottom-nav",
-          "legal-links",
-          "branding",
-        ],
+          "Navbar UI components for modern web and app navigation. Responsive, branded, and interactive design for improved frontend UX, performance, and seamless user journeys. Enhance your site’s navigation, branding, and visual consistency with these essential navbar patterns.",
+        tags: ["navbar", "header", "navigation", "top", "branding"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Navbar" }],
       },
@@ -292,14 +238,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Pricing Tables",
         description:
-          "SaaS-ready pricing tables designed to highlight features, compare plans, and drive subscription conversions.",
-        tags: [
-          "pricing-plans",
-          "comparison-table",
-          "subscription-ui",
-          "cta-blocks",
-          "feature-list",
-        ],
+          "SaaS-ready pricing table UI components for modern web applications. Highlight features, compare plans, and drive conversions with responsive, interactive design. Optimize your sales funnel, enhance user decision-making, and improve visual appeal in ecommerce and SaaS dashboards.",
+        tags: ["pricing", "comparison", "subscription", "cta", "features"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Pricing Table 1" }],
       },
@@ -320,8 +260,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Area Charts",
         description:
-          "Visualise volume and trends over time with sleek, shaded area charts ideal for tracking growth and performance metrics.",
-        tags: ["area-chart", "trend-analysis", "data-viz", "shaded-graph"],
+          "Area chart UI components for visualizing volume and trends over time. Sleek, shaded, and highly responsive charts ideal for analytics, dashboards, performance metrics, and interactive data visualization in modern web apps. Improve your UX and frontend data analysis with these visually engaging components.",
+        tags: ["area", "trend", "data", "shaded", "growth"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Area Chart" },
@@ -335,8 +275,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Bar Charts",
         description:
-          "Compare categorical data with precision using vertical, horizontal, and stacked bar chart components.",
-        tags: ["bar-graph", "comparison-chart", "histogram", "data-analytics"],
+          "Bar chart UI components for precise comparison of categorical data. Vertical, horizontal, and stacked designs for responsive analytics dashboards, web apps, and interactive performance tracking. Enhance your frontend visualizations with accessible, SEO-friendly bar charts.",
+        tags: ["bar", "comparison", "histogram", "data", "analytics"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Bar Chart" },
@@ -349,8 +289,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Line Charts",
         description:
-          "High-performance line graphs for tracking continuous data points and identifying cyclical patterns in datasets.",
-        tags: ["line-graph", "time-series", "pattern-analysis", "data-points"],
+          "Line chart UI components for high-performance tracking of continuous data and cyclical patterns. Responsive, modern, and ideal for analytics dashboards, web applications, and real-time performance monitoring. Deliver clear, interactive data visualization for superior frontend UX.",
+        tags: ["line", "time", "pattern", "graph", "data"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Area Line Chart" },
@@ -360,13 +300,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Pie Charts",
         description:
-          "Classic proportional charts used to represent numerical proportions and categorical distribution at a glance.",
-        tags: [
-          "pie-graph",
-          "proportional-data",
-          "data-distribution",
-          "segments",
-        ],
+          "Pie chart UI components for classic, visual representation of numerical proportions and categorical distribution. Modern, responsive, and perfect for dashboards, analytics, and interactive web apps. Improve data storytelling and visual design with these engaging chart components.",
+        tags: ["pie", "proportion", "distribution", "graph", "segments"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Pie Chart" },
@@ -376,13 +311,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Radar Charts",
         description:
-          "Spider-style charts for multivariate data comparison, ideal for skill analysis and feature benchmarking.",
-        tags: [
-          "radar-chart",
-          "spider-graph",
-          "multivariate-analysis",
-          "skill-map",
-        ],
+          "Radar chart UI components for multivariate data comparison and visual analysis. Spider-style, interactive, and ideal for skill analysis, benchmarking, analytics dashboards, and modern web applications. Enhance your frontend data visualization and UX with dynamic radar charts.",
+        tags: ["radar", "spider", "analysis", "skill", "comparison"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Radar Chart" },
@@ -392,13 +322,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Scatter Plots",
         description:
-          "Highly detailed charts for identifying correlations and distribution patterns between two or more variables.",
-        tags: [
-          "scatter-plot",
-          "dot-chart",
-          "correlation-analysis",
-          "statistical-viz",
-        ],
+          "Scatter plot UI components for identifying correlations and distribution patterns. Detailed, responsive, and essential for analytics dashboards, interactive data analysis, and high-performance web apps. Improve your frontend visualizations and user engagement with these advanced scatter plots.",
+        tags: ["scatter", "dot", "correlation", "statistic", "analysis"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Scatter Plot" },
@@ -408,8 +333,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Sparklines",
         description:
-          "Compact, lightweight charts designed to fit within dashboards or text to show general trends without axes.",
-        tags: ["sparkline", "mini-chart", "inline-viz", "micro-analytics"],
+          "Sparkline UI components for compact, lightweight trend visualization in dashboards, inline analytics, and modern responsive web design. Enhance performance, data density, and visual clarity in your frontend projects with these micro chart elements.",
+        tags: ["sparkline", "mini", "inline", "micro", "trend"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [{ itemName: "Area Sparkline" }, { itemName: "Bar Sparkline" }],
       },
@@ -430,8 +355,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Button Loaders",
         description:
-          "Loading indicators embedded inside buttons to communicate in‑progress actions such as submissions or async operations.",
-        tags: ["button-loader", "loading-state", "async-action", "ui-feedback"],
+          "Button loader UI components for interactive, responsive feedback on in-progress actions. Modern loading indicators for buttons in web and app design, enhancing UX, performance, and user trust. Integrate seamlessly into interactive dashboards and frontend workflows.",
+        tags: ["button", "loader", "loading", "async", "feedback"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Button Loader" },
@@ -443,13 +368,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Custom Loaders",
         description:
-          "Standalone loading animations designed for flexible use across pages, cards, and sections.",
-        tags: [
-          "custom-loader",
-          "loading-animation",
-          "progress-indicator",
-          "ui-feedback",
-        ],
+          "Custom loader UI components with flexible, animated loading indicators. Ideal for pages, cards, and sections in modern responsive web design, interactive dashboards, and web apps. Improve perceived performance and UX with visually engaging, customizable loaders.",
+        tags: ["loader", "animation", "progress", "custom", "ui"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Loader" },
@@ -462,8 +382,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Inline Loaders",
         description:
-          "Inline loading indicators used within text or compact UI areas to represent background processing.",
-        tags: ["inline-loader", "micro-loader", "text-loader", "non-blocking"],
+          "Inline loader UI components for compact, responsive indication of background processing within text or small UI areas. Optimized for modern frontend UX, interactive web apps, and visually consistent loading states. Enhance user feedback and performance perception with inline loaders.",
+        tags: ["inline", "loader", "text", "micro", "compact"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Inline Loader" },
@@ -474,13 +394,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Page Loaders",
         description:
-          "Full-page loading components used during route changes, initial app load, or critical blocking operations.",
-        tags: [
-          "page-loader",
-          "full-screen-loader",
-          "route-loading",
-          "blocking-ui",
-        ],
+          "Full-page loader UI components for modern web apps. Responsive loading screens during route changes, app loads, or blocking operations for improved UX, performance, and visual continuity. Essential for web dashboards, interactive apps, and seamless user journeys.",
+        tags: ["page", "loader", "fullscreen", "route", "blocking"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Centered Page Loader" },
@@ -491,13 +406,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Progress Bars",
         description:
-          "Linear and segmented progress bar components used to visualize task completion and loading progress.",
-        tags: [
-          "progress-bar",
-          "loading-progress",
-          "status-indicator",
-          "completion-ui",
-        ],
+          "Progress bar UI components for visualizing task completion and loading progress. Linear and segmented, responsive for modern web, dashboard design, and interactive applications. Enhance performance feedback, UX, and visual design with these dynamic progress indicators.",
+        tags: ["progress", "loading", "status", "completion", "linear"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Progress Bar" },
@@ -508,8 +418,8 @@ export const COMPONENTS = createComponents([
       {
         name: "Pulse Loaders",
         description:
-          "Pulse-based loading animations designed to subtly indicate activity or waiting states.",
-        tags: ["pulse-loader", "activity-indicator", "loading-animation"],
+          "Pulse loader UI components with animated, subtle indicators for activity or waiting states. Modern, responsive, and essential for interactive web UX, dashboards, and high-performance applications. Improve user feedback, engagement, and visual consistency with pulse loaders.",
+        tags: ["pulse", "loader", "activity", "animation", "waiting"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Pulse Loader" },
