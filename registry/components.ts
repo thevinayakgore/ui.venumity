@@ -88,7 +88,7 @@ export const COMPONENTS = createComponents([
       "frontend-blocks",
       "responsive-design",
     ],
-    techs: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    techs: ["React", "TypeScript", "Tailwind CSS", "Motion"],
     subcategories: [
       {
         name: "FAQ",
@@ -121,13 +121,7 @@ export const COMPONENTS = createComponents([
           "carousel",
           "grid-layout",
         ],
-        techs: [
-          "Next.js",
-          "Tailwind CSS",
-          "TypeScript",
-          "Shadcn UI",
-          "Framer Motion",
-        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
           { itemName: "Minimal Testimonial" },
           { itemName: "Social Testimonial" },
@@ -161,17 +155,8 @@ export const COMPONENTS = createComponents([
           "ui-layout",
           "responsive-layout",
         ],
-        techs: [
-          "Next.js",
-          "Tailwind CSS",
-          "TypeScript",
-          "Shadcn UI",
-          "Framer Motion",
-        ],
-        items: [
-          { itemName: "Interactive Card" },
-          { itemName: "Luxury Card" },
-        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [{ itemName: "Interactive Card" }, { itemName: "Luxury Card" }],
       },
       {
         name: "Containers",
@@ -207,7 +192,7 @@ export const COMPONENTS = createComponents([
           "Tailwind CSS",
           "TypeScript",
           "Shadcn UI",
-          "Lucid React",
+          "Lucide React",
         ],
         items: [{ itemName: "Sidebar 1" }],
       },
@@ -239,6 +224,57 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Footer" }],
       },
+      {
+        name: "Floating Menus",
+        description:
+          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
+        tags: [
+          "footer-section",
+          "sitemap",
+          "bottom-nav",
+          "legal-links",
+          "branding",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [
+          { itemName: "Dock Menu" },
+          { itemName: "Speed Dial Menu" },
+          { itemName: "Radial Menu" },
+        ],
+      },
+      {
+        name: "Menu",
+        description:
+          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
+        tags: [
+          "footer-section",
+          "sitemap",
+          "bottom-nav",
+          "legal-links",
+          "branding",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [
+          { itemName: "Dropdown Menu" },
+          { itemName: "Mega Menu" },
+          { itemName: "Nav Menu" },
+          { itemName: "Command Palette" },
+        ],
+      },
+      {
+        name: "Navbars",
+        description:
+          "Professional footer components with multi-column layouts, social links, and newsletter integration for improved site depth.",
+        tags: [
+          "footer-section",
+          "sitemap",
+          "bottom-nav",
+          "legal-links",
+          "branding",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [{ itemName: "Standard Navbar" }],
+      },
     ],
   },
   {
@@ -264,13 +300,7 @@ export const COMPONENTS = createComponents([
           "cta-blocks",
           "feature-list",
         ],
-        techs: [
-          "Next.js",
-          "Tailwind CSS",
-          "TypeScript",
-          "Shadcn UI",
-          "Framer Motion",
-        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Pricing Table 1" }],
       },
     ],
@@ -402,7 +432,7 @@ export const COMPONENTS = createComponents([
         description:
           "Loading indicators embedded inside buttons to communicate in‑progress actions such as submissions or async operations.",
         tags: ["button-loader", "loading-state", "async-action", "ui-feedback"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Button Loader" },
           { itemName: "Outline Button Loader" },
@@ -420,7 +450,7 @@ export const COMPONENTS = createComponents([
           "progress-indicator",
           "ui-feedback",
         ],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Loader" },
           { itemName: "Simple Round Loader" },
@@ -451,7 +481,7 @@ export const COMPONENTS = createComponents([
           "route-loading",
           "blocking-ui",
         ],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Centered Page Loader" },
           { itemName: "Full Page Loader" },
@@ -468,7 +498,7 @@ export const COMPONENTS = createComponents([
           "status-indicator",
           "completion-ui",
         ],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Progress Bar" },
           { itemName: "Animated Progress Bar" },
@@ -480,7 +510,7 @@ export const COMPONENTS = createComponents([
         description:
           "Pulse-based loading animations designed to subtly indicate activity or waiting states.",
         tags: ["pulse-loader", "activity-indicator", "loading-animation"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Pulse Loader" },
           { itemName: "Multi Pulse Loader" },

@@ -7,7 +7,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
 import { toKebabCase } from "@/utils/slug-kebab";
-import { getAllResources, getAllCategories, ResourcePage } from "@/registry/resources";
+import {
+  getAllResources,
+  getAllCategories,
+  ResourcePage,
+} from "@/registry/resources";
 import { useResources } from "@/contexts/resources";
 
 const LEFT_WORDS = [
@@ -146,9 +150,9 @@ function ResourceCard({
         <span className="absolute bottom-0 left-0 opacity-10 group-hover:opacity-30 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-[1.5s] w-full h-px" />
         <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-10 opacity-10 group-hover:opacity-100 bg-linear-to-l from-transparent via-primary to-transparent blur-lg rounded-full transition-all duration-[1.5s] w-full h-3" />
       </div>
-      <div className="flex flex-col items-start text-start gap-1 py-3 px-2 group-hover:border-transparent  font-normal w-full">
+      <div className="flex flex-col items-start text-start gap-0.5 py-3 px-2 group-hover:border-transparent font-normal w-full">
         <h3 className="text-lg uppercase font-semibold">{page.title}</h3>
-        <p className="text-sm leading-5 text-muted-foreground line-clamp-3">
+        <p className="text-sm leading-5 text-muted-foreground line-clamp-2">
           {description}
         </p>
         <div className="flex flex-wrap gap-1 mt-2">

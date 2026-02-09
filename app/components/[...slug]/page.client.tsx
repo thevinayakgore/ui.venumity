@@ -162,8 +162,8 @@ export default function PageClient({
                         .toLowerCase()
                         .replace(/[.\-\s]/g, "")}.png`}
                       alt={tech}
-                      width={100}
-                      height={100}
+                      width={500}
+                      height={500}
                       className="object-cover rounded-[3px] w-full h-full"
                     />
                   </div>
@@ -224,6 +224,9 @@ export default function PageClient({
               </section>
             );
           })}
+        </div>
+        <div className="text-[0.6rem] font-medium italic text-center opacity-40 mt-6 w-full">
+          Always use Live button to see the full page preview !
         </div>
       </main>
     );

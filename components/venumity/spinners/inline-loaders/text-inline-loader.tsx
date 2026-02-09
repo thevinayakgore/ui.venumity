@@ -24,8 +24,8 @@ export default function TextInlineLoader() {
         time and inspires to build faster with the reading materials to upskill
         and grow in web dev field and also
         <motion.span
-          className="text-base leading-none text-primary font-bold ml-0.5"
-          animate={{ opacity: [0.7, 1, 0.7] }}
+          className="text-lg leading-none text-primary font-bold ml-0.5"
+          animate={{ opacity: [0.5, 0.8, 1] }}
           transition={{ duration: 1, repeat: Infinity }}
         >
           {dots}

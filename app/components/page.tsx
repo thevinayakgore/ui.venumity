@@ -102,24 +102,24 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
   return (
     <button
       onClick={() => onClick(card.path)}
-      className="cursor-pointer transition-all duration-300 text-start group p-3 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden w-full h-fit"
+      className="cursor-pointer transition-all duration-500 text-start group p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden hover:shadow-lg/10 w-full h-fit"
     >
-      <div className="relative flex flex-col p-4 bg-background border rounded-md w-full h-full">
+      <div className="relative flex flex-col p-4 bg-background border rounded-lg w-full h-full">
         <div className="flex justify-between items-start">
-          <h2 className="text-xl font-normal whitespace-nowrap truncate">
+          <h2 className="text-lg font-medium whitespace-nowrap truncate">
             {card.title}
           </h2>
-          <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary">
+          <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
             {card.itemCount > 0 && card.itemCount <= 9 && "0"}
             {card.itemCount}
           </span>
         </div>
 
-        <p className="text-xs line-clamp-2 opacity-60 mt-3">
+        <p className="text-xs line-clamp-2 opacity-60 mt-1 mb-3">
           {card.description}
         </p>
 
-        <div className="flex flex-wrap gap-1.5 mt-3">
+        <div className="flex flex-wrap gap-1.5">
           {/* Show tags and techs */}
           {[...(card.tags || [])].length > 0 ? (
             <>
@@ -150,8 +150,8 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
           )}
         </div>
 
-        <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-70 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
-        <div className="absolute -bottom-1 left-0 blur-sm opacity-0 group-hover:opacity-60 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-2 w-full" />
+        <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-2 w-1/2" />
       </div>
     </button>
   );
@@ -211,13 +211,13 @@ export default function Components() {
 
       {/* Loading State */}
       {loading && (
-        <section className="columns-1 sm:columns-2 lg:columns-4 gap-4 space-y-4 w-full">
+        <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
           {Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
-              className="p-3 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden w-full h-fit animate-pulse"
+              className="p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden w-full h-fit animate-pulse"
             >
-              <div className="space-y-3 p-4 bg-background border rounded-md w-full h-full">
+              <div className="space-y-2 p-4 bg-background border rounded-lg w-full h-full">
                 <div className="flex justify-between items-start">
                   <div className="h-5 w-1/2 bg-foreground/10 rounded"></div>
                   <div className="h-6 w-8 bg-foreground/10 rounded"></div>
@@ -237,7 +237,7 @@ export default function Components() {
 
       {/* Cards Grid */}
       {!loading && categoryCards.length > 0 && (
-        <section className="columns-1 sm:columns-2 lg:columns-4 gap-4 space-y-4 w-full">
+        <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
           {categoryCards.map((card) => (
             <CategoryCard key={card.id} card={card} onClick={handleCardClick} />
           ))}

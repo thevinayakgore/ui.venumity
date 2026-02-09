@@ -1,51 +1,67 @@
 "use client";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Users,
+  Calendar,
+  BarChart3,
+  Settings,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 
-export default function DropdownMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+const menuItems = [
+  { label: "Dashboard", icon: LayoutDashboard },
+  { label: "Projects", icon: FolderKanban },
+  { label: "Team", icon: Users },
+  { label: "Calendar", icon: Calendar },
+  { label: "Reports", icon: BarChart3 },
+  { label: "Settings", icon: Settings },
+];
 
-  const menuItems = [
-    { label: "Dashboard", icon: "📊" },
-    { label: "Projects", icon: "📁" },
-    { label: "Team", icon: "👥" },
-    { label: "Calendar", icon: "📅" },
-    { label: "Reports", icon: "📈" },
-    { label: "Settings", icon: "⚙️" },
-  ];
+export default function DropdownMenuComponent() {
+  const [selected, setSelected] = useState<string>("Dropdown Menu");
 
   return (
-    <div className="relative inline-block">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-      >
-        Menu ▾
-      </button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="secondary"
+          className="p-6 border-2 hover:bg-primary hover:border-white hover:text-white hover:shadow-lg shadow-primary/40 gap-3 cursor-pointer transition-all duration-500 w-50"
+        >
+          <span className="truncate">{selected}</span>
+          <ChevronDown className="size-4 opacity-70" />
+        </Button>
+      </DropdownMenuTrigger>
 
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
-          {menuItems.map((item) => (
-            <button
-              key={item.label}
-              onClick={() => {
-                alert(`Selected: ${item.label}`);
-                setIsOpen(false);
-              }}
-              className="flex items-center w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <span className="mr-3">{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
+      <DropdownMenuContent align="end" className="w-50">
+        {menuItems.map((item) => (
+          <DropdownMenuItem
+            key={item.label}
+            className="cursor-pointer"
+            onSelect={() => setSelected(item.label)}
+          >
+            <item.icon className="mr-2 size-4" />
+            {item.label}
+          </DropdownMenuItem>
+        ))}
 
-          <div className="border-t border-gray-100 dark:border-gray-700 my-1" />
+        <DropdownMenuSeparator />
 
-          <button className="flex items-center w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-            <span className="mr-3">🚪</span>
-            Sign out
-          </button>
-        </div>
-      )}
-    </div>
+        <DropdownMenuItem className="text-red-600 focus:text-red-600">
+          <LogOut className="mr-2 size-4" />
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

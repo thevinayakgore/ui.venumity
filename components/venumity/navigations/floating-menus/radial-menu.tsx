@@ -14,7 +14,7 @@ export default function RadialMenu() {
   ];
 
   return (
-    <div className="flex items-center justify-center h-96">
+    <div className="flex items-center justify-center m-auto w-full h-full">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`relative w-20 h-20 rounded-full shadow-2xl transition-all duration-500 flex items-center justify-center text-2xl z-50 ${
