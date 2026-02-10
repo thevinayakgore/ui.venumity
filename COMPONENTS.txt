@@ -1,15 +1,13 @@
 ==================================
-1. AI SMART FEATURES
+1. AI FEATURES
 ==================================
-•  AI Chat Widgets
-•  AI Command Bars
+•  AI Chats
+•  AI Commands
 •  AI Suggestions
-•  AI Summary Cards
-•  AI-Powered Searches
-•  Auto-complete Fields
-•  Smart Inputs
-•  AI Form Fillers
-•  AI Analytics Widgets
+•  AI Summary
+•  AI Searches
+•  AI Forms
+•  AI Analytics
 •  AI Content Generators
 ==================================
 2. AVATARS

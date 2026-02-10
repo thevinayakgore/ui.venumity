@@ -69,7 +69,6 @@ export default function CommonActions() {
     const baseUrl = `${gitRepo}/issues/new`;
     const params = new URLSearchParams({
       template: type === "feature" ? "feature-request.yml" : "bug-report.yml",
-      labels: type === "feature" ? "enhancement" : "bug",
     });
 
     if (isSubcategoryPage && componentName) {
@@ -95,15 +94,6 @@ export default function CommonActions() {
   return (
     <div className="flex flex-col  font-normal mt-2 pt-2 text-[0.8rem] text-muted-foreground/70 border-t w-full">
       <Link
-        href={getIssueUrl("feature")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 py-1.5 leading-none group hover:text-foreground transition-all duration-500 w-fit!"
-      >
-        <WandSparkles className="size-3.5! group-hover:animate-[wiggle_0.6s_ease-in-out]" />
-        <span>Request a feature</span>
-      </Link>
-      <Link
         href={getIssueUrl("bug")}
         target="_blank"
         rel="noopener noreferrer"
@@ -111,6 +101,15 @@ export default function CommonActions() {
       >
         <Bug className="size-3.5! group-hover:animate-[wiggle_0.6s_ease-in-out]" />
         <span>Report an issue</span>
+      </Link>
+      <Link
+        href={getIssueUrl("feature")}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 py-1.5 leading-none group hover:text-foreground transition-all duration-500 w-fit!"
+      >
+        <WandSparkles className="size-3.5! group-hover:animate-[wiggle_0.6s_ease-in-out]" />
+        <span>Request a feature</span>
       </Link>
       <Link
         href={getEditUrl()}

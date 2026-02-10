@@ -138,15 +138,14 @@ export default function Overview({
   }, [code, selectedLanguage]);
 
   // Live demo URL
-  // In your Overview.tsx, update the liveDemoUrl:
   const liveDemoUrl = useMemo(() => {
-    // Create the preview URL
-    const baseUrl = `/preview/${componentName.toLowerCase()}/${kebabItemName}`;
+    // Convert category to kebab-case
+    const kebabCategory = toKebabCase(componentName);
+    const baseUrl = `/preview/${kebabCategory}/${kebabItemName}`;
 
-    // Add optional query params
     const params = new URLSearchParams({
       ref: "overview",
-      source: componentName.toLowerCase(),
+      source: kebabCategory, // Use kebab-case here too
     });
 
     return `${baseUrl}?${params.toString()}`;
