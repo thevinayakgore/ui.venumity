@@ -11,41 +11,42 @@ interface MetricItem {
   gradient: string;
 }
 
+const metrics: MetricItem[] = [
+  {
+    id: 1,
+    title: "Security Score",
+    value: "98.7%",
+    change: "+2.3%",
+    icon: <Shield className="w-8 h-8" />,
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    id: 2,
+    title: "Performance",
+    value: "99.9%",
+    change: "+0.5%",
+    icon: <Zap className="w-8 h-8" />,
+    gradient: "from-green-500 to-emerald-500",
+  },
+  {
+    id: 3,
+    title: "Global Reach",
+    value: "186",
+    change: "+24",
+    icon: <Globe className="w-8 h-8" />,
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    id: 4,
+    title: "User Growth",
+    value: "42.5K",
+    change: "+18.2%",
+    icon: <Users className="w-8 h-8" />,
+    gradient: "from-orange-500 to-red-500",
+  },
+];
+
 export default function PremiumSplitLayout() {
-  const metrics: MetricItem[] = [
-    {
-      id: 1,
-      title: "Security Score",
-      value: "98.7%",
-      change: "+2.3%",
-      icon: <Shield className="w-8 h-8" />,
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      id: 2,
-      title: "Performance",
-      value: "99.9%",
-      change: "+0.5%",
-      icon: <Zap className="w-8 h-8" />,
-      gradient: "from-green-500 to-emerald-500",
-    },
-    {
-      id: 3,
-      title: "Global Reach",
-      value: "186",
-      change: "+24",
-      icon: <Globe className="w-8 h-8" />,
-      gradient: "from-purple-500 to-pink-500",
-    },
-    {
-      id: 4,
-      title: "User Growth",
-      value: "42.5K",
-      change: "+18.2%",
-      icon: <Users className="w-8 h-8" />,
-      gradient: "from-orange-500 to-red-500",
-    },
-  ];
 
   return (
     <motion.main

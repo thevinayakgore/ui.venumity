@@ -13,7 +13,7 @@ export default function BasicStack() {
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
             Basic Stack Layout
           </h2>
-          
+
           <div className="space-y-4">
             {[1, 2, 3, 4].map((item) => (
               <div
@@ -22,14 +22,17 @@ export default function BasicStack() {
               >
                 <div className="flex items-start">
                   <div className="w-10 h-10 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-gray-700 dark:text-gray-300 font-bold">{item}</span>
+                    <span className="text-gray-700 dark:text-gray-300 font-bold">
+                      {item}
+                    </span>
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-700 dark:text-gray-200 mb-2">
                       Stack Item {item}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 text-sm">
-                      Basic stacked item with consistent spacing and clean layout
+                      Basic stacked item with consistent spacing and clean
+                      layout
                     </p>
                   </div>
                 </div>

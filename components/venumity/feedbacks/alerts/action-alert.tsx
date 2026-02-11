@@ -76,7 +76,7 @@ function ActionAlert({
             </AlertTitle>
 
             {type !== "list" ? (
-              <AlertDescription className="text-sm opacity-80">
+              <AlertDescription className="text-foreground/80">
                 Please confirm this action.
               </AlertDescription>
             ) : (
@@ -97,11 +97,16 @@ function ActionAlert({
             <Button
               size="sm"
               onClick={handleConfirm}
-              className={`${config.action} text-white`}
+              className={`${config.action} text-white rounded-sm`}
             >
               Confirm
             </Button>
-            <Button size="sm" variant="outline" onClick={handleCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleCancel}
+              className="bg-background! rounded-sm"
+            >
               Cancel
             </Button>
           </div>
@@ -110,11 +115,16 @@ function ActionAlert({
             <Button
               size="sm"
               onClick={handleConfirm}
-              className={`${config.action} text-white`}
+              className={`${config.action} text-white rounded-sm`}
             >
               Confirm
             </Button>
-            <Button size="sm" variant="outline" onClick={handleCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleCancel}
+              className="bg-background! rounded-sm"
+            >
               Cancel
             </Button>
           </div>

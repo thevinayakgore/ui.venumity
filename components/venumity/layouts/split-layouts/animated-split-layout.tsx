@@ -11,39 +11,40 @@ interface FeatureItem {
   color: string;
 }
 
+const features: FeatureItem[] = [
+  {
+    id: 0,
+    title: "Lightning Performance",
+    description: "Optimized for maximum speed and efficiency with advanced caching",
+    icon: <Zap className="w-8 h-8" />,
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    id: 1,
+    title: "Precision Analytics",
+    description: "Detailed insights and metrics for data-driven decision making",
+    icon: <Target className="w-8 h-8" />,
+    color: "from-red-400 to-pink-500",
+  },
+  {
+    id: 2,
+    title: "Growth Tracking",
+    description: "Monitor progress and growth with comprehensive tracking tools",
+    icon: <TrendingUp className="w-8 h-8" />,
+    color: "from-green-400 to-emerald-500",
+  },
+  {
+    id: 3,
+    title: "Innovation Engine",
+    description: "Cutting-edge features and experimental capabilities",
+    icon: <Sparkles className="w-8 h-8" />,
+    color: "from-purple-400 to-indigo-500",
+  },
+];
+
 export default function AnimatedSplitLayout() {
   const [activeFeature, setActiveFeature] = useState<number>(0);
 
-  const features: FeatureItem[] = [
-    {
-      id: 0,
-      title: "Lightning Performance",
-      description: "Optimized for maximum speed and efficiency with advanced caching",
-      icon: <Zap className="w-8 h-8" />,
-      color: "from-yellow-400 to-orange-500",
-    },
-    {
-      id: 1,
-      title: "Precision Analytics",
-      description: "Detailed insights and metrics for data-driven decision making",
-      icon: <Target className="w-8 h-8" />,
-      color: "from-red-400 to-pink-500",
-    },
-    {
-      id: 2,
-      title: "Growth Tracking",
-      description: "Monitor progress and growth with comprehensive tracking tools",
-      icon: <TrendingUp className="w-8 h-8" />,
-      color: "from-green-400 to-emerald-500",
-    },
-    {
-      id: 3,
-      title: "Innovation Engine",
-      description: "Cutting-edge features and experimental capabilities",
-      icon: <Sparkles className="w-8 h-8" />,
-      color: "from-purple-400 to-indigo-500",
-    },
-  ];
 
   return (
     <motion.main

@@ -2,38 +2,41 @@
 import { motion } from "framer-motion";
 import { ChevronRight, FileText, Users, Settings, Bell } from "lucide-react";
 
-export default function StandardStack() {
-  const stackItems = [
-    {
-      icon: <FileText className="w-6 h-6" />,
-      title: "Document Management",
-      description: "Organize and manage all your documents in one place",
-      count: "24 files",
-      color: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300",
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Team Collaboration",
-      description: "Work together with your team in real-time",
-      count: "8 members",
-      color: "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-300",
-    },
-    {
-      icon: <Settings className="w-6 h-6" />,
-      title: "System Configuration",
-      description: "Customize settings and preferences",
-      count: "12 settings",
-      color: "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300",
-    },
-    {
-      icon: <Bell className="w-6 h-6" />,
-      title: "Notifications",
-      description: "Stay updated with real-time alerts",
-      count: "3 new",
-      color: "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300",
-    },
-  ];
+const stackItems = [
+  {
+    icon: <FileText className="w-6 h-6" />,
+    title: "Document Management",
+    description: "Organize and manage all your documents in one place",
+    count: "24 files",
+    color: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300",
+  },
+  {
+    icon: <Users className="w-6 h-6" />,
+    title: "Team Collaboration",
+    description: "Work together with your team in real-time",
+    count: "8 members",
+    color:
+      "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-300",
+  },
+  {
+    icon: <Settings className="w-6 h-6" />,
+    title: "System Configuration",
+    description: "Customize settings and preferences",
+    count: "12 settings",
+    color:
+      "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300",
+  },
+  {
+    icon: <Bell className="w-6 h-6" />,
+    title: "Notifications",
+    description: "Stay updated with real-time alerts",
+    count: "3 new",
+    color:
+      "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300",
+  },
+];
 
+export default function StandardStack() {
   return (
     <motion.main
       initial={{ opacity: 0, scale: 0.6 }}
@@ -71,9 +74,11 @@ export default function StandardStack() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-4">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${item.color}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${item.color}`}
+                    >
                       {item.count}
                     </span>
                     <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" />

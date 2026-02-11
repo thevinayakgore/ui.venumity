@@ -52,7 +52,7 @@ function StandardAlert({
         </AlertTitle>
 
         {type !== "list" ? (
-          <AlertDescription>
+          <AlertDescription className="text-foreground/80">
             This is a {type} message for the user.
           </AlertDescription>
         ) : (

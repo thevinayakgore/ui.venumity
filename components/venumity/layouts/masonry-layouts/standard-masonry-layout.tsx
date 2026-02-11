@@ -1,117 +1,151 @@
 "use client";
-import { motion } from "framer-motion";
-import { FileText, Music, Video, File, Book, ImageIcon } from "lucide-react";
+import {
+  Camera,
+  ShieldCheck,
+  Headphones,
+  GraduationCap,
+  Archive,
+  Library,
+  Palette,
+  Megaphone,
+  Mic,
+  BarChart3,
+  Server,
+  Scale,
+} from "lucide-react";
 
 interface MasonryItem {
-  id: number;
   title: string;
   description: string;
   icon: React.ReactNode;
   color: string;
-  height: string;
+  storage: string;
 }
 
+const ITEMS: MasonryItem[] = [
+  {
+    title: "Product Imagery",
+    description:
+      "High-resolution product photos optimized for storefronts, catalogs, and marketing campaigns with consistent aspect ratios.",
+    icon: <Camera className="size-5" />,
+    color: "bg-blue-500",
+    storage: "38 items • 3.1 GB",
+  },
+  {
+    title: "Legal Documents",
+    description:
+      "Contracts, agreements, and compliance files securely organized for quick access during audits or reviews.",
+    icon: <ShieldCheck className="size-5" />,
+    color: "bg-green-500",
+    storage: "212 items • 640 MB",
+  },
+  {
+    title: "Sound Effects",
+    description:
+      "Short audio clips, UI sounds, and ambient effects used across product interactions and micro-animations.",
+    icon: <Headphones className="size-5" />,
+    color: "bg-purple-500",
+    storage: "124 items • 980 MB",
+  },
+  {
+    title: "Training Videos",
+    description:
+      "Recorded onboarding sessions, walkthroughs, and internal tutorials used to train teams across departments worldwide.",
+    icon: <GraduationCap className="size-5" />,
+    color: "bg-orange-500",
+    storage: "27 items • 9.6 GB",
+  },
+  {
+    title: "System Archives",
+    description:
+      "Compressed historical data snapshots stored for long-term reference, rollback, and regulatory requirements.",
+    icon: <Archive className="size-5" />,
+    color: "bg-rose-500",
+    storage: "64 items • 5.2 GB",
+  },
+  {
+    title: "Digital Publications",
+    description:
+      "E-books, whitepapers, and research publications distributed internally and externally.",
+    icon: <Library className="size-5" />,
+    color: "bg-teal-500",
+    storage: "91 items • 1.1 GB",
+  },
+  {
+    title: "Design Libraries",
+    description:
+      "Reusable UI components, icon sets, illustrations, and brand assets shared across multiple products and teams.",
+    icon: <Palette className="size-5" />,
+    color: "bg-indigo-500",
+    storage: "176 items • 4.8 GB",
+  },
+  {
+    title: "Campaign Media",
+    description:
+      "Short-form videos, banners, and creative assets produced for seasonal marketing initiatives.",
+    icon: <Megaphone className="size-5" />,
+    color: "bg-lime-500",
+    storage: "52 items • 2.6 GB",
+  },
+  {
+    title: "Podcast Episodes",
+    description:
+      "Recorded interviews, discussions, and narrative episodes published across multiple streaming platforms.",
+    icon: <Mic className="size-5" />,
+    color: "bg-fuchsia-500",
+    storage: "46 items • 2.1 GB",
+  },
+  {
+    title: "Operational Reports",
+    description:
+      "Daily and weekly system reports capturing performance metrics, error logs, and usage statistics in detail.",
+    icon: <BarChart3 className="size-5" />,
+    color: "bg-amber-500",
+    storage: "305 items • 780 MB",
+  },
+  {
+    title: "Infrastructure Backups",
+    description:
+      "Automated backups synced from production servers to ensure disaster recovery and high availability.",
+    icon: <Server className="size-5" />,
+    color: "bg-sky-500",
+    storage: "41 items • 14.2 GB",
+  },
+  {
+    title: "Compliance Media Vault",
+    description:
+      "Archived media assets retained to meet long-term legal, contractual, and regulatory compliance requirements across regions.",
+    icon: <Scale className="size-5" />,
+    color: "bg-cyan-500",
+    storage: "118 items • 6.9 GB",
+  },
+];
+
 export default function StandardMasonryLayout() {
-  const items: MasonryItem[] = [
-    {
-      id: 1,
-      title: "Image Gallery",
-      description: "Collection of high-resolution images with detailed descriptions and metadata",
-      icon: <ImageIcon className="w-6 h-6" />,
-      color: "bg-blue-100 dark:bg-blue-900/30",
-      height: "h-64",
-    },
-    {
-      id: 2,
-      title: "Documents",
-      description: "Important documents and files organized by category and priority",
-      icon: <FileText className="w-6 h-6" />,
-      color: "bg-green-100 dark:bg-green-900/30",
-      height: "h-48",
-    },
-    {
-      id: 3,
-      title: "Audio Files",
-      description: "Music library with playlists and audio recordings",
-      icon: <Music className="w-6 h-6" />,
-      color: "bg-purple-100 dark:bg-purple-900/30",
-      height: "h-56",
-    },
-    {
-      id: 4,
-      title: "Video Collection",
-      description: "Video tutorials and recorded sessions for training purposes",
-      icon: <Video className="w-6 h-6" />,
-      color: "bg-orange-100 dark:bg-orange-900/30",
-      height: "h-52",
-    },
-    {
-      id: 5,
-      title: "Archives",
-      description: "Compressed files and backups stored for long-term preservation",
-      icon: <File className="w-6 h-6" />,
-      color: "bg-pink-100 dark:bg-pink-900/30",
-      height: "h-44",
-    },
-    {
-      id: 6,
-      title: "E-books",
-      description: "Digital books and reading materials organized by genre",
-      icon: <Book className="w-6 h-6" />,
-      color: "bg-teal-100 dark:bg-teal-900/30",
-      height: "h-60",
-    },
-  ];
 
   return (
-    <motion.main
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center m-auto gap-8 p-4 sm:p-6 lg:p-8 xl:p-10 max-w-7xl w-full h-full"
-    >
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-3">
-              Standard Masonry Layout
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Professional masonry layout with varied content heights and organized sections
-            </p>
-          </div>
-
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className={`${item.color} ${item.height} rounded-xl p-6 break-inside-avoid border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 transition-colors`}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-white dark:bg-gray-700 rounded-lg">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                    {item.title}
-                  </h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {item.id === 1 && "24 items • 2.4 GB"}
-                    {item.id === 2 && "156 items • 480 MB"}
-                    {item.id === 3 && "89 items • 1.2 GB"}
-                    {item.id === 4 && "42 items • 8.7 GB"}
-                    {item.id === 5 && "18 items • 3.6 GB"}
-                    {item.id === 6 && "67 items • 890 MB"}
-                  </span>
-                </div>
+    <main className="flex flex-col items-center justify-center m-auto w-full">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 p-6 overflow-auto w-full">
+        {ITEMS.map((item) => (
+          <div
+            key={item.title}
+            className={`bg-card border-2 rounded-2xl p-6 break-inside-avoid hover:shadow-xl/10 transition-all duration-500 w-full`}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className={`p-2 ${item.color} text-white rounded-md`}>
+                {item.icon}
               </div>
-            ))}
+              <h3 className="text-xl font-medium">{item.title}</h3>
+            </div>
+            <p className="text-sm md:text-base leading-relaxed">
+              {item.description}
+            </p>
+            <div className="mt-4">
+              <span className="text-xs opacity-80">{item.storage}</span>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </motion.main>
+    </main>
   );
 }

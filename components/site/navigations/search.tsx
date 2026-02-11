@@ -315,16 +315,9 @@ export function Search({ isOpen, onClose }: SearchProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          className="fixed inset-0 z-1000"
-          onClick={onClose}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <div className="fixed inset-0 z-1000" onClick={onClose}>
           <motion.div
-            className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-4 bg-foreground/5 backdrop-blur-xl rounded-4xl! shadow-2xl w-full max-w-130"
+            className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-3 bg-foreground/5 backdrop-blur-xl rounded-4xl! shadow-2xl w-full max-w-130"
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0.5, scale: 0.5, y: 500, x: 500 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
@@ -332,7 +325,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             <div className="relative p-3 pt-5 bg-muted border rounded-3xl! shadow-xl/10 w-full h-full">
-              <div className="absolute top-1.5 left-1/4 translate-x-15 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
+              <div className="absolute top-1.5 left-1/4 translate-x-16 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
               <div className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-muted-foreground/30 dark:bg-popover rounded-full h-2 w-1/5" />
               <div className="absolute top-1.5 left-1/2 translate-x-13 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
               <div className="relative flex flex-col items-center justify-between p-3 bg-background border border-foreground/15 rounded-2xl! overflow-hidden w-full h-130">
@@ -359,7 +352,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                       <p className="text-sm">Searching across all content...</p>
                     </div>
                   ) : results.length > 0 ? (
-                    <div className="space-y-2 px-5 py-18 text-start w-full">
+                    <div className="space-y-2 px-3 py-18 text-start w-full">
                       {results.map((result, index) => (
                         <motion.div
                           key={result.id}
@@ -378,7 +371,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                             }}
                             onMouseEnter={() => setSelectedIndex(index)}
                             className={cn(
-                              "flex items-center gap-5 py-3 px-5 mb-2 border border-foreground/10 bg-muted/10 text-foreground rounded-md transition-all duration-200 group w-full",
+                              "flex items-center gap-5 py-3 px-5 border border-foreground/10 bg-muted/10 text-foreground rounded-md transition-all duration-200 group w-full",
                               selectedIndex === index &&
                                 "bg-primary/10 border-primary/50",
                             )}
@@ -445,18 +438,20 @@ export function Search({ isOpen, onClose }: SearchProps) {
                           className={cn(
                             "flex items-center justify-between text-sm px-3 py-2 rounded-md text-foreground/40 border border-transparent transition-all duration-200",
                             selectedIndex === index &&
-                              "bg-primary/10 border-primary/30 text-primary",
+                              "bg-primary/5 border-primary/30 text-primary/90",
                           )}
                         >
                           <span className="flex items-center gap-3">
                             <CircleFadingArrowUp
-                              className={`size-4 ${selectedIndex === index && "rotate-90 scale-120"} transition-all duration-500`}
+                              className={`size-4 ${selectedIndex === index && "rotate-90 scale-110"} transition-all duration-500`}
                             />
                             <div className="flex-1 font-medium truncate min-w-0">
                               {subcategory.name}
                             </div>
                           </span>
-                          <ArrowRight     className={`size-4 ${selectedIndex === index ? "opacity-100 scale-130" : "opacity-60"} transition-all duration-500`} />
+                          <ArrowRight
+                            className={`size-4 ${selectedIndex === index ? "opacity-100 scale-120" : "opacity-60"} transition-all duration-500`}
+                          />
                         </Link>
                       ))}
                     </div>
@@ -508,7 +503,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

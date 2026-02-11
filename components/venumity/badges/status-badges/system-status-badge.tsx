@@ -1,112 +1,162 @@
 "use client";
-import { motion } from "framer-motion";
 import {
   Radio,
   CheckCircle,
   XCircle,
   Clock,
   AlertTriangle,
+  Gift,
 } from "lucide-react";
 import { Loader, HelpCircle, AlertOctagon } from "lucide-react";
 
-// System Status Badge
-function SystemBadge({
-  status = "online",
-  index = 0,
-}: {
-  status?:
-    | "online"
-    | "offline"
-    | "maintenance"
-    | "degraded"
-    | "loading"
-    | "unknown"
-    | "success"
-    | "error";
-  index?: number;
-}) {
-  const statusConfig = {
-    online: {
-      bg: "bg-green-500",
-      text: "Online",
-      textColor: "text-green-500",
-      icon: Radio,
-    },
-    offline: {
-      bg: "bg-zinc-500",
-      text: "Offline",
-      textColor: "text-zinc-500",
-      icon: XCircle,
-    },
-    maintenance: {
-      bg: "bg-yellow-500",
-      text: "Maintenance",
-      textColor: "text-yellow-500",
-      icon: AlertTriangle,
-    },
-    degraded: {
-      bg: "bg-orange-500",
-      text: "Degraded",
-      textColor: "text-orange-500",
-      icon: Clock,
-    },
-    loading: {
-      bg: "bg-blue-500",
-      text: "Loading",
-      textColor: "text-blue-500",
-      icon: Loader,
-    },
-    unknown: {
-      bg: "bg-slate-500",
-      text: "Unknown",
-      textColor: "text-slate-500",
-      icon: HelpCircle,
-    },
-    success: {
-      bg: "bg-pink-500",
-      text: "Success",
-      textColor: "text-pink-500",
-      icon: CheckCircle,
-    },
-    error: {
-      bg: "bg-rose-500",
-      text: "Error",
-      textColor: "text-rose-500",
-      icon: AlertOctagon,
-    },
-  };
+type Status =
+  | "online"
+  | "offline"
+  | "maintenance"
+  | "degraded"
+  | "loading"
+  | "unknown"
+  | "success"
+  | "error";
 
-  const config = statusConfig[status];
-  const Icon = config.icon;
+const defaultStatusConfig: Record<
+  Status,
+  {
+    bg: string;
+    text: string;
+    textColor: string;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  }
+> = {
+  online: {
+    bg: "bg-green-500",
+    text: "Online",
+    textColor: "text-green-500",
+    icon: Radio,
+  },
+  offline: {
+    bg: "bg-zinc-500",
+    text: "Offline",
+    textColor: "text-zinc-500",
+    icon: XCircle,
+  },
+  maintenance: {
+    bg: "bg-yellow-500",
+    text: "Maintenance",
+    textColor: "text-yellow-500",
+    icon: AlertTriangle,
+  },
+  degraded: {
+    bg: "bg-orange-500",
+    text: "Degraded",
+    textColor: "text-orange-500",
+    icon: Clock,
+  },
+  loading: {
+    bg: "bg-blue-500",
+    text: "Loading",
+    textColor: "text-blue-500",
+    icon: Loader,
+  },
+  unknown: {
+    bg: "bg-slate-500",
+    text: "Unknown",
+    textColor: "text-slate-500",
+    icon: HelpCircle,
+  },
+  success: {
+    bg: "bg-pink-500",
+    text: "Success",
+    textColor: "text-pink-500",
+    icon: CheckCircle,
+  },
+  error: {
+    bg: "bg-rose-500",
+    text: "Error",
+    textColor: "text-rose-500",
+    icon: AlertOctagon,
+  },
+};
+
+interface SystemStatusBadgeProps {
+  status: Status;
+  text?: string;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  spin?: boolean;
+  rootClassName?: string;
+  iconColor?: string;
+  textColor?: string;
+}
+
+export function SystemStatusBadge({
+  status,
+  text,
+  icon,
+  spin,
+  rootClassName = "",
+  iconColor,
+  textColor,
+}: SystemStatusBadgeProps) {
+  const defaultConfig = defaultStatusConfig[status];
+
+  const badgeText = text ?? defaultConfig.text;
+  const Icon = icon ?? defaultConfig.icon;
+
+  const baseRootClass =
+    "flex items-center justify-center gap-2 text-sm font-medium text-white p-1 pr-4 rounded-full shadow-lg/5 hover:scale-105 transition-all duration-500";
+
+  const rootClasses = [baseRootClass, defaultConfig.bg, rootClassName]
+    .filter(Boolean)
+    .join(" ");
+  const iconColorClass = iconColor ?? defaultConfig.textColor;
+
+  const iconClasses = [
+    "size-6 p-1 bg-white rounded-full",
+    iconColorClass,
+    spin ? "animate-spin" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const textClass =
+    (textColor ?? defaultConfig.textColor) + "text-white leading-none";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.35, delay: index * 0.12 }}
-      className={`flex items-center justify-center gap-2 text-sm font-medium text-white p-1 rounded-full shadow-lg/5 ${config.bg} hover:scale-105 transition-all duration-500`}
-    >
-      <Icon
-        className={`size-6 p-1 bg-white ${config.textColor} rounded-full ${
-          status === "loading" ? "animate-spin" : ""
-        }`}
-      />
-      <span className="pr-3.5 leading-none">{config.text}</span>
-    </motion.div>
+    <div className={rootClasses}>
+      <Icon className={iconClasses} />
+      <span className={textClass}>{badgeText}</span>
+    </div>
   );
 }
 
-export default function SystemStatusBadge() {
+export default function SystemStatusBadgeDemo() {
   return (
     <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      <SystemBadge status="online" index={0} />
-      <SystemBadge status="offline" index={1} />
-      <SystemBadge status="maintenance" index={2} />
-      <SystemBadge status="degraded" index={3} />
-      <SystemBadge status="loading" index={4} />
-      <SystemBadge status="unknown" index={5} />
-      <SystemBadge status="success" index={6} />
-      <SystemBadge status="error" index={7} />
+      <SystemStatusBadge status="online" />
+      <SystemStatusBadge status="offline" />
+      <SystemStatusBadge status="maintenance" />
+      <SystemStatusBadge status="degraded" />
+      <SystemStatusBadge status="loading" spin />
+      <SystemStatusBadge
+        status="error"
+        text="Critical Failure"
+        icon={XCircle}
+      />
+      <SystemStatusBadge
+        status="success"
+        text="All Good"
+        icon={CheckCircle}
+        rootClassName="bg-white! text-green-500! ring-2 ring-green-500"
+        iconColor="text-green-500"
+      />
+      <SystemStatusBadge
+        status="unknown"
+        text="Mystery"
+        icon={Gift}
+        rootClassName="bg-linear-to-tl from-pink-500 to-fuchsia-300 ring-5 ring-sky-400"
+        iconColor="text-pink-500"
+        textColor="text-pink-500"
+      />
     </main>
   );
 }

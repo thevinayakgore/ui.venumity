@@ -302,7 +302,7 @@ export default function Overview({
                 window.open(liveDemoUrl, "_blank", "noopener,noreferrer");
               }}
               disabled={!currentCode}
-              className="relative group cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/60 hover:text-foreground rounded overflow-hidden"
+              className="relative group cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/60 hover:text-foreground rounded-sm overflow-hidden"
             >
               <span
                 aria-hidden

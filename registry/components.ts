@@ -92,12 +92,11 @@ export const COMPONENTS = createComponents([
         tags: ["status", "system", "connection", "priority", "user"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
-          { itemName: "Basic Status Badge" },
-          { itemName: "Connection Status Badge" },
-          { itemName: "Priority Status Badge" },
-          { itemName: "Progress Status Badge" },
-          { itemName: "System Status Badge" },
+          { itemName: "Basic Badge" },
           { itemName: "User Status Badge" },
+          { itemName: "System Status Badge" },
+          { itemName: "Priority Status Badge" },
+          { itemName: "Connection Status Badge" },
         ],
       },
     ],
@@ -210,12 +209,189 @@ export const COMPONENTS = createComponents([
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
+        name: "Checkout Forms",
+        description:
+          "Conversion-focused checkout form layouts designed to streamline the purchase flow. These components reduce friction, support multiple steps and layouts, and improve completion rates across e-commerce and SaaS payment experiences.",
+        tags: ["checkout", "forms", "payment", "conversion", "ecommerce", "ux"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Basic Checkout Form" },
+          { itemName: "Compact Checkout Form" },
+          { itemName: "Floating Checkout Form" },
+          { itemName: "Multi Step Checkout Form" },
+          { itemName: "Split Screen Checkout Form" },
+        ],
+      },
+      {
+        name: "Discount Badges",
+        description:
+          "Eye-catching discount and offer badge components that highlight promotions and drive urgency. Ideal for product listings and landing pages, these badges improve offer visibility and boost conversion rates.",
+        tags: [
+          "discount",
+          "badge",
+          "offer",
+          "promotion",
+          "pricing",
+          "ecommerce",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Simple Discount Badge" },
+          { itemName: "Minimal Discount Badge" },
+          { itemName: "Countdown Discount Badge" },
+          { itemName: "Collapse Discount Badge" },
+          { itemName: "Animated Discount Badge" },
+        ],
+      },
+      {
+        name: "Offer Banners",
+        description:
+          "Promotional banner components designed to announce offers, campaigns, and limited-time deals. These banners balance visibility with usability and are optimized for conversions and user engagement.",
+        tags: ["banner", "promotion", "offer", "marketing", "cta", "ecommerce"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Simple Offer Banner" },
+          { itemName: "Countdown Offer Banner" },
+          { itemName: "Interactive Offer Banner" },
+          { itemName: "Scrolling Offer Banner" },
+          { itemName: "Split Offer Banner" },
+        ],
+      },
+      {
+        name: "Payment Options",
+        description:
+          "Flexible payment selection components that present multiple payment methods clearly and securely. These layouts improve trust, reduce checkout abandonment, and support modern payment flows.",
+        tags: [
+          "payment",
+          "checkout",
+          "billing",
+          "methods",
+          "ecommerce",
+          "finance",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Minimal Payment Options" },
+          { itemName: "Payment Methods Cards" },
+          { itemName: "Payment Methods Selector" },
+          { itemName: "Saved Cards Payment Options" },
+          { itemName: "Split Payment Options" },
+        ],
+      },
+      {
+        name: "Pricing Cards",
+        description:
+          "Structured pricing card components that communicate plan value clearly. Designed for SaaS and subscription products, these cards highlight features, tiers, and CTAs to maximize plan selection.",
+        tags: [
+          "pricing",
+          "plans",
+          "subscription",
+          "saas",
+          "comparison",
+          "cards",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Simple Pricing Card" },
+          { itemName: "Minimal Pricing Card" },
+          { itemName: "Feature Comparison Pricing" },
+          { itemName: "Tiered Pricing Card" },
+          { itemName: "Toggle Pricing Card" },
+        ],
+      },
+      {
         name: "Pricing Tables",
         description:
           "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups. These professional components feature clear value propositions, strategic CTAs, and responsive designs that outperform standard pricing pages—driving measurable business impact.",
-        tags: ["pricing", "comparison", "subscription", "cta", "features"],
+        tags: ["pricing", "comparison", "subscription", "features"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Pricing Table 1" }],
+      },
+      {
+        name: "Product Cards",
+        description:
+          "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
+        tags: ["product", "ecommerce", "card", "catalog"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Minimal Product Card" },
+          { itemName: "Standard Product Card" },
+          { itemName: "Product Card 1" },
+          { itemName: "Product Card 2" },
+          { itemName: "Status Product Card" },
+          { itemName: "Variants Product Card" },
+          { itemName: "Quick Actions Product Card" },
+        ],
+      },
+      {
+        name: "Product Display",
+        description:
+          "High-impact product display sections built to showcase product details, visuals, and key selling points. These layouts enhance product storytelling and support informed purchasing decisions.",
+        tags: ["product", "showcase", "details", "ecommerce", "ui", "display"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Compact Product Display" },
+          { itemName: "Minimal Product Display" },
+          { itemName: "Interactive Product Display" },
+          { itemName: "Tech Product Display" },
+          { itemName: "Luxury Product Display" },
+        ],
+      },
+      {
+        name: "Product Grids",
+        description:
+          "Responsive product grid layouts optimized for browsing large catalogs. These grids support filtering, highlighting, and masonry styles to improve discovery and visual balance.",
+        tags: [
+          "product-grid",
+          "catalog",
+          "listing",
+          "ecommerce",
+          "responsive",
+          "layout",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Minimal Product Grid" },
+          { itemName: "Standard Product Grid" },
+          { itemName: "Filters Product Grid" },
+          { itemName: "Featured Product Grid" },
+          { itemName: "Masonry Product Grid" },
+        ],
+      },
+      {
+        name: "Shopping Carts",
+        description:
+          "Shopping cart components that manage product selection, quantities, and checkout progression. These carts improve clarity, reduce errors, and guide users smoothly toward purchase completion.",
+        tags: ["cart", "shopping", "checkout", "ecommerce", "order", "summary"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Compact Shopping Cart" },
+          { itemName: "Progress Shopping Cart" },
+          { itemName: "Standard Shopping Cart" },
+          { itemName: "Sidebar Shopping Cart" },
+          { itemName: "Recommendations Shopping Cart" },
+        ],
+      },
+      {
+        name: "Wishlist Buttons",
+        description:
+          "Interactive wishlist button components that allow users to save products for later. These UI elements encourage return visits and improve engagement in e-commerce experiences.",
+        tags: [
+          "wishlist",
+          "favorites",
+          "like",
+          "ecommerce",
+          "interaction",
+          "ui",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Animated Wishlist Button" },
+          { itemName: "Standard Wishlist Button" },
+          { itemName: "Floating Wishlist Button" },
+          { itemName: "Tooltip Wishlist Button" },
+          { itemName: "Toggle Wishlist Button" },
+        ],
       },
     ],
   },
@@ -233,10 +409,8 @@ export const COMPONENTS = createComponents([
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
           { itemName: "Standard Alert" },
-          { itemName: "Banner Alert" },
           { itemName: "Action Alert" },
-          { itemName: "Animated Alert" },
-          { itemName: "Notification Bell" },
+          { itemName: "Modal Alert" },
         ],
       },
       {
@@ -246,14 +420,6 @@ export const COMPONENTS = createComponents([
         tags: ["popup", "modal", "overlay", "interactive"],
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [{ itemName: "Popup 1" }, { itemName: "Popup 2" }],
-      },
-      {
-        name: "Modal Alerts",
-        description:
-          "Ensure critical actions with professional modal alerts that demand user attention for important decisions. These smart dialog components prevent errors, confirm high-stakes operations, and guide users through complex workflows with confidence.",
-        tags: ["modal", "critical", "confirmation", "blocking"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [{ itemName: "Standard Modal Alert" }],
       },
       {
         name: "Snackbars",
@@ -286,14 +452,6 @@ export const COMPONENTS = createComponents([
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
-        name: "Cards",
-        description:
-          "Elevate content presentation with modular card layouts that organize information effectively. These professional container components improve content scanning, enhance visual hierarchy, and increase engagement across dashboard interfaces and content platforms.",
-        tags: ["card", "dashboard", "content", "layout", "responsive"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [{ itemName: "Interactive Card" }, { itemName: "Luxury Card" }],
-      },
-      {
         name: "Containers",
         description:
           "Establish visual consistency with professional container systems that structure content with precision. These smart layout concepts ensure responsive behavior across devices while maintaining brand alignment and improving content readability.",
@@ -306,18 +464,188 @@ export const COMPONENTS = createComponents([
         ],
       },
       {
+        name: "Grid Systems",
+        description:
+          "Grid-based masonry layouts that arrange variable-height content into balanced columns. Ideal for galleries, feeds, and card-heavy interfaces, these layouts maximize space usage while staying fully responsive across screen sizes.",
+
+        tags: ["masonry", "grid", "layout", "gallery", "cards"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Basic Grid" },
+          { itemName: "Standard Grid" },
+          { itemName: "Animated Grid" },
+        ],
+      },
+      {
+        name: "Masonry Layouts",
+        description:
+          "Grid-based masonry layouts that arrange variable-height content into balanced columns. Ideal for galleries, feeds, and card-heavy interfaces, these layouts maximize space usage while staying fully responsive across screen sizes.",
+
+        tags: ["masonry", "grid", "layout", "gallery", "cards"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Basic Masonry Layout" },
+          { itemName: "Standard Masonry Layout" },
+          { itemName: "Masonry Image Gallery" },
+        ],
+      },
+      {
         name: "Sidebars",
         description:
           "Optimize navigation efficiency with intelligent sidebar systems that adapt to user workflows. These featured layout components provide contextual navigation, reduce cognitive load, and improve task completion rates in complex applications.",
         tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
-        techs: [
-          "Next.js",
-          "Tailwind CSS",
-          "TypeScript",
-          "Shadcn UI",
-          "Lucide React",
-        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Sidebar 1" }],
+      },
+      {
+        name: "Split Layouts",
+        description:
+          "Responsive split-screen layouts designed to present parallel content side by side. Ideal for comparisons, onboarding flows, dashboards, and feature showcases, these layouts adapt seamlessly across devices while maintaining clear visual balance and hierarchy.",
+        tags: [
+          "split-layout",
+          "two-column",
+          "responsive",
+          "comparison",
+          "dashboard",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Basic Split Layout" },
+          { itemName: "Standard Split Layout" },
+          { itemName: "Animated Split Layout" },
+          { itemName: "Premium Split Layout" },
+        ],
+      },
+      {
+        name: "Stacks",
+        description:
+          "Vertical stacking layouts that organize content in a clear top-to-bottom flow. Perfect for feeds, forms, cards, and content-heavy sections, these stack systems ensure consistent spacing, alignment, and smooth responsiveness across screen sizes.",
+        tags: [
+          "stack",
+          "vertical-layout",
+          "spacing",
+          "content-flow",
+          "responsive",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Basic Stack" },
+          { itemName: "Standard Stack" },
+          { itemName: "Moderate Stack" },
+          { itemName: "Complex Stack" },
+          { itemName: "Animated Stack" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Loaders",
+    icon: "loader",
+    tags: [
+      "spinner",
+      "loading",
+      "progress-indicator",
+      "ui-element",
+      "animation",
+    ],
+    techs: ["React", "TypeScript", "Tailwind CSS"],
+    subcategories: [
+      {
+        name: "Button Loaders",
+        description:
+          "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations. These smart loading indicators enhance user confidence, reduce premature clicking, and create professional experiences during asynchronous processes.",
+        tags: ["button", "loader", "loading", "async", "feedback"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Basic Button Loader" },
+          { itemName: "Outline Button Loader" },
+          { itemName: "Animated Button Loader" },
+          { itemName: "Shiny Button Loader" },
+        ],
+      },
+      {
+        name: "Grid Loaders",
+        description:
+          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
+        tags: ["pulse", "loader", "activity", "animation", "waiting"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [{ itemName: "Grid Loader 1" }],
+      },
+      {
+        name: "Inline Loaders",
+        description:
+          "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption. These smart micro-loading components provide contextual feedback within content streams, forms, and data tables—perfect for real-time applications.",
+        tags: ["inline", "loader", "text", "micro", "compact"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
+        items: [
+          { itemName: "Basic Inline Loader" },
+          { itemName: "Pulse Inline Loader" },
+          { itemName: "Text Inline Loader" },
+        ],
+      },
+      {
+        name: "Page Loaders",
+        description:
+          "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
+        tags: ["page", "loader", "fullscreen", "route", "blocking"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Centered Page Loader" },
+          { itemName: "Full Page Loader" },
+          { itemName: "Logo Page Loader" },
+        ],
+      },
+      {
+        name: "Progress Loaders",
+        description:
+          "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
+        tags: ["page", "loader", "fullscreen", "route", "blocking"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Linear Progress Loader" },
+          { itemName: "Circular Progress Loader" },
+          { itemName: "Progress Loader 2" },
+        ],
+      },
+      {
+        name: "Skeletons",
+        description:
+          "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
+        tags: ["page", "loader", "fullscreen", "route", "blocking"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Basic Skeleton Loader" },
+          { itemName: "Card Skeleton Loader" },
+          { itemName: "Profile Skeleton Loader" },
+          { itemName: "Table Skeleton Loader" },
+          { itemName: "Dashboard Skeleton Loader" },
+        ],
+      },
+      {
+        name: "Spinners",
+        description:
+          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
+        tags: ["pulse", "loader", "activity", "animation", "waiting"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Basic Spinner" },
+          { itemName: "Ring Spinner" },
+          { itemName: "Gradient Spinner" },
+        ],
+      },
+      {
+        name: "Wave Loaders",
+        description:
+          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
+        tags: ["pulse", "loader", "activity", "animation", "waiting"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Basic Wave Loader" },
+          { itemName: "Pulse Wave Loader" },
+          { itemName: "Circle Wave Loader" },
+          { itemName: "Gradient Wave Loader" },
+          { itemName: "Premium Wave Loader" },
+        ],
       },
     ],
   },
@@ -334,14 +662,6 @@ export const COMPONENTS = createComponents([
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
-        name: "Footers",
-        description:
-          "Maximize site engagement with comprehensive footer systems that improve navigation and conversion. These professional footer components enhance SEO through structured links, build trust with legal information, and capture leads through strategic CTAs.",
-        tags: ["footer", "sitemap", "bottom", "legal", "branding"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [{ itemName: "Standard Footer" }],
-      },
-      {
         name: "Floating Menus",
         description:
           "Accelerate user actions with dynamic floating menus that provide instant access to key functions. These smart navigation components improve productivity metrics, reduce interaction cost, and create memorable user experiences through innovative interaction patterns.",
@@ -352,6 +672,14 @@ export const COMPONENTS = createComponents([
           { itemName: "Speed Dial Menu" },
           { itemName: "Radial Menu" },
         ],
+      },
+      {
+        name: "Footers",
+        description:
+          "Maximize site engagement with comprehensive footer systems that improve navigation and conversion. These professional footer components enhance SEO through structured links, build trust with legal information, and capture leads through strategic CTAs.",
+        tags: ["footer", "sitemap", "bottom", "legal", "branding"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [{ itemName: "Standard Footer" }],
       },
       {
         name: "Menu",
@@ -373,6 +701,48 @@ export const COMPONENTS = createComponents([
         tags: ["navbar", "header", "navigation", "top", "branding"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Navbar" }],
+      },
+      {
+        name: "Pagination",
+        description:
+          "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
+        tags: [
+          "pagination",
+          "navigation",
+          "paging",
+          "tables",
+          "lists",
+          "infinite-scroll",
+          "ui",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [
+          { itemName: "Basic Pagination" },
+          { itemName: "Compact Pagination" },
+          { itemName: "Table Pagination" },
+          { itemName: "Load More Pagination" },
+          { itemName: "Infinite Scroll" },
+        ],
+      },
+      {
+        name: "Tabs",
+        description:
+          "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
+        tags: [
+          "pagination",
+          "navigation",
+          "paging",
+          "tables",
+          "lists",
+          "infinite-scroll",
+          "ui",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+        items: [
+          { itemName: "Basic Tab" },
+          { itemName: "Pills Tab" },
+          { itemName: "Scrollable Tab" },
+        ],
       },
     ],
   },
@@ -414,94 +784,6 @@ export const COMPONENTS = createComponents([
           { itemName: "Standard Testimonial" },
           { itemName: "Glowing Testimonial" },
           { itemName: "Carousel Testimonial" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Spinners",
-    icon: "loader",
-    tags: [
-      "spinner",
-      "loading",
-      "progress-indicator",
-      "ui-element",
-      "animation",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
-    subcategories: [
-      {
-        name: "Button Loaders",
-        description:
-          "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations. These smart loading indicators enhance user confidence, reduce premature clicking, and create professional experiences during asynchronous processes.",
-        tags: ["button", "loader", "loading", "async", "feedback"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Button Loader" },
-          { itemName: "Outline Button Loader" },
-          { itemName: "Animated Button Loader" },
-          { itemName: "Shiny Button Loader" },
-        ],
-      },
-      {
-        name: "Custom Loaders",
-        description:
-          "Enhance brand experience with distinctive custom loaders that reflect your application's personality. These professional loading animations maintain user engagement during wait times, improve perceived speed, and reinforce visual identity through thoughtful motion design.",
-        tags: ["loader", "animation", "progress", "custom", "ui"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Loader" },
-          { itemName: "Simple Round Loader" },
-          { itemName: "Gradient Loader" },
-          { itemName: "Grid Loader" },
-          { itemName: "Wave Loader" },
-        ],
-      },
-      {
-        name: "Inline Loaders",
-        description:
-          "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption. These smart micro-loading components provide contextual feedback within content streams, forms, and data tables—perfect for real-time applications.",
-        tags: ["inline", "loader", "text", "micro", "compact"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Inline Loader" },
-          { itemName: "Pulse Inline Loader" },
-          { itemName: "Text Inline Loader" },
-        ],
-      },
-      {
-        name: "Page Loaders",
-        description:
-          "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
-        tags: ["page", "loader", "fullscreen", "route", "blocking"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Centered Page Loader" },
-          { itemName: "Full Page Loader" },
-          { itemName: "Logo Page Loader" },
-        ],
-      },
-      {
-        name: "Progress Bars",
-        description:
-          "Increase completion rates with visual progress indicators that motivate users through multi-step processes. These smart progress components reduce abandonment, provide clear expectations, and enhance satisfaction during onboarding, uploads, and complex workflows.",
-        tags: ["progress", "loading", "status", "completion", "linear"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Progress Bar" },
-          { itemName: "Animated Progress Bar" },
-          { itemName: "Segmented Progress Bar" },
-        ],
-      },
-      {
-        name: "Pulse Loaders",
-        description:
-          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
-        tags: ["pulse", "loader", "activity", "animation", "waiting"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Pulse Loader" },
-          { itemName: "Multi Pulse Loader" },
         ],
       },
     ],

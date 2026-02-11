@@ -1,87 +1,98 @@
 "use client";
-import { motion } from "framer-motion";
 import {
   SeparatorHorizontal,
   TrendingDown,
   Flag,
   TrendingUp,
-  CheckCircle,
-  Info,
-  Eye,
   Ban,
-  ShieldAlert,
+  type LucideIcon,
 } from "lucide-react";
 
-// Priority Status Badge
-function PriorityBadge({
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
+export type PriorityStatusBadgeProps = {
+  priority?: "low" | "medium" | "high" | "critical" | "blocked";
+  text?: string;
+  color?: string;
+  icon?: LucideIcon;
+  outline?: boolean;
+  className?: string;
+};
+
+export function PriorityBadge({
   priority = "medium",
-  index = 0,
-}: {
-  priority?:
-    | "low"
-    | "medium"
-    | "high"
-    | "critical"
-    | "blocked"
-    | "urgent"
-    | "review"
-    | "info"
-    | "resolved";
-  index?: number;
-}) {
-  const priorityConfig = {
-    low: { color: "bg-orange-500", text: "Low", icon: TrendingDown },
+  text,
+  color,
+  icon,
+  outline,
+  className,
+}: PriorityStatusBadgeProps) {
+  const priorityConfig: Record<
+    "low" | "medium" | "high" | "critical" | "blocked",
+    { color: string; text: string; icon: LucideIcon; outline?: boolean }
+  > = {
+    low: {
+      color: "bg-orange-500",
+      text: "Low",
+      icon: TrendingDown,
+      outline: true,
+    },
     medium: {
       color: "bg-yellow-400",
       text: "Medium",
       icon: SeparatorHorizontal,
     },
     high: { color: "bg-green-500", text: "High", icon: TrendingUp },
-    critical: { color: "bg-red-500", text: "Critical", icon: Flag },
+    critical: {
+      color: "bg-red-500",
+      text: "Critical",
+      icon: Flag,
+      outline: true,
+    },
     blocked: { color: "bg-zinc-500", text: "Blocked", icon: Ban },
-    urgent: { color: "bg-purple-500", text: "Urgent", icon: ShieldAlert },
-    review: { color: "bg-cyan-500", text: "Review", icon: Eye },
-    info: { color: "bg-blue-500", text: "Info", icon: Info },
-    resolved: { color: "bg-pink-500", text: "Resolved", icon: CheckCircle },
   };
 
   const config = priorityConfig[priority];
-  const Icon = config.icon;
+
+  const Icon = icon ?? config.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.35, delay: index * 0.12 }}
-      className="flex items-center gap-3 bg-muted rounded-sm shadow-lg/5 px-3 py-2 border"
+    <div
+      className={cn("p-0", className)}
     >
-      <div className="flex items-center gap-2">
+      <Badge
+        variant={(outline ?? config.outline) ? "outline" : "secondary"}
+        className={cn(
+          "flex items-center gap-2 px-3 py-2 shadow-lg/5 rounded-sm",
+          outline && "bg-accent dark:bg-popover",
+        )}
+      >
         <Icon className="size-4" />
-        <span className="font-medium text-sm leading-none">{config.text}</span>
-      </div>
-      <div className={`size-3 ${config.color} rounded-full`} />
-    </motion.div>
+        <span className="font-medium text-sm leading-none">
+          {text ?? config.text}
+        </span>
+
+        {color && <span className={cn(`ml-1 size-3 rounded-full`, color)} />}
+      </Badge>
+    </div>
   );
 }
 
-export default function PriorityStatusBadge() {
+export default function PriorityStatusBadgeDemo() {
   return (
     <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      {(
-        [
-          "low",
-          "medium",
-          "high",
-          "critical",
-          "blocked",
-          "urgent",
-          "review",
-          "info",
-          "resolved",
-        ] as const
-      ).map((priority, index) => (
-        <PriorityBadge key={priority} priority={priority} index={index} />
-      ))}
+      <PriorityBadge priority="high" text="High" color="bg-emerald-500" />
+      <PriorityBadge
+        priority="medium"
+        text="Medium"
+        color="bg-purple-500"
+        icon={Flag}
+        outline
+      />
+      <PriorityBadge priority="low" text="Low" />
+      <PriorityBadge priority="critical" text="Critical" />
+      <PriorityBadge priority="blocked" />
     </main>
   );
 }
