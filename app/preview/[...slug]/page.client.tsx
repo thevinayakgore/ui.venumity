@@ -1,3 +1,4 @@
+// app/preview/[...slug]/page.client.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";

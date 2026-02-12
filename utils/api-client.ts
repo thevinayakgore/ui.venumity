@@ -11,6 +11,7 @@ export async function fetchComponentCode(category: string, componentPath: string
     }
     
     const data = await response.json();
+    // Return the EXACT code from the API without any processing
     return data.code || null;
   } catch (error) {
     console.error('Error fetching component code:', error);
@@ -18,7 +19,6 @@ export async function fetchComponentCode(category: string, componentPath: string
   }
 }
 
-// NEW: Fetch all components in a subcategory
 export async function fetchSubcategoryComponents(category: string, subcategory: string): Promise<Array<{name: string, code: string}> | null> {
   try {
     const response = await fetch(`/api/components/${category}/${subcategory}`);
@@ -31,6 +31,7 @@ export async function fetchSubcategoryComponents(category: string, subcategory: 
     }
     
     const data = await response.json();
+    // Return components with EXACT code from the API
     return data.components || [];
   } catch (error) {
     console.error('Error fetching subcategory components:', error);

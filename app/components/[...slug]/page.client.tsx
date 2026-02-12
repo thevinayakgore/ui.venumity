@@ -1,3 +1,4 @@
+// app/components/[...slug]/page.client.tsx
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import { fetchComponentCode } from "@/utils/api-client";
@@ -23,10 +24,9 @@ interface ComponentItemData {
 interface PageClientProps {
   component: ComponentItemData | null;
   slugPath: string;
-  subcategoryData?: ComponentSubcategory | null; // NEW: Added subcategoryData prop
+  subcategoryData?: ComponentSubcategory | null;
 }
 
-// Helper function to get all items in a subcategory
 function getSubcategoryItems(
   categorySlug: string,
   subcategorySlug: string,
@@ -66,7 +66,6 @@ export default function PageClient({
   const [loading, setLoading] = useState(true);
   const [isSubcategoryPage, setIsSubcategoryPage] = useState(false);
 
-  // Check if this is a subcategory page (2 parts) or component page (3+ parts)
   const pathInfo = useMemo(() => {
     const parts = slugPath.split("/").filter(Boolean);
     return {
@@ -97,6 +96,7 @@ export default function PageClient({
                 toKebabCase(item.category),
                 `${toKebabCase(item.subcategory || "")}/${toKebabCase(item.itemName)}`,
               );
+              // Store EXACT code as received from API
               return { ...item, code: code || undefined };
             } catch {
               return { ...item, code: undefined };
@@ -113,6 +113,7 @@ export default function PageClient({
             `${toKebabCase(component.subcategory || "")}/${toKebabCase(component.itemName)}`,
           );
 
+          // Store EXACT code as received from API without any modifications
           setComponentData({ ...component, code: rawCode || undefined });
         }
       } catch (error) {
@@ -140,7 +141,6 @@ export default function PageClient({
     );
   }
 
-  // In the subcategory page section, update the header to show tags/techs:
   if (isSubcategoryPage && subcategoryItemsWithCode.length > 0) {
     return (
       <main className="w-full">
@@ -177,14 +177,13 @@ export default function PageClient({
             {pathInfo.category}
           </p>
           {subcategoryData?.description && (
-            <p className="text-base  font-normal text-muted-foreground mt-3">
+            <p className="text-base font-normal text-muted-foreground mt-3">
               {subcategoryData.description}
             </p>
           )}
 
           {subcategoryData?.tags && (
             <div className="flex flex-wrap gap-2 mt-4">
-              {/* Tags */}
               {subcategoryData.tags?.map((tag) => (
                 <Badge
                   key={tag}
@@ -216,7 +215,7 @@ export default function PageClient({
                   tags={item.tags || []}
                   techs={item.techs || []}
                   youtubeUrl={item.video}
-                  code={item.code}
+                  code={item.code} // Pass EXACT code without modifications
                   slugPath={itemSlugPath}
                   subcategory={item.subcategory}
                   isInListView={true}
@@ -240,7 +239,7 @@ export default function PageClient({
             {pathInfo.subcategory.replace(/-/g, " ")}
           </h1>
           {subcategoryData?.description && (
-            <p className="text-base  font-normal text-muted-foreground mt-3">
+            <p className="text-base font-normal text-muted-foreground mt-3">
               {subcategoryData.description}
             </p>
           )}
@@ -275,7 +274,7 @@ export default function PageClient({
                 tags={componentData.tags || []}
                 techs={componentData.techs || []}
                 youtubeUrl={componentData.video}
-                code={componentData.code}
+                code={componentData.code} // Pass EXACT code without modifications
                 slugPath={slugPath}
                 subcategory={subcategory || componentData.subcategory}
                 isInListView={false}

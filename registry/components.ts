@@ -1,3 +1,4 @@
+// registry/components.ts
 import { createComponents } from "./component-utils";
 
 export const COMPONENTS = createComponents([

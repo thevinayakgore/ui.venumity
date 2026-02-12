@@ -1,3 +1,4 @@
+// registry/component-utils.ts
 import { toKebabCase } from "@/utils/slug-kebab";
 import * as LucideIcons from "lucide-react";
 import type { LucideIcon } from "lucide-react";

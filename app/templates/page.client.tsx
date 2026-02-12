@@ -216,7 +216,7 @@ export default function PageClient() {
                         <Button
                           size="sm"
                           variant="secondary"
-                          className={`relative group flex items-center gap-1 p-4.5! text-sm uppercase font-semibold border-white ${template.price === 0 ? "group-hover/btn:bg-green-500! group-hover/btn:border-green-500!" : "group-hover/btn:bg-pink-500! group-hover/btn:border-pink-500!"} bg-foreground! text-secondary rounded hover:text-white! shadow-none! overflow-hidden transition-all duration-500`}
+                          className={`relative group flex items-center gap-1 p-4.5! text-sm cursor-pointer uppercase font-semibold border-white ${template.price === 0 ? "group-hover/btn:bg-green-500! group-hover/btn:border-green-500!" : "group-hover/btn:bg-pink-500! group-hover/btn:border-pink-500!"} bg-foreground! text-secondary rounded-sm hover:text-white! shadow-none! overflow-hidden transition-all duration-500`}
                         >
                           <span className="vnm-shimmer-btn bg-linear-to-l from-transparent via-white/70! to-transparent absolute left-0 top-0 bottom-0 w-32 pointer-events-none opacity-0! group-hover/btn:opacity-50!" />
                           <span className="text-base font-bold leading-none">
@@ -306,7 +306,7 @@ export function PriceToggle({ checked, onChange }: PriceToggleProps) {
   }
 
   return (
-    <label className="relative inline-flex items-center cursor-pointer  uppercase">
+    <label className="relative inline-flex items-center cursor-pointer uppercase">
       <input
         type="checkbox"
         checked={checked}

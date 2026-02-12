@@ -122,7 +122,7 @@ export default function Overview({ template }: { template: TemplateData }) {
                   damping: 30,
                   delay: 0.15,
                 }}
-                className={`absolute -bottom-5 -z-10 transform-gpu w-29 h-10 mb-5 border ${template.price === 0 ? "bg-green-500/10 border-green-500/50" : "bg-primary/10 border-primary/50"} leading-none rounded-sm`}
+                className={`absolute -bottom-5 -z-10 transform-gpu inset-shadow-sm inset-shadow-green-500/40 w-27 h-10 mb-5 border ${template.price === 0 ? "bg-green-500/10 border-green-500/50" : "bg-primary/10 border-primary/50"} leading-none rounded-sm`}
                 style={{
                   left: activeTab === PREVIEW_TAB ? 0 : 129,
                 }}
@@ -130,7 +130,7 @@ export default function Overview({ template }: { template: TemplateData }) {
               <motion.span
                 layout
                 transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                className={`absolute -bottom-6 w-29 h-1.5 rounded-full ${template.price === 0 ? "bg-green-500" : "bg-primary"}`}
+                className={`absolute -bottom-6 w-27 h-1.5 rounded-full ${template.price === 0 ? "bg-green-500" : "bg-primary"}`}
                 style={{
                   left:
                     activeTab === PREVIEW_TAB
@@ -147,7 +147,7 @@ export default function Overview({ template }: { template: TemplateData }) {
                   <Button
                     variant="secondary"
                     size="lg"
-                    className={`gap-2 cursor-pointer border bg-foreground/5 rounded group hover:shadow-lg ${template.price === 0 ? "hover:shadow-green-500/20" : "hover:shadow-primary/20"} transition-all duration-500`}
+                    className={`gap-2 cursor-pointer border bg-foreground/5 rounded-sm group hover:shadow-lg ${template.price === 0 ? "hover:shadow-green-500/20" : "hover:shadow-primary/20"} transition-all duration-500`}
                   >
                     <Fullscreen className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
                     Live Demo
@@ -162,9 +162,9 @@ export default function Overview({ template }: { template: TemplateData }) {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className={`relative cursor-pointer  group flex items-center gap-1 text-sm uppercase font-semibold hover:shadow-lg ${template.price === 0 ? "hover:bg-green-500 shadow-green-500/30" : "hover:bg-primary shadow-primary/30"} bg-foreground text-secondary rounded hover:text-white overflow-hidden transition-all duration-500`}
+                  className={`relative cursor-pointer group flex items-center gap-1 text-sm uppercase font-semibold hover:shadow-lg ${template.price === 0 ? "hover:bg-green-500 shadow-green-500/30" : "hover:bg-primary shadow-primary/30"} bg-foreground text-secondary rounded-sm hover:text-white overflow-hidden transition-all duration-500`}
                 >
-                  <span className="vnm-shimmer-btn bg-linear-to-l from-transparent via-white/70! to-transparent absolute left-0 top-0 bottom-0 w-32 pointer-events-none opacity-0! group-hover:opacity-50!" />
+                  <span className="vnm-shimmer-btn bg-linear-to-l from-transparent via-white/70! to-transparent absolute left-0 top-0 bottom-0 opacity-0! group-hover:opacity-50!" />
                   <span className="text-lg leading-none">
                     ${template.price}
                   </span>{" "}

@@ -20,7 +20,7 @@ interface ExtendedOverviewProps {
   code?: string;
   slugPath?: string;
   subcategory?: string;
-  isInListView?: boolean; // NEW: Optional prop to indicate list view
+  isInListView?: boolean;
 }
 
 type TabType = "preview" | "code" | "video";
@@ -28,56 +28,6 @@ type TabType = "preview" | "code" | "video";
 const PREVIEW_TAB: TabType = "preview";
 const CODE_TAB: TabType = "code";
 const VIDEO_TAB: TabType = "video";
-
-// Simple TS → JS converter
-const convertTsxToJsx = (tsxCode: string): string => {
-  if (!tsxCode?.trim()) return "";
-
-  let code = tsxCode;
-
-  // Remove type imports
-  code = code.replace(
-    /import\s+type\s+{[^}]+}\s+from\s+['"][^'"]+['"];?\n?/g,
-    "",
-  );
-
-  // Remove interfaces
-  code = code.replace(/interface\s+\w+\s*{[\s\S]*?}\n?/g, "");
-
-  // Remove type declarations
-  code = code.replace(/type\s+\w+\s*=\s*[\s\S]*?;\n?/g, "");
-
-  // Remove generic type parameters from function calls
-  code = code.replace(/<\s*[A-Za-z0-9_,\s]+\s*>(?=\s*\()/g, "");
-
-  // Remove React component types
-  code = code.replace(
-    /:\s*React\.(FC|FunctionComponent|ComponentType)<[^>]*>/g,
-    "",
-  );
-  code = code.replace(/:\s*React\.(FC|FunctionComponent|ComponentType)/g, "");
-
-  // Remove type annotations
-  code = code.replace(/:\s*[A-Za-z0-9_<>\[\]|{},\s]+(?=\s*[=,)\]}])/g, "");
-
-  // Remove type assertions
-  code = code.replace(/\s+as\s+[A-Za-z0-9_<>\[\]|{},\s]+/g, "");
-
-  // Remove non-null assertions
-  code = code.replace(/!\./g, ".");
-  code = code.replace(/!;/g, ";");
-
-  // Clean up extra newlines
-  code = code.replace(/\n{3,}/g, "\n\n");
-
-  // Trim whitespace from each line
-  code = code
-    .split("\n")
-    .map((line) => line.trimEnd())
-    .join("\n");
-
-  return code.trim();
-};
 
 export default function Overview({
   itemName,
@@ -89,7 +39,6 @@ export default function Overview({
   subcategory,
 }: ExtendedOverviewProps) {
   const [activeTab, setActiveTab] = useState<TabType>(PREVIEW_TAB);
-  const [selectedLanguage, setSelectedLanguage] = useState<"ts" | "js">("ts");
 
   const tabs = useMemo<TabType[]>(() => {
     const base: TabType[] = [PREVIEW_TAB, CODE_TAB];
@@ -108,17 +57,14 @@ export default function Overview({
     [itemName, componentName],
   );
 
-  // Automatically determine subcategory from slugPath if not provided
   const resolvedSubcategory = useMemo(() => {
     if (subcategory) return subcategory;
 
-    // Extract from slug path: /feedbacks/alert/standard-alert -> "alert"
     const parts = slugPath.split("/").filter(Boolean);
     if (parts.length >= 2) {
       return parts[1];
     }
 
-    // Fallback: try to guess from component name
     if (kebabItemName.includes("alert")) return "alert";
     if (kebabItemName.includes("button")) return "button";
     if (kebabItemName.includes("input")) return "input";
@@ -127,25 +73,20 @@ export default function Overview({
     return null;
   }, [subcategory, slugPath, kebabItemName]);
 
-  // Update the currentCode memo to clean imports for display
+  // IMPORTANT: Use the EXACT code from the API without any modifications
   const currentCode = useMemo(() => {
-    const tsxCode = code || "";
-    const codeToUse =
-      selectedLanguage === "ts" ? tsxCode : convertTsxToJsx(tsxCode);
+    // Return the raw code as received from the API
+    // No import stripping, no modifications - keep the EXACT file content
+    return code || "";
+  }, [code]);
 
-    // Clean imports for display in code block
-    return codeToUse.replace(/import\s+.*?\s+from\s+['"].*?['"];?\n?/g, "");
-  }, [code, selectedLanguage]);
-
-  // Live demo URL
   const liveDemoUrl = useMemo(() => {
-    // Convert category to kebab-case
     const kebabCategory = toKebabCase(componentName);
     const baseUrl = `/preview/${kebabCategory}/${kebabItemName}`;
 
     const params = new URLSearchParams({
       ref: "overview",
-      source: kebabCategory, // Use kebab-case here too
+      source: kebabCategory,
     });
 
     return `${baseUrl}?${params.toString()}`;
@@ -198,12 +139,8 @@ export default function Overview({
       <div className="w-full">
         <CodeBlock
           code={currentCode}
-          language={selectedLanguage === "ts" ? "typescript" : "javascript"}
+          language="typescript"
           aspectVideo
-          selectedLang={selectedLanguage === "ts" ? "typescript" : "javascript"}
-          setSelectedLang={(value) =>
-            setSelectedLanguage(value === "typescript" ? "ts" : "js")
-          }
         />
       </div>
     );
@@ -214,25 +151,22 @@ export default function Overview({
     kebabItemName,
     youtubeEmbedUrl,
     currentCode,
-    selectedLanguage,
   ]);
 
   return (
     <section className="w-full">
-      {/* Header */}
       <header className="relative flex flex-col items-start mb-8 w-full">
         <h1 className="text-4xl leading-none font-semibold text-foreground/90 tracking-tight">
           {itemName}
         </h1>
         {description && (
-          <p className="text-base  font-normal text-muted-foreground mt-4">
+          <p className="text-base font-normal text-muted-foreground mt-4">
             {description}
           </p>
         )}
       </header>
 
       <div className="relative flex flex-col items-start p-3 bg-foreground/3 border border-foreground/5 rounded-lg overflow-hidden w-full">
-        {/* Tabs + Actions */}
         <div className="flex items-center justify-between gap-3 pb-3 w-full flex-wrap">
           <div className="relative flex items-center gap-2 w-auto">
             {tabs.map((tab) => (
@@ -240,7 +174,7 @@ export default function Overview({
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={` text-sm uppercase z-10 w-24 font-medium cursor-pointer transition-all duration-300 ${
+                className={`text-sm uppercase z-10 w-24 font-medium cursor-pointer transition-all duration-300 ${
                   activeTab === tab
                     ? "text-foreground"
                     : "text-foreground/40 hover:text-foreground"
@@ -286,15 +220,10 @@ export default function Overview({
             <OpenTools
               componentName={itemName || componentName}
               description={description || ""}
-              filePath={
-                code
-                  ? `${componentName}/${kebabItemName}.${selectedLanguage === "ts" ? "tsx" : "jsx"}`
-                  : ""
-              }
+              filePath={code ? `${componentName}/${kebabItemName}.tsx` : ""}
               currentCode={currentCode}
             />
 
-            {/* Live Demo */}
             <Button
               size="sm"
               variant="outline"
@@ -314,7 +243,6 @@ export default function Overview({
           </div>
         </div>
 
-        {/* Preview, Code, Video Area */}
         <div
           className={`flex flex-col items-center justify-center m-auto border border-foreground/5 rounded-md ${activeTab === "preview" && "bg-background rounded-tl-none"} aspect-video max-h-screen overflow-hidden transition-all duration-700 w-full`}
         >

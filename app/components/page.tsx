@@ -1,3 +1,4 @@
+// app/components/page.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -104,7 +105,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
       onClick={() => onClick(card.path)}
       className="cursor-pointer transition-all duration-500 text-start group p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden hover:shadow-lg/10 w-full h-fit"
     >
-      <div className="relative flex flex-col p-4 bg-background border rounded-lg w-full h-full">
+      <div className="relative flex flex-col p-4 bg-linear-to-br from-primary/5 dark:from-primary/10 via-background to-background backdrop-blur-2xl border rounded-lg w-full h-full">
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-medium whitespace-nowrap truncate">
             {card.title}

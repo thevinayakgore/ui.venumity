@@ -8,7 +8,7 @@ const CTA_CONFIG = [
     label: "Browse Components",
     icon: SquareArrowOutUpRight,
     buttonClass:
-      "inset-shadow-sm hover:inset-shadow-white/50 hover:shadow-lg shadow-primary/30 bg-foreground text-secondary hover:bg-primary hover:text-white",
+      "hover:shadow-lg shadow-primary/30 bg-foreground text-secondary hover:bg-primary hover:text-white inset-shadow-sm hover:inset-shadow-white/70",
     iconClass: "size-4!",
   },
   {
@@ -16,7 +16,7 @@ const CTA_CONFIG = [
     label: "Resources",
     icon: ArrowRight,
     buttonClass:
-      "group/btn text-foreground hover:text-white hover:bg-green-500 hover:shadow-lg shadow-green-500/30 hover:shadow-green-500/30!",
+      "group/btn text-foreground hover:text-white hover:bg-green-500 hover:shadow-lg shadow-green-500/30 hover:shadow-green-500/30! hover:inset-shadow-sm inset-shadow-white/70",
     iconClass:
       "size-4! group-hover/btn:translate-x-2.5 transition-all duration-500",
   },
@@ -29,7 +29,7 @@ export default function CTAButtons() {
         <Link key={href} href={href}>
           <Button
             variant="secondary"
-            className={`p-6! cursor-pointer border border-foreground/20 hover:border-white rounded-sm hover:scale-105 transition-all duration-500 ${buttonClass}`}
+            className={`p-6! cursor-pointer border border-foreground/20 hover:border-white hover:scale-105 transition-all duration-500 ${buttonClass}`}
           >
             {label}
             <Icon className={iconClass} />

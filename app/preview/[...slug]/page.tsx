@@ -1,3 +1,4 @@
+// app/preview/[...slug]/page.tsx
 import { Metadata } from "next";
 import PageClient from "./page.client";
 

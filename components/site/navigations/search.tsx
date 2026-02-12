@@ -77,7 +77,7 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
             title: item.itemName,
             description: item.description,
             category: `${category.name} > ${subcategory.name}`,
-            path: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}/${toKebabCase(item.itemName)}`,
+            path: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
           });
         }
       });

@@ -1,3 +1,4 @@
+// app/components/[...slug]/page.tsx
 import { Metadata } from "next";
 import {
   getComponentByPath,

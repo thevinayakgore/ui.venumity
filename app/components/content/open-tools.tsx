@@ -19,98 +19,77 @@ interface OpenToolsProps {
   currentCode: string;
 }
 
-export const OPEN_TOOL_LINKS = [
-  {
-    name: "V0",
-    icon: "https://v0.app/assets/icon.svg",
-    buildUrl: (prompt: string) =>
-      `https://v0.app/chat?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Lovable",
-    icon: "https://lovable.dev/favicon.ico",
-    buildUrl: (prompt: string) =>
-      `https://lovable.dev/chat?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "ChatGPT",
-    icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/chatgpt-icon.png",
-    buildUrl: (prompt: string) =>
-      `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Claude",
-    icon: "https://claude.ai/favicon.ico",
-    buildUrl: (prompt: string) =>
-      `https://claude.ai/new?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Gemini",
-    icon: "https://www.gstatic.com/lamda/images/gemini_sparkle_aurora_33f86dc0c0257da337c63.svg",
-    buildUrl: (prompt: string) =>
-      `https://gemini.google.com/app?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Perplexity",
-    icon: "https://www.perplexity.ai/favicon.ico",
-    buildUrl: (prompt: string) =>
-      `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Copilot",
-    icon: "https://github.com/favicons/favicon-copilot-dark.png",
-    buildUrl: () => "https://github.com/copilot",
-  },
-  {
-    name: "Windsurf",
-    icon: "https://windsurf.ai/favicon.ico",
-    buildUrl: (prompt: string) =>
-      `https://windsurf.ai/?q=${encodeURIComponent(prompt)}`,
-  },
-  {
-    name: "Replit",
-    icon: "https://replit.com/public/icons/favicon-prompt-192.png",
-    buildUrl: (prompt: string) =>
-      `https://replit.com/search?q=${encodeURIComponent(prompt)}`,
-  },
+export const OPEN_TOOLS = [
+  { name: "V0", icon: "/assets/open-tools/v0.svg" },
+  { name: "Lovable", icon: "/assets/open-tools/lovable.ico" },
+  { name: "ChatGPT", icon: "/assets/open-tools/chatgpt.webp" },
+  { name: "Claude", icon: "/assets/open-tools/claude.ico" },
+  { name: "Perplexity", icon: "/assets/open-tools/perplexity.ico" },
 ];
 
 export function generateComponentPrompt({
   componentName,
   description,
-  dependencies = [],
   filePath,
+  code,
 }: {
   componentName: string;
   description: string;
-  dependencies?: string[];
   filePath: string;
+  code: string;
 }) {
+  const safeCode = code || "// No component code available yet !";
   return `
-You are given a task to integrate a React component into your codebase.
+You are a senior frontend engineer and UI architect working on a production application.
 
-Please verify your project has :
-- Next.js App Router
+I am using a React component from the Venumity UI design system in a Next.js project.
+
+Project stack :
+- Next.js (App Router)
 - TypeScript
 - Tailwind CSS
+- shadcn/ui
 
 Component details :
 - Name : ${componentName}
 - Description : ${description}
-- File location : ${filePath}
+- File path : ${filePath}
 
-Dependencies:
-${dependencies.map((d) => `- ${d}`).join("\n")}
+Component source code :
+${safeCode}
 
-Instructions :
-1. Verify project setup
-2. Create missing files if required
-3. Paste the component code
-4. Explain integration steps briefly
+Your task :
+1. Explain what this component does and where it fits best in real products
+2. Review it for production readiness (performance, accessibility, edge cases)
+3. Suggest practical improvements to code quality, reusability, and type safety
+4. Recommend design‑system friendly props, variants, or configurations
+5. Propose UX or motion improvements only if they clearly add value
 
-Return only actionable steps and code.
+Constraints :
+- Do not change visual design unless it improves UX
+- Prefer incremental, realistic improvements
+- Focus on production‑level best practices
+
+Return concise, actionable recommendations with code snippets.
 `.trim();
 }
+
+const buildOpenToolUrl = (name: string, prompt: string) => {
+  const map: Record<string, (p: string) => string> = {
+    V0: (p) => `https://v0.dev/chat?q=${encodeURIComponent(p)}`,
+
+    Lovable: (p) => `https://lovable.dev/?prompt=${encodeURIComponent(p)}`,
+
+    ChatGPT: (p) => `https://chat.openai.com/?q=${encodeURIComponent(p)}`,
+
+    Claude: (p) => `https://claude.ai/new?q=${encodeURIComponent(p)}`,
+
+    Perplexity: (p) =>
+      `https://www.perplexity.ai/search?q=${encodeURIComponent(p)}`,
+  };
+
+  return map[name]?.(prompt) ?? "#";
+};
 
 const containerVariants = {
   hidden: {},
@@ -150,6 +129,7 @@ export function OpenTools({
     componentName,
     description,
     filePath,
+    code: currentCode,
   });
 
   return (
@@ -171,7 +151,7 @@ export function OpenTools({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="p-0 gap-0 overflow-hidden text-white bg-white/10! backdrop-blur-xl border-white/20 rounded-md! max-w-xl!">
+        <DialogContent className="p-0 gap-0 overflow-hidden text-white bg-white/10! backdrop-blur-xl border-white/20 rounded-xl! max-w-lg!">
           <DialogHeader className="pt-5 pb-3 px-6!">
             <DialogTitle className="flex items-center gap-3 font-normal">
               <Zap className="size-5" />
@@ -198,19 +178,19 @@ export function OpenTools({
           >
             <div className="p-4 pt-2  font-medium text-foreground w-full">
               <motion.div
-                className="grid grid-cols-3 gap-5 p-6 rounded-md bg-background overflow-hidden hover:shadow-xl transition-all duration-500"
+                className="grid grid-cols-3 gap-3 p-6 rounded-lg bg-background overflow-hidden hover:shadow-xl transition-all duration-500"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
               >
-                {OPEN_TOOL_LINKS.map(({ name, icon, buildUrl }) => (
+                {OPEN_TOOLS.map(({ name, icon }) => (
                   <motion.div
                     key={name}
                     variants={itemVariants}
                     className="hover:scale-110 transition-all duration-500"
                   >
                     <Link
-                      href={buildUrl(prompt)}
+                      href={buildOpenToolUrl(name, prompt)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full"
@@ -218,7 +198,7 @@ export function OpenTools({
                       <Button
                         variant="outline"
                         size="lg"
-                        className="flex items-center gap-3 p-6! border-foreground/10! hover:border-green-500/70! bg-muted/30 hover:bg-linear-to-tl from-green-500/30 hover:shadow-lg shadow-green-500/20 via-background duration-100 rounded cursor-pointer w-full"
+                        className="flex items-center gap-3 p-6! border-foreground/10! hover:border-green-500/70! bg-muted/30 hover:bg-linear-to-tl from-green-500/30 shadow-none hover:shadow-lg shadow-green-500/20 via-background duration-100 rounded-sm cursor-pointer w-full"
                       >
                         <Image
                           src={icon}
