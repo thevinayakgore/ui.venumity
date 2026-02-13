@@ -69,7 +69,7 @@ export default function OfferBanner4_2() {
             </div>
 
             {/* Countdown Timer */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 min-w-[280px]">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 min-w-70">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Clock className="w-5 h-5 text-white/80" />
                 <span className="text-white font-medium">Offer ends in:</span>
