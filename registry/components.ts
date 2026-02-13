@@ -74,9 +74,9 @@ export const COMPONENTS = createComponents([
         name: "AI Summary",
         description:
           "Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights. These punchy summary components enhance dashboard intelligence, improve decision velocity, and provide at-a-glance understanding for busy professionals.",
-        tags: ["ai", "summary", "insights", "nlp", "content"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Summary Card" }],
+        tags: ["ai", "summary", "insights", "layout", "content"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
+        items: [{ itemName: "Summary Block" }, { itemName: "Summary Card" }],
       },
     ],
   },

@@ -1,8 +1,8 @@
 // app/components/page.tsx
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Flame } from "lucide-react";
+import { Flame, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -98,16 +98,16 @@ export interface CategoryCardProps {
   onClick: (path: string) => void;
 }
 
-// Export the original CategoryCard component (EXACTLY AS IS)
+// Export the original CategoryCard component (EXACTLY AS IS - NO CHANGES)
 export function CategoryCard({ card, onClick }: CategoryCardProps) {
   return (
     <button
       onClick={() => onClick(card.path)}
       className="cursor-pointer transition-all duration-500 text-start group p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden hover:shadow-lg/10 w-full h-fit"
     >
-      <div className="relative flex flex-col p-4 bg-linear-to-br from-primary/5 dark:from-primary/10 via-background to-background backdrop-blur-2xl border rounded-lg w-full h-full">
-        <div className="flex justify-between items-start">
-          <h2 className="text-lg font-medium whitespace-nowrap truncate">
+      <div className="relative flex flex-col p-4 bg-linear-to-br from-foreground/5 hover:from-primary/5 dark:hover:from-primary/10 via-background to-background backdrop-blur-2xl border rounded-lg transition-all duration-500 w-full h-full">
+        <div className="flex items-start justify-between">
+          <h2 className="text-lg font-medium whitespace-nowrap truncate leading-none">
             {card.title}
           </h2>
           <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
@@ -158,12 +158,123 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
   );
 }
 
-// Main component remains the same
+// ====================
+// INFINITE SCROLL LOADER COMPONENT
+// ====================
+interface InfiniteScrollLoaderProps {
+  hasMore: boolean;
+  loading: boolean;
+  onLoadMore: () => void;
+}
+
+function InfiniteScrollLoader({
+  hasMore,
+  loading,
+  onLoadMore,
+}: InfiniteScrollLoaderProps) {
+  const observerTarget = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          onLoadMore();
+        }
+      },
+      { threshold: 0.1, rootMargin: "200px" }, // Load when 200px from viewport
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, loading, onLoadMore]);
+
+  return (
+    <div
+      ref={observerTarget}
+      className="col-span-full w-full py-8 flex justify-center"
+    >
+      {loading && (
+        <div className="flex items-center gap-2 text-primary">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span className="text-sm font-medium">
+            Loading more components...
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ====================
+// PAGINATION HOOK
+// ====================
+function useInfinitePagination<T>(items: T[], pageSize: number = 30) {
+  const [displayedItems, setDisplayedItems] = useState<T[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  // Reset pagination when items change
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDisplayedItems(items.slice(0, pageSize));
+      setCurrentPage(1);
+      setHasMore(items.length > pageSize);
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [items, pageSize]);
+
+  const loadMore = useCallback(() => {
+    if (!hasMore || isLoadingMore) return;
+
+    setIsLoadingMore(true);
+
+    // Simulate network delay for smooth UX (like YouTube)
+    setTimeout(() => {
+      const nextPage = currentPage + 1;
+      const startIndex = currentPage * pageSize;
+      const endIndex = startIndex + pageSize;
+      const nextItems = items.slice(startIndex, endIndex);
+
+      if (nextItems.length > 0) {
+        setDisplayedItems((prev) => [...prev, ...nextItems]);
+        setCurrentPage(nextPage);
+        setHasMore(endIndex < items.length);
+      } else {
+        setHasMore(false);
+      }
+
+      setIsLoadingMore(false);
+    }, 800); // 800ms delay for smooth loading effect
+  }, [currentPage, hasMore, isLoadingMore, items, pageSize]);
+
+  return {
+    displayedItems,
+    hasMore,
+    isLoadingMore,
+    loadMore,
+    totalItems: items.length,
+    currentPage,
+  };
+}
+
+// ====================
+// MAIN COMPONENT (WITH INFINITE SCROLL)
+// ====================
 export default function Components() {
   const router = useRouter();
   const [categoryCards, setCategoryCards] = useState<CategoryCard[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Initialize infinite scroll with 30 cards per page
+  const { displayedItems, hasMore, isLoadingMore, loadMore, totalItems } =
+    useInfinitePagination(categoryCards, 30);
+
+  // Load all cards on mount
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -185,12 +296,18 @@ export default function Components() {
     router.push(`/components${path}`);
   };
 
+  // Calculate loading progress
+  const progressPercentage = Math.min(
+    Math.round((displayedItems.length / totalItems) * 100),
+    100,
+  );
+
   return (
     <main className="w-full h-full">
       <header className="mb-8 pb-6 border-b w-full">
         <Badge
           variant="secondary"
-          className="flex items-center mb-5.5 h-8 px-2 text-xs! leading-none  font-medium uppercase bg-foreground/5 border-foreground/10 shadow-xl/5! rounded"
+          className="flex items-center mb-5.5 h-8 px-2 text-xs! leading-none font-medium uppercase bg-foreground/5 border-foreground/10 shadow-xl/5! rounded"
         >
           <Flame className="size-3.5! mr-0.5" />
           <BadgeTextAnimate
@@ -199,18 +316,35 @@ export default function Components() {
             interval={4000}
           />
         </Badge>
+
         <h1 className="text-3xl md:text-6xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
           Components
         </h1>
-        <p className="text-base md:text-lg  font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full">
+
+        <p className="text-base md:text-lg font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full mt-2">
           A curated collection of reusable UI components designed to help you
           build faster and more consistently. From core building blocks to
           advanced patterns, everything you need to craft modern interfaces in
           one place.
         </p>
+
+        {/* Mobile progress indicator */}
+        {!loading && categoryCards.length > 0 && (
+          <div className="flex md:hidden items-center gap-2 mt-3">
+            <div className="flex-1 h-1 bg-foreground/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full transition-all duration-500"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+            <span className="text-xs text-muted-foreground whitespace-nowrap">
+              {displayedItems.length}/{totalItems}
+            </span>
+          </div>
+        )}
       </header>
 
-      {/* Loading State */}
+      {/* Loading State - Initial Load */}
       {loading && (
         <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
           {Array.from({ length: 8 }).map((_, index) => (
@@ -236,13 +370,26 @@ export default function Components() {
         </section>
       )}
 
-      {/* Cards Grid */}
+      {/* Cards Grid - With Infinite Scroll */}
       {!loading && categoryCards.length > 0 && (
-        <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
-          {categoryCards.map((card) => (
-            <CategoryCard key={card.id} card={card} onClick={handleCardClick} />
-          ))}
-        </section>
+        <>
+          <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
+            {displayedItems.map((card) => (
+              <CategoryCard
+                key={card.id}
+                card={card}
+                onClick={handleCardClick}
+              />
+            ))}
+          </section>
+
+          {/* Infinite Scroll Loader */}
+          <InfiniteScrollLoader
+            hasMore={hasMore}
+            loading={isLoadingMore}
+            onLoadMore={loadMore}
+          />
+        </>
       )}
 
       {/* Empty State */}

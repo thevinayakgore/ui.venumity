@@ -25,8 +25,8 @@ export default function ContentLayoutClient({
         <LeftSidebar />
         <div
           id="content"
-          className={`flex flex-col items-center pt-24 pb-10 m-auto ${
-            !hideRightSidebar ? "px-10 max-w-240" : "pl-10"
+          className={`flex flex-col items-center pt-24 m-auto ${
+            !hideRightSidebar ? "px-10 pb-10 max-w-240" : "pl-10"
           } w-full h-full`}
         >
           {children}
