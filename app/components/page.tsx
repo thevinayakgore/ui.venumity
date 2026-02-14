@@ -2,6 +2,7 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Flame, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
@@ -35,10 +36,13 @@ const RIGHT_WORDS = [
   "Interfaces",
 ];
 
-// Export the CategoryCard interface
+// LocalStorage key for saving scroll state
+const SCROLL_STATE_KEY = "components-scroll-state";
+
 export interface CategoryCard {
   id: string;
   title: string;
+  thumbnail?: string;
   description: string;
   type: "category" | "subcategory";
   parentCategory?: string;
@@ -48,7 +52,6 @@ export interface CategoryCard {
   techs?: string[];
 }
 
-// Export the card generator function
 export function getCategoryCards(): CategoryCard[] {
   const cards: CategoryCard[] = [];
 
@@ -83,72 +86,107 @@ export function getCategoryCards(): CategoryCard[] {
             itemCount: subcategory.items.length,
             tags: allTags,
             techs: allTechs,
+            thumbnail: subcategory.thumbnail,
           });
         }
       });
     }
   });
 
-  return [...cards].sort((a, b) => a.title.localeCompare(b.title));
+  return [...cards].sort((a, b) =>
+    a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
+  );
 }
 
-// Export CategoryCardProps interface
 export interface CategoryCardProps {
   card: CategoryCard;
   onClick: (path: string) => void;
 }
 
-// Export the original CategoryCard component (EXACTLY AS IS - NO CHANGES)
 export function CategoryCard({ card, onClick }: CategoryCardProps) {
+  const [imageError, setImageError] = useState(false);
+
+  const thumbnailPath =
+    card.thumbnail || `/thumbnails/${toKebabCase(card.title)}.png`;
+
   return (
     <button
       onClick={() => onClick(card.path)}
       className="cursor-pointer transition-all duration-500 text-start group p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden hover:shadow-lg/10 w-full h-fit"
     >
-      <div className="relative flex flex-col p-4 bg-linear-to-br from-foreground/5 hover:from-primary/5 dark:hover:from-primary/10 via-background to-background backdrop-blur-2xl border rounded-lg transition-all duration-500 w-full h-full">
-        <div className="flex items-start justify-between">
-          <h2 className="text-lg font-medium whitespace-nowrap truncate leading-none">
-            {card.title}
-          </h2>
-          <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
-            {card.itemCount > 0 && card.itemCount <= 9 && "0"}
-            {card.itemCount}
-          </span>
+      <div className="relative flex flex-col border rounded-lg transition-all duration-500 w-full h-full">
+        <div className="aspect-video relative border-b w-full overflow-hidden rounded-t-lg">
+          {!imageError ? (
+            <Image
+              src={thumbnailPath}
+              alt={card.title}
+              width={5000}
+              height={5000}
+              onError={() => setImageError(true)}
+              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              unoptimized
+            />
+          ) : (
+            <div className="bg-linear-to-br from-accent via-background to-background w-full h-full" />
+          )}
+
+          {/* Fallback gradient with text - always render as base, but hide when image loads successfully */}
+          <div
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
+              imageError ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div className="relative z-10 flex flex-col items-center justify-center">
+              <span className="text-7xl font-bold drop-shadow-lg">
+                {card.title.charAt(0)}
+              </span>
+              <span className="text-sm font-medium mt-2">{card.title}</span>
+            </div>
+          </div>
         </div>
 
-        <p className="text-xs line-clamp-2 opacity-60 mt-1 mb-3">
-          {card.description}
-        </p>
+        {/* Content */}
+        <div className="p-6">
+          <div className="flex items-start justify-between">
+            <h2 className="text-lg font-medium whitespace-nowrap truncate leading-none">
+              {card.title}
+            </h2>
+            <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
+              {card.itemCount > 0 && card.itemCount <= 9 && "0"}
+              {card.itemCount}
+            </span>
+          </div>
 
-        <div className="flex flex-wrap gap-1.5">
-          {/* Show tags and techs */}
-          {[...(card.tags || [])].length > 0 ? (
-            <>
-              {/* Display first 4 items (tags + techs) */}
-              {[...(card.tags || [])].slice(0, 3).map((item, index) => (
-                <span
-                  key={`${item}-${index}`}
-                  className="bg-foreground/5 text-muted-foreground text-[10px] px-1.5 py-1 capitalize leading-none rounded border border-foreground/10 w-fit"
-                >
-                  {item}
-                </span>
-              ))}
+          <p className="text-xs line-clamp-2 opacity-60 mt-1 mb-3">
+            {card.description}
+          </p>
 
-              {/* Show +X badge if there are more than 4 items */}
-              {[...(card.tags || [])].length > 3 && (
+          <div className="flex flex-wrap gap-1.5">
+            {[...(card.tags || [])].length > 0 ? (
+              <>
+                {[...(card.tags || [])].slice(0, 3).map((item, index) => (
+                  <span
+                    key={`${item}-${index}`}
+                    className="bg-foreground/5 text-muted-foreground text-[10px] px-1.5 py-1 capitalize leading-none rounded border border-foreground/10 w-fit"
+                  >
+                    {item}
+                  </span>
+                ))}
+
+                {[...(card.tags || [])].length > 3 && (
+                  <span className="text-[10px] px-1.5 py-1 leading-none rounded bg-foreground/5 border border-foreground/10 text-muted-foreground w-fit">
+                    +{[...(card.tags || [])].length - 3}
+                  </span>
+                )}
+              </>
+            ) : (
+              card.parentCategory && (
                 <span className="text-[10px] px-1.5 py-1 leading-none rounded bg-foreground/5 border border-foreground/10 text-muted-foreground w-fit">
-                  +{[...(card.tags || [])].length - 3}
+                  {card.parentCategory}
                 </span>
-              )}
-            </>
-          ) : (
-            // Fallback if no tags/techs but has parent category
-            card.parentCategory && (
-              <span className="text-[10px] px-1.5 py-1 leading-none rounded bg-foreground/5 border border-foreground/10 text-muted-foreground w-fit">
-                {card.parentCategory}
-              </span>
-            )
-          )}
+              )
+            )}
+          </div>
         </div>
 
         <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
@@ -181,7 +219,7 @@ function InfiniteScrollLoader({
           onLoadMore();
         }
       },
-      { threshold: 0.1, rootMargin: "200px" }, // Load when 200px from viewport
+      { threshold: 0.1, rootMargin: "200px" },
     );
 
     if (observerTarget.current) {
@@ -209,31 +247,81 @@ function InfiniteScrollLoader({
 }
 
 // ====================
-// PAGINATION HOOK
+// PAGINATION HOOK WITH LOCALSTORAGE
 // ====================
-function useInfinitePagination<T>(items: T[], pageSize: number = 30) {
+function useInfinitePagination<T extends { id: string }>(
+  items: T[],
+  pageSize: number = 30,
+) {
   const [displayedItems, setDisplayedItems] = useState<T[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Reset pagination when items change
+  // Load saved state from localStorage on mount
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    try {
+      const savedState = localStorage.getItem(SCROLL_STATE_KEY);
+      if (savedState && items.length > 0) {
+        const { savedPage, savedItemIds } = JSON.parse(savedState);
+
+        // Verify that saved items still exist in the current items list
+        const validSavedItems = items.filter((item) =>
+          savedItemIds.includes(item.id),
+        );
+
+        if (validSavedItems.length > 0) {
+          setDisplayedItems(validSavedItems);
+          setCurrentPage(savedPage);
+          setHasMore(items.length > validSavedItems.length);
+        } else {
+          // If no valid saved items, start fresh
+          setDisplayedItems(items.slice(0, pageSize));
+          setCurrentPage(1);
+          setHasMore(items.length > pageSize);
+        }
+      } else {
+        // No saved state, start fresh
+        setDisplayedItems(items.slice(0, pageSize));
+        setCurrentPage(1);
+        setHasMore(items.length > pageSize);
+      }
+    } catch (error) {
+      console.error("Error loading scroll state:", error);
+      // Fallback to fresh start
       setDisplayedItems(items.slice(0, pageSize));
       setCurrentPage(1);
       setHasMore(items.length > pageSize);
-    }, 0);
-
-    return () => clearTimeout(timeout);
+    } finally {
+      setIsInitialized(true);
+    }
   }, [items, pageSize]);
 
+  // Save state to localStorage whenever displayed items change
+  useEffect(() => {
+    if (isInitialized && displayedItems.length > 0) {
+      try {
+        localStorage.setItem(
+          SCROLL_STATE_KEY,
+          JSON.stringify({
+            savedPage: currentPage,
+            savedItemIds: displayedItems.map((item) => item.id),
+            timestamp: Date.now(),
+          }),
+        );
+      } catch (error) {
+        console.error("Error saving scroll state:", error);
+      }
+    }
+  }, [displayedItems, currentPage, isInitialized]);
+
   const loadMore = useCallback(() => {
-    if (!hasMore || isLoadingMore) return;
+    if (!hasMore || isLoadingMore || !isInitialized) return;
 
     setIsLoadingMore(true);
 
-    // Simulate network delay for smooth UX (like YouTube)
+    // Simulate network delay for smooth UX
     setTimeout(() => {
       const nextPage = currentPage + 1;
       const startIndex = currentPage * pageSize;
@@ -241,7 +329,10 @@ function useInfinitePagination<T>(items: T[], pageSize: number = 30) {
       const nextItems = items.slice(startIndex, endIndex);
 
       if (nextItems.length > 0) {
-        setDisplayedItems((prev) => [...prev, ...nextItems]);
+        setDisplayedItems((prev) => {
+          const newItems = [...prev, ...nextItems];
+          return newItems;
+        });
         setCurrentPage(nextPage);
         setHasMore(endIndex < items.length);
       } else {
@@ -249,8 +340,8 @@ function useInfinitePagination<T>(items: T[], pageSize: number = 30) {
       }
 
       setIsLoadingMore(false);
-    }, 800); // 800ms delay for smooth loading effect
-  }, [currentPage, hasMore, isLoadingMore, items, pageSize]);
+    }, 800);
+  }, [currentPage, hasMore, isLoadingMore, items, pageSize, isInitialized]);
 
   return {
     displayedItems,
@@ -259,11 +350,12 @@ function useInfinitePagination<T>(items: T[], pageSize: number = 30) {
     loadMore,
     totalItems: items.length,
     currentPage,
+    isInitialized,
   };
 }
 
 // ====================
-// MAIN COMPONENT (WITH INFINITE SCROLL)
+// MAIN COMPONENT
 // ====================
 export default function Components() {
   const router = useRouter();
@@ -271,8 +363,14 @@ export default function Components() {
   const [loading, setLoading] = useState(true);
 
   // Initialize infinite scroll with 30 cards per page
-  const { displayedItems, hasMore, isLoadingMore, loadMore, totalItems } =
-    useInfinitePagination(categoryCards, 30);
+  const {
+    displayedItems,
+    hasMore,
+    isLoadingMore,
+    loadMore,
+    totalItems,
+    isInitialized,
+  } = useInfinitePagination(categoryCards, 30);
 
   // Load all cards on mount
   useEffect(() => {
@@ -346,23 +444,26 @@ export default function Components() {
 
       {/* Loading State - Initial Load */}
       {loading && (
-        <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
+        <section className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 w-full">
           {Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
               className="p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden w-full h-fit animate-pulse"
             >
-              <div className="space-y-2 p-4 bg-background border rounded-lg w-full h-full">
-                <div className="flex justify-between items-start">
-                  <div className="h-5 w-1/2 bg-foreground/10 rounded"></div>
-                  <div className="h-6 w-8 bg-foreground/10 rounded"></div>
-                </div>
-                <div className="h-4 w-full bg-foreground/10 rounded"></div>
-                <div className="h-4 w-3/4 bg-foreground/10 rounded"></div>
-                <div className="flex gap-1.5">
-                  <div className="h-5 w-12 bg-foreground/10 rounded"></div>
-                  <div className="h-5 w-10 bg-foreground/10 rounded"></div>
-                  <div className="h-5 w-8 bg-foreground/10 rounded"></div>
+              <div className="space-y-2 bg-background border rounded-lg w-full h-full">
+                <div className="aspect-video w-full bg-primary/10 rounded-t-lg"></div>
+                <div className="p-4 space-y-2">
+                  <div className="flex justify-between items-start">
+                    <div className="h-5 w-1/2 bg-foreground/10 rounded"></div>
+                    <div className="h-6 w-8 bg-foreground/10 rounded"></div>
+                  </div>
+                  <div className="h-4 w-full bg-foreground/10 rounded"></div>
+                  <div className="h-4 w-3/4 bg-foreground/10 rounded"></div>
+                  <div className="flex gap-1.5">
+                    <div className="h-5 w-12 bg-foreground/10 rounded"></div>
+                    <div className="h-5 w-10 bg-foreground/10 rounded"></div>
+                    <div className="h-5 w-8 bg-foreground/10 rounded"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -373,7 +474,7 @@ export default function Components() {
       {/* Cards Grid - With Infinite Scroll */}
       {!loading && categoryCards.length > 0 && (
         <>
-          <section className="columns-1 sm:columns-2 lg:columns-4 gap-3 space-y-3 w-full">
+          <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 w-full">
             {displayedItems.map((card) => (
               <CategoryCard
                 key={card.id}
@@ -383,12 +484,14 @@ export default function Components() {
             ))}
           </section>
 
-          {/* Infinite Scroll Loader */}
-          <InfiniteScrollLoader
-            hasMore={hasMore}
-            loading={isLoadingMore}
-            onLoadMore={loadMore}
-          />
+          {/* Infinite Scroll Loader - Only show if initialized and has more */}
+          {isInitialized && hasMore && (
+            <InfiniteScrollLoader
+              hasMore={hasMore}
+              loading={isLoadingMore}
+              onLoadMore={loadMore}
+            />
+          )}
         </>
       )}
 

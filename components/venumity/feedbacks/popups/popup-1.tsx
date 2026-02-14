@@ -180,7 +180,7 @@ export default function Popup1() {
   const [loadingLogout, setLoadingLogout] = useState(false);
 
   return (
-    <main className="grid grid-cols-2 gap-4 p-6 sm:p-10 md:py-14">
+    <main className="grid grid-cols-2 items-center justify-center m-auto gap-4 p-6 sm:p-10">
       {POPUPS.map(
         ({
           key,

@@ -83,7 +83,7 @@ export default function Toast1() {
   }
 
   return (
-    <main className="grid grid-cols-2 gap-4 p-6 sm:p-10 md:py-14">
+    <main className="grid grid-cols-2 gap-4 items-center justify-center m-auto p-6 sm:p-10 md:py-14">
       <Button
         variant="default"
         className="bg-green-600 hover:bg-green-700 text-white p-6 cursor-pointer"

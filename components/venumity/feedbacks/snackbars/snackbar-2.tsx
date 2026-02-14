@@ -41,7 +41,7 @@ function Snackbar({
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
-        className={`fixed bottom-4 left-1/2 -translate-x-1/2 ${config.bg} rounded-md p-4 shadow-lg z-50 min-w-md`}
+        className={`fixed bottom-20 left-1/2 -translate-x-1/2 ${config.bg} rounded-md p-4 shadow-lg z-50 min-w-md`}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
@@ -75,7 +75,7 @@ function Snackbar({
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-500 rounded-md p-3 shadow-lg z-50 min-w-sm"
+        className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-green-500 rounded-md p-3 shadow-lg z-50 min-w-sm"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3 text-white">
@@ -146,7 +146,7 @@ export default function Snackbar2() {
   ];
 
   return (
-    <main className="grid grid-cols-1 gap-4 py-7 md:py-14">
+    <main className="grid grid-cols-1 gap-4 items-center justify-center m-auto py-7 md:py-14">
       {snackbarButtons.map((btn) => (
         <Button
           key={btn.label}

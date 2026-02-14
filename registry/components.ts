@@ -1,6 +1,7 @@
 // registry/components.ts
 import { createComponents } from "./component-utils";
 
+// Commented Components are under progress...
 export const COMPONENTS = createComponents([
   {
     category: "AI Features",
@@ -8,20 +9,20 @@ export const COMPONENTS = createComponents([
     tags: ["ui", "feedback", "notifications", "interaction", "frontend"],
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
-      {
-        name: "AI Analytics",
-        description:
-          "Boost data-driven decision making with our smart AI analytics dashboard components. These featured UI elements deliver real-time insights, predictive metrics, and performance visualization that accelerate business growth. Engineered for SaaS platforms, enterprise dashboards, and AI-powered applications seeking actionable intelligence.",
-        tags: ["ai", "analytics", "insights", "metrics", "dashboard"],
-        techs: [
-          "Next.js",
-          "TypeScript",
-          "Tailwind CSS",
-          "Recharts",
-          "Shadcn UI",
-        ],
-        items: [{ itemName: "Analytics" }],
-      },
+      // {
+      //   name: "AI Analytics",
+      //   description:
+      //     "Boost data-driven decision making with our smart AI analytics dashboard components. These featured UI elements deliver real-time insights, predictive metrics, and performance visualization that accelerate business growth. Engineered for SaaS platforms, enterprise dashboards, and AI-powered applications seeking actionable intelligence.",
+      //   tags: ["ai", "analytics", "insights", "metrics", "dashboard"],
+      //   techs: [
+      //     "Next.js",
+      //     "TypeScript",
+      //     "Tailwind CSS",
+      //     "Recharts",
+      //     "Shadcn UI",
+      //   ],
+      //   items: [{ itemName: "Analytics" }],
+      // },
       {
         name: "AI Chats",
         description:
@@ -30,46 +31,46 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
         items: [{ itemName: "AI Chat Bot 1" }],
       },
-      {
-        name: "AI Commands",
-        description:
-          "Supercharge productivity workflows with smart command palettes and AI-powered navigation systems. These punchy interface components reduce user friction, accelerate task completion, and provide intelligent shortcuts—essential for enterprise software, developer tools, and power-user applications.",
-        tags: ["ai", "commands", "command-palette", "actions", "productivity"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Command Bar" }],
-      },
-      {
-        name: "AI Forms",
-        description:
-          "Revolutionize data collection with intelligent form components featuring AI validation, contextual suggestions, and automated workflows. These smart form concepts dramatically reduce abandonment rates while increasing conversion—perfect for lead generation, onboarding sequences, and enterprise data entry.",
-        tags: ["ai", "forms", "input", "autofill", "validation"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Forms" }],
-      },
-      {
-        name: "AI Generators",
-        description:
-          "Accelerate content creation with cutting-edge AI generation tools for text, code, and media. These featured components showcase the latest in generative AI integration—ideal for marketing automation, developer productivity suites, and creative workflow enhancement.",
-        tags: ["ai", "generator", "content", "automation", "creative"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Content Generators" }],
-      },
-      {
-        name: "AI Searches",
-        description:
-          "Drive discovery and engagement with intelligent search interfaces featuring semantic understanding and predictive results. These professional search components enhance user experience while increasing content findability and time-on-site metrics for e-commerce and content platforms.",
-        tags: ["ai", "search", "semantic", "command", "discovery"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Searches" }],
-      },
-      {
-        name: "AI Suggestions",
-        description:
-          "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows. These smart recommendation components leverage behavioral analytics to deliver personalized experiences that boost engagement and reduce cognitive load.",
-        tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Suggestions" }],
-      },
+      // {
+      //   name: "AI Commands",
+      //   description:
+      //     "Supercharge productivity workflows with smart command palettes and AI-powered navigation systems. These punchy interface components reduce user friction, accelerate task completion, and provide intelligent shortcuts—essential for enterprise software, developer tools, and power-user applications.",
+      //   tags: ["ai", "commands", "command-palette", "actions", "productivity"],
+      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+      //   items: [{ itemName: "Command Bar" }],
+      // },
+      // {
+      //   name: "AI Forms",
+      //   description:
+      //     "Revolutionize data collection with intelligent form components featuring AI validation, contextual suggestions, and automated workflows. These smart form concepts dramatically reduce abandonment rates while increasing conversion—perfect for lead generation, onboarding sequences, and enterprise data entry.",
+      //   tags: ["ai", "forms", "input", "autofill", "validation"],
+      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+      //   items: [{ itemName: "Forms" }],
+      // },
+      // {
+      //   name: "AI Generators",
+      //   description:
+      //     "Accelerate content creation with cutting-edge AI generation tools for text, code, and media. These featured components showcase the latest in generative AI integration—ideal for marketing automation, developer productivity suites, and creative workflow enhancement.",
+      //   tags: ["ai", "generator", "content", "automation", "creative"],
+      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+      //   items: [{ itemName: "Content Generators" }],
+      // },
+      // {
+      //   name: "AI Searches",
+      //   description:
+      //     "Drive discovery and engagement with intelligent search interfaces featuring semantic understanding and predictive results. These professional search components enhance user experience while increasing content findability and time-on-site metrics for e-commerce and content platforms.",
+      //   tags: ["ai", "search", "semantic", "command", "discovery"],
+      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+      //   items: [{ itemName: "Searches" }],
+      // },
+      // {
+      //   name: "AI Suggestions",
+      //   description:
+      //     "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows. These smart recommendation components leverage behavioral analytics to deliver personalized experiences that boost engagement and reduce cognitive load.",
+      //   tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
+      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+      //   items: [{ itemName: "Suggestions" }],
+      // },
       {
         name: "AI Summary",
         description:
@@ -209,97 +210,97 @@ export const COMPONENTS = createComponents([
     ],
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
-      {
-        name: "Checkout Forms",
-        description:
-          "Conversion-focused checkout form layouts designed to streamline the purchase flow. These components reduce friction, support multiple steps and layouts, and improve completion rates across e-commerce and SaaS payment experiences.",
-        tags: ["checkout", "forms", "payment", "conversion", "ecommerce", "ux"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Basic Checkout Form" },
-          { itemName: "Compact Checkout Form" },
-          { itemName: "Floating Checkout Form" },
-          { itemName: "Multi Step Checkout Form" },
-          { itemName: "Split Screen Checkout Form" },
-        ],
-      },
-      {
-        name: "Discount Badges",
-        description:
-          "Eye-catching discount and offer badge components that highlight promotions and drive urgency. Ideal for product listings and landing pages, these badges improve offer visibility and boost conversion rates.",
-        tags: [
-          "discount",
-          "badge",
-          "offer",
-          "promotion",
-          "pricing",
-          "ecommerce",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Simple Discount Badge" },
-          { itemName: "Minimal Discount Badge" },
-          { itemName: "Countdown Discount Badge" },
-          { itemName: "Collapse Discount Badge" },
-          { itemName: "Animated Discount Badge" },
-        ],
-      },
-      {
-        name: "Offer Banners",
-        description:
-          "Promotional banner components designed to announce offers, campaigns, and limited-time deals. These banners balance visibility with usability and are optimized for conversions and user engagement.",
-        tags: ["banner", "promotion", "offer", "marketing", "cta", "ecommerce"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Simple Offer Banner" },
-          { itemName: "Countdown Offer Banner" },
-          { itemName: "Interactive Offer Banner" },
-          { itemName: "Scrolling Offer Banner" },
-          { itemName: "Split Offer Banner" },
-        ],
-      },
-      {
-        name: "Payment Options",
-        description:
-          "Flexible payment selection components that present multiple payment methods clearly and securely. These layouts improve trust, reduce checkout abandonment, and support modern payment flows.",
-        tags: [
-          "payment",
-          "checkout",
-          "billing",
-          "methods",
-          "ecommerce",
-          "finance",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Minimal Payment Options" },
-          { itemName: "Payment Methods Cards" },
-          { itemName: "Payment Methods Selector" },
-          { itemName: "Saved Cards Payment Options" },
-          { itemName: "Split Payment Options" },
-        ],
-      },
-      {
-        name: "Pricing Cards",
-        description:
-          "Structured pricing card components that communicate plan value clearly. Designed for SaaS and subscription products, these cards highlight features, tiers, and CTAs to maximize plan selection.",
-        tags: [
-          "pricing",
-          "plans",
-          "subscription",
-          "saas",
-          "comparison",
-          "cards",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Simple Pricing Card" },
-          { itemName: "Minimal Pricing Card" },
-          { itemName: "Feature Comparison Pricing" },
-          { itemName: "Tiered Pricing Card" },
-          { itemName: "Toggle Pricing Card" },
-        ],
-      },
+      // {
+      //   name: "Checkout Forms",
+      //   description:
+      //     "Conversion-focused checkout form layouts designed to streamline the purchase flow. These components reduce friction, support multiple steps and layouts, and improve completion rates across e-commerce and SaaS payment experiences.",
+      //   tags: ["checkout", "forms", "payment", "conversion", "ecommerce", "ux"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Basic Checkout Form" },
+      //     { itemName: "Compact Checkout Form" },
+      //     { itemName: "Floating Checkout Form" },
+      //     { itemName: "Multi Step Checkout Form" },
+      //     { itemName: "Split Screen Checkout Form" },
+      //   ],
+      // },
+      // {
+      //   name: "Discount Badges",
+      //   description:
+      //     "Eye-catching discount and offer badge components that highlight promotions and drive urgency. Ideal for product listings and landing pages, these badges improve offer visibility and boost conversion rates.",
+      //   tags: [
+      //     "discount",
+      //     "badge",
+      //     "offer",
+      //     "promotion",
+      //     "pricing",
+      //     "ecommerce",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Simple Discount Badge" },
+      //     { itemName: "Minimal Discount Badge" },
+      //     { itemName: "Countdown Discount Badge" },
+      //     { itemName: "Collapse Discount Badge" },
+      //     { itemName: "Animated Discount Badge" },
+      //   ],
+      // },
+      // {
+      //   name: "Offer Banners",
+      //   description:
+      //     "Promotional banner components designed to announce offers, campaigns, and limited-time deals. These banners balance visibility with usability and are optimized for conversions and user engagement.",
+      //   tags: ["banner", "promotion", "offer", "marketing", "cta", "ecommerce"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Simple Offer Banner" },
+      //     { itemName: "Countdown Offer Banner" },
+      //     { itemName: "Interactive Offer Banner" },
+      //     { itemName: "Scrolling Offer Banner" },
+      //     { itemName: "Split Offer Banner" },
+      //   ],
+      // },
+      // {
+      //   name: "Payment Options",
+      //   description:
+      //     "Flexible payment selection components that present multiple payment methods clearly and securely. These layouts improve trust, reduce checkout abandonment, and support modern payment flows.",
+      //   tags: [
+      //     "payment",
+      //     "checkout",
+      //     "billing",
+      //     "methods",
+      //     "ecommerce",
+      //     "finance",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Minimal Payment Options" },
+      //     { itemName: "Payment Methods Cards" },
+      //     { itemName: "Payment Methods Selector" },
+      //     { itemName: "Saved Cards Payment Options" },
+      //     { itemName: "Split Payment Options" },
+      //   ],
+      // },
+      // {
+      //   name: "Pricing Cards",
+      //   description:
+      //     "Structured pricing card components that communicate plan value clearly. Designed for SaaS and subscription products, these cards highlight features, tiers, and CTAs to maximize plan selection.",
+      //   tags: [
+      //     "pricing",
+      //     "plans",
+      //     "subscription",
+      //     "saas",
+      //     "comparison",
+      //     "cards",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Simple Pricing Card" },
+      //     { itemName: "Minimal Pricing Card" },
+      //     { itemName: "Feature Comparison Pricing" },
+      //     { itemName: "Tiered Pricing Card" },
+      //     { itemName: "Toggle Pricing Card" },
+      //   ],
+      // },
       {
         name: "Pricing Tables",
         description:
@@ -308,92 +309,92 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [{ itemName: "Pricing Table 1" }],
       },
-      {
-        name: "Product Cards",
-        description:
-          "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
-        tags: ["product", "ecommerce", "card", "catalog"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Minimal Product Card" },
-          { itemName: "Standard Product Card" },
-          { itemName: "Product Card 1" },
-          { itemName: "Product Card 2" },
-          { itemName: "Status Product Card" },
-          { itemName: "Variants Product Card" },
-          { itemName: "Quick Actions Product Card" },
-        ],
-      },
-      {
-        name: "Product Display",
-        description:
-          "High-impact product display sections built to showcase product details, visuals, and key selling points. These layouts enhance product storytelling and support informed purchasing decisions.",
-        tags: ["product", "showcase", "details", "ecommerce", "ui", "display"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Compact Product Display" },
-          { itemName: "Minimal Product Display" },
-          { itemName: "Interactive Product Display" },
-          { itemName: "Tech Product Display" },
-          { itemName: "Luxury Product Display" },
-        ],
-      },
-      {
-        name: "Product Grids",
-        description:
-          "Responsive product grid layouts optimized for browsing large catalogs. These grids support filtering, highlighting, and masonry styles to improve discovery and visual balance.",
-        tags: [
-          "product-grid",
-          "catalog",
-          "listing",
-          "ecommerce",
-          "responsive",
-          "layout",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Minimal Product Grid" },
-          { itemName: "Standard Product Grid" },
-          { itemName: "Filters Product Grid" },
-          { itemName: "Featured Product Grid" },
-          { itemName: "Masonry Product Grid" },
-        ],
-      },
-      {
-        name: "Shopping Carts",
-        description:
-          "Shopping cart components that manage product selection, quantities, and checkout progression. These carts improve clarity, reduce errors, and guide users smoothly toward purchase completion.",
-        tags: ["cart", "shopping", "checkout", "ecommerce", "order", "summary"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Compact Shopping Cart" },
-          { itemName: "Progress Shopping Cart" },
-          { itemName: "Standard Shopping Cart" },
-          { itemName: "Sidebar Shopping Cart" },
-          { itemName: "Recommendations Shopping Cart" },
-        ],
-      },
-      {
-        name: "Wishlist Buttons",
-        description:
-          "Interactive wishlist button components that allow users to save products for later. These UI elements encourage return visits and improve engagement in e-commerce experiences.",
-        tags: [
-          "wishlist",
-          "favorites",
-          "like",
-          "ecommerce",
-          "interaction",
-          "ui",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Animated Wishlist Button" },
-          { itemName: "Standard Wishlist Button" },
-          { itemName: "Floating Wishlist Button" },
-          { itemName: "Tooltip Wishlist Button" },
-          { itemName: "Toggle Wishlist Button" },
-        ],
-      },
+      // {
+      //   name: "Product Cards",
+      //   description:
+      //     "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
+      //   tags: ["product", "ecommerce", "card", "catalog"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Minimal Product Card" },
+      //     { itemName: "Standard Product Card" },
+      //     { itemName: "Product Card 1" },
+      //     { itemName: "Product Card 2" },
+      //     { itemName: "Status Product Card" },
+      //     { itemName: "Variants Product Card" },
+      //     { itemName: "Quick Actions Product Card" },
+      //   ],
+      // },
+      // {
+      //   name: "Product Display",
+      //   description:
+      //     "High-impact product display sections built to showcase product details, visuals, and key selling points. These layouts enhance product storytelling and support informed purchasing decisions.",
+      //   tags: ["product", "showcase", "details", "ecommerce", "ui", "display"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Compact Product Display" },
+      //     { itemName: "Minimal Product Display" },
+      //     { itemName: "Interactive Product Display" },
+      //     { itemName: "Tech Product Display" },
+      //     { itemName: "Luxury Product Display" },
+      //   ],
+      // },
+      // {
+      //   name: "Product Grids",
+      //   description:
+      //     "Responsive product grid layouts optimized for browsing large catalogs. These grids support filtering, highlighting, and masonry styles to improve discovery and visual balance.",
+      //   tags: [
+      //     "product-grid",
+      //     "catalog",
+      //     "listing",
+      //     "ecommerce",
+      //     "responsive",
+      //     "layout",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Minimal Product Grid" },
+      //     { itemName: "Standard Product Grid" },
+      //     { itemName: "Filters Product Grid" },
+      //     { itemName: "Featured Product Grid" },
+      //     { itemName: "Masonry Product Grid" },
+      //   ],
+      // },
+      // {
+      //   name: "Shopping Carts",
+      //   description:
+      //     "Shopping cart components that manage product selection, quantities, and checkout progression. These carts improve clarity, reduce errors, and guide users smoothly toward purchase completion.",
+      //   tags: ["cart", "shopping", "checkout", "ecommerce", "order", "summary"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Compact Shopping Cart" },
+      //     { itemName: "Progress Shopping Cart" },
+      //     { itemName: "Standard Shopping Cart" },
+      //     { itemName: "Sidebar Shopping Cart" },
+      //     { itemName: "Recommendations Shopping Cart" },
+      //   ],
+      // },
+      // {
+      //   name: "Wishlist Buttons",
+      //   description:
+      //     "Interactive wishlist button components that allow users to save products for later. These UI elements encourage return visits and improve engagement in e-commerce experiences.",
+      //   tags: [
+      //     "wishlist",
+      //     "favorites",
+      //     "like",
+      //     "ecommerce",
+      //     "interaction",
+      //     "ui",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Animated Wishlist Button" },
+      //     { itemName: "Standard Wishlist Button" },
+      //     { itemName: "Floating Wishlist Button" },
+      //     { itemName: "Tooltip Wishlist Button" },
+      //     { itemName: "Toggle Wishlist Button" },
+      //   ],
+      // },
     ],
   },
   {
@@ -464,19 +465,19 @@ export const COMPONENTS = createComponents([
           { itemName: "Premium Container" },
         ],
       },
-      {
-        name: "Grid Systems",
-        description:
-          "Grid-based masonry layouts that arrange variable-height content into balanced columns. Ideal for galleries, feeds, and card-heavy interfaces, these layouts maximize space usage while staying fully responsive across screen sizes.",
+      // {
+      //   name: "Grid Systems",
+      //   description:
+      //     "Grid-based masonry layouts that arrange variable-height content into balanced columns. Ideal for galleries, feeds, and card-heavy interfaces, these layouts maximize space usage while staying fully responsive across screen sizes.",
 
-        tags: ["masonry", "grid", "layout", "gallery", "cards"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Basic Grid" },
-          { itemName: "Standard Grid" },
-          { itemName: "Animated Grid" },
-        ],
-      },
+      //   tags: ["masonry", "grid", "layout", "gallery", "cards"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Basic Grid" },
+      //     { itemName: "Standard Grid" },
+      //     { itemName: "Animated Grid" },
+      //   ],
+      // },
       {
         name: "Masonry Layouts",
         description:
@@ -490,53 +491,53 @@ export const COMPONENTS = createComponents([
           { itemName: "Masonry Image Gallery" },
         ],
       },
-      {
-        name: "Sidebars",
-        description:
-          "Optimize navigation efficiency with intelligent sidebar systems that adapt to user workflows. These featured layout components provide contextual navigation, reduce cognitive load, and improve task completion rates in complex applications.",
-        tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [{ itemName: "Sidebar 1" }],
-      },
-      {
-        name: "Split Layouts",
-        description:
-          "Responsive split-screen layouts designed to present parallel content side by side. Ideal for comparisons, onboarding flows, dashboards, and feature showcases, these layouts adapt seamlessly across devices while maintaining clear visual balance and hierarchy.",
-        tags: [
-          "split-layout",
-          "two-column",
-          "responsive",
-          "comparison",
-          "dashboard",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Basic Split Layout" },
-          { itemName: "Standard Split Layout" },
-          { itemName: "Animated Split Layout" },
-          { itemName: "Premium Split Layout" },
-        ],
-      },
-      {
-        name: "Stacks",
-        description:
-          "Vertical stacking layouts that organize content in a clear top-to-bottom flow. Perfect for feeds, forms, cards, and content-heavy sections, these stack systems ensure consistent spacing, alignment, and smooth responsiveness across screen sizes.",
-        tags: [
-          "stack",
-          "vertical-layout",
-          "spacing",
-          "content-flow",
-          "responsive",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Basic Stack" },
-          { itemName: "Standard Stack" },
-          { itemName: "Moderate Stack" },
-          { itemName: "Complex Stack" },
-          { itemName: "Animated Stack" },
-        ],
-      },
+      // {
+      //   name: "Sidebars",
+      //   description:
+      //     "Optimize navigation efficiency with intelligent sidebar systems that adapt to user workflows. These featured layout components provide contextual navigation, reduce cognitive load, and improve task completion rates in complex applications.",
+      //   tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [{ itemName: "Sidebar 1" }],
+      // },
+      // {
+      //   name: "Split Layouts",
+      //   description:
+      //     "Responsive split-screen layouts designed to present parallel content side by side. Ideal for comparisons, onboarding flows, dashboards, and feature showcases, these layouts adapt seamlessly across devices while maintaining clear visual balance and hierarchy.",
+      //   tags: [
+      //     "split-layout",
+      //     "two-column",
+      //     "responsive",
+      //     "comparison",
+      //     "dashboard",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Basic Split Layout" },
+      //     { itemName: "Standard Split Layout" },
+      //     { itemName: "Animated Split Layout" },
+      //     { itemName: "Premium Split Layout" },
+      //   ],
+      // },
+      // {
+      //   name: "Stacks",
+      //   description:
+      //     "Vertical stacking layouts that organize content in a clear top-to-bottom flow. Perfect for feeds, forms, cards, and content-heavy sections, these stack systems ensure consistent spacing, alignment, and smooth responsiveness across screen sizes.",
+      //   tags: [
+      //     "stack",
+      //     "vertical-layout",
+      //     "spacing",
+      //     "content-flow",
+      //     "responsive",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+      //   items: [
+      //     { itemName: "Basic Stack" },
+      //     { itemName: "Standard Stack" },
+      //     { itemName: "Moderate Stack" },
+      //     { itemName: "Complex Stack" },
+      //     { itemName: "Animated Stack" },
+      //   ],
+      // },
     ],
   },
   {
@@ -662,18 +663,18 @@ export const COMPONENTS = createComponents([
     ],
     techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
-      {
-        name: "Floating Menus",
-        description:
-          "Accelerate user actions with dynamic floating menus that provide instant access to key functions. These smart navigation components improve productivity metrics, reduce interaction cost, and create memorable user experiences through innovative interaction patterns.",
-        tags: ["menu", "dock", "speed", "radial", "navigation"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Dock Menu" },
-          { itemName: "Speed Dial Menu" },
-          { itemName: "Radial Menu" },
-        ],
-      },
+      // {
+      //   name: "Floating Menus",
+      //   description:
+      //     "Accelerate user actions with dynamic floating menus that provide instant access to key functions. These smart navigation components improve productivity metrics, reduce interaction cost, and create memorable user experiences through innovative interaction patterns.",
+      //   tags: ["menu", "dock", "speed", "radial", "navigation"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+      //   items: [
+      //     { itemName: "Dock Menu" },
+      //     { itemName: "Speed Dial Menu" },
+      //     { itemName: "Radial Menu" },
+      //   ],
+      // },
       {
         name: "Footers",
         description:
@@ -682,19 +683,19 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Footer" }],
       },
-      {
-        name: "Menu",
-        description:
-          "Streamline user journeys with intuitive menu systems that simplify complex navigation. These professional navigation components reduce bounce rates, improve content discovery, and enhance mobile experience through responsive designs and smart organization.",
-        tags: ["menu", "dropdown", "mega", "nav", "command"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Dropdown Menu" },
-          { itemName: "Mega Menu" },
-          { itemName: "Nav Menu" },
-          { itemName: "Command Palette" },
-        ],
-      },
+      // {
+      //   name: "Menu",
+      //   description:
+      //     "Streamline user journeys with intuitive menu systems that simplify complex navigation. These professional navigation components reduce bounce rates, improve content discovery, and enhance mobile experience through responsive designs and smart organization.",
+      //   tags: ["menu", "dropdown", "mega", "nav", "command"],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+      //   items: [
+      //     { itemName: "Dropdown Menu" },
+      //     { itemName: "Mega Menu" },
+      //     { itemName: "Nav Menu" },
+      //     { itemName: "Command Palette" },
+      //   ],
+      // },
       {
         name: "Navbars",
         description:
@@ -703,48 +704,48 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "Standard Navbar" }],
       },
-      {
-        name: "Pagination",
-        description:
-          "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
-        tags: [
-          "pagination",
-          "navigation",
-          "paging",
-          "tables",
-          "lists",
-          "infinite-scroll",
-          "ui",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Basic Pagination" },
-          { itemName: "Compact Pagination" },
-          { itemName: "Table Pagination" },
-          { itemName: "Load More Pagination" },
-          { itemName: "Infinite Scroll" },
-        ],
-      },
-      {
-        name: "Tabs",
-        description:
-          "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
-        tags: [
-          "pagination",
-          "navigation",
-          "paging",
-          "tables",
-          "lists",
-          "infinite-scroll",
-          "ui",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Basic Tab" },
-          { itemName: "Pills Tab" },
-          { itemName: "Scrollable Tab" },
-        ],
-      },
+      // {
+      //   name: "Pagination",
+      //   description:
+      //     "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
+      //   tags: [
+      //     "pagination",
+      //     "navigation",
+      //     "paging",
+      //     "tables",
+      //     "lists",
+      //     "infinite-scroll",
+      //     "ui",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+      //   items: [
+      //     { itemName: "Basic Pagination" },
+      //     { itemName: "Compact Pagination" },
+      //     { itemName: "Table Pagination" },
+      //     { itemName: "Load More Pagination" },
+      //     { itemName: "Infinite Scroll" },
+      //   ],
+      // },
+      // {
+      //   name: "Tabs",
+      //   description:
+      //     "Navigation controls that help users move efficiently through large datasets and content collections. These pagination patterns improve performance, usability, and content discoverability across tables, feeds, and long-form listings.",
+      //   tags: [
+      //     "pagination",
+      //     "navigation",
+      //     "paging",
+      //     "tables",
+      //     "lists",
+      //     "infinite-scroll",
+      //     "ui",
+      //   ],
+      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
+      //   items: [
+      //     { itemName: "Basic Tab" },
+      //     { itemName: "Pills Tab" },
+      //     { itemName: "Scrollable Tab" },
+      //   ],
+      // },
     ],
   },
   {
@@ -783,33 +784,10 @@ export const COMPONENTS = createComponents([
           { itemName: "Minimal Testimonial" },
           { itemName: "Social Testimonial" },
           { itemName: "Standard Testimonial" },
-          { itemName: "Glowing Testimonial" },
+          { itemName: "Company Testimonial" },
           { itemName: "Carousel Testimonial" },
         ],
       },
     ],
   },
-  // Example of another category:
-  // {
-  //   category: "Forms",
-  //   icon: "form-input", // Required category icon
-  //   tags: ["form", "input", "validation"],
-  //   techs: ["React Hook Form", "Zod"],
-  //   subcategories: [
-  //     {
-  //       name: "Inputs",
-  //       description: "Form input components",
-  //       icon: "keyboard", // Optional subcategory icon
-  //       tags: ["input", "text", "control"],
-  //       techs: ["React", "Tailwind CSS"],
-  //       items: [
-  //         {
-  //           itemName: "Text Input",
-  //           description: "A text input field",
-  //           tags: ["text", "input"],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ]);

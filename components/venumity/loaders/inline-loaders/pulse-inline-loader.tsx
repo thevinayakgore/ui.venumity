@@ -1,6 +1,6 @@
 export default function InlineLoaderPulse() {
   return (
-    <div className="inline-flex items-center gap-2">
+    <div className="inline-flex items-center justify-center m-auto gap-2">
       <span className="relative size-2.5">
         <span className="absolute inset-0 bg-primary rounded-full animate-ping w-full h-full" />
         <span className="absolute inset-0 z-10 bg-primary/60 scale-120 rounded-full animate-pulse w-full h-full" />

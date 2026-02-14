@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function LogoPageLoader() {
   return (
-    <main className="flex flex-col items-center justify-center gap-10">
+    <main className="flex flex-col items-center justify-center m-auto gap-10">
       <div className="relative">
         <motion.div
           className="flex items-center justify-center size-30"

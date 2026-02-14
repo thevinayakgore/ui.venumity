@@ -5,7 +5,7 @@ const GRID_SIZE = 3;
 
 export default function CustomLoaderGrid() {
   return (
-    <div className="grid grid-cols-3 gap-1.5">
+    <div className="grid grid-cols-3 gap-1.5 items-center justify-center m-auto">
       {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, index) => (
         <motion.div
           key={index}

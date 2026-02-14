@@ -105,7 +105,7 @@ export default function ButtonLoaderAnimated() {
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6 }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 items-center justify-center m-auto"
     >
       <AnimatedButton label="Success Action" finalState="success" />
       <AnimatedButton label="Waiting Action" finalState="waiting" />

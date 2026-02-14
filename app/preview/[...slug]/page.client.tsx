@@ -11,6 +11,8 @@ import {
   findComponentBySlugPath,
   getComponentByPath,
 } from "@/registry/component-utils";
+import { ArrowLeft, Terminal } from "lucide-react";
+import Link from "next/link";
 
 interface PreviewClientProps {
   slugPath: string;
@@ -134,14 +136,23 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
 
   return (
     <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
-      <nav className="fixed top-3 right-3 z-10000! transform-gpu! flex flex-col items-center gap-2">
+      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 p-2 bg-background border rounded-full">
+        <Link href="/components">
+          <Button
+            variant="ghost"
+            className="flex items-center gap-2 cursor-pointer text-foreground/60 hover:text-foreground rounded-full"
+          >
+            <ArrowLeft />
+            <span>Components</span>
+          </Button>
+        </Link>
         <Button
           size="icon"
           variant="secondary"
           onClick={() =>
             setTheme(mounted && theme === "dark" ? "light" : "dark")
           }
-          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +178,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           size="icon"
           variant="secondary"
           onClick={() => window.location.reload()}
-          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded-full"
           title="Refresh preview"
         >
           <svg
@@ -186,7 +197,22 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
             <path d="M21 3v6h-6" />
           </svg>
         </Button>
-      </nav>
+        <Link
+          href={
+            componentData?.subcategory
+              ? `/components/${toKebabCase(componentData.category)}/${toKebabCase(componentData.subcategory)}`
+              : `/components/${toKebabCase(componentData.category)}`
+          }
+        >
+          <Button
+            variant="secondary"
+            className="flex items-center gpa-2 cursor-pointer bg-foreground! text-secondary! inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full"
+          >
+            <Terminal />
+            <span>Code</span>
+          </Button>
+        </Link>
+      </footer>
       <section className="w-full h-full">
         {componentPath && (
           <ComponentPreview

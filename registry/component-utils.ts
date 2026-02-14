@@ -20,6 +20,7 @@ export interface ComponentSubcategory {
   name: string;
   description?: string;
   icon?: string;
+  thumbnail?: string; // Add thumbnail field
   tags?: string[];
   techs?: string[];
   items: ComponentItem[];
@@ -61,6 +62,7 @@ export function createComponents(
       name: string;
       description?: string;
       icon?: string;
+      thumbnail?: string; // Add thumbnail field
       tags: string[];
       techs: string[];
       items: {
@@ -82,6 +84,7 @@ export function createComponents(
       name: subcategoryData.name,
       description: subcategoryData.description,
       icon: subcategoryData.icon,
+      thumbnail: subcategoryData.thumbnail, // Pass thumbnail
       tags: subcategoryData.tags,
       techs: subcategoryData.techs,
       items: subcategoryData.items.map((itemData) => {

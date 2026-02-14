@@ -135,7 +135,7 @@ export default function ComponentPreview({
   }
 
   return (
-    <main className="flex items-center justify-center m-auto overflow-auto w-full h-full">
+    <main className="flex overflow-auto w-full h-full">
       <Button
         size="icon"
         variant="secondary"

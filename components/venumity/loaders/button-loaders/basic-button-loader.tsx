@@ -17,7 +17,7 @@ export default function BasicButtonLoader() {
     <Button
       onClick={handleClick}
       disabled={loading}
-      className="relative p-6 cursor-pointer min-w-50 disabled:opacity-80"
+      className="relative p-6 cursor-pointer min-w-50 disabled:opacity-80 items-center justify-center m-auto"
     >
       {loading ? (
         <>

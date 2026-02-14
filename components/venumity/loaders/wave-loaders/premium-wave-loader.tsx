@@ -5,10 +5,8 @@ export default function WaveLoaderPremium() {
   const bars = 9;
 
   return (
-    <motion.main
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center m-auto gap-5 p-4 sm:p-6 lg:p-8 xl:p-10 w-full h-full"
+    <main
+      className="flex flex-col items-center justify-center m-auto gap-5 p-4 sm:p-6 lg:p-8 xl:p-20 w-full h-full"
     >
       <div className="relative">
         <div className="flex items-end justify-center gap-2 border-b-2 h-20 w-55">
@@ -88,6 +86,6 @@ export default function WaveLoaderPremium() {
           Active processing • High quality • Real-time
         </span>
       </div>
-    </motion.main>
+    </main>
   );
 }

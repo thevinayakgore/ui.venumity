@@ -165,14 +165,14 @@ export default function Hero() {
               <span className="text-4xl scale-115 -mt-1 mb-1">Components</span>
               <span className="text-4xl scale-135">of library</span>
             </div>
-            <div className="aspect-video absolute -bottom-6 left-0 p-4 w-full">
+            <div className="aspect-video absolute -bottom-50 left-0 p-6 w-full">
               <motion.div
                 key={activeComponentIndex}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 initial={{ opacity: 0, y: 100, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                whileHover={{ y: latestSubcategories.length > 0 ? -50 : 0 }}
+                whileHover={{ y: latestSubcategories.length > 0 ? -120 : 0 }}
                 exit={{ opacity: 0, y: 100, filter: "blur(10px)" }}
                 transition={{ duration: 0.7, ease: "easeInOut" }}
                 className="overflow-hidden rounded-xl w-full"

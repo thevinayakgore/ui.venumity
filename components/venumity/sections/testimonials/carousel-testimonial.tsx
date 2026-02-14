@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 
 export default function CarouselTestimonial() {
   const [isAnimating, setIsAnimating] = useState(false);
-
   const testimonials = [
     {
       name: "Manish Singh",
@@ -52,6 +51,7 @@ export default function CarouselTestimonial() {
     },
   ];
 
+
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -82,7 +82,7 @@ export default function CarouselTestimonial() {
   }, [isPlaying, handleNext]);
 
   return (
-    <div className={`relative md:p-8 overflow-hidden`}>
+    <main className="relative flex flex-col items-center justify-center m-auto p-6 md:p-10 max-w-2xl w-full h-full">
       <div className="bg-foreground/5 backdrop-blur-3xl border-2 rounded-lg shadow-xl p-6 max-w-3xl mx-auto w-full">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-center mb-6">
@@ -163,6 +163,6 @@ export default function CarouselTestimonial() {
           {isPlaying ? <Pause /> : <Play />}
         </Button>
       </div>
-    </div>
+    </main>
   );
 }

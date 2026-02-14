@@ -61,34 +61,6 @@ We deliver more than just UI components - we provide **the building blocks for f
 - 🌱 **Community-Driven Ecosystem**  
   Contribute your own creations. Share your best work with fellow developers and help build the future of UI development together.
 
-## 🎒 What's Inside ?
-
-**Venu<span style="color:orange">mity</span> UI** offers a curated collection of components across multiple categories :
-
-### 💼 **Core UI Components**
-- **Buttons** - Primary, secondary, ghost, destructive variants
-- **Cards** - Multiple layouts with headers, footers, and content areas
-- **Forms** - Inputs, selects, checkboxes with validation
-- **Navigation** - Menus, tabs, breadcrumbs, and sidebars
-
-### 🎭 **Interactive Elements**
-- **Modals & Dialogs** - Fully accessible overlay components
-- **Notifications** - Toast, alerts, and snackbars
-- **Loaders & Skeletons** - Beautiful loading states
-- **Tooltips & Popovers** - Contextual information display
-
-### 📊 **Data Display**
-- **Tables** - Sortable, filterable, and paginated
-- **Charts** - Simple data visualization components
-- **Lists & Grids** - Flexible content organization
-- **Stats & Metrics** - Data visualization cards
-
-### 🏗️ **Layout Components**
-- **Dashboards** - Ready-to-use dashboard layouts
-- **Hero Sections** - Landing page components
-- **Pricing Tables** - Multiple pricing strategies
-- **Feature Sections** - Product feature showcases
-
 ## 🚀 Getting Started
 
 ### Basic Usage
@@ -173,7 +145,20 @@ We welcome contributions from developers of all skill levels ! Whether you're fi
 1. **Fork** the repository
 2. **Create** a feature branch
 3. **Make** your changes
-4. **Submit** a pull request
+4. **Screenshot** of component
+5. **Submit** a pull request
+
+## 📌 Note on Component Thumbnails
+
+Contributors must capture a **screenshot of the first component item** from each **subcategory/category** and place it in the `public/thumbnails` folder.
+
+- This screenshot is used as the **default thumbnail preview**.
+- The **maintainer (@thevinayakgore)** may later replace this thumbnail with a **“best of” component showcase** if needed.
+- Contributors are **not required** to curate or optimize thumbnails beyond the **first item screenshot**.
+
+This ensures consistency while allowing curated visual improvements over time.
+
+----
 
 ### Contribution Areas
 - 🐛 **Bug fixes** - Help squash those pesky bugs

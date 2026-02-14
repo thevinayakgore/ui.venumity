@@ -19,7 +19,7 @@ export default function ButtonLoaderOutline() {
       variant="outline"
       onClick={handleClick}
       disabled={loading}
-      className="relative p-6 cursor-pointer border-3 min-w-50 group overflow-hidden transition-all duration-500"
+      className="relative items-center justify-center m-auto p-6 cursor-pointer border-3 min-w-50 group overflow-hidden transition-all duration-500"
     >
       {loading && (
         <motion.div
