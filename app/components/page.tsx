@@ -112,10 +112,10 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
   return (
     <button
       onClick={() => onClick(card.path)}
-      className="cursor-pointer transition-all duration-500 text-start group p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden hover:shadow-lg/10 w-full h-fit"
+      className="relative cursor-pointer text-start p-1.5 group bg-foreground/3 border border-foreground/10 rounded-2xl overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
     >
-      <div className="relative flex flex-col border rounded-lg transition-all duration-500 w-full h-full">
-        <div className="aspect-video relative border-b w-full overflow-hidden rounded-t-lg">
+      <div className="relative flex flex-col rounded-2xl transition-all duration-500 w-full h-full">
+        <div className="aspect-video relative border border-foreground/7 w-full overflow-hidden rounded-xl">
           {!imageError ? (
             <Image
               src={thumbnailPath}
@@ -123,7 +123,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
               width={5000}
               height={5000}
               onError={() => setImageError(true)}
-              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              className="object-cover group-hover:scale-120 transition-all duration-500 w-full h-full"
               unoptimized
             />
           ) : (
@@ -146,7 +146,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="px-4 pt-6 pb-4">
           <div className="flex items-start justify-between">
             <h2 className="text-lg font-medium whitespace-nowrap truncate leading-none">
               {card.title}
@@ -188,10 +188,9 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
             )}
           </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-2 w-1/2" />
       </div>
+      <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-2 w-1/2" />
     </button>
   );
 }
