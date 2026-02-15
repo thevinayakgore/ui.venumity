@@ -17,6 +17,7 @@ export interface ComponentItem {
   isFolderBased?: boolean;
   hasFolderStructure?: boolean;
   hasSetup?: boolean;
+  githubUsername?: string;
 }
 
 export interface ComponentSubcategory {
@@ -27,8 +28,8 @@ export interface ComponentSubcategory {
   tags?: string[];
   techs?: string[];
   items: ComponentItem[];
-  hasFolderStructure?: boolean; // Add this for subcategory level
-  hasSetup?: boolean; // Add this for subcategory level
+  hasFolderStructure?: boolean;
+  hasSetup?: boolean;
 }
 
 export interface ComponentCategory {
@@ -80,6 +81,7 @@ export function createComponents(
         video?: string;
         hasFolderStructure?: boolean;
         hasSetup?: boolean;
+        githubUsername?: string;
       }[];
     }[];
   }[],
@@ -117,6 +119,7 @@ export function createComponents(
           hasFolderStructure: itemData.hasFolderStructure || false,
           hasSetup: itemData.hasSetup || false,
           isFolderBased: itemData.hasFolderStructure || false,
+          githubUsername: itemData.githubUsername, // Add this line
         };
       }),
     })),

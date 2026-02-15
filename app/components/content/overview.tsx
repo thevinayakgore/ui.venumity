@@ -8,6 +8,8 @@ import CodeBlock from "@/components/site/common/code-block";
 import ComponentPreview from "./preview";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { OpenTools } from "./open-tools";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ExtendedOverviewProps {
   itemName?: string;
@@ -21,6 +23,7 @@ interface ExtendedOverviewProps {
   slugPath?: string;
   subcategory?: string;
   isInListView?: boolean;
+  githubUsername?: string;
 }
 
 type TabType = "preview" | "code" | "video";
@@ -37,6 +40,7 @@ export default function Overview({
   componentName,
   slugPath = "",
   subcategory,
+  githubUsername,
 }: ExtendedOverviewProps) {
   const [activeTab, setActiveTab] = useState<TabType>(PREVIEW_TAB);
 
@@ -244,6 +248,22 @@ export default function Overview({
         >
           <div className="relative flex flex-col overflow-hidden bg-background w-full h-full">
             {mainContent}
+            {githubUsername && (
+              <Link
+                href={`https://github.com/${githubUsername}`}
+                target="_blank"
+                className="absolute bottom-4 right-4 flex items-center gap-1 p-1 pr-3 leading-none bg-sky-500/10 backdrop-blur-md border border-sky-500/30 inset-shadow-sm inset-shadow-sky-500/40 text-xs font-medium rounded-full w-fit"
+              >
+                <Image
+                  src={`https://github.com/${githubUsername}.png`}
+                  alt={`${githubUsername} GitHub profile`}
+                  width={500}
+                  height={500}
+                  className="size-4.5 rounded-full"
+                />
+                <span>{githubUsername}</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

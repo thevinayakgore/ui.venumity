@@ -48,6 +48,7 @@ export default function ComponentItemWithTabs({
         slugPath={itemSlugPath}
         subcategory={item.subcategory}
         isInListView={true}
+        githubUsername={item.githubUsername}
       />
 
       {/* Component-specific Folder Structure & Installation */}

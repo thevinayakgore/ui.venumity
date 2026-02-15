@@ -296,6 +296,7 @@ export default function PageClient({
                 slugPath={slugPath}
                 subcategory={subcategory || componentData.subcategory}
                 isInListView={false}
+                githubUsername={componentData.githubUsername}
               />
             </section>
 

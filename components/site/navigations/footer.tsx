@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { authorName, brandName } from "@/lib/brand";
 import { usePathname } from "next/navigation";
@@ -22,6 +23,8 @@ type FooterSection = {
   title: string;
   links: FooterLink[];
 };
+
+const words = ["Imagine", "Impact", "Inspire"];
 
 const FOOTER_TITLE =
   "The best way to learn is to build and the best way to build is with tools that empower rather than overwhelm.";
@@ -468,6 +471,27 @@ export default function Footer() {
         <h1 className="absolute bottom-0 left-1/2 -translate-x-1/2 opacity-30 text-center text-[20rem]  uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none">
           Library
         </h1>
+        <h3 className="absolute bottom-35 left-1/2 -translate-x-1/2 tracking-widest text-center text-xl font-medium uppercase whitespace-nowrap leading-none w-fit flex gap-3">
+          {words.map((word, i) => (
+            <motion.span
+              key={word}
+              animate={{
+                y: [0, -10, 0],
+                opacity: [0.3, 0.8, 0.3],
+                filter: ["blur(5px)", "blur(0px)", "blur(5px)"],
+              }}
+              transition={{
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: i * 0.8,
+              }}
+              className={`inline-block ${i === 0 ? "text-primary" : i === 2 ? "text-green-500" : "text-zinc-300"}`}
+            >
+              {word} ^
+            </motion.span>
+          ))}
+        </h3>
 
         {/* Footer Bottom */}
         <BottomFooter />

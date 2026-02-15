@@ -13,6 +13,12 @@ import {
 } from "@/registry/component-utils";
 import { ArrowLeft, Terminal } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PreviewClientProps {
   slugPath: string;
@@ -134,69 +140,111 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
 
   if (!mounted) return null;
 
+  // Get githubUsername from component data
+  const githubUsername = componentData.githubUsername;
+
   return (
     <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
-      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 p-2 bg-background border rounded-full">
+      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 p-1.5 bg-background border rounded-full">
         <Link href="/components">
-          <Button
-            variant="ghost"
-            className="flex items-center gap-2 cursor-pointer text-foreground/60 hover:text-foreground rounded-full"
-          >
-            <ArrowLeft />
-            <span>Components</span>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 cursor-pointer text-foreground/60 hover:text-foreground rounded-full"
+              >
+                <ArrowLeft />
+                <span>Components</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Get back to Components</TooltipContent>
+          </Tooltip>
         </Link>
-        <Button
-          size="icon"
-          variant="secondary"
-          onClick={() =>
-            setTheme(mounted && theme === "dark" ? "light" : "dark")
-          }
-          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded-full"
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() =>
+                setTheme(mounted && theme === "dark" ? "light" : "dark")
+              }
+              className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! group border rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4.5 group-hover:rotate-360 transition-all duration-500"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                <path d="M12 3l0 18" />
+                <path d="M12 9l4.65 -4.65" />
+                <path d="M12 14.3l7.37 -7.37" />
+                <path d="M12 19.6l8.85 -8.85" />
+              </svg>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Dark Mode</TooltipContent>
+        </Tooltip>
+        <Link
+          href={`https://github.com/${githubUsername}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-4.5"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 3l0 18" />
-            <path d="M12 9l4.65 -4.65" />
-            <path d="M12 14.3l7.37 -7.37" />
-            <path d="M12 19.6l8.85 -8.85" />
-          </svg>
-        </Button>
-        <Button
-          size="icon"
-          variant="secondary"
-          onClick={() => window.location.reload()}
-          className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded-full"
-          title="Refresh preview"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-4.5"
-          >
-            <path d="M21 12a9 9 0 1 1 -3 -6.7" />
-            <path d="M21 3v6h-6" />
-          </svg>
-        </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="secondary"
+                className="cursor-pointer group border rounded-full overflow-hidden"
+              >
+                <Image
+                  src={`https://github.com/${githubUsername}.png`}
+                  alt={`${githubUsername} GitHub profile`}
+                  width={500}
+                  height={500}
+                  className="rounded-full grayscale-100 group-hover:grayscale-0 transition-all duration-500 w-full h-full"
+                />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>GitHub profile of {githubUsername}</TooltipContent>
+          </Tooltip>
+        </Link>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() => window.location.reload()}
+              className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! group border rounded-full"
+              title="Refresh preview"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4.5 group-hover:rotate-360 transition-all duration-500"
+              >
+                <path d="M21 12a9 9 0 1 1 -3 -6.7" />
+                <path d="M21 3v6h-6" />
+              </svg>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Reload Component</TooltipContent>
+        </Tooltip>
         <Link
           href={
             componentData?.subcategory
@@ -204,13 +252,18 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
               : `/components/${toKebabCase(componentData.category)}`
           }
         >
-          <Button
-            variant="secondary"
-            className="flex items-center gpa-2 cursor-pointer bg-foreground! text-secondary! inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full"
-          >
-            <Terminal />
-            <span>Code</span>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="secondary"
+                className="flex items-center gap-2 cursor-pointer bg-foreground text-secondary inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full hover:bg-green-500 hover:text-white hover:border-zinc-200 hover:inset-shadow-green-100 transition-all duration-500"
+              >
+                <Terminal />
+                <span>Code</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>View Source Code</TooltipContent>
+          </Tooltip>
         </Link>
       </footer>
       <section className="w-full h-full">
