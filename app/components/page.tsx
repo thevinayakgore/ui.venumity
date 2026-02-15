@@ -52,47 +52,72 @@ export interface CategoryCard {
   techs?: string[];
 }
 
+// In app/components/page.tsx, update the getCategoryCards function:
 export function getCategoryCards(): CategoryCard[] {
   const cards: CategoryCard[] = [];
 
+  console.log("COMPONENTS data:", JSON.stringify(COMPONENTS, null, 2)); // Better debug
+
   COMPONENTS.forEach((category) => {
+    console.log(`Processing category: ${category.name}`);
+
     if (category.subcategories.length > 0) {
       category.subcategories.forEach((subcategory) => {
-        if (subcategory.items.length > 0) {
-          const path = `/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
+        // Log the raw subcategory data
+        console.log(`  Subcategory: ${subcategory.name}`, {
+          itemsLength: subcategory.items?.length,
+          items: subcategory.items?.map((i) => i.itemName),
+          rawItems: subcategory.items,
+        });
 
-          const allTags = getSubcategoryTags(
+        // Don't filter by items.length - show all subcategories that exist
+        // Just use a fallback item count
+        const itemCount = subcategory.items?.length || 0;
+
+        const path = `/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
+
+        const allTags =
+          subcategory.tags ||
+          getSubcategoryTags(
             toKebabCase(category.name),
             toKebabCase(subcategory.name),
-          );
+          ) ||
+          [];
 
-          const allTechs = getSubcategoryTechs(
+        const allTechs =
+          subcategory.techs ||
+          getSubcategoryTechs(
             toKebabCase(category.name),
             toKebabCase(subcategory.name),
-          );
+          ) ||
+          [];
 
-          const description =
-            subcategory.description ||
-            subcategory.items[0]?.description ||
-            `${subcategory.items.length} component${subcategory.items.length !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
+        const description =
+          subcategory.description ||
+          subcategory.items?.[0]?.description ||
+          `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-          cards.push({
-            id: `${category.name}-${subcategory.name}`,
-            title: subcategory.name,
-            description: description,
-            type: "subcategory",
-            parentCategory: category.name,
-            path: path,
-            itemCount: subcategory.items.length,
-            tags: allTags,
-            techs: allTechs,
-            thumbnail: subcategory.thumbnail,
-          });
-        }
+        console.log(
+          `    Adding card for: ${subcategory.name} with ${itemCount} items`,
+        );
+
+        cards.push({
+          id: `${category.name}-${subcategory.name}`,
+          title: subcategory.name,
+          description: description,
+          type: "subcategory",
+          parentCategory: category.name,
+          path: path,
+          itemCount: itemCount,
+          tags: allTags,
+          techs: allTechs,
+          thumbnail: subcategory.thumbnail,
+        });
       });
     }
   });
 
+  console.log("Final cards count:", cards.length);
   return [...cards].sort((a, b) =>
     a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
   );
@@ -112,18 +137,18 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
   return (
     <button
       onClick={() => onClick(card.path)}
-      className="relative cursor-pointer text-start p-1.5 group bg-foreground/3 border border-foreground/10 rounded-2xl overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
+      className="relative cursor-pointer text-start p-3 group bg-foreground/3 border border-foreground/5 rounded-[1.2rem] overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
     >
-      <div className="relative flex flex-col rounded-2xl transition-all duration-500 w-full h-full">
-        <div className="aspect-video relative border border-foreground/7 w-full overflow-hidden rounded-xl">
+      <div className="relative flex flex-col rounded-[1.2rem] transition-all duration-500 w-full h-full">
+        <div className="aspect-video relative w-full overflow-hidden rounded-xl">
           {!imageError ? (
             <Image
               src={thumbnailPath}
               alt={card.title}
-              width={5000}
-              height={5000}
+              width={500}
+              height={280}
               onError={() => setImageError(true)}
-              className="object-cover group-hover:scale-120 transition-all duration-500 w-full h-full"
+              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
               unoptimized
             />
           ) : (
@@ -146,25 +171,25 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
         </div>
 
         {/* Content */}
-        <div className="px-4 pt-6 pb-4">
+        <div className="p-3 pt-6">
           <div className="flex items-start justify-between">
-            <h2 className="text-lg font-medium whitespace-nowrap truncate leading-none">
+            <h2 className="text-xl font-medium whitespace-nowrap truncate leading-none">
               {card.title}
             </h2>
-            <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
+            <span className="text-xs px-2 py-1 -mt-2 rounded bg-primary/10 text-primary/80">
               {card.itemCount > 0 && card.itemCount <= 9 && "0"}
               {card.itemCount}
             </span>
           </div>
 
-          <p className="text-xs line-clamp-2 opacity-60 mt-1 mb-3">
+          <p className="text-xs line-clamp-2 opacity-60 my-3">
             {card.description}
           </p>
 
           <div className="flex flex-wrap gap-1.5">
-            {[...(card.tags || [])].length > 0 ? (
+            {card.tags && card.tags.length > 0 ? (
               <>
-                {[...(card.tags || [])].slice(0, 3).map((item, index) => (
+                {card.tags.slice(0, 3).map((item, index) => (
                   <span
                     key={`${item}-${index}`}
                     className="bg-foreground/5 text-muted-foreground text-[10px] px-1.5 py-1 capitalize leading-none rounded border border-foreground/10 w-fit"
@@ -173,9 +198,9 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
                   </span>
                 ))}
 
-                {[...(card.tags || [])].length > 3 && (
+                {card.tags.length > 3 && (
                   <span className="text-[10px] px-1.5 py-1 leading-none rounded bg-foreground/5 border border-foreground/10 text-muted-foreground w-fit">
-                    +{[...(card.tags || [])].length - 3}
+                    +{card.tags.length - 3}
                   </span>
                 )}
               </>
@@ -190,7 +215,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
         </div>
       </div>
       <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-2 w-1/2" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent rounded-full transition-all duration-500 h-1.5 w-2/3" />
     </button>
   );
 }
@@ -214,18 +239,23 @@ function InfiniteScrollLoader({
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
+        if (entries[0]?.isIntersecting && hasMore && !loading) {
           onLoadMore();
         }
       },
       { threshold: 0.1, rootMargin: "200px" },
     );
 
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
   }, [hasMore, loading, onLoadMore]);
 
   return (
@@ -260,9 +290,11 @@ function useInfinitePagination<T extends { id: string }>(
 
   // Load saved state from localStorage on mount
   useEffect(() => {
+    if (items.length === 0) return;
+
     try {
       const savedState = localStorage.getItem(SCROLL_STATE_KEY);
-      if (savedState && items.length > 0) {
+      if (savedState) {
         const { savedPage, savedItemIds } = JSON.parse(savedState);
 
         // Verify that saved items still exist in the current items list
@@ -328,10 +360,7 @@ function useInfinitePagination<T extends { id: string }>(
       const nextItems = items.slice(startIndex, endIndex);
 
       if (nextItems.length > 0) {
-        setDisplayedItems((prev) => {
-          const newItems = [...prev, ...nextItems];
-          return newItems;
-        });
+        setDisplayedItems((prev) => [...prev, ...nextItems]);
         setCurrentPage(nextPage);
         setHasMore(endIndex < items.length);
       } else {
@@ -342,6 +371,15 @@ function useInfinitePagination<T extends { id: string }>(
     }, 800);
   }, [currentPage, hasMore, isLoadingMore, items, pageSize, isInitialized]);
 
+  // Clear localStorage when all items are displayed (optional)
+  const resetPagination = useCallback(() => {
+    localStorage.removeItem(SCROLL_STATE_KEY);
+    setDisplayedItems(items.slice(0, pageSize));
+    setCurrentPage(1);
+    setHasMore(items.length > pageSize);
+    setIsLoadingMore(false);
+  }, [items, pageSize]);
+
   return {
     displayedItems,
     hasMore,
@@ -350,6 +388,7 @@ function useInfinitePagination<T extends { id: string }>(
     totalItems: items.length,
     currentPage,
     isInitialized,
+    resetPagination,
   };
 }
 
@@ -372,15 +411,20 @@ export default function Components() {
   } = useInfinitePagination(categoryCards, 30);
 
   // Load all cards on mount
+  // In the main Components function, update the useEffect :
   useEffect(() => {
     const loadCategories = async () => {
       try {
         setLoading(true);
         const cards = getCategoryCards();
+
+        // TEMPORARY: Clear localStorage to reset pagination
+        localStorage.removeItem(SCROLL_STATE_KEY);
+
         setCategoryCards(cards);
       } catch (error) {
         console.error("Error loading components:", error);
-        toast.error("Error loading components: " + error);
+        toast.error("Error loading components");
       } finally {
         setLoading(false);
       }
@@ -394,10 +438,10 @@ export default function Components() {
   };
 
   // Calculate loading progress
-  const progressPercentage = Math.min(
-    Math.round((displayedItems.length / totalItems) * 100),
-    100,
-  );
+  const progressPercentage =
+    totalItems > 0
+      ? Math.min(Math.round((displayedItems.length / totalItems) * 100), 100)
+      : 0;
 
   return (
     <main className="w-full h-full">
@@ -443,25 +487,25 @@ export default function Components() {
 
       {/* Loading State - Initial Load */}
       {loading && (
-        <section className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5 w-full">
-          {Array.from({ length: 8 }).map((_, index) => (
+        <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+          {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="p-2 bg-foreground/3 border border-foreground/10 rounded-xl overflow-hidden w-full h-fit animate-pulse"
+              className="p-3 bg-foreground/3 border border-foreground/5 rounded-[1.2rem] overflow-hidden w-full h-fit animate-pulse"
             >
-              <div className="space-y-2 bg-background border rounded-lg w-full h-full">
-                <div className="aspect-video w-full bg-primary/10 rounded-t-lg"></div>
-                <div className="p-4 space-y-2">
+              <div className="space-y-2 rounded-[1.2rem] w-full h-full">
+                <div className="aspect-video w-full bg-foreground/5 rounded-xl"></div>
+                <div className="px-3 py-4 space-y-3">
                   <div className="flex justify-between items-start">
-                    <div className="h-5 w-1/2 bg-foreground/10 rounded"></div>
-                    <div className="h-6 w-8 bg-foreground/10 rounded"></div>
+                    <div className="h-5 w-1/2 bg-foreground/5 rounded"></div>
+                    <div className="h-6 w-8 bg-foreground/5 rounded"></div>
                   </div>
-                  <div className="h-4 w-full bg-foreground/10 rounded"></div>
-                  <div className="h-4 w-3/4 bg-foreground/10 rounded"></div>
+                  <div className="h-4 w-full bg-foreground/5 rounded"></div>
+                  <div className="h-4 w-3/4 bg-foreground/5 rounded"></div>
                   <div className="flex gap-1.5">
-                    <div className="h-5 w-12 bg-foreground/10 rounded"></div>
-                    <div className="h-5 w-10 bg-foreground/10 rounded"></div>
-                    <div className="h-5 w-8 bg-foreground/10 rounded"></div>
+                    <div className="h-5 w-12 bg-foreground/5 rounded"></div>
+                    <div className="h-5 w-10 bg-foreground/5 rounded"></div>
+                    <div className="h-5 w-8 bg-foreground/5 rounded"></div>
                   </div>
                 </div>
               </div>

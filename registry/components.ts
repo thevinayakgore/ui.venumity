@@ -6,8 +6,6 @@ export const COMPONENTS = createComponents([
   {
     category: "AI Features",
     icon: "bot",
-    tags: ["ui", "feedback", "notifications", "interaction", "frontend"],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       // {
       //   name: "AI Analytics",
@@ -84,8 +82,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Badges",
     icon: "badge-check",
-    tags: ["ui", "feedback", "notifications", "interaction", "frontend"],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Status Badges",
@@ -106,14 +102,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Charts",
     icon: "chart-pie",
-    tags: [
-      "data-visualization",
-      "analytics",
-      "dashboard-charts",
-      "infographics",
-      "d3-js",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS", "Recharts"],
     subcategories: [
       {
         name: "Area Charts",
@@ -201,14 +189,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Commerce",
     icon: "indian-rupee",
-    tags: [
-      "ecommerce-ui",
-      "saas-blocks",
-      "conversion",
-      "sales-funnel",
-      "pricing",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       // {
       //   name: "Checkout Forms",
@@ -398,10 +378,35 @@ export const COMPONENTS = createComponents([
     ],
   },
   {
+    category: "Dashboards",
+    icon: "chart-no-axes-combined",
+    subcategories: [
+      {
+        name: "Financial",
+        description:
+          "Professional financial dashboard layouts designed to track income, expenses, savings, and key performance metrics. These dashboards provide clear data visualization, actionable insights, and a structured overview—ideal for personal finance tools, fintech platforms, and business reporting applications.",
+        tags: [
+          "finance",
+          "personal-finance",
+          "analytics",
+          "metrics",
+          "charts",
+          "reports",
+          "fintech",
+        ],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [
+          {
+            itemName: "Personal Panel 1",
+            hasFolderStructure: true, // Enable Folder Structure
+          },
+        ],
+      },
+    ],
+  },
+  {
     category: "Feedbacks",
     icon: "messages-square",
-    tags: ["ui", "feedback", "notifications", "interaction", "frontend"],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Alerts",
@@ -444,14 +449,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Layouts",
     icon: "layout-template",
-    tags: [
-      "app-shell",
-      "dashboard-layout",
-      "structure",
-      "ux-architecture",
-      "frontend",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Containers",
@@ -543,14 +540,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Loaders",
     icon: "loader",
-    tags: [
-      "spinner",
-      "loading",
-      "progress-indicator",
-      "ui-element",
-      "animation",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       {
         name: "Button Loaders",
@@ -654,14 +643,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Navigations",
     icon: "send",
-    tags: [
-      "site-navigation",
-      "header-footer",
-      "menus",
-      "ux-design",
-      "internal-links",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS"],
     subcategories: [
       // {
       //   name: "Floating Menus",
@@ -751,14 +732,6 @@ export const COMPONENTS = createComponents([
   {
     category: "Sections",
     icon: "layout-grid",
-    tags: [
-      "ui-components",
-      "web-sections",
-      "landing-page",
-      "frontend-blocks",
-      "responsive-design",
-    ],
-    techs: ["React", "TypeScript", "Tailwind CSS", "Motion"],
     subcategories: [
       {
         name: "FAQ",

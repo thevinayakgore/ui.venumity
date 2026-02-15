@@ -23,11 +23,17 @@ const findComponentFile = (
   componentParts: string[],
 ): string | null => {
   const componentPath = componentParts.join("/");
+  
+  // Try exact path with .tsx extension first
+  const exactPath = path.join(basePath, category, `${componentPath}.tsx`);
+  if (fs.existsSync(exactPath)) {
+    return exactPath;
+  }
 
-  // Try exact path first - only .tsx files
-  const fullPath = path.join(basePath, category, `${componentPath}.tsx`);
-  if (fs.existsSync(fullPath)) {
-    return fullPath;
+  // Try exact path with index.tsx (for folder-based components)
+  const indexPath = path.join(basePath, category, componentPath, "index.tsx");
+  if (fs.existsSync(indexPath)) {
+    return indexPath;
   }
 
   // Try to find recursively
@@ -47,6 +53,15 @@ const findComponentFile = (
       const itemNameKebab = toKebabCase(item.name.replace(/\.tsx$/, ""));
 
       if (item.isDirectory() && itemNameKebab === currentPart) {
+        // If this is the last part and directory contains index.tsx
+        if (remainingParts.length === 1) {
+          const indexPath = path.join(dir, item.name, "index.tsx");
+          if (fs.existsSync(indexPath)) {
+            return indexPath;
+          }
+        }
+        
+        // Continue searching in subdirectory
         const result = searchRecursively(
           path.join(dir, item.name),
           remainingParts.slice(1),
@@ -86,15 +101,27 @@ const getAllComponentsInSubcategory = (
     if (item.isFile() && item.name.endsWith('.tsx')) {
       const componentName = item.name.replace(/\.tsx$/, "");
       const filePath = path.join(subcategoryPath, item.name);
-      // Read EXACT file content without any modifications
       const code = readFile(filePath);
 
       if (code) {
         components.push({
           name: componentName,
-          // Return EXACT code as read from file
           code: code,
         });
+      }
+    } else if (item.isDirectory()) {
+      // Check if directory contains an index.tsx file
+      const indexPath = path.join(subcategoryPath, item.name, "index.tsx");
+      if (fs.existsSync(indexPath)) {
+        const componentName = item.name; // Use folder name as component name
+        const code = readFile(indexPath);
+        
+        if (code) {
+          components.push({
+            name: componentName,
+            code: code,
+          });
+        }
       }
     }
   }
@@ -129,7 +156,6 @@ export async function GET(
         toKebabCase(component[0]),
       );
       return NextResponse.json({
-        // Return EXACT component code without any processing
         components: allComponents,
         isSubcategory: true,
       });
@@ -160,7 +186,7 @@ export async function GET(
 
     // Return the EXACT code as read from the file
     return NextResponse.json({
-      code: code, // This is the raw file content
+      code: code,
       isSubcategory: false,
     });
   } catch (error) {

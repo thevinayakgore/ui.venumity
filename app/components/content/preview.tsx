@@ -20,7 +20,7 @@ export default function ComponentPreview({
   const [Component, setComponent] = useState<React.ComponentType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0); // Add a refresh key
+  const [refreshKey, setRefreshKey] = useState(0);
   const pathname = usePathname();
 
   const loadComponent = useCallback(async () => {
@@ -32,36 +32,57 @@ export default function ComponentPreview({
       const kebabSubcategory = subcategory ? toKebabCase(subcategory) : "";
       const kebabComponentName = toKebabCase(componentName);
 
-      let importPath = "";
-
-      if (subcategory && kebabSubcategory) {
-        importPath = `@/components/venumity/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}`;
-      } else {
-        importPath = `@/components/venumity/${kebabCategory}/${kebabComponentName}`;
-      }
-
-      console.log("Attempting to load from:", importPath);
+      let importedModule = null;
+      let lastError = null;
 
       try {
-        const importedModule = await import(/* @vite-ignore */ importPath);
-
-        // Try different ways to find the component
-        const ComponentToRender =
-          importedModule.default ||
-          importedModule[componentName as keyof typeof importedModule] ||
-          importedModule[
-            toKebabCase(componentName) as keyof typeof importedModule
-          ];
-
-        if (!ComponentToRender) {
-          throw new Error(`Component not found in module at ${importPath}`);
+        if (subcategory && kebabSubcategory) {
+          // Try different import patterns for components with subcategory
+          try {
+            // Try file-based import (direct .tsx file)
+            importedModule = await import(
+              `@/components/venumity/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}.tsx`
+            );
+          } catch {
+            // Try folder-based import with index.tsx
+            importedModule = await import(
+              `@/components/venumity/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}/index.tsx`
+            );
+          }
+        } else {
+          // Try different import patterns for components without subcategory
+          try {
+            // Try file-based import (direct .tsx file)
+            importedModule = await import(
+              `@/components/venumity/${kebabCategory}/${kebabComponentName}.tsx`
+            );
+          } catch {
+            // Try folder-based import with index.tsx
+            importedModule = await import(
+              `@/components/venumity/${kebabCategory}/${kebabComponentName}/index.tsx`
+            );
+          }
         }
-
-        setComponent(() => ComponentToRender);
-      } catch (importError) {
-        console.error("Import failed:", importError);
-        throw importError;
+      } catch (e) {
+        lastError = e;
+        console.error("Import failed:", e);
       }
+
+      if (!importedModule) {
+        throw lastError || new Error(`Component not found`);
+      }
+
+      // Try different ways to find the component
+      const ComponentToRender =
+        importedModule.default ||
+        importedModule[componentName as keyof typeof importedModule] ||
+        importedModule[kebabComponentName as keyof typeof importedModule];
+
+      if (!ComponentToRender) {
+        throw new Error(`Component not found in module`);
+      }
+
+      setComponent(() => ComponentToRender);
     } catch (err) {
       console.error("Failed to load component:", err);
       setError(err instanceof Error ? err.message : "Failed to load component");
@@ -73,10 +94,9 @@ export default function ComponentPreview({
 
   useEffect(() => {
     loadComponent();
-  }, [loadComponent, refreshKey]); // Add refreshKey to dependencies
+  }, [loadComponent, refreshKey]);
 
   const handleRefresh = () => {
-    // Force a re-render by incrementing the refresh key
     setRefreshKey((prev) => prev + 1);
   };
 
@@ -135,17 +155,19 @@ export default function ComponentPreview({
   }
 
   return (
-    <main className="flex overflow-auto w-full h-full">
+    <main className="relative flex overflow-auto w-full h-full">
       <Button
         size="icon"
         variant="secondary"
-        onClick={handleRefresh} // Use the new handleRefresh function
-        className={`absolute top-2 right-2 z-900! transform-gpu bg-foreground/10! backdrop-blur-3xl ${!pathname.startsWith("/components") && "hidden"} cursor-pointer transition-all duration-500 rounded-sm`}
+        onClick={handleRefresh}
+        className={`absolute top-4 right-4 z-100 transform-gpu bg-foreground/5 backdrop-blur-sm ${
+          !pathname.startsWith("/components") && "hidden"
+        } cursor-pointer transition-all duration-500 rounded-sm`}
         title="Refresh preview"
       >
         <RotateCcw />
       </Button>
-      <Component key={refreshKey} /> {/* Add key prop to force re-mount */}
+      <Component key={refreshKey} />
     </main>
   );
 }

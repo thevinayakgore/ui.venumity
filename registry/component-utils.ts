@@ -14,16 +14,21 @@ export interface ComponentItem {
   category: string;
   subcategory?: string;
   folderPath?: string;
+  isFolderBased?: boolean;
+  hasFolderStructure?: boolean;
+  hasSetup?: boolean;
 }
 
 export interface ComponentSubcategory {
   name: string;
   description?: string;
   icon?: string;
-  thumbnail?: string; // Add thumbnail field
+  thumbnail?: string;
   tags?: string[];
   techs?: string[];
   items: ComponentItem[];
+  hasFolderStructure?: boolean; // Add this for subcategory level
+  hasSetup?: boolean; // Add this for subcategory level
 }
 
 export interface ComponentCategory {
@@ -62,15 +67,19 @@ export function createComponents(
       name: string;
       description?: string;
       icon?: string;
-      thumbnail?: string; // Add thumbnail field
+      thumbnail?: string;
       tags: string[];
       techs: string[];
+      hasFolderStructure?: boolean; // Add for subcategory level
+      hasSetup?: boolean; // Add for subcategory level
       items: {
         itemName: string;
         description?: string;
         tags?: string[];
         techs?: string[];
         video?: string;
+        hasFolderStructure?: boolean;
+        hasSetup?: boolean;
       }[];
     }[];
   }[],
@@ -84,9 +93,11 @@ export function createComponents(
       name: subcategoryData.name,
       description: subcategoryData.description,
       icon: subcategoryData.icon,
-      thumbnail: subcategoryData.thumbnail, // Pass thumbnail
+      thumbnail: subcategoryData.thumbnail,
       tags: subcategoryData.tags,
       techs: subcategoryData.techs,
+      hasFolderStructure: subcategoryData.hasFolderStructure || false, // Pass through
+      hasSetup: subcategoryData.hasSetup || false, // Pass through
       items: subcategoryData.items.map((itemData) => {
         const categoryKebab = toKebabCase(categoryData.category);
         const subcategoryKebab = toKebabCase(subcategoryData.name);
@@ -103,6 +114,9 @@ export function createComponents(
           category: categoryKebab,
           subcategory: subcategoryKebab,
           folderPath: `${categoryKebab}/${subcategoryKebab}/${itemKebab}`,
+          hasFolderStructure: itemData.hasFolderStructure || false,
+          hasSetup: itemData.hasSetup || false,
+          isFolderBased: itemData.hasFolderStructure || false,
         };
       }),
     })),
@@ -301,6 +315,14 @@ export function getComponentDisplayName(componentPath: string): string {
 export function getComponentFolderPath(componentPath: string): string | null {
   const component = getComponentByPath(componentPath);
   return component?.folderPath || null;
+}
+
+// Helper to check if a component is likely folder-based
+export function isFolderBasedComponent(componentName: string): boolean {
+  const folderBasedKeywords = ["dashboard", "layout", "complex", "page", "app"];
+  return folderBasedKeywords.some((keyword) =>
+    componentName.toLowerCase().includes(keyword),
+  );
 }
 
 // ==================== GITHUB UTILS ====================

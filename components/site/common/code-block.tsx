@@ -13,12 +13,14 @@ interface CodeBlockProps {
   code: string;
   language?: string;
   aspectVideo?: boolean;
+  hasCopyBtn?: boolean;
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({
   code,
   aspectVideo,
   language = "typescript",
+  hasCopyBtn = true,
 }) => {
   const [copied, setCopied] = useState(false);
   const pathname = usePathname();
@@ -50,20 +52,22 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
       <div
         className={`${aspectVideo && "aspect-video"} group/main overflow-auto w-full h-full`}
       >
-        <button
-          onClick={handleCopy}
-          className={`group/btn absolute top-2.5 right-2.5 z-10! cursor-pointer! bg-background/70 backdrop-blur-sm text-muted-foreground/70 hover:text-foreground ${
-            isComponentsPage
-              ? "size-8 p-1.5 rounded!"
-              : "size-7 p-1.5 bg-background! border border-foreground/15 rounded!"
-          } transition-all duration-500`}
-        >
-          {copied ? (
-            <CheckLine className="w-full h-full text-green-500" />
-          ) : (
-            <Clipboard className="w-full h-full group-hover/btn:text-foreground transition-all duration-500" />
-          )}
-        </button>
+        {hasCopyBtn && (
+          <button
+            onClick={handleCopy}
+            className={`group/btn absolute top-2.5 right-2.5 z-10! cursor-pointer! bg-background/70 backdrop-blur-sm text-muted-foreground/70 hover:text-foreground ${
+              isComponentsPage
+                ? "size-7 p-1.5 rounded!"
+                : "size-7 p-1.5 bg-background! border border-foreground/15 rounded!"
+            } transition-all duration-500`}
+          >
+            {copied ? (
+              <CheckLine className="w-full h-full text-green-500" />
+            ) : (
+              <Clipboard className="w-full h-full group-hover/btn:text-foreground transition-all duration-500" />
+            )}
+          </button>
+        )}
 
         <div
           className={`${!isComponentsPage && "border rounded-md overflow-hidden"}`}

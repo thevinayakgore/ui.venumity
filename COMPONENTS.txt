@@ -136,11 +136,11 @@
 •  Activity Feeds
 •  Analytics Overview
 •  Conversion Funnels
+•  Financial
 •  Health Monitors
 •  KPI Strips
 •  Metrics Cards
 •  Performance Sections
-•  Revenue Widgets
 •  Stats Sections
 •  System Status
 •  Task / Project Boards

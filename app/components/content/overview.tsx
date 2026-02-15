@@ -137,11 +137,7 @@ export default function Overview({
 
     return (
       <div className="w-full">
-        <CodeBlock
-          code={currentCode}
-          language="typescript"
-          aspectVideo
-        />
+        <CodeBlock code={currentCode} language="tsx" aspectVideo />
       </div>
     );
   }, [
@@ -166,8 +162,8 @@ export default function Overview({
         )}
       </header>
 
-      <div className="relative flex flex-col items-start p-3 bg-foreground/3 border border-foreground/5 rounded-lg overflow-hidden w-full">
-        <div className="flex items-center justify-between gap-3 pb-3 w-full flex-wrap">
+      <div className="relative flex flex-col items-start p-3.5 bg-foreground/3 border border-foreground/5 rounded-[0.7rem] overflow-hidden w-full">
+        <div className="flex items-center justify-between gap-3 pt-0.5 pb-3 w-full flex-wrap">
           <div className="relative flex items-center gap-2 w-auto">
             {tabs.map((tab) => (
               <button
@@ -189,9 +185,9 @@ export default function Overview({
                 type: "spring",
                 stiffness: 400,
                 damping: 30,
-                delay: 0.15,
+                delay: 0.2,
               }}
-              className="absolute -bottom-5 w-24 h-9 mb-3 border border-foreground/20 bg-background transform-gpu leading-none rounded-sm"
+              className="absolute -bottom-5 w-24 h-9 mb-3 border border-foreground/15 bg-background transform-gpu leading-none rounded-sm"
               style={{
                 left:
                   activeTab === PREVIEW_TAB
@@ -204,7 +200,7 @@ export default function Overview({
             <motion.span
               layout
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute -bottom-5 z-10! w-24 h-1 bg-primary leading-none rounded-full"
+              className="absolute -bottom-5 z-500! w-24 h-1 bg-primary leading-none rounded-full"
               style={{
                 left:
                   activeTab === PREVIEW_TAB
@@ -244,7 +240,7 @@ export default function Overview({
         </div>
 
         <div
-          className={`flex flex-col items-center justify-center m-auto border border-foreground/5 rounded-md ${activeTab === "preview" && "bg-background rounded-tl-none"} aspect-video max-h-screen overflow-hidden transition-all duration-700 w-full`}
+          className={`flex flex-col items-center justify-center m-auto border border-foreground/7 rounded-lg ${activeTab === "preview" && "bg-background rounded-tl-none"} aspect-video max-h-screen overflow-hidden! transition-all duration-700 w-full`}
         >
           <div className="relative flex flex-col overflow-hidden bg-background w-full h-full">
             {mainContent}

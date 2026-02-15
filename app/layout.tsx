@@ -4,6 +4,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/utility/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { brandName, handle, website } from "@/lib/brand";
 import Navbar from "@/components/site/navigations/navbar";
@@ -127,12 +128,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
-          <Navbar />
-          {children}
-          <Footer />
+          <TooltipProvider>
+            <Toaster />
+            <Analytics />
+            <SpeedInsights />
+            <Navbar />
+            {children}
+            <Footer />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
