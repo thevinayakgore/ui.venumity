@@ -103,7 +103,7 @@ export function SystemStatusBadge({
   const Icon = icon ?? defaultConfig.icon;
 
   const baseRootClass =
-    "flex items-center justify-center gap-2 text-sm font-medium text-white p-1 pr-4 rounded-full shadow-lg/5 hover:scale-105 transition-all duration-500";
+    "flex items-center justify-center gap-2 text-sm font-medium text-white p-1 pr-4 rounded-full shadow-lg/5 hover:scale-105 transition-all duration-500 h-fit";
 
   const rootClasses = [baseRootClass, defaultConfig.bg, rootClassName]
     .filter(Boolean)
@@ -131,32 +131,34 @@ export function SystemStatusBadge({
 
 export default function SystemStatusBadgeDemo() {
   return (
-    <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      <SystemStatusBadge status="online" />
-      <SystemStatusBadge status="offline" />
-      <SystemStatusBadge status="maintenance" />
-      <SystemStatusBadge status="degraded" />
-      <SystemStatusBadge status="loading" spin />
-      <SystemStatusBadge
-        status="error"
-        text="Critical Failure"
-        icon={XCircle}
-      />
-      <SystemStatusBadge
-        status="success"
-        text="All Good"
-        icon={CheckCircle}
-        rootClassName="bg-white! text-green-500! ring-2 ring-green-500"
-        iconColor="text-green-500"
-      />
-      <SystemStatusBadge
-        status="unknown"
-        text="Mystery"
-        icon={Gift}
-        rootClassName="bg-linear-to-tl from-pink-500 to-fuchsia-300 ring-5 ring-sky-400"
-        iconColor="text-pink-500"
-        textColor="text-pink-500"
-      />
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        <SystemStatusBadge status="online" />
+        <SystemStatusBadge status="offline" />
+        <SystemStatusBadge status="maintenance" />
+        <SystemStatusBadge status="degraded" />
+        <SystemStatusBadge status="loading" spin />
+        <SystemStatusBadge
+          status="error"
+          text="Critical Failure"
+          icon={XCircle}
+        />
+        <SystemStatusBadge
+          status="success"
+          text="All Good"
+          icon={CheckCircle}
+          rootClassName="bg-white! text-green-500! ring-2 ring-green-500"
+          iconColor="text-green-500"
+        />
+        <SystemStatusBadge
+          status="unknown"
+          text="Mystery"
+          icon={Gift}
+          rootClassName="bg-linear-to-tl from-pink-500 to-fuchsia-300 ring-5 ring-sky-400"
+          iconColor="text-pink-500"
+          textColor="text-pink-500"
+        />
+      </section>
     </main>
   );
 }

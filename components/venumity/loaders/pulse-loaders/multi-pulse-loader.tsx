@@ -4,7 +4,7 @@ import { Zap } from "lucide-react";
 
 export default function MultiPulseLoader() {
   return (
-    <main className="flex flex-col items-center justify-center gap-12">
+    <main className="flex flex-col items-center justify-center m-auto gap-20 w-full min-h-screen">
       <div className="relative size-40">
         {/* Outer pulse rings */}
         {[...Array(4)].map((_, i) => (

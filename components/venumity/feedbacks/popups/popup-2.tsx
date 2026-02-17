@@ -84,7 +84,7 @@ export default function Popup2() {
   const currentDirection = directions.find((d) => d.dir === direction)!;
 
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 sm:p-10 md:py-14 max-w-7xl w-full h-full">
+    <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 sm:p-10 md:py-14 w-full h-full">
       <div className="grid grid-cols-2 gap-4 items-center justify-center m-auto">
         {directions.map(({ dir, label, gradient }) => (
           <Button

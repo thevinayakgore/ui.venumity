@@ -155,7 +155,7 @@ export default function ComponentPreview({
   }
 
   return (
-    <main className="relative flex overflow-auto w-full h-full">
+    <div className="overflow-auto h-full">
       <Button
         size="icon"
         variant="secondary"
@@ -168,6 +168,6 @@ export default function ComponentPreview({
         <RotateCcw />
       </Button>
       <Component key={refreshKey} />
-    </main>
+    </div>
   );
 }

@@ -214,7 +214,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>GitHub profile of {githubUsername}</TooltipContent>
+            <TooltipContent>GitHub - {githubUsername}</TooltipContent>
           </Tooltip>
         </Link>
         <Tooltip>

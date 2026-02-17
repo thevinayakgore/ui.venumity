@@ -77,18 +77,20 @@ export default function Snackbar1() {
   const hideSnackbar = useCallback(() => setSnackbar(null), []);
 
   return (
-    <main className="grid grid-cols-1 items-center justify-center m-auto gap-4 py-7 md:py-14">
-      {/* Buttons to Trigger */}
-      {snackbarTypes.map(({ type, bg }) => (
-        <Button
-          key={type}
-          onClick={() => showSnackbar(type, `This is a ${type} message.`)}
-          className={`p-6 cursor-pointer text-white bg-linear-to-tl ${bg} hover:scale-105 transition-all duration-500`}
-          type="button"
-        >
-          Show {type.charAt(0).toUpperCase() + type.slice(1)}
-        </Button>
-      ))}
+    <main className="grid grid-cols-1 items-center justify-center m-auto gap-4 py-7 md:py-14 w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        {/* Buttons to Trigger */}
+        {snackbarTypes.map(({ type, bg }) => (
+          <Button
+            key={type}
+            onClick={() => showSnackbar(type, `This is a ${type} message.`)}
+            className={`p-6 cursor-pointer text-white bg-linear-to-tl ${bg} hover:scale-105 transition-all duration-500`}
+            type="button"
+          >
+            Show {type.charAt(0).toUpperCase() + type.slice(1)}
+          </Button>
+        ))}
+      </section>
 
       {/* Snackbar Container */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">

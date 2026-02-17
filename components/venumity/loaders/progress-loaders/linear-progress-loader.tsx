@@ -146,7 +146,7 @@ export function LinearProgressLoader({
 
 export default function CircularProgressLoaderDemo() {
   return (
-    <main className="flex flex-col items-start justify-center m-auto gap-10 p-6 md:p-10 overflow-auto max-w-3xl w-full">
+      <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 md:p-10 max-w-3xl w-full">
       <LinearProgressLoader
         progress={45}
         size="sm"

@@ -58,9 +58,7 @@ export function PriorityBadge({
   const Icon = icon ?? config.icon;
 
   return (
-    <div
-      className={cn("p-0", className)}
-    >
+    <div className={cn("p-0", className)}>
       <Badge
         variant={(outline ?? config.outline) ? "outline" : "secondary"}
         className={cn(
@@ -81,18 +79,20 @@ export function PriorityBadge({
 
 export default function PriorityStatusBadgeDemo() {
   return (
-    <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      <PriorityBadge priority="high" text="High" color="bg-emerald-500" />
-      <PriorityBadge
-        priority="medium"
-        text="Medium"
-        color="bg-purple-500"
-        icon={Flag}
-        outline
-      />
-      <PriorityBadge priority="low" text="Low" />
-      <PriorityBadge priority="critical" text="Critical" />
-      <PriorityBadge priority="blocked" />
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        <PriorityBadge priority="high" text="High" color="bg-emerald-500" />
+        <PriorityBadge
+          priority="medium"
+          text="Medium"
+          color="bg-purple-500"
+          icon={Flag}
+          outline
+        />
+        <PriorityBadge priority="low" text="Low" />
+        <PriorityBadge priority="critical" text="Critical" />
+        <PriorityBadge priority="blocked" />
+      </section>
     </main>
   );
 }

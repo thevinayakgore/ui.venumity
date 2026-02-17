@@ -83,35 +83,37 @@ export default function Toast1() {
   }
 
   return (
-    <main className="grid grid-cols-2 gap-4 items-center justify-center m-auto p-6 sm:p-10 md:py-14">
-      <Button
-        variant="default"
-        className="bg-green-600 hover:bg-green-700 text-white p-6 cursor-pointer"
-        onClick={() => showToast("success")}
-      >
-        Show Success
-      </Button>
-      <Button
-        variant="default"
-        className="bg-red-600 hover:bg-red-700 text-white p-6 cursor-pointer"
-        onClick={() => showToast("error")}
-      >
-        Show Error
-      </Button>
-      <Button
-        variant="default"
-        className="bg-blue-600 hover:bg-blue-700 text-white p-6 cursor-pointer"
-        onClick={() => showToast("info")}
-      >
-        Show Info
-      </Button>
-      <Button
-        variant="default"
-        className="bg-yellow-400 hover:bg-yellow-500 text-white p-6 cursor-pointer"
-        onClick={() => showToast("warning")}
-      >
-        Show Warning
-      </Button>
+    <main className="grid grid-cols-1 items-center justify-center m-auto gap-4 py-7 md:py-14 w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        <Button
+          variant="default"
+          className="bg-green-600 hover:bg-green-700 text-white p-6 cursor-pointer"
+          onClick={() => showToast("success")}
+        >
+          Show Success
+        </Button>
+        <Button
+          variant="default"
+          className="bg-red-600 hover:bg-red-700 text-white p-6 cursor-pointer"
+          onClick={() => showToast("error")}
+        >
+          Show Error
+        </Button>
+        <Button
+          variant="default"
+          className="bg-blue-600 hover:bg-blue-700 text-white p-6 cursor-pointer"
+          onClick={() => showToast("info")}
+        >
+          Show Info
+        </Button>
+        <Button
+          variant="default"
+          className="bg-yellow-400 hover:bg-yellow-500 text-white p-6 cursor-pointer"
+          onClick={() => showToast("warning")}
+        >
+          Show Warning
+        </Button>
+      </section>
     </main>
   );
 }

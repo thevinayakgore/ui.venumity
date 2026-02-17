@@ -204,8 +204,8 @@ export default function AIChatBot1() {
   };
 
   return (
-    <main className="flex items-center justify-center m-auto p-6 md:p-10 overflow-auto h-auto">
-      <Card className="gap-0! p-3! bg-background! border-8 shadow-xl/5 rounded-[1.7rem] overflow-hidden w-xl">
+    <main className="flex items-center justify-center m-auto p-6 md:p-10 w-full">
+      <Card className="gap-0! p-3! bg-background! border-8 shadow-xl/5 rounded-[1.7rem] overflow-hidden w-xl h-auto">
         {/* Header */}
         <CardHeader className="flex items-center justify-between p-3! gap-0! bg-accent dark:bg-popover border-4 rounded-2xl w-full">
           <div className="flex items-center gap-2">

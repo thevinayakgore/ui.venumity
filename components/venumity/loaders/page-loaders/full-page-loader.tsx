@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 
 export default function FullPageLoader() {
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-5">
+    <main className="flex flex-col items-center justify-center m-auto gap-6 w-full h-full">
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -13,9 +13,7 @@ export default function FullPageLoader() {
       </motion.div>
 
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">
-          Loading Application
-        </h2>
+        <h2 className="text-2xl font-bold mb-2">Loading Application</h2>
         <p className="opacity-50">
           Please wait while we prepare everything for you
         </p>

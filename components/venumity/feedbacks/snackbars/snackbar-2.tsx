@@ -146,26 +146,28 @@ export default function Snackbar2() {
   ];
 
   return (
-    <main className="grid grid-cols-1 gap-4 items-center justify-center m-auto py-7 md:py-14">
-      {snackbarButtons.map((btn) => (
-        <Button
-          key={btn.label}
-          onClick={() => addSnackbar(btn.type, btn.variant)}
-          className={`p-6 cursor-pointer ${btn.bg} rounded-sm text-white font-medium hover:scale-105 transition-all duration-500`}
-        >
-          {btn.label}
-        </Button>
-      ))}
-      <AnimatePresence>
-        {snackbars.map((snackbar) => (
-          <Snackbar
-            key={snackbar.id}
-            type={snackbar.type}
-            variant={snackbar.variant}
-            onClose={() => removeSnackbar(snackbar.id)}
-          />
+    <main className="grid grid-cols-1 items-center justify-center m-auto gap-4 py-7 md:py-14 w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        {snackbarButtons.map((btn) => (
+          <Button
+            key={btn.label}
+            onClick={() => addSnackbar(btn.type, btn.variant)}
+            className={`p-6 cursor-pointer ${btn.bg} rounded-sm text-white font-medium hover:scale-105 transition-all duration-500`}
+          >
+            {btn.label}
+          </Button>
         ))}
-      </AnimatePresence>
+        <AnimatePresence>
+          {snackbars.map((snackbar) => (
+            <Snackbar
+              key={snackbar.id}
+              type={snackbar.type}
+              variant={snackbar.variant}
+              onClose={() => removeSnackbar(snackbar.id)}
+            />
+          ))}
+        </AnimatePresence>
+      </section>
     </main>
   );
 }

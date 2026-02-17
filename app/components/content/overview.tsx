@@ -117,11 +117,11 @@ export default function Overview({
   const mainContent = useMemo(() => {
     if (activeTab === PREVIEW_TAB) {
       return (
-        <ComponentPreview
-          category={componentName}
-          subcategory={resolvedSubcategory}
-          componentName={kebabItemName}
-        />
+          <ComponentPreview
+            category={componentName}
+            subcategory={resolvedSubcategory}
+            componentName={kebabItemName}
+          />
       );
     }
 

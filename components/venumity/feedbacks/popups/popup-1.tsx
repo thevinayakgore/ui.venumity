@@ -180,48 +180,50 @@ export default function Popup1() {
   const [loadingLogout, setLoadingLogout] = useState(false);
 
   return (
-    <main className="grid grid-cols-2 items-center justify-center m-auto gap-4 p-6 sm:p-10">
-      {POPUPS.map(
-        ({
-          key,
-          triggerLabel,
-          triggerClass,
-          modalProps,
-          children,
-          withLoading,
-        }) => (
-          <div key={key}>
-            <Button
-              onClick={() => setActivePopup(key)}
-              className={cn(triggerClass, "w-full")}
-            >
-              {triggerLabel}
-            </Button>
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        {POPUPS.map(
+          ({
+            key,
+            triggerLabel,
+            triggerClass,
+            modalProps,
+            children,
+            withLoading,
+          }) => (
+            <div key={key}>
+              <Button
+                onClick={() => setActivePopup(key)}
+                className={cn(triggerClass, "w-full")}
+              >
+                {triggerLabel}
+              </Button>
 
-            <PopupModal
-              isOpen={activePopup === key}
-              onClose={() => setActivePopup(null)}
-              onConfirm={() => {
-                if (withLoading) {
-                  setLoadingLogout(true);
-                  setTimeout(() => {
+              <PopupModal
+                isOpen={activePopup === key}
+                onClose={() => setActivePopup(null)}
+                onConfirm={() => {
+                  if (withLoading) {
+                    setLoadingLogout(true);
+                    setTimeout(() => {
+                      console.log(`${key} confirmed`);
+                      setLoadingLogout(false);
+                      setActivePopup(null);
+                    }, 4000);
+                  } else {
                     console.log(`${key} confirmed`);
-                    setLoadingLogout(false);
                     setActivePopup(null);
-                  }, 4000);
-                } else {
-                  console.log(`${key} confirmed`);
-                  setActivePopup(null);
-                }
-              }}
-              loading={withLoading ? loadingLogout : undefined}
-              {...modalProps}
-            >
-              {children}
-            </PopupModal>
-          </div>
-        ),
-      )}
+                  }
+                }}
+                loading={withLoading ? loadingLogout : undefined}
+                {...modalProps}
+              >
+                {children}
+              </PopupModal>
+            </div>
+          ),
+        )}
+      </section>
     </main>
   );
 }

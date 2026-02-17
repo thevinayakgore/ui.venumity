@@ -74,11 +74,13 @@ export function UserBadge({
 
 export default function UserStatusBadgePage() {
   return (
-    <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      <UserBadge status="online" />
-      <UserBadge status="offline" />
-      <UserBadge status="away" />
-      <UserBadge status="busy" />
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        <UserBadge status="online" />
+        <UserBadge status="offline" />
+        <UserBadge status="away" />
+        <UserBadge status="busy" />
+      </section>
     </main>
   );
 }

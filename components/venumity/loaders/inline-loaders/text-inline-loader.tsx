@@ -14,9 +14,9 @@ export default function TextInlineLoader() {
   }, []);
 
   return (
-    <div className="max-w-xl m-auto space-y-1 text-sm text-foreground">
+    <main className="flex items-center justify-center m-auto p-6 md:p-10 text-foreground/60 max-w-3xl w-full h-full">
       <p>
-        <span className="text-lg font-medium">
+        <span className="text-lg text-foreground font-medium">
           Venu<span className="text-primary">mity</span>
         </span>{" "}
         is a modern UI system built to deliver fast, elegant, and
@@ -31,6 +31,6 @@ export default function TextInlineLoader() {
           {dots}
         </motion.span>
       </p>
-    </div>
+    </main>
   );
 }

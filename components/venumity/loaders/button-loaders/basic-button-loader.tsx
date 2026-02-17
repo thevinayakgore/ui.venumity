@@ -14,19 +14,21 @@ export default function BasicButtonLoader() {
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      disabled={loading}
-      className="relative p-6 cursor-pointer min-w-50 disabled:opacity-80 items-center justify-center m-auto"
-    >
-      {loading ? (
-        <>
-          <Loader2 className="size-5 animate-spin" />
-          Loading...
-        </>
-      ) : (
-        "Load More"
-      )}
-    </Button>
+    <main className="flex items-center justify-center m-auto w-full h-full">
+      <Button
+        onClick={handleClick}
+        disabled={loading}
+        className="relative p-6 cursor-pointer min-w-50 disabled:opacity-80 items-center"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="size-5 animate-spin" />
+            Loading...
+          </>
+        ) : (
+          "Load More"
+        )}
+      </Button>
+    </main>
   );
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function LogoPageLoader() {
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-10">
+    <main className="flex flex-col items-center justify-center m-auto gap-6 w-full h-full">
       <div className="relative">
         <motion.div
           className="flex items-center justify-center size-30"
@@ -26,7 +26,6 @@ export default function LogoPageLoader() {
             className="border-6 border-white shadow-xl rounded-2xl w-full h-full"
           />
         </motion.div>
-
       </div>
 
       <div className="text-center space-y-6">

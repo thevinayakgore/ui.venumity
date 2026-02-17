@@ -301,28 +301,30 @@ export default function StandardModalAlert() {
     keyof typeof modalConfigs | null
   >(null);
   return (
-    <main className="grid grid-cols-2 gap-4 p-6 sm:p-10 md:py-14 max-w-7xl">
-      {(Object.keys(modalConfigs) as Array<keyof typeof modalConfigs>).map(
-        (key) => (
-          <Button
-            key={key}
-            onClick={() => setActiveModal(key)}
-            className={`cursor-pointer p-6 rounded-sm text-white font-medium hover:scale-105 transition-all duration-500 capitalize ${modalButtonStyles[key]}`}
-            type="button"
-          >
-            {key} Modal
-          </Button>
-        ),
-      )}
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
+        {(Object.keys(modalConfigs) as Array<keyof typeof modalConfigs>).map(
+          (key) => (
+            <Button
+              key={key}
+              onClick={() => setActiveModal(key)}
+              className={`cursor-pointer p-6 rounded-sm text-white font-medium hover:scale-105 transition-all duration-500 capitalize ${modalButtonStyles[key]}`}
+              type="button"
+            >
+              {key} Modal
+            </Button>
+          ),
+        )}
 
-      {/* Render selected modal dynamically */}
-      {activeModal && (
-        <UniversalModal
-          isOpen={true}
-          onClose={() => setActiveModal(null)}
-          config={modalConfigs[activeModal]}
-        />
-      )}
+        {/* Render selected modal dynamically */}
+        {activeModal && (
+          <UniversalModal
+            isOpen={true}
+            onClose={() => setActiveModal(null)}
+            config={modalConfigs[activeModal]}
+          />
+        )}
+      </section>
     </main>
   );
 }

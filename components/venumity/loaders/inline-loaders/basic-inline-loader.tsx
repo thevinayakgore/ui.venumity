@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function BasicInlineLoader() {
   return (
-    <div className="max-w-xl m-auto space-y-5">
+    <main className="flex flex-col items-center justify-center m-auto p-6 md:p-10 max-w-3xl w-full h-full">
       <p className="text-sm text-foreground w-full">
         <span className="text-lg font-medium">AI</span> can now write, see,
         hear, and reason together - modern multimodal AI systems can understand
@@ -13,7 +13,7 @@ export default function BasicInlineLoader() {
         to doctor instructions in one unified model 🤯 and also can...
       </p>
       {/* Line loader */}
-      <div className="relative h-1 overflow-hidden rounded-full bg-foreground/10 w-full">
+      <div className="relative h-1 mt-5 overflow-hidden rounded-full bg-foreground/10 w-full">
         <motion.div
           className="absolute left-0 top-0 h-full w-1/2 rounded-full bg-linear-to-l from-transparent via-primary/80 to-transparent"
           animate={{ x: ["-100%", "250%"] }}
@@ -24,6 +24,6 @@ export default function BasicInlineLoader() {
           }}
         />
       </div>
-    </div>
+    </main>
   );
 }

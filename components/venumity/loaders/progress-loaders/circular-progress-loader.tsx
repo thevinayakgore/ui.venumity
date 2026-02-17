@@ -120,12 +120,12 @@ export function CircularProgressLoader({
 
 export default function CircularProgressLoaderDemo() {
   return (
-    <div className="flex flex-wrap gap-8 items-center">
+    <main className="flex items-center justify-center m-auto gap-6 w-full h-full">
       <CircularProgressLoader progress={65} size="sm" label="Small" />
       <CircularProgressLoader progress={75} size="md" label="Medium" />
       <CircularProgressLoader progress={90} size="lg" label="Large" />
       <CircularProgressLoader progress={100} status="success" label="Success" />
       <CircularProgressLoader progress={45} status="error" label="Error" />
-    </div>
+    </main>
   );
 }

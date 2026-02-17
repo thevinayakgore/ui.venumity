@@ -63,14 +63,17 @@ export const COMPONENTS = createComponents([
       //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
       //   items: [{ itemName: "Searches", githubUsername: "thevinayakgore" }],
       // },
-      // {
-      //   name: "AI Suggestions",
-      //   description:
-      //     "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows. These smart recommendation components leverage behavioral analytics to deliver personalized experiences that boost engagement and reduce cognitive load.",
-      //   tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
-      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-      //   items: [{ itemName: "Suggestions", githubUsername: "thevinayakgore" }],
-      // },
+      {
+        name: "AI Suggestions",
+        description:
+          "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows. These smart recommendation components leverage behavioral analytics to deliver personalized experiences that boost engagement and reduce cognitive load.",
+        tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+        items: [
+          { itemName: "Enhance Mail", githubUsername: "thevinayakgore" },
+          { itemName: "Suggestions", githubUsername: "thevinayakgore" },
+        ],
+      },
       {
         name: "AI Summary",
         description:
@@ -425,6 +428,45 @@ export const COMPONENTS = createComponents([
     ],
   },
   {
+    category: "Data Display",
+    icon: "database-zap",
+    subcategories: [
+      {
+        name: "Accordions",
+        description:
+          "Data-focused accordion components designed to organize large or hierarchical datasets into expandable sections. Ideal for dashboards, settings panels, FAQs, and dense information layouts where progressive disclosure improves readability and usability.",
+        tags: [
+          "accordion",
+          "data-display",
+          "collapsible",
+          "expandable",
+          "hierarchical",
+          "dashboard",
+          "ui-pattern",
+        ],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [
+          {
+            itemName: "Basic Accordion",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Steps Accordion",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Multiple Open Accordion",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Nested Accordion",
+            githubUsername: "thevinayakgore",
+          },
+        ],
+      },
+    ],
+  },
+  {
     category: "Feedbacks",
     icon: "messages-square",
     subcategories: [
@@ -646,6 +688,23 @@ export const COMPONENTS = createComponents([
             githubUsername: "thevinayakgore",
           },
           { itemName: "Progress Loader 2", githubUsername: "thevinayakgore" },
+        ],
+      },
+      {
+        name: "Pulse Loaders",
+        description:
+          "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
+        tags: ["page", "loader", "fullscreen", "route", "blocking"],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          {
+            itemName: "Basic Pulse Loader",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Multi Pulse Loader",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       {

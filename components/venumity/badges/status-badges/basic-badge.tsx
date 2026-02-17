@@ -93,7 +93,7 @@ export function BasicBadge({
 
 export default function BasicBadgeDemo() {
   return (
-    <main className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
+    <main className="flex flex-wrap items-center justify-center gap-3 p-6 md:p-10 max-w-3xl m-auto w-full h-full">
       <BasicBadge label="Online" showDot color="bg-green-500" />
       <BasicBadge label="Busy" showDot color="bg-red-500" />
       <BasicBadge label="Idle" showDot color="bg-blue-400" outline />

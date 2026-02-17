@@ -175,39 +175,41 @@ export function ConnectionStatusBars() {
 
 export default function ConnectionStatusBadgeDemo() {
   return (
-    <main className="flex flex-wrap items-center justify-center m-auto gap-4 p-6 sm:p-10 max-w-4xl overflow-auto w-full">
-      <ConnectionStatus
-        strength="good"
-        bars={4}
-        text="Custom Bars"
-        label="Manually set 5 bars"
-        color="bg-purple-500"
-      >
-        <ConnectionStatusHeader />
-        <ConnectionStatusBars />
-      </ConnectionStatus>
-      <ConnectionStatus
-        strength="excellent"
-        text="Ultra Fast"
-        label="Optimized high-speed connection"
-        color="bg-emerald-500"
-        className="scale-95"
-      >
-        <ConnectionStatusHeader />
-        <ConnectionStatusBars />
-      </ConnectionStatus>
-      <ConnectionStatus strength="good">
-        <ConnectionStatusHeader />
-        <ConnectionStatusBars />
-      </ConnectionStatus>
-      <ConnectionStatus strength="fair">
-        <ConnectionStatusHeader />
-        <ConnectionStatusBars />
-      </ConnectionStatus>
-      <ConnectionStatus strength="poor">
-        <ConnectionStatusHeader />
-        <ConnectionStatusBars />
-      </ConnectionStatus>
+    <main className="flex items-center mx-auto w-full h-full">
+      <section className="flex flex-wrap items-center justify-center gap-3 p-6 md:p-10 max-w-3xl m-auto w-full">
+        <ConnectionStatus
+          strength="good"
+          bars={4}
+          text="Custom Bars"
+          label="Manually set 5 bars"
+          color="bg-purple-500"
+        >
+          <ConnectionStatusHeader />
+          <ConnectionStatusBars />
+        </ConnectionStatus>
+        <ConnectionStatus
+          strength="excellent"
+          text="Ultra Fast"
+          label="Optimized high-speed connection"
+          color="bg-emerald-500"
+          className="scale-95"
+        >
+          <ConnectionStatusHeader />
+          <ConnectionStatusBars />
+        </ConnectionStatus>
+        <ConnectionStatus strength="good">
+          <ConnectionStatusHeader />
+          <ConnectionStatusBars />
+        </ConnectionStatus>
+        <ConnectionStatus strength="fair">
+          <ConnectionStatusHeader />
+          <ConnectionStatusBars />
+        </ConnectionStatus>
+        <ConnectionStatus strength="poor">
+          <ConnectionStatusHeader />
+          <ConnectionStatusBars />
+        </ConnectionStatus>
+      </section>
     </main>
   );
 }
