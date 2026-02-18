@@ -114,6 +114,31 @@ export const COMPONENTS = createComponents([
     ],
   },
   {
+    category: "Cards",
+    icon: "square-slash",
+    subcategories: [
+      {
+        name: "Profile Cards",
+        description:
+          "Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout. Ideal for dashboards, team pages, social platforms, and SaaS applications where quick recognition and contextual user information are essential.",
+        tags: [
+          "profile",
+          "user",
+          "identity",
+          "card",
+          "avatar",
+          "dashboard",
+          "saas",
+          "team",
+        ],
+        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS", "Motion"],
+        items: [
+          { itemName: "Profile Card 1", githubUsername: "thevinayakgore" },
+        ],
+      },
+    ],
+  },
+  {
     category: "Charts",
     icon: "chart-pie",
     subcategories: [
@@ -311,22 +336,18 @@ export const COMPONENTS = createComponents([
           { itemName: "Pricing Table 1", githubUsername: "thevinayakgore" },
         ],
       },
-      // {
-      //   name: "Product Cards",
-      //   description:
-      //     "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
-      //   tags: ["product", "ecommerce", "card", "catalog"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Minimal Product Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Product Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Product Card 1", githubUsername: "thevinayakgore" },
-      //     { itemName: "Product Card 2", githubUsername: "thevinayakgore" },
-      //     { itemName: "Status Product Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Variants Product Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Quick Actions Product Card", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
+      {
+        name: "Product Cards",
+        description:
+          "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
+        tags: ["product", "ecommerce", "card", "catalog"],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
+        items: [
+          { itemName: "Product Card 1", githubUsername: "thevinayakgore" },
+          { itemName: "Product Card 2", githubUsername: "thevinayakgore" },
+          { itemName: "Product Card 3", githubUsername: "thevinayakgore" },
+        ],
+      },
       // {
       //   name: "Product Display",
       //   description:
@@ -460,6 +481,28 @@ export const COMPONENTS = createComponents([
           },
           {
             itemName: "Nested Accordion",
+            githubUsername: "thevinayakgore",
+          },
+        ],
+      },
+      {
+        name: "Tables",
+        description:
+          "Powerful table components built for displaying, sorting, and managing structured data efficiently. Ideal for dashboards, admin panels, analytics views, and enterprise applications where clarity, performance, and user control are essential.",
+        tags: [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise",
+        ],
+        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
+        items: [
+          {
+            itemName: "Sortable Table",
             githubUsername: "thevinayakgore",
           },
         ],

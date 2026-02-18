@@ -31,7 +31,6 @@
 -  Animated Avatars  
 -  Avatar Groups  
 -  Creator Stats  
--  Profile Cards (Profile Tooltips)  
 -  Social Profile Badges  
 -  Team Avatars Display  
 -  User Avatars (Avatar with Status, Avatar Stacks, etc)  
@@ -75,6 +74,7 @@
 8. CARDS
 ========================================
 -  Content Cards (Containers)  
+-  Profile Cards (Profile Tooltips)  
 -  Feature Cards  
 -  Interactive Flip Cards  
 -  News Cards  
