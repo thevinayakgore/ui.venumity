@@ -502,7 +502,31 @@ export const COMPONENTS = createComponents([
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
           {
+            itemName: "Fixed Column Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
             itemName: "Sortable Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Editable Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Filters Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Real Time Filterable Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Saved Views Filterable Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Expandable Row Table",
             githubUsername: "thevinayakgore",
           },
         ],

@@ -775,7 +775,7 @@ export default function SortableTable() {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+          <div className="flex items-center justify-between mt-6 text-sm text-muted-foreground">
             <div>
               Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
               {Math.min(currentPage * ITEMS_PER_PAGE, sortedEmployees.length)}{" "}
