@@ -150,11 +150,10 @@ We welcome contributions from developers of all skill levels ! Whether you're fi
 
 ## 📌 Note on Component Thumbnails
 
-Contributors must capture a **screenshot of the first component item** from each **subcategory/category** and place it in the `public/thumbnails` folder.
+Contributors must capture a **screenshot of the full screen component** and place it in the `public/thumbnails` folder with component item name.
 
-- This screenshot is used as the **default thumbnail preview**.
+- The first component item screenshot is used as the **default thumbnail preview for component cards**.
 - The **maintainer (@thevinayakgore)** may later replace this thumbnail with a **“best of” component showcase** if needed.
-- Contributors are **not required** to curate or optimize thumbnails beyond the **first item screenshot**.
 
 This ensures consistency while allowing curated visual improvements over time.
 

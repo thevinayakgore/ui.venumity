@@ -24,7 +24,7 @@ export interface ComponentSubcategory {
   name: string;
   description?: string;
   icon?: string;
-  thumbnail?: string;
+  thumbnail?: string; // Only here - for category cards
   tags?: string[];
   techs?: string[];
   items: ComponentItem[];
@@ -68,14 +68,13 @@ export function createComponents(
       name: string;
       description?: string;
       icon?: string;
-      thumbnail?: string;
+      thumbnail?: string; // Only here for category cards
       tags: string[];
       techs: string[];
-      hasFolderStructure?: boolean; // Add for subcategory level
-      hasSetup?: boolean; // Add for subcategory level
+      hasFolderStructure?: boolean;
+      hasSetup?: boolean;
       items: {
         itemName: string;
-        description?: string;
         tags?: string[];
         techs?: string[];
         video?: string;
@@ -95,11 +94,11 @@ export function createComponents(
       name: subcategoryData.name,
       description: subcategoryData.description,
       icon: subcategoryData.icon,
-      thumbnail: subcategoryData.thumbnail,
+      thumbnail: subcategoryData.thumbnail, // Pass through for category cards
       tags: subcategoryData.tags,
       techs: subcategoryData.techs,
-      hasFolderStructure: subcategoryData.hasFolderStructure || false, // Pass through
-      hasSetup: subcategoryData.hasSetup || false, // Pass through
+      hasFolderStructure: subcategoryData.hasFolderStructure || false,
+      hasSetup: subcategoryData.hasSetup || false,
       items: subcategoryData.items.map((itemData) => {
         const categoryKebab = toKebabCase(categoryData.category);
         const subcategoryKebab = toKebabCase(subcategoryData.name);
@@ -119,7 +118,7 @@ export function createComponents(
           hasFolderStructure: itemData.hasFolderStructure || false,
           hasSetup: itemData.hasSetup || false,
           isFolderBased: itemData.hasFolderStructure || false,
-          githubUsername: itemData.githubUsername, // Add this line
+          githubUsername: itemData.githubUsername,
         };
       }),
     })),
@@ -379,4 +378,41 @@ export function getGitHubEditUrl(componentPath: string): string {
   }
 
   return "https://github.com/thevinayakgore/ui.venumity";
+}
+
+// ==================== THUMBNAIL HELPERS ====================
+
+/**
+ * Get thumbnail path for category cards
+ * Priority: 
+ * 1. Subcategory.thumbnail (custom thumbnail)
+ * 2. First item's name (fallback)
+ * Returns: /thumbnails/[thumbnail-name].png
+ */
+export function getCategoryCardThumbnailPath(
+  subcategory: ComponentSubcategory,
+): string {
+  if (subcategory.thumbnail) {
+    // Use custom thumbnail from subcategory
+    return `/thumbnails/${toKebabCase(subcategory.thumbnail)}.png`;
+  }
+  
+  if (subcategory.items && subcategory.items.length > 0) {
+    // Use first item's name as fallback
+    return `/thumbnails/${toKebabCase(subcategory.items[0].itemName)}.png`;
+  }
+  
+  // No items, return empty string (will show default box)
+  return '';
+}
+
+/**
+ * Get thumbnail path for OG images (SEO)
+ * Always uses the component item name
+ * Returns: /thumbnails/[component-item-name].png
+ */
+export function getOGThumbnailPath(
+  itemName: string,
+): string {
+  return `/thumbnails/${toKebabCase(itemName)}.png`;
 }

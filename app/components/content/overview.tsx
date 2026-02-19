@@ -10,6 +10,7 @@ import { toKebabCase } from "@/utils/slug-kebab";
 import { OpenTools } from "./open-tools";
 import Image from "next/image";
 import Link from "next/link";
+import ShareComponent from "@/components/site/navigations/share-component";
 
 interface ExtendedOverviewProps {
   itemName?: string;
@@ -117,11 +118,11 @@ export default function Overview({
   const mainContent = useMemo(() => {
     if (activeTab === PREVIEW_TAB) {
       return (
-          <ComponentPreview
-            category={componentName}
-            subcategory={resolvedSubcategory}
-            componentName={kebabItemName}
-          />
+        <ComponentPreview
+          category={componentName}
+          subcategory={resolvedSubcategory}
+          componentName={kebabItemName}
+        />
       );
     }
 
@@ -240,6 +241,7 @@ export default function Overview({
               <Fullscreen className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
               <span>Live</span>
             </Button>
+            <ShareComponent itemName={itemName} />
           </div>
         </div>
 

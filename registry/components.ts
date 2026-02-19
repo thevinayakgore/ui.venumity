@@ -69,10 +69,7 @@ export const COMPONENTS = createComponents([
           "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows. These smart recommendation components leverage behavioral analytics to deliver personalized experiences that boost engagement and reduce cognitive load.",
         tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [
-          { itemName: "Enhance Mail", githubUsername: "thevinayakgore" },
-          { itemName: "Suggestions", githubUsername: "thevinayakgore" },
-        ],
+        items: [{ itemName: "Enhance Mail", githubUsername: "thevinayakgore" }],
       },
       {
         name: "AI Summary",
@@ -82,7 +79,6 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
         items: [
           { itemName: "Summary Block", githubUsername: "thevinayakgore" },
-          { itemName: "Summary Card", githubUsername: "thevinayakgore" },
         ],
       },
     ],
@@ -93,6 +89,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Status Badges",
+        thumbnail: "connection-status-badge",
         description:
           "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity. These smart badge components enhance dashboard clarity, improve user onboarding, and provide at-a-glance understanding—crucial for enterprise applications and growth-focused platforms.",
         tags: ["status", "system", "connection", "priority", "user"],
@@ -144,6 +141,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Area Charts",
+        thumbnail: "percent-area-chart",
         description:
           "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics. These featured chart components deliver exceptional data storytelling for business intelligence dashboards, financial applications, and performance monitoring platforms seeking actionable insights.",
         tags: ["area", "trend", "data", "shaded", "growth"],
@@ -159,6 +157,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Bar Charts",
+        thumbnail: "mixed-bar-chart",
         description:
           "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis. These smart charting components feature responsive designs, accessibility compliance, and interactive capabilities—perfect for analytics platforms, reporting tools, and business dashboards.",
         tags: ["bar", "comparison", "histogram", "data", "analytics"],
@@ -176,6 +175,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Line Charts",
+        thumbnail: "basic-line-chart",
         description:
           "Capture performance trends with precision line visualizations designed for time-series analysis. These professional chart components deliver clear pattern recognition and forecasting capabilities essential for financial platforms, IoT dashboards, and growth analytics.",
         tags: ["line", "time", "pattern", "graph", "data"],
@@ -187,6 +187,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Pie Charts",
+        thumbnail: "donut-pie-chart",
         description:
           "Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns. These smart chart concepts enhance dashboard storytelling and improve data comprehension for marketing analytics, budget allocation, and market share analysis.",
         tags: ["pie", "proportion", "distribution", "graph", "segments"],
@@ -338,6 +339,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Product Cards",
+        thumbnail: "product-card-3",
         description:
           "Commerce-ready card components designed to showcase products with clarity and impact. These cards support pricing, images, actions, and metadata, helping improve product discovery, conversion rates, and browsing experience across e-commerce, SaaS, and marketplace interfaces.",
         tags: ["product", "ecommerce", "card", "catalog"],
@@ -444,6 +446,10 @@ export const COMPONENTS = createComponents([
             hasFolderStructure: true, // Enable Folder Structure
             githubUsername: "thevinayakgore",
           },
+          {
+            itemName: "Charts Dashboard",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
     ],
@@ -454,6 +460,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Accordions",
+        thumbnail: "nested-accordion",
         description:
           "Data-focused accordion components designed to organize large or hierarchical datasets into expandable sections. Ideal for dashboards, settings panels, FAQs, and dense information layouts where progressive disclosure improves readability and usability.",
         tags: [
@@ -487,6 +494,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Tables",
+        thumbnail: "real-time-filterable-table",
         description:
           "Powerful table components built for displaying, sorting, and managing structured data efficiently. Ideal for dashboards, admin panels, analytics views, and enterprise applications where clarity, performance, and user control are essential.",
         tags: [
@@ -539,6 +547,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Alerts",
+        thumbnail: "action-alert",
         description:
           "Enhance user experience with professional alert systems that communicate critical information effectively. These smart notification components improve system transparency, guide user actions, and reduce support tickets through clear, actionable feedback mechanisms.",
         tags: ["alert", "notification", "banner", "action", "animated"],
@@ -562,6 +571,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Snackbars",
+        thumbnail: "snackbar-2",
         description:
           "Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates. These punchy message components enhance user confidence without interrupting workflow—perfect for modern applications prioritizing productivity.",
         tags: ["snackbar", "temporary", "action", "nonblocking"],
@@ -587,6 +597,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Containers",
+        thumbnail: "premium-container",
         description:
           "Establish visual consistency with professional container systems that structure content with precision. These smart layout concepts ensure responsive behavior across devices while maintaining brand alignment and improving content readability.",
         tags: ["container", "page", "wrapper", "responsive", "structure"],
@@ -611,6 +622,7 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "Masonry Layouts",
+        thumbnail: "masonry-image-gallery",
         description:
           "Grid-based masonry layouts that arrange variable-height content into balanced columns. Ideal for galleries, feeds, and card-heavy interfaces, these layouts maximize space usage while staying fully responsive across screen sizes.",
         tags: ["masonry", "grid", "layout", "gallery", "cards"],
@@ -685,6 +697,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Button Loaders",
+        thumbnail: "shiny-button-loader",
         description:
           "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations. These smart loading indicators enhance user confidence, reduce premature clicking, and create professional experiences during asynchronous processes.",
         tags: ["button", "loader", "loading", "async", "feedback"],
@@ -714,6 +727,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Inline Loaders",
+        thumbnail: "basic-inline-loader",
         description:
           "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption. These smart micro-loading components provide contextual feedback within content streams, forms, and data tables—perfect for real-time applications.",
         tags: ["inline", "loader", "text", "micro", "compact"],
@@ -726,6 +740,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Page Loaders",
+        thumbnail: "full-page-loader",
         description:
           "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
         tags: ["page", "loader", "fullscreen", "route", "blocking"],
@@ -741,6 +756,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Progress Loaders",
+        thumbnail: "progress-loader-2",
         description:
           "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
         tags: ["page", "loader", "fullscreen", "route", "blocking"],
@@ -759,6 +775,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Pulse Loaders",
+        thumbnail: "multi-pulse-loader",
         description:
           "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
         tags: ["page", "loader", "fullscreen", "route", "blocking"],
@@ -776,6 +793,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Skeletons",
+        thumbnail: "dashboard-skeleton-loader",
         description:
           "Create polished transitions with professional page loaders that manage user expectations during critical waits. These featured loading screens improve perceived performance, maintain brand presence, and reduce bounce rates during initial load and navigation.",
         tags: ["page", "loader", "fullscreen", "route", "blocking"],
@@ -805,6 +823,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Spinners",
+        thumbnail: "ring-spinner",
         description:
           "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
         tags: ["pulse", "loader", "activity", "animation", "waiting"],
@@ -817,6 +836,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Wave Loaders",
+        thumbnail: "premium-wave-loader",
         description:
           "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow. These professional loading indicators provide gentle feedback for background operations, real-time updates, and system status monitoring.",
         tags: ["pulse", "loader", "activity", "animation", "waiting"],
@@ -947,6 +967,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Testimonials",
+        thumbnail: "company-testimonial",
         description:
           "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof. These professional testimonial components increase credibility, improve engagement metrics, and drive purchasing decisions through authentic customer stories and strategic placement.",
         tags: ["testimonial", "social", "reviews", "trust", "carousel"],

@@ -1,3 +1,4 @@
+// app/charts/basic/page.tsx
 "use client";
 import {
   BarChart,
@@ -8,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { TrendingUp, Calendar } from "lucide-react";
 
 const data = [
   { name: "Jan", value: 4000 },
@@ -25,70 +27,129 @@ const data = [
 ];
 
 export default function BasicBarChart() {
+  const total = data.reduce((acc, item) => acc + item.value, 0);
+  const average = total / data.length;
+
   return (
-    <main className="flex flex-col items-center justify-center m-auto pl-5 pb-5 border rounded-md overflow-hidden max-w-6xl w-full h-130">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ left: -25 }}>
-          <defs>
-            <linearGradient id="colorBar" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.8}
+    <main className="p-6 md:p-10">
+      <section className="border-b pb-5 mb-5">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-semibold">Monthly Revenue Analysis</h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Track revenue trends across 2024
+            </p>
+          </div>
+          <div className="flex gap-4 text-sm">
+            <div className="bg-muted border px-4 py-2 rounded-lg">
+              <span className="text-muted-foreground">Total Revenue</span>
+              <p className="text-xl font-bold">${(total / 1000).toFixed(1)}K</p>
+            </div>
+            <div className="bg-muted border px-4 py-2 rounded-lg">
+              <span className="text-muted-foreground">Monthly Avg</span>
+              <p className="text-xl font-bold">
+                ${(average / 1000).toFixed(1)}K
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="p-6">
+        <div className="h-100 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              margin={{ left: -25, right: 20, top: 20, bottom: 20 }}
+            >
+              <defs>
+                <linearGradient id="colorBar" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                className="stroke-foreground/20"
               />
-              <stop
-                offset="95%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.2}
+              <XAxis
+                dataKey="name"
+                stroke="hsl(215 20% 65%)"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                padding={{ left: 10, right: 10 }}
+                tick={{ fill: "hsl(215 20% 65%)" }}
               />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            className="stroke-foreground/10!"
-            vertical={false}
-          />
-          <XAxis
-            dataKey="name"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            padding={{ left: 10, right: 10 }}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <YAxis
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tickFormatter={(value) => `${value / 1000}K`}
-            padding={{ top: 20, bottom: 20 }}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <Tooltip
-            contentStyle={{
-              padding: "10px 15px",
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              border: "1px solid white",
-              borderRadius: "7px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-              backdropFilter: "blur(3px)",
-            }}
-            labelStyle={{ color: "black" }}
-            itemStyle={{ color: "rgba(255, 84, 0,1)" }}
-          />
-          <Bar
-            dataKey="value"
-            fill="url(#colorBar)"
-            stroke="hsl(24 100% 55%)"
-            strokeWidth={1}
-            radius={[4, 4, 0, 0]}
-            animationDuration={1500}
-            animationEasing="ease-out"
-          />
-        </BarChart>
-      </ResponsiveContainer>
+              <YAxis
+                stroke="hsl(215 20% 65%)"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `$${value / 1000}K`}
+                tick={{ fill: "hsl(215 20% 65%)" }}
+              />
+              <Tooltip
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-background border rounded-lg shadow-lg p-3">
+                        <p className="text-sm font-medium mb-1">{label}</p>
+                        <p className="text-lg font-bold text-blue-500">
+                          ${payload[0].value?.toLocaleString()}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar
+                dataKey="value"
+                radius={[10, 10, 0, 0]}
+                animationDuration={1500}
+                animationEasing="ease-out"
+                className="fill-teal-500"
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Stats Footer */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div className="bg-muted border rounded-lg p-3">
+            <div className="flex items-center gap-2 text-muted-foreground mb-1">
+              <TrendingUp className="size-4" />
+              <span className="text-xs">Peak Month</span>
+            </div>
+            <div className="text-lg font-semibold">November</div>
+            <div className="text-sm text-muted-foreground">$8,000</div>
+          </div>
+          <div className="bg-muted border rounded-lg p-3">
+            <div className="flex items-center gap-2 text-muted-foreground mb-1">
+              <Calendar className="size-4" />
+              <span className="text-xs">Lowest Month</span>
+            </div>
+            <div className="text-lg font-semibold">February</div>
+            <div className="text-sm text-muted-foreground">$3,000</div>
+          </div>
+          <div className="bg-muted border rounded-lg p-3">
+            <div className="flex items-center gap-2 text-muted-foreground mb-1">
+              <TrendingUp className="size-4" />
+              <span className="text-xs">Growth Rate</span>
+            </div>
+            <div className="text-lg font-semibold text-green-600">+50%</div>
+            <div className="text-sm text-muted-foreground">vs previous</div>
+          </div>
+          <div className="bg-muted border rounded-lg p-3">
+            <div className="flex items-center gap-2 text-muted-foreground mb-1">
+              <Calendar className="size-4" />
+              <span className="text-xs">Best Quarter</span>
+            </div>
+            <div className="text-lg font-semibold">Q4</div>
+            <div className="text-sm text-muted-foreground">$18,000</div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

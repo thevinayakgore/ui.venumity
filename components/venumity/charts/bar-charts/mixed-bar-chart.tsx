@@ -1,3 +1,4 @@
+// app/charts/mixed/page.tsx
 "use client";
 import {
   Bar,
@@ -21,116 +22,165 @@ const mixedData = [
 ];
 
 export default function MixedBarChart() {
+  const avgMargin =
+    mixedData.reduce((acc, item) => acc + item.margin, 0) / mixedData.length;
+
   return (
-    <main className="flex flex-col items-center justify-center m-auto pl-5 pb-5 border rounded-md overflow-hidden max-w-6xl w-full h-130">
-      <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={mixedData} margin={{ left: -25 }}>
-          <defs>
-            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.2}
-              />
-            </linearGradient>
-            <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="hsl(142 76% 36%)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="hsl(142 76% 36%)"
-                stopOpacity={0.2}
-              />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            className="stroke-foreground/10!"
-            vertical={false}
-          />
-          <XAxis
-            dataKey="name"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <YAxis
-            yAxisId="left"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tickFormatter={(value) => `${value / 1000}K`}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tickFormatter={(value) => `${value}%`}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <Tooltip
-            contentStyle={{
-              padding: "10px 15px",
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              border: "1px solid white",
-              borderRadius: "7px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-              backdropFilter: "blur(3px)",
-            }}
-            labelStyle={{ color: "black" }}
-            formatter={(value, name) => {
-              if (name === "margin") return [`${value}%`, "Margin"];
-              if (name === "revenue") return [`$${value}`, "Revenue"];
-              return [`$${value}`, "Profit"];
-            }}
-          />
-          <Legend />
-          <Bar
-            yAxisId="left"
-            dataKey="revenue"
-            fill="url(#colorRevenue)"
-            stroke="hsl(24 100% 55%)"
-            strokeWidth={1}
-            radius={[4, 4, 0, 0]}
-            animationDuration={1500}
-            barSize={30}
-          />
-          <Bar
-            yAxisId="left"
-            dataKey="profit"
-            fill="url(#colorProfit)"
-            stroke="hsl(142 76% 36%)"
-            strokeWidth={1}
-            radius={[4, 4, 0, 0]}
-            animationDuration={1500}
-            barSize={30}
-          />
-          <Line
-            yAxisId="right"
-            type="monotone"
-            dataKey="margin"
-            stroke="hsl(220 90% 56%)"
-            strokeWidth={3}
-            dot={{ strokeWidth: 2, r: 4 }}
-            animationDuration={1500}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
+    <main className="p-6 md:p-10">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h3 className="text-3xl font-semibold">Revenue & Profit Analysis</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Combined view with profit margin trend
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <div className="bg-blue-500/10 px-4 py-2 rounded-lg">
+            <span className="text-xs text-blue-600">Avg Margin</span>
+            <p className="text-lg font-bold text-blue-600">
+              {avgMargin.toFixed(1)}%
+            </p>
+          </div>
+          <div className="bg-green-500/10 px-4 py-2 rounded-lg">
+            <span className="text-xs text-green-600">Peak Revenue</span>
+            <p className="text-lg font-bold text-green-600">$6,000</p>
+          </div>
+        </div>
+      </div>
+      <div className="h-100 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart
+            data={mixedData}
+            margin={{ left: -25, right: 20, top: 20, bottom: 20 }}
+          >
+            <defs>
+              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1"/>
+              <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1"/>
+            </defs>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              className="stroke-foreground/20"
+            />
+            <XAxis
+              dataKey="name"
+              stroke="hsl(215 20% 65%)"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "hsl(215 20% 65%)" }}
+            />
+            <YAxis
+              yAxisId="left"
+              stroke="hsl(215 20% 65%)"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `$${value / 1000}K`}
+              tick={{ fill: "hsl(215 20% 65%)" }}
+            />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              stroke="hsl(215 20% 65%)"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}%`}
+              tick={{ fill: "hsl(215 20% 65%)" }}
+            />
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
+                      <p className="text-sm font-medium mb-2">{label}</p>
+                      {payload.map((entry) => (
+                        <div
+                          key={entry.name}
+                          className="flex items-center justify-between gap-4 text-sm"
+                        >
+                          <span style={{ color: entry.color }}>
+                            {entry.name}:
+                          </span>
+                          <span className="font-bold">
+                            {entry.name === "margin"
+                              ? `${entry.value}%`
+                              : `$${entry.value}`}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
+            <Legend
+              verticalAlign="top"
+              height={36}
+              formatter={(value) => (
+                <span className="text-sm font-medium capitalize px-2">
+                  {value}
+                </span>
+              )}
+            />
+            <Bar
+              yAxisId="left"
+              dataKey="revenue"
+              radius={[10, 10, 0, 0]}
+              animationDuration={1500}
+              barSize={40}
+              className="fill-blue-500"
+            />
+            <Bar
+              yAxisId="left"
+              dataKey="profit"
+              radius={[10, 10, 0, 0]}
+              animationDuration={1500}
+              barSize={40}
+              className="fill-green-500"
+            />
+            <Line
+              yAxisId="right"
+              type="monotone"
+              dataKey="margin"
+              stroke="#8b5cf6"
+              strokeWidth={3}
+              dot={{ strokeWidth: 2, r: 4, fill: "#8b5cf6" }}
+              animationDuration={1500}
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Monthly Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+        {mixedData.map((month) => (
+          <div key={month.name} className="bg-foreground/5 backdrop-blur-sm border-2 rounded-lg p-3">
+            <div className="text-sm font-semibold mb-2">{month.name}</div>
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Revenue :</span>
+                <span className="font-medium text-blue-600">
+                  ${month.revenue}
+                </span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Profit :</span>
+                <span className="font-medium text-green-600">
+                  ${month.profit}
+                </span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Margin :</span>
+                <span className="font-medium text-purple-600">
+                  {month.margin}%
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }

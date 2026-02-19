@@ -1,132 +1,76 @@
 // app/components/[...slug]/page.tsx
-import { Metadata } from "next";
-import {
-  getComponentByPath,
-  getSubcategory,
-  isSubcategoryPath,
-  getCategorySubcategoryFromPath,
-} from "@/registry/component-utils";
+import { COMPONENTS } from "@/registry/components";
+import { toKebabCase } from "@/utils/slug-kebab";
 import PageClient from "./page.client";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 interface PageProps {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{
+    slug: string[];
+  }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  try {
-    const { slug } = await params;
-    const path = slug.join("/");
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+  const slugPath = slug.join("/");
 
-    // Check if this is a subcategory path
-    if (isSubcategoryPath(path)) {
-      const categorySubcategory = getCategorySubcategoryFromPath(path);
-      if (categorySubcategory) {
-        const subcategory = getSubcategory(
-          categorySubcategory.category,
-          categorySubcategory.subcategory,
-        );
-        if (subcategory) {
-          return {
-            title: `${subcategory.name.charAt(0).toUpperCase()}${subcategory.name.slice(1)}`,
-            description: subcategory.description || `Browse ${subcategory.items.length} ${subcategory.name.toLowerCase()} components`,
-          };
+  // Find component data
+  let componentData = null;
+  let subcategoryData = null;
+
+  const parts = slugPath.split("/").filter(Boolean);
+
+  // Handle subcategory pages (parts.length === 2)
+  if (parts.length === 2) {
+    const categorySlug = parts[0];
+    const subcategorySlug = parts[1];
+
+    for (const category of COMPONENTS) {
+      if (toKebabCase(category.name) === categorySlug) {
+        for (const subcategory of category.subcategories) {
+          if (toKebabCase(subcategory.name) === subcategorySlug) {
+            subcategoryData = subcategory;
+            break;
+          }
         }
+        break;
       }
     }
-
-    // Otherwise, it's a component path
-    const component = getComponentByPath(path);
-
-    if (!component) {
-      const title = slug
-        .map((part) =>
-          part
-            .split("-")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" "),
-        )
-        .join(" / ");
-
-      return {
-        title: title || "Component",
-        description: `${title} component details`,
-      };
-    }
-
-    return {
-      title: component.itemName || "Component",
-      description: component.description || "Component details",
-      openGraph: {
-        title: component.itemName || "Component",
-        description: component.description || "Component details",
-        type: "website",
-      },
-    };
-  } catch (error) {
-    console.error("Error generating metadata:", error);
-    return {
-      title: "Component",
-      description: "Component details page",
-    };
   }
-}
 
-export default async function ComponentPage({ params }: PageProps) {
-  let path: string | null = null;
-  let component: ReturnType<typeof getComponentByPath> | null = null;
-  let subcategoryData: ReturnType<typeof getSubcategory> | null = null; // NEW: Changed to get subcategory data
-  let error: "not-found" | "unknown" | null = null;
+  // Handle component pages (parts.length >= 3)
+  if (parts.length >= 3) {
+    const categorySlug = parts[0];
+    const subcategorySlug = parts[1];
+    const componentSlug = parts.slice(2).join("/");
 
-  try {
-    const resolvedParams = await params;
-    path = resolvedParams.slug.join("/");
-
-    // Check if this is a subcategory path (2 parts)
-    if (isSubcategoryPath(path)) {
-      const categorySubcategory = getCategorySubcategoryFromPath(path);
-      if (categorySubcategory) {
-        subcategoryData = getSubcategory(
-          categorySubcategory.category,
-          categorySubcategory.subcategory,
-        );
-        if (!subcategoryData || subcategoryData.items.length === 0) {
-          error = "not-found";
+    for (const category of COMPONENTS) {
+      if (toKebabCase(category.name) === categorySlug) {
+        for (const subcategory of category.subcategories) {
+          if (toKebabCase(subcategory.name) === subcategorySlug) {
+            subcategoryData = subcategory;
+            for (const item of subcategory.items) {
+              if (toKebabCase(item.itemName) === componentSlug) {
+                componentData = {
+                  ...item,
+                  category: category.name,
+                  subcategory: subcategory.name,
+                };
+                break;
+              }
+            }
+            break;
+          }
         }
-      } else {
-        error = "not-found";
-      }
-    } else {
-      // It's a component path (3+ parts)
-      component = getComponentByPath(path);
-      if (!component) {
-        error = "not-found";
+        break;
       }
     }
-  } catch (err) {
-    console.error("Error loading component:", err);
-    error = "unknown";
   }
 
-  if (error === "not-found") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl">Not found: {path}</h1>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl">Error loading component</h1>
-      </div>
-    );
-  }
-
-  return <PageClient component={component} slugPath={path!} subcategoryData={subcategoryData} />;
+  return (
+    <PageClient
+      component={componentData}
+      slugPath={slugPath}
+      subcategoryData={subcategoryData}
+    />
+  );
 }

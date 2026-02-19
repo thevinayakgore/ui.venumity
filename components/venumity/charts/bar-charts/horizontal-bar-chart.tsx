@@ -1,3 +1,4 @@
+// app/charts/horizontal/page.tsx
 "use client";
 import {
   BarChart,
@@ -8,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Building2, Briefcase } from "lucide-react";
 
 const horizontalData = [
   { name: "Marketing", value: 8500 },
@@ -20,74 +22,136 @@ const horizontalData = [
 ];
 
 export default function HorizontalBarChart() {
+  const total = horizontalData.reduce((acc, item) => acc + item.value, 0);
+  const topDept = horizontalData.reduce((max, item) =>
+    item.value > max.value ? item : max,
+  );
+
   return (
-    <main className="flex flex-col items-center justify-center m-auto pl-5 pb-5 border rounded-md overflow-hidden max-w-6xl w-full h-130">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={horizontalData}
-          layout="vertical"
-          margin={{ left: -10, right: 20 }}
-        >
-          <defs>
-            <linearGradient id="colorHorizontal" x1="0" y1="0" x2="1" y2="0">
-              <stop
-                offset="5%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="hsl(24 100% 55%)"
-                stopOpacity={0.2}
-              />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            className="stroke-foreground/10!"
-            horizontal={false}
-          />
-          <XAxis
-            type="number"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tickFormatter={(value) => `${value / 1000}K`}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            stroke="hsl(215 20% 65%)"
-            fontSize={14}
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "hsl(215 0% 50%)" }}
-          />
-          <Tooltip
-            contentStyle={{
-              padding: "10px 15px",
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              border: "1px solid white",
-              borderRadius: "7px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-              backdropFilter: "blur(3px)",
-            }}
-            labelStyle={{ color: "black" }}
-            itemStyle={{ color: "rgba(255, 84, 0,1)" }}
-          />
-          <Bar
-            dataKey="value"
-            fill="url(#colorHorizontal)"
-            stroke="hsl(24 100% 55%)"
-            strokeWidth={1}
-            radius={[0, 4, 4, 0]}
-            animationDuration={1500}
-            barSize={24}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+    <main className="p-6 md:p-10">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-5 mb-5">
+        <div>
+          <h3 className="text-3xl font-semibold">
+            Department Budget Allocation
+          </h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Budget distribution across departments
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <div className="bg-muted border px-4 py-2 rounded-lg">
+            <span className="text-xs text-muted-foreground">Total Budget</span>
+            <p className="text-lg font-bold">${(total / 1000).toFixed(1)}K</p>
+          </div>
+          <div className="bg-muted border px-4 py-2 rounded-lg">
+            <span className="text-xs text-muted-foreground">Top Dept</span>
+            <p className="text-lg font-bold">{topDept.name}</p>
+          </div>
+        </div>
+      </div>
+      <div className="h-120 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={horizontalData}
+            layout="vertical"
+            margin={{ left: 20, right: 20, top: 20, bottom: 20 }}
+          >
+            <defs>
+              <linearGradient id="colorHorizontal" x1="0" y1="0" x2="1" y2="0">
+                <stop stopColor="#8b5cf6" />
+              </linearGradient>
+            </defs>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              className="stroke-foreground/20"
+            />
+            <XAxis
+              type="number"
+              stroke="hsl(215 20% 65%)"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `$${value / 1000}K`}
+              tick={{ fill: "hsl(215 20% 65%)" }}
+            />
+            <YAxis
+              type="category"
+              dataKey="name"
+              stroke="hsl(215 20% 65%)"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "hsl(215 20% 65%)" }}
+              width={100}
+            />
+            <Tooltip
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div className="bg-background border rounded-lg shadow-lg p-3">
+                      <p className="text-sm font-medium mb-1">
+                        {payload[0].payload.name}
+                      </p>
+                      <p className="text-lg font-bold text-blue-600">
+                        ${payload[0].value?.toLocaleString()}
+                      </p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
+            <Bar
+              dataKey="value"
+              radius={[0, 10, 10, 0]}
+              animationDuration={1500}
+              barSize={40}
+              label={{
+                position: "right",
+                formatter: (value: number) => `$${value / 1000}K`,
+                fontSize: 13,
+              }}
+              className="fill-blue-500"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Department Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div className="bg-muted border rounded-lg p-3">
+          <div className="flex items-center gap-2 text-muted-foreground mb-1">
+            <Building2 className="size-4" />
+            <span className="text-xs">Highest Budget</span>
+          </div>
+          <div className="text-lg font-semibold">Development</div>
+          <div className="text-sm text-muted-foreground">$9,300</div>
+        </div>
+        <div className="bg-muted border rounded-lg p-3">
+          <div className="flex items-center gap-2 text-muted-foreground mb-1">
+            <Briefcase className="size-4" />
+            <span className="text-xs">Lowest Budget</span>
+          </div>
+          <div className="text-lg font-semibold">HR</div>
+          <div className="text-sm text-muted-foreground">$2,900</div>
+        </div>
+        <div className="bg-muted border rounded-lg p-3">
+          <div className="flex items-center gap-2 text-muted-foreground mb-1">
+            <Building2 className="size-4" />
+            <span className="text-xs">Average Budget</span>
+          </div>
+          <div className="text-lg font-semibold">
+            ${Math.round(total / horizontalData.length).toLocaleString()}
+          </div>
+        </div>
+        <div className="bg-muted border rounded-lg p-3">
+          <div className="flex items-center gap-2 text-muted-foreground mb-1">
+            <Briefcase className="size-4" />
+            <span className="text-xs">Departments</span>
+          </div>
+          <div className="text-lg font-semibold">{horizontalData.length}</div>
+        </div>
+      </div>
     </main>
   );
 }

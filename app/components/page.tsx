@@ -1,4 +1,3 @@
-// app/components/page.tsx
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -13,6 +12,7 @@ import {
   getSubcategoryTags,
   getSubcategoryTechs,
 } from "@/registry/component-utils";
+import { getCategoryCardThumbnailPath } from "@/registry/component-utils";
 
 const LEFT_WORDS = [
   "Tech",
@@ -52,26 +52,17 @@ export interface CategoryCard {
   techs?: string[];
 }
 
-// In app/components/page.tsx, update the getCategoryCards function:
+export interface CategoryCardProps {
+  card: CategoryCard;
+  onClick: (path: string) => void;
+}
+
 export function getCategoryCards(): CategoryCard[] {
   const cards: CategoryCard[] = [];
 
-  console.log("COMPONENTS data:", JSON.stringify(COMPONENTS, null, 2)); // Better debug
-
   COMPONENTS.forEach((category) => {
-    console.log(`Processing category: ${category.name}`);
-
     if (category.subcategories.length > 0) {
       category.subcategories.forEach((subcategory) => {
-        // Log the raw subcategory data
-        console.log(`  Subcategory: ${subcategory.name}`, {
-          itemsLength: subcategory.items?.length,
-          items: subcategory.items?.map((i) => i.itemName),
-          rawItems: subcategory.items,
-        });
-
-        // Don't filter by items.length - show all subcategories that exist
-        // Just use a fallback item count
         const itemCount = subcategory.items?.length || 0;
 
         const path = `/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
@@ -97,9 +88,9 @@ export function getCategoryCards(): CategoryCard[] {
           subcategory.items?.[0]?.description ||
           `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-        console.log(
-          `    Adding card for: ${subcategory.name} with ${itemCount} items`,
-        );
+        // Get thumbnail path for category card
+        // Priority: subcategory.thumbnail -> first item name
+        const thumbnailPath = getCategoryCardThumbnailPath(subcategory);
 
         cards.push({
           id: `${category.name}-${subcategory.name}`,
@@ -111,28 +102,24 @@ export function getCategoryCards(): CategoryCard[] {
           itemCount: itemCount,
           tags: allTags,
           techs: allTechs,
-          thumbnail: subcategory.thumbnail,
+          thumbnail: thumbnailPath,
         });
       });
     }
   });
 
-  console.log("Final cards count:", cards.length);
   return [...cards].sort((a, b) =>
     a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
   );
 }
 
-export interface CategoryCardProps {
-  card: CategoryCard;
-  onClick: (path: string) => void;
-}
-
 export function CategoryCard({ card, onClick }: CategoryCardProps) {
   const [imageError, setImageError] = useState(false);
+  const [thumbnailSrc] = useState<string>(card.thumbnail || "");
 
-  const thumbnailPath =
-    card.thumbnail || `/thumbnails/${toKebabCase(card.title)}.png`;
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   return (
     <button
@@ -141,24 +128,25 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
     >
       <div className="relative flex flex-col rounded-[1.2rem] transition-all duration-500 w-full h-full">
         <div className="aspect-video relative w-full overflow-hidden rounded-xl">
-          {!imageError ? (
+          {!imageError && thumbnailSrc ? (
             <Image
-              src={thumbnailPath}
+              src={thumbnailSrc}
               alt={card.title}
-              width={500}
-              height={280}
-              onError={() => setImageError(true)}
-              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              width={5000}
+              height={5000}
+              priority
               unoptimized
+              onError={handleImageError}
+              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
             />
           ) : (
             <div className="bg-linear-to-br from-accent via-background to-background w-full h-full" />
           )}
 
-          {/* Fallback gradient with text - always render as base, but hide when image loads successfully */}
+          {/* Fallback gradient with text */}
           <div
             className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
-              imageError ? "opacity-100" : "opacity-0"
+              imageError || !thumbnailSrc ? "opacity-100" : "opacity-0"
             }`}
           >
             <div className="relative z-10 flex flex-col items-center justify-center">
@@ -170,7 +158,6 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-3 pt-6">
           <div className="flex items-start justify-between">
             <h2 className="text-xl font-medium whitespace-nowrap truncate leading-none">
@@ -288,7 +275,6 @@ function useInfinitePagination<T extends { id: string }>(
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Load saved state from localStorage on mount
   useEffect(() => {
     if (items.length === 0) return;
 
@@ -297,7 +283,6 @@ function useInfinitePagination<T extends { id: string }>(
       if (savedState) {
         const { savedPage, savedItemIds } = JSON.parse(savedState);
 
-        // Verify that saved items still exist in the current items list
         const validSavedItems = items.filter((item) =>
           savedItemIds.includes(item.id),
         );
@@ -307,20 +292,17 @@ function useInfinitePagination<T extends { id: string }>(
           setCurrentPage(savedPage);
           setHasMore(items.length > validSavedItems.length);
         } else {
-          // If no valid saved items, start fresh
           setDisplayedItems(items.slice(0, pageSize));
           setCurrentPage(1);
           setHasMore(items.length > pageSize);
         }
       } else {
-        // No saved state, start fresh
         setDisplayedItems(items.slice(0, pageSize));
         setCurrentPage(1);
         setHasMore(items.length > pageSize);
       }
     } catch (error) {
       console.error("Error loading scroll state:", error);
-      // Fallback to fresh start
       setDisplayedItems(items.slice(0, pageSize));
       setCurrentPage(1);
       setHasMore(items.length > pageSize);
@@ -329,7 +311,6 @@ function useInfinitePagination<T extends { id: string }>(
     }
   }, [items, pageSize]);
 
-  // Save state to localStorage whenever displayed items change
   useEffect(() => {
     if (isInitialized && displayedItems.length > 0) {
       try {
@@ -352,7 +333,6 @@ function useInfinitePagination<T extends { id: string }>(
 
     setIsLoadingMore(true);
 
-    // Simulate network delay for smooth UX
     setTimeout(() => {
       const nextPage = currentPage + 1;
       const startIndex = currentPage * pageSize;
@@ -371,7 +351,6 @@ function useInfinitePagination<T extends { id: string }>(
     }, 800);
   }, [currentPage, hasMore, isLoadingMore, items, pageSize, isInitialized]);
 
-  // Clear localStorage when all items are displayed (optional)
   const resetPagination = useCallback(() => {
     localStorage.removeItem(SCROLL_STATE_KEY);
     setDisplayedItems(items.slice(0, pageSize));
@@ -400,7 +379,6 @@ export default function Components() {
   const [categoryCards, setCategoryCards] = useState<CategoryCard[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Initialize infinite scroll with 30 cards per page
   const {
     displayedItems,
     hasMore,
@@ -410,17 +388,12 @@ export default function Components() {
     isInitialized,
   } = useInfinitePagination(categoryCards, 30);
 
-  // Load all cards on mount
-  // In the main Components function, update the useEffect :
   useEffect(() => {
     const loadCategories = async () => {
       try {
         setLoading(true);
         const cards = getCategoryCards();
-
-        // TEMPORARY: Clear localStorage to reset pagination
         localStorage.removeItem(SCROLL_STATE_KEY);
-
         setCategoryCards(cards);
       } catch (error) {
         console.error("Error loading components:", error);
@@ -437,7 +410,6 @@ export default function Components() {
     router.push(`/components${path}`);
   };
 
-  // Calculate loading progress
   const progressPercentage =
     totalItems > 0
       ? Math.min(Math.round((displayedItems.length / totalItems) * 100), 100)
@@ -469,7 +441,6 @@ export default function Components() {
           one place.
         </p>
 
-        {/* Mobile progress indicator */}
         {!loading && categoryCards.length > 0 && (
           <div className="flex md:hidden items-center gap-2 mt-3">
             <div className="flex-1 h-1 bg-foreground/10 rounded-full overflow-hidden">
@@ -485,7 +456,6 @@ export default function Components() {
         )}
       </header>
 
-      {/* Loading State - Initial Load */}
       {loading && (
         <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
           {Array.from({ length: 6 }).map((_, index) => (
@@ -514,7 +484,6 @@ export default function Components() {
         </section>
       )}
 
-      {/* Cards Grid - With Infinite Scroll */}
       {!loading && categoryCards.length > 0 && (
         <>
           <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 w-full">
@@ -527,7 +496,6 @@ export default function Components() {
             ))}
           </section>
 
-          {/* Infinite Scroll Loader - Only show if initialized and has more */}
           {isInitialized && hasMore && (
             <InfiniteScrollLoader
               hasMore={hasMore}
@@ -538,7 +506,6 @@ export default function Components() {
         </>
       )}
 
-      {/* Empty State */}
       {!loading && categoryCards.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <div className="size-20 rounded-full bg-foreground/5 flex items-center justify-center mb-4">
