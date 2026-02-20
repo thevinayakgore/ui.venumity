@@ -127,7 +127,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
       className="relative cursor-pointer text-start p-3 group bg-foreground/3 border border-foreground/5 rounded-[1.2rem] overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
     >
       <div className="relative flex flex-col rounded-[1.2rem] transition-all duration-500 w-full h-full">
-        <div className="aspect-video relative w-full overflow-hidden rounded-xl">
+        <div className="aspect-square relative border border-foreground/5 grayscale-100 group-hover:grayscale-0 w-full max-h-70 overflow-hidden rounded-xl transition-all duration-500">
           {!imageError && thumbnailSrc ? (
             <Image
               src={thumbnailSrc}
@@ -430,11 +430,11 @@ export default function Components() {
           />
         </Badge>
 
-        <h1 className="text-3xl md:text-6xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
+        <h1 className="text-2xl md:text-4xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
           Components
         </h1>
 
-        <p className="text-base md:text-lg font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full mt-2">
+        <p className="text-sm md:text-base font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full mt-2">
           A curated collection of reusable UI components designed to help you
           build faster and more consistently. From core building blocks to
           advanced patterns, everything you need to craft modern interfaces in

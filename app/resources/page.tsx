@@ -76,10 +76,10 @@ export default function Resources() {
               interval={4000}
             />
           </Badge>
-          <h1 className="text-3xl md:text-6xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
+          <h1 className="text-2xl md:text-4xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
             Resources
           </h1>
-          <p className="text-base md:text-lg  font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full">
+          <p className="text-sm md:text-base font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full">
             Curated guides, libraries, and references to help you build faster
             with modern tools. From frameworks and animations to patterns and
             cheatsheets, everything in one place.

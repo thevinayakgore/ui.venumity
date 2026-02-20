@@ -175,14 +175,33 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Line Charts",
-        thumbnail: "basic-line-chart",
+        thumbnail: "label-line-chart",
         description:
           "Capture performance trends with precision line visualizations designed for time-series analysis. These professional chart components deliver clear pattern recognition and forecasting capabilities essential for financial platforms, IoT dashboards, and growth analytics.",
         tags: ["line", "time", "pattern", "graph", "data"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
-          { itemName: "Area Line Chart", githubUsername: "thevinayakgore" },
           { itemName: "Basic Line Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Linear Line Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Step Line Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Multiple Line Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Dots Line Chart", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Custom Dots Line Chart",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Dots Color Line Chart",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Label Line Chart",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Custom Label Line Chart",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       {
@@ -199,6 +218,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Radar Charts",
+        thumbnail: "filled-radar-chart",
         description:
           "Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping. These featured chart components excel at performance benchmarking, competitive analysis, and multivariate data comparison for enterprise applications.",
         tags: ["radar", "spider", "analysis", "skill", "comparison"],
@@ -206,6 +226,40 @@ export const COMPONENTS = createComponents([
         items: [
           { itemName: "Basic Radar Chart", githubUsername: "thevinayakgore" },
           { itemName: "Filled Radar Chart", githubUsername: "thevinayakgore" },
+        ],
+      },
+      {
+        name: "Radial Charts",
+        thumbnail: "label-radial-chart",
+        description:
+          "Visualize progress, distribution, and performance with radial chart components built for circular data representation. These charts are ideal for KPIs, completion metrics, comparative proportions, and dashboard highlights where visual impact and quick comprehension matter.",
+        tags: [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard",
+        ],
+        techs: [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui",
+        ],
+        items: [
+          { itemName: "Basic Radial Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Label Radial Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Grid Radial Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Text Radial Chart", githubUsername: "thevinayakgore" },
+          { itemName: "Shape Radial Chart", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Stacked Radial Chart",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       {
@@ -221,13 +275,18 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Sparklines",
+        thumbnail: "range-sparkline",
         description:
           "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis. These smart micro-chart components integrate seamlessly into dashboards, tables, and reports—perfect for financial applications, performance metrics, and space-constrained interfaces.",
         tags: ["sparkline", "mini", "inline", "micro", "trend"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
+          { itemName: "Line Sparkline", githubUsername: "thevinayakgore" },
           { itemName: "Area Sparkline", githubUsername: "thevinayakgore" },
           { itemName: "Bar Sparkline", githubUsername: "thevinayakgore" },
+          { itemName: "Winloss Sparkline", githubUsername: "thevinayakgore" },
+          { itemName: "Scatter Sparkline", githubUsername: "thevinayakgore" },
+          { itemName: "Range Sparkline", githubUsername: "thevinayakgore" },
         ],
       },
     ],
@@ -428,6 +487,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Financial",
+        
         description:
           "Professional financial dashboard layouts designed to track income, expenses, savings, and key performance metrics. These dashboards provide clear data visualization, actionable insights, and a structured overview—ideal for personal finance tools, fintech platforms, and business reporting applications.",
         tags: [

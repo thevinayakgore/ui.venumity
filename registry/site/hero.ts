@@ -21,7 +21,7 @@ export const FEATURES = [
     border: "border-orange-500/40",
   },
   {
-    title: "5",
+    title: "10",
     subtitle: "Categories",
     description:
       "Cleanly grouped layouts, forms, navigation patterns, and many more things.",

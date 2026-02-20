@@ -13,6 +13,11 @@ import { Camera } from "@/components/utility/camera";
 import { HeroMovingCards } from "@/components/ui/hero-moving-cards";
 import { BorderBeam } from "@/components/ui/border-beam";
 
+// Ensures cards keep registry insertion order (no alphabetical sorting)
+function getRecentSubcategories(cards: CategoryCardType[], limit = 10) {
+  return cards.slice(-limit);
+}
+
 const AnimatedText = ({
   text,
   className,
@@ -86,7 +91,10 @@ export default function Hero() {
   useEffect(() => {
     const getLatestSubcategories = () => {
       const allCards = getCategoryCards();
-      const latest = allCards.slice(0, 10);
+
+      // ✅ Take the LAST 10 added (most recent)
+      const latest = getRecentSubcategories(allCards, 10);
+
       setLatestSubcategories(latest);
     };
 
@@ -165,14 +173,14 @@ export default function Hero() {
               <span className="text-4xl scale-115 -mt-1 mb-1">Components</span>
               <span className="text-4xl scale-135">of library</span>
             </div>
-            <div className="aspect-video absolute -bottom-45 left-0 p-6 w-full">
+            <div className="aspect-video absolute -bottom-70 left-0 p-6 w-full">
               <motion.div
                 key={activeComponentIndex}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 initial={{ opacity: 0, y: 100, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                whileHover={{ y: latestSubcategories.length > 0 ? -120 : 0 }}
+                whileHover={{ y: latestSubcategories.length > 0 ? -170 : 0 }}
                 exit={{ opacity: 0, y: 100, filter: "blur(10px)" }}
                 transition={{ duration: 0.7, ease: "easeInOut" }}
                 className="overflow-hidden rounded-xl w-full"

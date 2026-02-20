@@ -24,14 +24,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function ChartLineDefault() {
+export default function ChartLineStep() {
   return (
     <main className="p-6 md:p-10">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-semibold">Line Chart - Natural</h2>
+          <h2 className="text-3xl font-semibold">Line Chart - Step</h2>
           <p className="text-base mt-1">
-            Smooth curve interpolation · January - June 
+            Step interpolation · January - June 
           </p>
         </div>
         <div className="flex gap-3">
@@ -39,12 +39,6 @@ export default function ChartLineDefault() {
             <span className="text-xs text-blue-600">Total</span>
             <p className="text-lg font-bold text-blue-600">
               {chartData.reduce((acc, item) => acc + item.desktop, 0)}
-            </p>
-          </div>
-          <div className="bg-emerald-500/10 px-4 py-2 rounded-lg border border-emerald-500/20 w-30">
-            <span className="text-xs text-emerald-600">Peak</span>
-            <p className="text-lg font-bold text-emerald-600">
-              {Math.max(...chartData.map((d) => d.desktop))}
             </p>
           </div>
         </div>
@@ -73,7 +67,7 @@ export default function ChartLineDefault() {
           />
           <Line
             dataKey="desktop"
-            type="natural"
+            type="step"
             stroke="var(--color-desktop)"
             strokeWidth={3}
             dot={false}
@@ -83,21 +77,16 @@ export default function ChartLineDefault() {
       </ChartContainer>
       <div className="flex items-center justify-between w-full">
         <div className="space-y-1">
-          <div className="flex flex-col gap-1 text-sm font-medium leading-none">
-            <span>Average</span>
-            <span className="text-2xl font-bold">
-              {(
-                chartData.reduce((acc, item) => acc + item.desktop, 0) /
-                chartData.length
-              ).toFixed(0)}
-            </span>
+          <div className="flex flex-col items-start gap-1 text-sm font-medium leading-none">
+            <span>Volatility</span>
+            <span className="text-2xl font-bold">Medium</span>
           </div>
-          <p className="text-xs text-muted-foreground">Per month average</p>
+          <p className="text-xs text-muted-foreground">Step pattern analysis</p>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <span className="text-emerald-600 font-medium">+15.2%</span>
-          <TrendingUp className="h-4 w-4 text-emerald-600" />
-          <span className="text-muted-foreground">growth</span>
+          <span className="text-blue-600 font-medium">+12.3%</span>
+          <TrendingUp className="h-4 w-4 text-blue-600" />
+          <span className="text-muted-foreground">since Jan</span>
         </div>
       </div>
     </main>

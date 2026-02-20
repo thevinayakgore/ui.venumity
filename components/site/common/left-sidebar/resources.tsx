@@ -136,7 +136,7 @@ export default function LeftResources({
                     isActive
                       ? "text-foreground bg-muted/60 border-primary"
                       : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                  } transition-all duration-500`}
+                  }`}
                   onClick={() => setSelectedCategory(categoryConfig.slug)}
                 >
                   <span>{categoryConfig.label}</span>
@@ -160,7 +160,7 @@ export default function LeftResources({
                     isActive
                       ? "text-foreground bg-muted/60 border-primary"
                       : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                  } transition-all duration-500`}
+                  }`}
                 >
                   <span>{categoryConfig.label}</span>
                   <span
@@ -204,7 +204,7 @@ export default function LeftResources({
                         isActive
                           ? "text-foreground bg-muted/60 border-primary"
                           : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                      } truncate transition-all duration-500`}
+                      } truncate`}
                     >
                       {resource.title}
                     </Link>
@@ -219,7 +219,7 @@ export default function LeftResources({
           <div className="mt-3 w-full">
             <Link
               href="/resources"
-              className="flex items-center justify-center gap-2 text-[11px] leading-none font-medium text-muted-foreground/80 hover:text-foreground bg-foreground/5 border hover:border-foreground/20 rounded w-full py-3 px-5 uppercase transition-all duration-500"
+              className="flex items-center justify-center gap-2 text-[11px] leading-none font-medium text-muted-foreground/80 hover:text-foreground bg-foreground/5 border hover:border-foreground/20 rounded w-full py-3 px-5 uppercase"
               onClick={() => {
                 // Keep the current category selected when going back
                 if (categorySlug) {

@@ -12,7 +12,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CheckLine, Link as Linked, MoveRight, Share2 } from "lucide-react";
+import {
+  CheckLine,
+  Clipboard,
+  Link as Linked,
+  MoveRight,
+  Share2,
+} from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { getOGThumbnailPath } from "@/registry/component-utils";
@@ -222,7 +228,7 @@ export default function ShareComponent({ itemName }: ShareComponentProps) {
           <div className="p-4 pt-2 font-medium text-foreground w-full h-full">
             {/* Preview section */}
             <div className="flex items-start gap-4 mb-4 w-full h-70">
-              <div className="relative bg-accent dark:bg-popover border shadow-lg/10 rounded-lg overflow-hidden w-1/2 h-full">
+              <div className="relative group/img bg-accent dark:bg-popover border shadow-lg/10 rounded-lg overflow-hidden w-1/2 h-full">
                 <Image
                   src={thumbnailPath}
                   alt={componentName}
@@ -230,20 +236,34 @@ export default function ShareComponent({ itemName }: ShareComponentProps) {
                   height={5000}
                   unoptimized
                   priority
-                  className="object-cover border-b w-full"
+                  className="object-cover group-hover/img:scale-110 transition-all duration-500 w-full"
                   onError={(e) => {
                     const img = e.target as HTMLImageElement;
                     img.src = "/brand-logo.png";
                   }}
                 />
-                <h3 className="px-4 py-3 text-sm md:text-base font-medium truncate">
+                <h3 className="absolute inset-x-0 bottom-0 z-10 px-4 py-3 bg-accent dark:bg-popover border-t text-sm md:text-base font-medium truncate">
                   📦 {componentName}
                 </h3>
               </div>
               <div className="flex flex-col items-start gap-3 text-xs bg-accent dark:bg-popover p-3 pb-4 rounded-lg border font-mono whitespace-pre-wrap overflow-y-auto w-1/2 h-full">
-                <h3 className="sticky top-0 p-3 text-center bg-background border shadow-lg/5 rounded-md text-base font-medium font-sans w-full">
-                  📢 SHARE ON SOCIAL MEDIA WITH MESSAGE
-                </h3>
+                <div className="sticky top-0 flex items-center justify-between p-2 pl-3 text-center bg-background border shadow-lg/5 rounded-md text-base font-medium font-sans w-full">
+                  <span className="text-2xl leading-none">🌐</span>
+                  <h3>SHARE COMPONENTS WITH OTHERS</h3>
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    disabled={copied}
+                    aria-label="Copy share message"
+                    className={`group/btn cursor-pointer rounded size-8 p-1.5 hover:bg-foreground/10 backdrop-blur-sm text-muted-foreground/70 hover:text-foreground disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300`}
+                  >
+                    {copied ? (
+                      <CheckLine className="w-full h-full text-green-500" />
+                    ) : (
+                      <Clipboard className="w-full h-full group-hover/btn:text-foreground transition-colors duration-300" />
+                    )}
+                  </button>
+                </div>
                 <div className="flex flex-col item-start gap-2 px-1 w-full">
                   <p># Component - {componentName}</p>
                   <p>

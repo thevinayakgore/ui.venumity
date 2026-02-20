@@ -52,7 +52,7 @@ export default function LeftSidebar() {
                         <Link
                           key={page.slug}
                           href={href}
-                          className={`flex items-center tracking-wide px-5 py-2 border-x rounded-[3px] transition-all duration-500 ${
+                          className={`flex items-center tracking-wide px-5 py-2 border-x rounded-[3px] ${
                             isActive
                               ? "text-foreground bg-muted/60 border-primary"
                               : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
@@ -85,7 +85,7 @@ export default function LeftSidebar() {
                     <Link
                       key={category.name}
                       href={categoryLink}
-                      className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] transition-all duration-500 ${
+                      className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] ${
                         isCategoryActive
                           ? "text-foreground bg-muted/60 border-primary"
                           : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
