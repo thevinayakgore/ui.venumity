@@ -1,4 +1,3 @@
-// app/robots.ts
 import { MetadataRoute } from "next";
 import { website } from "@/lib/brand";
 
