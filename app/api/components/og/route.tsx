@@ -1,4 +1,3 @@
-// app/api/og/route.tsx
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { COMPONENTS } from "@/registry/components";
@@ -11,9 +10,11 @@ export const runtime = "edge";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const component = searchParams.get("component");
-    const category = searchParams.get("category");
-    const subcategory = searchParams.get("subcategory");
+    
+    // Handle multiple possible parameter names
+    const component = searchParams.get("component") || searchParams.get("title") || "";
+    const category = searchParams.get("category") || searchParams.get("path")?.split("/")[0] || "";
+    const subcategory = searchParams.get("subcategory") || searchParams.get("path")?.split("/")[1] || "";
 
     // Find component details
     let componentName = component || "UI Component";
@@ -21,34 +22,43 @@ export async function GET(req: NextRequest) {
     let subcategoryName = subcategory || "";
     let thumbnailPath = "";
 
-    // Search through COMPONENTS to find the matching component
-    for (const cat of COMPONENTS) {
-      if (toKebabCase(cat.name) === category) {
-        categoryName = cat.name;
-        for (const sub of cat.subcategories) {
-          if (toKebabCase(sub.name) === subcategory) {
-            subcategoryName = sub.name;
-            for (const item of sub.items) {
-              if (toKebabCase(item.itemName) === component) {
-                componentName = item.itemName;
-                // OG images ALWAYS use component item name (not subcategory thumbnail)
-                thumbnailPath = getOGThumbnailPath(item.itemName);
-                break;
+    // First try to get thumbnail directly from component name
+    if (component) {
+      thumbnailPath = getOGThumbnailPath(component);
+    }
+
+    // If not found, search through COMPONENTS
+    if (!thumbnailPath || thumbnailPath.includes('undefined')) {
+      for (const cat of COMPONENTS) {
+        if (toKebabCase(cat.name) === category) {
+          categoryName = cat.name;
+          for (const sub of cat.subcategories) {
+            if (toKebabCase(sub.name) === subcategory) {
+              subcategoryName = sub.name;
+              for (const item of sub.items) {
+                if (toKebabCase(item.itemName) === component) {
+                  componentName = item.itemName;
+                  thumbnailPath = getOGThumbnailPath(item.itemName);
+                  break;
+                }
               }
+              break;
             }
-            break;
           }
+          break;
         }
-        break;
       }
     }
 
     // Try to fetch the actual component thumbnail from public folder
     let thumbnailBase64 = "";
-    if (thumbnailPath) {
+    if (thumbnailPath && !thumbnailPath.includes('undefined')) {
       try {
-        const baseUrl = website || "http://localhost:3000/";
-        const imageUrl = `${baseUrl}${thumbnailPath}`;
+        const baseUrl = website || "https://ui.venumity.com";
+        const imageUrl = thumbnailPath.startsWith('http') 
+          ? thumbnailPath 
+          : `${baseUrl}${thumbnailPath}`;
+        
         const imageRes = await fetch(imageUrl);
         if (imageRes.ok) {
           const arrayBuffer = await imageRes.arrayBuffer();
@@ -104,7 +114,7 @@ export async function GET(req: NextRequest) {
               boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
             }}
           >
-            {/* Component thumbnail - from public/thumbnails using item name */}
+            {/* Component thumbnail */}
             {thumbnailBase64 ? (
               <img
                 src={thumbnailBase64}
@@ -119,7 +129,6 @@ export async function GET(req: NextRequest) {
                 }}
               />
             ) : (
-              // Default box when image not found in thumbnails folder
               <div
                 style={{
                   width: "200px",
@@ -136,7 +145,7 @@ export async function GET(req: NextRequest) {
                   color: "#3b82f6",
                 }}
               >
-                {componentName.charAt(0)}
+                {componentName.charAt(0).toUpperCase()}
               </div>
             )}
 
@@ -225,9 +234,7 @@ export async function GET(req: NextRequest) {
           {
             name: "Inter",
             data: await fetch(
-              new URL(
-                "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2",
-              ),
+              "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2"
             ).then((res) => res.arrayBuffer()),
             style: "normal",
             weight: 400,
