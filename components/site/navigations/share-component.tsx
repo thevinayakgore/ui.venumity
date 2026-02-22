@@ -44,7 +44,11 @@ const SHARE_PROVIDERS = [
 const ACTION_BUTTON_CLASS =
   "py-6 border-foreground/10! hover:border-blue-500/70! bg-muted/30 hover:bg-linear-to-tl from-blue-500/30 via-background shadow-none hover:shadow-lg shadow-blue-500/20 transition-all duration-100 rounded-sm cursor-pointer w-full";
 
-const getShareMessage = (componentName: string, url: string) => {
+const getShareMessage = (
+  componentName: string,
+  url: string,
+  imageUrl: string,
+) => {
   return `# Component - ${componentName}
 
 ✨ Next.js, TypeScript, Framer Motion, Tailwind CSS, shadcn/ui.
@@ -53,14 +57,21 @@ const getShareMessage = (componentName: string, url: string) => {
 🎉 Copy-paste ready - Customizable - Open source 
 🛠️ Built for developers who ship fast.
 
-#venumityui #nextjs #buildinginpublic`;
+#venumityui #nextjs #buildinginpublic
+${imageUrl}
+`;
 };
 
-const getShareConfig = (name: string, url: string, componentName: string) => {
+const getShareConfig = (
+  name: string,
+  url: string,
+  componentName: string,
+  imageUrl: string,
+) => {
   const label = name.charAt(0).toUpperCase() + name.slice(1);
   const key = name;
   const target = ["gmail", "messages"].includes(name) ? undefined : "_blank";
-  const shareMessage = getShareMessage(componentName, url);
+  const shareMessage = getShareMessage(componentName, url, imageUrl);
 
   const hrefMap: Record<string, string> = {
     gmail: `mailto:?subject=${encodeURIComponent(componentName)}&body=${encodeURIComponent(shareMessage)}`,
@@ -85,9 +96,13 @@ const getShareConfig = (name: string, url: string, componentName: string) => {
   };
 };
 
-const buildShareActions = (url: string, componentName: string) => {
+const buildShareActions = (
+  url: string,
+  componentName: string,
+  imageUrl: string,
+) => {
   return SHARE_PROVIDERS.map(({ name, src }) => {
-    const config = getShareConfig(name, url, componentName);
+    const config = getShareConfig(name, url, componentName, imageUrl);
     return {
       ...config,
       src,
@@ -168,7 +183,8 @@ export default function ShareComponent({ itemName }: ShareComponentProps) {
 
   const handleCopy = async () => {
     try {
-      const shareMessage = getShareMessage(componentName, currentUrl);
+      const imageUrl = `${window.location.origin}${thumbnailPath}`;
+      const shareMessage = getShareMessage(componentName, currentUrl, imageUrl);
       await navigator.clipboard.writeText(shareMessage);
       setCopied(true);
       toast.success("Share message copied to clipboard!");
@@ -181,7 +197,8 @@ export default function ShareComponent({ itemName }: ShareComponentProps) {
     }
   };
 
-  const shareActions = buildShareActions(currentUrl, componentName);
+  const imageUrl = `${window.location.origin}${thumbnailPath}`;
+  const shareActions = buildShareActions(currentUrl, componentName, imageUrl);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
