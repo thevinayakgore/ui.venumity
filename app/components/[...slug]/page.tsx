@@ -107,7 +107,7 @@ export async function generateMetadata({
             title: title,
             description: description,
             keywords: generateKeywords(undefined, subcategory),
-            metadataBase: new URL(website || "http://localhost:3000/"),
+            metadataBase: new URL(website || "https://ui.venumity.com"),
             alternates: {
               canonical: canonicalUrl,
             },
@@ -247,6 +247,10 @@ export async function generateMetadata({
       verification: {
         google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
         yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "",
+        // Bing uses 'msvalidate.01' – add it here
+        other: {
+          "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
+        },
       },
       // Other metadata
       category: component?.category || "UI Components",
@@ -299,7 +303,7 @@ export default async function ComponentPage({ params }: PageProps) {
       }
     }
   } catch (err) {
-    console.error("Error loading component:", err);
+    console.error("Error loading component :", err);
     error = "unknown";
   }
 

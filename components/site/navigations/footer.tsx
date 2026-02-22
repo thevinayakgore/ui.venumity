@@ -471,14 +471,13 @@ export default function Footer() {
         <h1 className="absolute bottom-0 left-1/2 -translate-x-1/2 opacity-30 text-center text-[20rem]  uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none">
           Library
         </h1>
-        <h3 className="absolute bottom-35 left-1/2 -translate-x-1/2 tracking-widest text-center text-xl font-medium uppercase whitespace-nowrap leading-none w-fit flex gap-3">
+        <h3 className="absolute bottom-30 left-1/2 -translate-x-1/2 tracking-widest text-center text-3xl font-medium uppercase whitespace-nowrap leading-none w-fit flex gap-3">
           {words.map((word, i) => (
             <motion.span
               key={word}
               animate={{
-                y: [0, -10, 0],
-                opacity: [0.3, 0.8, 0.3],
-                filter: ["blur(5px)", "blur(0px)", "blur(5px)"],
+                y: [0, -15, 0],
+                opacity: [0, 1, 0],
               }}
               transition={{
                 duration: 3,
