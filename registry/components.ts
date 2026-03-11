@@ -394,6 +394,8 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
           { itemName: "Pricing Table 1", githubUsername: "thevinayakgore" },
+          { itemName: "Pricing Table 2", githubUsername: "thevinayakgore" },
+          { itemName: "Pricing Table 3", githubUsername: "thevinayakgore" },
         ],
       },
       {
@@ -1048,4 +1050,4 @@ export const COMPONENTS = createComponents([
       },
     ],
   },
-]);
+ ] as const);

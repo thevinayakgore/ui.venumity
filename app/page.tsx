@@ -5,7 +5,7 @@ import FAQ from "./faq/page";
 const page = () => {
   return (
     <>
-      <main className="flex flex-col gap-32 pb-32 max-w-360 m-auto 2xl:border-x-2 border-dashed border-foreground/10 overflow-hidden! transform-gpu w-full">
+      <main className="flex flex-col gap-10 md:gap-15 lg:gap-25 xl:gap-32 pb-32 max-w-360 m-auto 2xl:border-x-2 border-dashed border-foreground/10 overflow-hidden! transform-gpu w-full">
         <Hero />
         <FAQ />
         <CTA />

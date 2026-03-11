@@ -33,6 +33,7 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setMounted(true), 0);
@@ -44,13 +45,13 @@ export default function Navbar() {
     <>
       <main className="relative flex items-center justify-center m-auto w-full">
         <div className="fixed top-0 z-1000! flex items-center justify-center m-auto bg-background border-b w-full">
-          <nav className="flex items-center justify-between m-auto py-2 px-10 max-w-360 2xl:border-x-2 border-dashed w-full">
+          <nav className="flex items-center justify-between m-auto py-2 px-4 sm:px-6 lg:px-10 max-w-360 2xl:border-x-2 border-dashed w-full">
             <div className="flex items-center m-auto w-full">
               {/* Logo & Desktop Navigation */}
               <section className="flex items-center justify-start gap-10 m-auto whitespace-nowrap w-full">
                 <Link
                   href="/"
-                  className="flex items-center justify-start gap-2 text-2xl stackSans font-medium! leading-none"
+                  className="flex items-center justify-start gap-2 text-lg sm:text-2xl stackSans font-medium! leading-none"
                 >
                   <Image
                     src="/logo.png"
@@ -80,10 +81,28 @@ export default function Navbar() {
                     ))}
                   </LayoutGroup>
                 </div>
+                <button
+                  className="md:hidden ml-auto p-2 rounded hover:bg-foreground/10"
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  aria-label="Toggle menu"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </svg>
+                </button>
               </section>
 
               {/* Searchbar and Dark Mode */}
-              <section className="hidden lg:flex items-center justify-end gap-1.5">
+              <section className="hidden md:flex items-center justify-end gap-2">
                 <SearchTrigger />
                 <Button
                   asChild
@@ -135,6 +154,53 @@ export default function Navbar() {
               </section>
             </div>
           </nav>
+          {mobileOpen && (
+            <div className="md:hidden fixed top-14 inset-x-0 z-50 bg-background border-b">
+              <div className="flex flex-col gap-2 px-4 py-4">
+                <div className="flex items-center gap-2 pt-2 w-full">
+                  <SearchTrigger />
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    onClick={() =>
+                      setTheme(mounted && theme === "dark" ? "light" : "dark")
+                    }
+                    className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-4.5"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                      <path d="M12 3l0 18" />
+                      <path d="M12 9l4.65 -4.65" />
+                      <path d="M12 14.3l7.37 -7.37" />
+                      <path d="M12 19.6l8.85 -8.85" />
+                    </svg>
+                  </Button>
+                </div>
+                {COMPANY_SECTION.links.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={`/${link.name.toLowerCase()}`}
+                    onClick={() => setMobileOpen(false)}
+                    className="py-2 px-3 rounded hover:bg-foreground/5 text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         {(pathname === "/" || pathname.startsWith("/legal")) && (
           <motion.div

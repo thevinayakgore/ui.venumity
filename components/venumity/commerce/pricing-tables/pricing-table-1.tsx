@@ -161,7 +161,7 @@ export default function PricingTable1() {
 
         <Card
           className={cn(
-            "group relative overflow-hidden border-6 transition-all duration-300 hover:shadow-xl rounded-3xl!",
+            "group relative overflow-hidden border-3 transition-all duration-300 hover:shadow-xl rounded-3xl!",
             highlighted
               ? "border-primary/80 bg-linear-to-t from-primary/40 via-primary/10 to-background"
               : "border-border hover:border-primary/80",

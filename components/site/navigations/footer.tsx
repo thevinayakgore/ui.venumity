@@ -59,7 +59,7 @@ const FOOTER_CONFIG = {
 
 export const BottomFooter = () => {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between gap-3  font-medium text-muted-foreground/80 tracking-normal text-center py-3 px-10 bg-transparent/5 backdrop-blur-md border-y 2xl:border-y-2 2xl:border-dashed w-full">
+    <section className="flex flex-col lg:flex-row items-center justify-between gap-3 font-medium text-muted-foreground/80 tracking-normal text-center py-3 px-6 md:px-10 bg-transparent/5 backdrop-blur-md border-y 2xl:border-y-2 2xl:border-dashed w-full">
       <div className="flex items-center text-sm">
         <p className="flex items-center gap-2">
           © {new Date().getFullYear()}{" "}
@@ -321,15 +321,15 @@ export default function Footer() {
   return (
     <footer className="w-full">
       <div className="relative flex flex-col items-center justify-center gap-5 max-w-360 m-auto bg-background border-t 2xl:border-2 2xl:border-dashed 2xl:border-t overflow-hidden w-full h-full">
-        <span className="absolute top-0 left-1/2 -translate-x-1/2 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 w-1/2 h-px" />
-        <span className="absolute -top-15 left-1/2 -translate-x-1/2 z-10 blur-3xl bg-linear-to-l from-transparent via-primary/60 to-transparent transition-all duration-500 rounded-full w-1/2 h-10" />
+        <span className="absolute top-0 left-1/2 -translate-x-1/2 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 w-full md:w-1/2 h-px" />
+        <span className="absolute -top-15 left-1/2 -translate-x-1/2 z-10 blur-3xl bg-linear-to-l from-transparent via-primary/60 to-transparent transition-all duration-500 rounded-full w-full md:w-1/2 h-10" />
 
         <section
           className={`flex flex-col items-center text-center max-w-2xl m-auto mb-8 p-6 sm:p-10 pb-0! w-full px-2 sm:px-0`}
         >
           <Link
             href="/"
-            className="flex items-center gap-1 sm:gap-2 text-3xl sm:text-4xl md:text-[5rem] stackSans font-medium!"
+            className="flex items-center gap-1 sm:gap-2 text-5xl md:text-[5rem] stackSans font-medium!"
           >
             <div className="flex items-center">
               <span className="opacity-50 text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent">
@@ -341,7 +341,7 @@ export default function Footer() {
             </div>
             <span>⚡</span>
           </Link>
-          <p className="mt-5  font-normal text-lg text-transparent bg-clip-text bg-linear-to-l from-foreground/10 via-foreground/70 to-foreground/10 opacity-60">
+          <p className="mt-3 md:mt-5 font-normal text-sm sm:text-base md:text-lg text-transparent bg-clip-text bg-linear-to-l from-foreground/10 via-foreground/70 to-foreground/10 opacity-60">
             {FOOTER_TITLE}
           </p>
         </section>
@@ -468,10 +468,10 @@ export default function Footer() {
           })}
         </section>
 
-        <h1 className="absolute bottom-0 left-1/2 -translate-x-1/2 opacity-30 text-center text-[20rem]  uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none">
+        <h1 className="absolute bottom-35 md:bottom-20 lg:bottom-0 left-1/2 -translate-x-1/2 opacity-30 text-center text-7xl md:text-[12rem] lg:text-[14rem] xl:text-[20rem] uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none">
           Library
         </h1>
-        <h3 className="absolute bottom-30 left-1/2 -translate-x-1/2 tracking-widest text-center text-3xl font-medium uppercase whitespace-nowrap leading-none w-fit flex gap-3">
+        <h3 className="absolute bottom-35 lg:bottom-25 xl:bottom-30 left-1/2 -translate-x-1/2 tracking-widest text-center text-base md:text-xl xl:text-3xl font-medium uppercase whitespace-nowrap leading-none w-fit flex gap-3">
           {words.map((word, i) => (
             <motion.span
               key={word}

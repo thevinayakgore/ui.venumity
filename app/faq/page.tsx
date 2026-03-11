@@ -12,10 +12,10 @@ export default function FAQ() {
 
   return (
     <section
-      className={`relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 sm:px-6 md:px-8 lg:px-10 ${isFaqPage && "pt-12 sm:pt-16 md:pt-20 lg:pt-24 2xl:border-x-2 border-dashed m-auto max-w-360 overflow-x-hidden w-full"}`}
+      className={`relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-6 md:px-8 lg:px-10 ${isFaqPage && "pt-12 sm:pt-16 md:pt-20 lg:pt-24 2xl:border-x-2 border-dashed m-auto max-w-360 overflow-x-hidden w-full"}`}
     >
       <h1
-        className={`absolute ${isFaqPage ? "top-8 sm:top-12 md:top-15" : "-top-8 sm:-top-10"} left-1/2 -translate-x-1/2 text-center text-4xl sm:text-6xl md:text-8xl lg:text-[15rem] xl:text-[20rem] uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none`}
+        className={`absolute ${isFaqPage ? "top-15 lg:top-10" : "top-10 md:-top-5 xl:-top-15"} left-1/2 -translate-x-1/2 text-center text-7xl md:text-[12rem] lg:text-[14rem] xl:text-[20rem] uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none`}
       >
         Queries
       </h1>
@@ -70,10 +70,10 @@ export default function FAQ() {
               <div className="relative p-2 sm:p-3 z-20 overflow-hidden border-2 border-transparent dark:border-foreground/5 hover:border-white dark:hover:border-transparent bg-zinc-500/5 backdrop-blur-sm rounded-lg transition-all duration-300 w-full">
                 <div className="relative z-50 bg-background border group-hover:shadow-lg/10 transition-all duration-700 rounded-lg w-full">
                   <div className="p-4 sm:p-5 md:p-6 lg:p-7 w-full h-fit">
-                    <h1 className="text-sm sm:text-base md:text-lg text-foreground">
+                    <h1 className="text-sm md:text-base xl:text-lg text-foreground">
                       {item.question}
                     </h1>
-                    <p className="mt-2 font-light text-foreground/80 tracking-wide leading-relaxed text-xs sm:text-sm">
+                    <p className="mt-2 font-light text-foreground/80 tracking-wide leading-relaxed text-xs xl:text-sm">
                       {item.answer}
                     </p>
                   </div>
