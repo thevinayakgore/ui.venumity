@@ -380,14 +380,8 @@ export default function Components() {
   const [categoryCards, setCategoryCards] = useState<CategoryCard[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const {
-    displayedItems,
-    hasMore,
-    isLoadingMore,
-    loadMore,
-    totalItems,
-    isInitialized,
-  } = useInfinitePagination(categoryCards, 30);
+  const { displayedItems, hasMore, isLoadingMore, loadMore, isInitialized } =
+    useInfinitePagination(categoryCards, 30);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -410,11 +404,6 @@ export default function Components() {
   const handleCardClick = (path: string) => {
     router.push(`/components${path}`);
   };
-
-  const progressPercentage =
-    totalItems > 0
-      ? Math.min(Math.round((displayedItems.length / totalItems) * 100), 100)
-      : 0;
 
   return (
     <main className="w-full h-full">
@@ -441,24 +430,10 @@ export default function Components() {
           advanced patterns, everything you need to craft modern interfaces in
           one place.
         </p>
-
-        {!loading && categoryCards.length > 0 && (
-          <div className="flex md:hidden items-center gap-2 mt-3">
-            <div className="flex-1 h-1 bg-foreground/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-primary rounded-full transition-all duration-500"
-                style={{ width: `${progressPercentage}%` }}
-              />
-            </div>
-            <span className="text-xs text-muted-foreground whitespace-nowrap">
-              {displayedItems.length}/{totalItems}
-            </span>
-          </div>
-        )}
       </header>
 
       {loading && (
-        <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+        <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 w-full">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -487,7 +462,7 @@ export default function Components() {
 
       {!loading && categoryCards.length > 0 && (
         <>
-          <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 w-full">
+          <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 pb-20 w-full">
             {displayedItems.map((card) => (
               <CategoryCard
                 key={card.id}

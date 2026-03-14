@@ -388,6 +388,7 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "Pricing Tables",
+        thumbnail: "tiered-pricing-card",
         description:
           "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups. These professional components feature clear value propositions, strategic CTAs, and responsive designs that outperform standard pricing pages—driving measurable business impact.",
         tags: ["pricing", "comparison", "subscription", "features"],
@@ -396,6 +397,7 @@ export const COMPONENTS = createComponents([
           { itemName: "Pricing Table 1", githubUsername: "thevinayakgore" },
           { itemName: "Pricing Table 2", githubUsername: "thevinayakgore" },
           { itemName: "Pricing Table 3", githubUsername: "thevinayakgore" },
+          { itemName: "Tiered Pricing Card", githubUsername: "thevinayakgore" },
         ],
       },
       {
@@ -489,7 +491,7 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Financial",
-        
+
         description:
           "Professional financial dashboard layouts designed to track income, expenses, savings, and key performance metrics. These dashboards provide clear data visualization, actionable insights, and a structured overview—ideal for personal finance tools, fintech platforms, and business reporting applications.",
         tags: [
@@ -1050,4 +1052,4 @@ export const COMPONENTS = createComponents([
       },
     ],
   },
- ] as const);
+] as const);

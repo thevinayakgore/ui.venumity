@@ -18,7 +18,7 @@ export default function LeftSidebar() {
   >;
 
   return (
-    <aside className="sticky top-0 overflow-auto w-full max-h-screen">
+    <aside className="hidden md:block sticky top-0 overflow-auto w-full max-h-screen">
       <div
         ref={sidebarRef}
         className="flex flex-col items-start text-[0.8rem] font-medium leading-none pt-24 overflow-y-auto w-full h-full"

@@ -12,7 +12,7 @@ export default function FAQ() {
 
   return (
     <section
-      className={`relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-6 md:px-8 lg:px-10 ${isFaqPage && "pt-12 sm:pt-16 md:pt-20 lg:pt-24 2xl:border-x-2 border-dashed m-auto max-w-360 overflow-x-hidden w-full"}`}
+      className={`relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 md:px-8 lg:px-10 ${isFaqPage && "pt-12 sm:pt-16 md:pt-20 lg:pt-24 2xl:border-x-2 border-dashed m-auto max-w-360 overflow-x-hidden w-full"}`}
     >
       <h1
         className={`absolute ${isFaqPage ? "top-15 lg:top-10" : "top-10 md:-top-5 xl:-top-15"} left-1/2 -translate-x-1/2 text-center text-7xl md:text-[12rem] lg:text-[14rem] xl:text-[20rem] uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none`}

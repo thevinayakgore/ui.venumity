@@ -157,7 +157,9 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 <span>Components</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Get back to Components</TooltipContent>
+            <TooltipContent className="z-10001!">
+              Back to Components
+            </TooltipContent>
           </Tooltip>
         </Link>
         <Tooltip>
@@ -180,7 +182,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="size-4.5 group-hover:rotate-360 transition-all duration-500"
+                className="size-4.5"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
@@ -191,7 +193,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
               </svg>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Dark Mode</TooltipContent>
+          <TooltipContent className="z-10001!">Dark Mode</TooltipContent>
         </Tooltip>
         <Link
           href={`https://github.com/${githubUsername}`}
@@ -214,7 +216,9 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>GitHub - {githubUsername}</TooltipContent>
+            <TooltipContent className="z-10001!">
+              @{githubUsername}
+            </TooltipContent>
           </Tooltip>
         </Link>
         <Tooltip>
@@ -236,14 +240,14 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="size-4.5 group-hover:rotate-360 transition-all duration-500"
+                className="size-4.5"
               >
                 <path d="M21 12a9 9 0 1 1 -3 -6.7" />
                 <path d="M21 3v6h-6" />
               </svg>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Reload Component</TooltipContent>
+          <TooltipContent className="z-10001!">Reload Component</TooltipContent>
         </Tooltip>
         <Link
           href={
@@ -262,7 +266,9 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
                 <span>Code</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>View Source Code</TooltipContent>
+            <TooltipContent className="z-10001!">
+              View Source Code
+            </TooltipContent>
           </Tooltip>
         </Link>
       </footer>

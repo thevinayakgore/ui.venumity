@@ -195,14 +195,14 @@ export default function PageClient({
             )}
           </div>
 
-          <p className="text-muted-foreground capitalize mt-2">
+          <p className="text-sm md:text-base text-muted-foreground capitalize mt-2">
             {subcategoryItemsWithCode.length} component
             {subcategoryItemsWithCode.length !== 1 ? "s" : ""} •{" "}
             {pathInfo.category}
           </p>
 
           {subcategoryData?.description && (
-            <p className="text-base font-normal text-muted-foreground mt-3">
+            <p className="text-sm md:text-base font-normal text-muted-foreground mt-3">
               {subcategoryData.description}
             </p>
           )}
@@ -244,11 +244,11 @@ export default function PageClient({
     return (
       <main className="w-full">
         <header className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold capitalize">
+          <h1 className="text-2xl md:text-4xl font-bold capitalize">
             {pathInfo.subcategory.replace(/-/g, " ")}
           </h1>
           {subcategoryData?.description && (
-            <p className="text-base font-normal text-muted-foreground mt-3">
+            <p className="text-xs md:text-base font-normal text-muted-foreground mt-3">
               {subcategoryData.description}
             </p>
           )}

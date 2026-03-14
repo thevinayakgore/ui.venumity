@@ -18,15 +18,17 @@ export default function ContentLayoutClient({
       <section
         className={`grid ${
           !hideRightSidebar
-            ? "grid-cols-[190px_1fr_195px]"
-            : "grid-cols-[190px_1fr]"
-        } m-auto px-10 w-full`}
+            ? "grid-cols-1 md:grid-cols-[190px_1fr] xl:grid-cols-[190px_1fr_195px]"
+            : "md:grid-cols-[190px_1fr]"
+        } m-auto px-4 md:px-10 w-full`}
       >
         <LeftSidebar />
         <div
           id="content"
-          className={`flex flex-col items-center pt-24 m-auto ${
-            !hideRightSidebar ? "px-10 pb-10 max-w-240" : "pl-10"
+          className={`flex flex-col items-center pt-20 md:pt-24 m-auto ${
+            !hideRightSidebar
+              ? "md:px-10 pb-10 w-full md:max-w-240"
+              : "md:pl-10"
           } w-full h-full`}
         >
           {children}

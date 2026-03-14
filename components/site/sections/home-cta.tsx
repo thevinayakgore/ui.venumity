@@ -6,7 +6,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 
 function AxisGrid({ size, position }: { size: string; position: string }) {
   return (
-    <div className={`absolute ${position} -z-10 p-2 ${size}`}>
+    <div className={`hidden xl:block absolute ${position} -z-10 p-2 ${size}`}>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-linear-to-t from-foreground/3 via-foreground/15 to-foreground/3 w-[1.5px] h-full" />
       <div className="absolute top-1/2 left-0 -translate-y-1/2 bg-linear-to-l from-foreground/3 via-foreground/15 to-foreground/3 w-full h-[1.5px]" />
       <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10 bg-foreground/30 backdrop-blur-md size-2 rounded-full" />
@@ -55,7 +55,7 @@ export default function CTA() {
         Explore
       </h1>
       <div className="px-4 sm:px-6 lg:px-10 mt-12 sm:mt-16 lg:mt-20 w-full">
-        <div className="p-4 md:p-6 xl:p-8 bg-foreground/3 backdrop-blur-sm border rounded-2xl sm:rounded-3xl lg:rounded-4xl w-full h-full">
+        <div className="p-4 md:p-6 xl:p-8 bg-foreground/3 backdrop-blur-sm border rounded-3xl lg:rounded-4xl w-full h-full">
           <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl bg-linear-to-tl from-foreground/2 via-background/80 to-foreground/2 backdrop-blur-sm border p-6 sm:p-10 md:p-16 lg:p-20">
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-2 sm:gap-3 py-1.5 sm:py-2 px-3 sm:px-4 mb-8 sm:mb-12 bg-background border-2 sm:border-4 border-foreground/15 border-b-primary inset-shadow-sm inset-shadow-foreground/30 shadow-xl shadow-primary/30 rounded-full w-auto">
@@ -127,7 +127,7 @@ export default function CTA() {
                   </span>
                   <span className="opacity-50">Open-Source Library</span>
                   <span className="relative size-2 z-50 mx-2 bg-green-500 opacity-100 scale-100 rounded-full transition-all duration-700">
-                    <span className="absolute top-0 left-0 size-2 scale-130 bg-green-500 animate-ping rounded-full -z-10" />
+                    <span className="absolute top-0 left-0 size-2 scale-130 bg-green-500 animate-ping delay-300 rounded-full -z-10" />
                   </span>
                   <span className="opacity-50">Developer First</span>
                 </div>
@@ -136,10 +136,10 @@ export default function CTA() {
             {BORDER_BEAMS.map((beam, i) => (
               <BorderBeam key={i} size={300} {...beam} />
             ))}
-            <AxisGrid size="size-250 lg:size-400 xl:size-500" position="md:-top-115 md:-left-115 lg:-top-190 lg:-left-190 xl:-top-240 xl:-left-240" />
-            {/* <AxisGrid size="size-60 lg:size-80 xl:size-120" position="-top-15 -left-15 xl:-top-25 -left-25" />
-            <AxisGrid size="size-60 lg:size-80 xl:size-120" position="-bottom-15 -right-15 xl:-bottom-25 -right-25" />
-            <AxisGrid size="size-200 lg:size-300 xl:size-500" position="-bottom-180 -right-180 xl:-bottom-240 -right-240" /> */}
+            <AxisGrid size="size-500" position="-top-240 -left-240" />
+            <AxisGrid size="size-120" position="-top-25 -left-25" />
+            <AxisGrid size="size-120" position="-bottom-25 -right-25" />
+            <AxisGrid size="size-500" position="-bottom-240 -right-240" />
           </div>
         </div>
       </div>

@@ -75,7 +75,7 @@ export const InfiniteMovingText = ({
         {items.map((item, idx) => (
           <h1
             key={idx}
-            className="inline-flex items-center gap-3 text-4xl orbitron uppercase font-extrabold leading-none! w-auto"
+            className="inline-flex items-center gap-3 text-2xl md:text-4xl orbitron uppercase font-extrabold leading-none! w-auto"
           >
             <span className="opacity-10">{item}</span>
             <span className="opacity-80">⚡️</span>

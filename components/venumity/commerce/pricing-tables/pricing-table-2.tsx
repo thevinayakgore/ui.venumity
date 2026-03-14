@@ -85,11 +85,7 @@ export default function PricingTable2() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center m-auto py-20 px-4 overflow-hidden w-full max-h-screen">
-      {/* Background Ambience Elements */}
-      <div className="absolute top-[-10%] right-[-5%] w-150 h-150 bg-indigo-500 rounded-full blur-[100px] opacity-70 pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-125 h-125 bg-blue-500 rounded-full blur-[100px] opacity-70 pointer-events-none" />
-
+    <div className="py-20 px-4 w-full">
       {/* Header Section */}
       <div className="text-center mb-6 flex flex-col items-center">
         <h1 className="text-5xl font-medium tracking-tight mb-8">
@@ -120,7 +116,7 @@ export default function PricingTable2() {
           <div key={plan.id} className="flex">
             {plan.isHighlighted ? (
               // Highlighted Card (Growth Stage)
-              <div className="relative w-full rounded-3xl p-0.75 pt-14 bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] shadow-2xl shadow-indigo-500/40 flex flex-col transition-transform hover:-translate-y-1 duration-300">
+              <div className="relative w-full rounded-3xl p-0.75 pt-14 bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] shadow-2xl shadow-indigo-500/30 flex flex-col transition-transform hover:-translate-y-1 duration-300">
                 {/* Simulated inner texture for gradient */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--tw-gradient-stops))] from-white/30 via-transparent to-transparent rounded-4xl pointer-events-none" />
 
@@ -174,7 +170,7 @@ export default function PricingTable2() {
               </div>
             ) : (
               // Standard Cards (MVP Stage, Scale Stage)
-              <div className="w-full bg-card rounded-3xl p-6 border-4 shadow-xl/20 flex flex-col transition-transform hover:-translate-y-1 duration-300">
+              <div className="w-full bg-card rounded-3xl p-6 border-4 shadow-xl/10 flex flex-col transition-transform hover:-translate-y-1 duration-300">
                 <h3 className="font-semibold text-[17px] tracking-tight mb-4">
                   {plan.name}
                 </h3>

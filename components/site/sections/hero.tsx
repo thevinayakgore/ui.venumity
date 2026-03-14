@@ -127,35 +127,47 @@ export default function Hero() {
   const currentSubcategory = latestSubcategories[activeComponentIndex];
 
   return (
-    <main className="flex items-start justify-between pt-15 mt-3 pr-10 border-b border-foreground/10 overflow-hidden w-full max-h-190">
-      <section className="flex flex-col items-start w-[70%]">
-        <div className="flex flex-col items-start justify-start px-10 font-extrabold! w-full">
+    <main className="flex flex-col xl:flex-row items-start justify-between pt-8 sm:pt-12 md:pt-15 mt-3 px-4 sm:px-6 lg:pr-10 border-b border-foreground/10 overflow-hidden w-full min-h-screen xl:max-h-190">
+      {/* Left Section */}
+      <section className="flex flex-col items-start pt-10 sm:pt-0 w-full xl:w-[70%]">
+        <div className="flex flex-col items-start justify-start px-2 sm:px-4 font-extrabold! w-full">
+          {/* Animated Text - Responsive sizing */}
           <AnimatedText
             text={WORDS[currentWordIndex].prefix}
-            className="dancing text-[17rem] leading-none"
+            className="dancing text-8xl md:text-9xl lg:text-[13rem] xl:text-[17rem] leading-none"
           />
 
-          <span className="orbitron uppercase mt-3 mb-7 text-[9rem] leading-40 opacity-30 text-transparent bg-clip-text bg-linear-to-b from-foreground via-foreground/40">
+          {/* Websites Text - Responsive */}
+          <span className="orbitron uppercase mt-2 sm:mt-3 mb-0 sm:mb-7 text-6xl md:text-7xl lg:text-9xl xl:text-[9rem] leading-tight lg:leading-40 opacity-30 text-transparent bg-clip-text bg-linear-to-b from-foreground via-foreground/40">
             Websites
           </span>
 
-          <span className="kumarOne mt-2 relative text-9xl uppercase tracking-wide leading-none max-h-48!">
+          {/* WordAnimate Container - Responsive */}
+          <span className="kumarOne mt-2 relative text-5xl sm:text-6xl md:text-7xl lg:text-9xl uppercase tracking-wide leading-none max-h-20 sm:max-h-32 md:max-h-40 lg:max-h-48!">
             <WordAnimate duration={7000} onWordChange={setCurrentWordIndex} />
           </span>
         </div>
-        <InfiniteMovingText
-          items={Array.from({ length: 3 }).flatMap(() => TEXT)}
-          direction="left"
-          speed="slow"
-          className="bg-foreground/3 backdrop-blur-sm w-full h-15!"
-        />
+
+        {/* Infinite Moving Text - Full width on mobile */}
+        <div className="w-full mt-6 sm:mt-10 lg:mt-3">
+          <InfiniteMovingText
+            items={Array.from({ length: 3 }).flatMap(() => TEXT)}
+            direction="left"
+            speed="slow"
+            className="bg-foreground/3 backdrop-blur-sm w-full h-12 sm:h-15!"
+          />
+        </div>
       </section>
 
-      <section className="relative flex flex-col items-center z-50 mt-12 p-3 bg-zinc-800 rounded-[2.5rem] shadow-2xl w-[30%] h-180">
-        <div className="flex flex-col items-center bg-background rounded-4xl overflow-hidden w-full h-full">
-          <div className="absolute top-5 left-1/2 -translate-x-1/2 z-50">
+      {/* Right Section - Phone Container */}
+      <section className="relative flex flex-col items-center z-50 my-10 md:my-15 p-2 sm:p-3 bg-zinc-800 rounded-3xl sm:rounded-4xl lg:rounded-[2.5rem] shadow-2xl w-full xl:w-[30%] max-w-md xl:max-w-none mx-auto xl:mx-0 h-180">
+        <div className="flex flex-col items-center bg-background rounded-2xl sm:rounded-3xl lg:rounded-4xl overflow-hidden w-full h-full">
+          {/* Camera - Responsive positioning */}
+          <div className="absolute top-3 sm:top-4 lg:top-5 left-1/2 -translate-x-1/2 z-50 scale-75 sm:scale-90 lg:scale-100">
             <Camera />
           </div>
+
+          {/* Hero Moving Cards Section - Responsive height */}
           <div className="w-full h-[45%]">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -166,24 +178,31 @@ export default function Hero() {
               <HeroMovingCards />
             </motion.div>
           </div>
-          <div className="relative -mt-14 bg-zinc-500/15 rounded-t-4xl backdrop-blur-sm z-50! overflow-hidden w-full h-[55%]">
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-foreground/20 rounded-full w-20 h-1.5 z-50" />
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 -z-10 flex flex-wrap items-center justify-center m-auto leading-none text-center  font-extrabold opacity-10 orbitron uppercase">
+
+          {/* Bottom Section with Latest Components */}
+          <div className="relative -mt-14 bg-zinc-500/15 rounded-t-2xl sm:rounded-t-3xl lg:rounded-t-4xl backdrop-blur-sm z-50! overflow-hidden w-full h-full">
+            {/* Home Bar Indicator */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-foreground/20 rounded-full w-12 sm:w-16 lg:w-20 h-1 sm:h-1.5 z-50" />
+
+            {/* Background Text - Hidden on smaller screens */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 -z-10 flex flex-wrap items-center justify-center m-auto leading-none text-center font-extrabold opacity-10 orbitron uppercase">
               <span className="text-7xl leading-none">Latest</span>
               <span className="text-4xl scale-115 -mt-1 mb-1">Components</span>
               <span className="text-4xl scale-135">of library</span>
             </div>
-            <div className="aspect-video absolute -bottom-70 left-0 p-6 w-full">
+
+            {/* Category Card Container - Responsive positioning */}
+            <div className="absolute -bottom-40 left-0 p-3 sm:p-4 lg:p-6 w-full">
               <motion.div
                 key={activeComponentIndex}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                initial={{ opacity: 0, y: 100, filter: "blur(10px)" }}
+                initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                whileHover={{ y: latestSubcategories.length > 0 ? -170 : 0 }}
-                exit={{ opacity: 0, y: 100, filter: "blur(10px)" }}
+                whileHover={{ y: latestSubcategories.length > 0 ? -120 : 0 }}
+                exit={{ opacity: 0, y: 50, filter: "blur(10px)" }}
                 transition={{ duration: 0.7, ease: "easeInOut" }}
-                className="overflow-hidden rounded-xl w-full"
+                className="overflow-hidden rounded-lg sm:rounded-xl w-full sm:max-w-sm mx-auto lg:mx-0"
               >
                 {currentSubcategory && (
                   <CategoryCard
@@ -205,9 +224,11 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <div className="absolute -left-1 top-40 bg-zinc-800 rounded-l-full h-17 w-1" />
-        <div className="absolute -left-1 top-60 bg-zinc-800 rounded-l-full h-17 w-1" />
-        <div className="absolute -right-1 top-45 bg-zinc-800 rounded-r-full h-17 w-1" />
+
+        {/* Decorative elements - Hidden on mobile/tablet */}
+        <div className="hidden lg:block absolute -left-1 top-40 bg-zinc-800 rounded-l-full h-17 w-1" />
+        <div className="hidden lg:block absolute -left-1 top-60 bg-zinc-800 rounded-l-full h-17 w-1" />
+        <div className="hidden lg:block absolute -right-1 top-45 bg-zinc-800 rounded-r-full h-17 w-1" />
       </section>
     </main>
   );

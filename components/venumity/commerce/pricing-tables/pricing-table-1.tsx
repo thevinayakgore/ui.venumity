@@ -167,7 +167,7 @@ export default function PricingTable1() {
               : "border-border hover:border-primary/80",
           )}
         >
-          <CardHeader className="text-center mt-6">
+          <CardHeader className="text-center mt-4 sm:mt-6">
             <CardTitle className="text-xl sm:text-4xl font-medium">
               {plan.name}
             </CardTitle>
@@ -176,11 +176,13 @@ export default function PricingTable1() {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="px-4 sm:px-6">
-            <div className="text-center mb-6 p-10 rounded-xl bg-primary/5 border-2 border-primary">
+          <CardContent className="px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6 p-6 sm:p-8 lg:p-10 rounded-xl bg-primary/5 border-2 border-primary">
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-3xl font-semibold">$</span>
-                <span className="text-4xl sm:text-7xl font-bold">{price}</span>
+                <span className="text-4xl sm:text-5xl lg:text-7xl font-bold">
+                  {price}
+                </span>
                 <span className="text-sm font-medium ml-1">/{period}</span>
               </div>
               {isAnnualValue && (
@@ -216,7 +218,7 @@ export default function PricingTable1() {
             <Button
               size="lg"
               className={cn(
-                "w-full p-8 cursor-pointer text-base font-semibold transition-all duration-500 rounded-xl",
+                "w-full py-5 sm:py-6 cursor-pointer text-base font-semibold transition-all duration-500 rounded-xl",
                 highlighted
                   ? "bg-green-500! text-white! shadow-lg hover:shadow-xl"
                   : "bg-foreground text-secondary hover:bg-primary hover:text-white",
@@ -234,8 +236,8 @@ export default function PricingTable1() {
   };
 
   return (
-    <main className="flex flex-col text-center p-6 md:p-10 overflow-auto w-full h-full">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+    <main className="flex flex-col text-center px-4 py-8 sm:px-6 md:px-10 lg:px-16 overflow-x-hidden w-full min-h-screen">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
         <span className="bg-linear-to-br from-yellow-400 to-primary bg-clip-text text-transparent">
           Simple Pricing
         </span>
@@ -243,11 +245,11 @@ export default function PricingTable1() {
         <span className="text-foreground">For Every Business</span>
       </h1>
 
-      <div className="relative inline-flex items-center justify-center m-auto bg-muted/50 mt-5 mb-10 rounded-full w-fit">
+      <div className="relative inline-flex items-center justify-center mx-auto bg-muted/50 mt-6 mb-10 rounded-full w-full max-w-xs sm:max-w-sm">
         <button
           onClick={() => onToggle()}
           className={cn(
-            "relative z-10 cursor-pointer px-6 py-4 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap",
+            "relative z-10 cursor-pointer px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap flex-1",
             !isAnnual
               ? "text-primary"
               : "text-muted-foreground hover:text-primary",
@@ -258,7 +260,7 @@ export default function PricingTable1() {
         <button
           onClick={() => onToggle()}
           className={cn(
-            "relative z-10 cursor-pointer sm:px-8 py-4 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap",
+            "relative z-10 cursor-pointer px-4 sm:px-8 py-3 sm:py-4 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap flex-1",
             isAnnual
               ? "text-primary"
               : "text-muted-foreground hover:text-primary",
@@ -279,7 +281,7 @@ export default function PricingTable1() {
 
       <div
         key={isAnnual ? "annual" : "monthly"}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 w-full"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full max-w-7xl mx-auto"
       >
         {pricingPlans.map((plan) => (
           <PricingCard
