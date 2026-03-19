@@ -11,16 +11,37 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-  { content: "The platform exceeded all our expectations. We've seen a 300% increase in productivity since implementing it.", author: "Alex Thompson", role: "VP of Engineering", company: "TechGiant Inc" },
-  { content: "Exceptional product and even better customer service. They truly understand our business needs.", author: "Maria Garcia", role: "Operations Director", company: "GlobalCorp" },
-  { content: "This solution has saved us countless hours. The automation features are incredibly powerful.", author: "David Kim", role: "Product Manager", company: "InnovateTech" },
+  {
+    content:
+      "The platform exceeded all our expectations. We've seen a 300% increase in productivity since implementing it.",
+    author: "Alex Thompson",
+    role: "VP of Engineering",
+    company: "TechGiant Inc",
+  },
+  {
+    content:
+      "Exceptional product and even better customer service. They truly understand our business needs.",
+    author: "Maria Garcia",
+    role: "Operations Director",
+    company: "GlobalCorp",
+  },
+  {
+    content:
+      "This solution has saved us countless hours. The automation features are incredibly powerful.",
+    author: "David Kim",
+    role: "Product Manager",
+    company: "InnovateTech",
+  },
 ];
 
-export default function CarouselTestimonials() {
+export default function CarouselTestimonial() {
   const [current, setCurrent] = useState(0);
 
   const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const prev = () =>
+    setCurrent(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+    );
 
   return (
     <motion.main
@@ -43,14 +64,21 @@ export default function CarouselTestimonials() {
           <div className="flex items-center justify-center gap-4">
             <div className="w-14 h-14 rounded-full bg-primary/20" />
             <div className="text-left">
-              <div className="font-semibold text-foreground dark:text-foreground">{testimonials[current].author}</div>
-              <div className="text-sm text-muted-foreground">{testimonials[current].role}, {testimonials[current].company}</div>
+              <div className="font-semibold text-foreground dark:text-foreground">
+                {testimonials[current].author}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {testimonials[current].role}, {testimonials[current].company}
+              </div>
             </div>
           </div>
         </motion.div>
 
         <div className="flex items-center justify-center gap-4 mt-12">
-          <button onClick={prev} className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors">
+          <button
+            onClick={prev}
+            className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+          >
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
           <div className="flex gap-2">
@@ -62,7 +90,10 @@ export default function CarouselTestimonials() {
               />
             ))}
           </div>
-          <button onClick={next} className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors">
+          <button
+            onClick={next}
+            className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+          >
             <ChevronRight className="w-5 h-5 text-foreground" />
           </button>
         </div>

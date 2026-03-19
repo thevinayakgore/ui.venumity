@@ -26,7 +26,6 @@ import {
 
 export default function StandardNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [language, setLanguage] = useState<
     "en" | "hi" | "mr" | "gu" | "bn" | "ta" | "te" | "kn" | "ml" | "fr" | "de"
   >("en");
@@ -174,193 +173,190 @@ export default function StandardNavbar() {
   > = ["mr", "en", "hi", "gu", "bn", "ta", "te", "kn", "ml", "fr", "de"];
 
   return (
-    <main className="relative flex items-center justify-center m-auto p-6 lg:p-10 w-full h-full">
-      <nav className="w-full">
-        <div className="flex items-center justify-between bg-foreground/5 backdrop-blur-md p-3">
-          <section className="flex items-center gap-10">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt={brandName}
-                width={500}
-                height={500}
-                className="size-8"
-              />
-              <span className="flex items-center text-2xl font-semibold">
-                Venu<span className="text-primary mr-2">mity</span> UI
-              </span>
-            </div>
+    <nav className="sticky top-0 w-full">
+      <div className="flex items-center justify-between bg-foreground/5 backdrop-blur-md p-3">
+        <section className="flex items-center gap-10">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt={brandName}
+              width={500}
+              height={500}
+              className="size-8"
+            />
+            <span className="flex items-center text-2xl font-semibold">
+              Venu<span className="text-primary mr-2">mity</span> UI
+            </span>
+          </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1 relative">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-1 relative">
+            {navLabels[language].map((item) => (
+              <Link key={item} href="#">
+                <Button
+                  variant="ghost"
+                  className="text-sm font-medium hover:bg-foreground/10! cursor-pointer leading-none rounded-sm"
+                >
+                  {item}
+                </Button>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="hidden lg:flex items-center gap-1">
+          <Select
+            value={language}
+            onValueChange={(v) =>
+              setLanguage(
+                v as
+                  | "en"
+                  | "hi"
+                  | "mr"
+                  | "gu"
+                  | "bn"
+                  | "ta"
+                  | "te"
+                  | "kn"
+                  | "ml"
+                  | "fr"
+                  | "de",
+              )
+            }
+          >
+            <SelectTrigger className="h-8! cursor-pointer px-2! gap-2 bg-background! border-foreground/20! rounded-sm text-sm">
+              <Globe className="size-4" />
+              <SelectValue placeholder="EN" />
+            </SelectTrigger>
+            <SelectContent>
+              {languageOrder.map((key) => (
+                <SelectItem key={key} value={key} className="cursor-pointer">
+                  {languageNames[key]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button
+            size="sm"
+            variant="outline"
+            className="bg-background! cursor-pointer border-foreground/20 rounded-sm"
+          >
+            <Github className="size-4!" />
+            {uiText[language].github}
+          </Button>
+
+          <Button
+            size="sm"
+            className="cursor-pointer bg-foreground! text-secondary! rounded-sm"
+          >
+            {uiText[language].signIn}
+          </Button>
+
+          <Button
+            size="sm"
+            className="cursor-pointer bg-linear-to-tl from-rose-500 to-pink-400 text-white! hover:shadow-lg shadow-pink-500/30 hover:scale-105 text-sm rounded-sm transition-all duration-500"
+          >
+            <Zap className="size-4!" />
+            {uiText[language].getStarted}
+          </Button>
+        </section>
+
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </Button>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 overflow-hidden"
+          >
+            <div className="px-4 py-6 space-y-6">
               {navLabels[language].map((item) => (
-                <Link key={item} href="#">
-                  <Button
-                    variant="ghost"
-                    className="text-sm font-medium hover:bg-foreground/10! cursor-pointer leading-none rounded-sm"
+                <div key={item} className="space-y-2">
+                  <Link
+                    href="#"
+                    className="font-medium p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item}
-                  </Button>
-                </Link>
+                  </Link>
+                </div>
               ))}
-            </div>
-          </section>
 
-          <section className="hidden lg:flex items-center gap-1">
-            <Select
-              value={language}
-              onValueChange={(v) =>
-                setLanguage(
-                  v as
-                    | "en"
-                    | "hi"
-                    | "mr"
-                    | "gu"
-                    | "bn"
-                    | "ta"
-                    | "te"
-                    | "kn"
-                    | "ml"
-                    | "fr"
-                    | "de",
-                )
-              }
-            >
-              <SelectTrigger className="h-8! cursor-pointer px-2! gap-2 bg-background! border-foreground/20! rounded-sm text-sm">
-                <Globe className="size-4" />
-                <SelectValue placeholder="EN" />
-              </SelectTrigger>
-              <SelectContent>
-                {languageOrder.map((key) => (
-                  <SelectItem key={key} value={key}>
-                    {languageNames[key]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              size="sm"
-              variant="outline"
-              className="bg-background! cursor-pointer border-foreground/20 rounded-sm"
-            >
-              <Github className="size-4!" />
-              {uiText[language].github}
-            </Button>
+              <div className="pt-4 space-y-3 border-t border-gray-200 dark:border-gray-800">
+                <Button className="w-full bg-linear-to-r from-blue-600 to-purple-600">
+                  <Zap className="w-4 h-4 mr-2" />
+                  {uiText[language].startFree}
+                </Button>
+                <Button variant="outline" className="w-full">
+                  {uiText[language].signIn}
+                </Button>
 
-            <Button
-              size="sm"
-              variant="secondary"
-              className="cursor-pointer bg-foreground text-secondary rounded-sm"
-            >
-              {uiText[language].signIn}
-            </Button>
-
-            <Button
-              size="sm"
-              className="cursor-pointer bg-linear-to-tl from-rose-500 to-pink-400 text-white! hover:shadow-lg shadow-pink-500/30 hover:scale-105 text-sm rounded-sm transition-all duration-500"
-            >
-              <Zap className="size-4!" />
-              {uiText[language].getStarted}
-            </Button>
-          </section>
-
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </Button>
-        </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 overflow-hidden"
-            >
-              <div className="px-4 py-6 space-y-6">
-                {navLabels[language].map((item) => (
-                  <div key={item} className="space-y-2">
-                    <Link
-                      href="#"
-                      className="font-medium p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item}
-                    </Link>
-                  </div>
-                ))}
-
-                <div className="pt-4 space-y-3 border-t border-gray-200 dark:border-gray-800">
-                  <Button className="w-full bg-linear-to-r from-blue-600 to-purple-600">
-                    <Zap className="w-4 h-4 mr-2" />
-                    {uiText[language].startFree}
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    {uiText[language].signIn}
-                  </Button>
-
-                  <div className="flex items-center justify-center gap-4 pt-4">
-                    <Link
-                      href="#"
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    >
-                      <Github className="w-5 h-5" />
-                    </Link>
-                    <Link
-                      href="#"
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    >
-                      <Twitter className="w-5 h-5" />
-                    </Link>
-                    <Link
-                      href="#"
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </Link>
-                  </div>
+                <div className="flex items-center justify-center gap-4 pt-4">
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <Github className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <Twitter className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </Link>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* Announcement Banner */}
-        <div className="bg-linear-to-tl from-blue-500 to-sky-500 text-white font-medium">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center py-2">
-              <div className="flex items-center gap-3">
-                <Badge className="bg-white text-blue-500">
-                  <Sparkles className="size-2.5! mr-0.5" />
-                  {uiText[language].newBadge}
-                </Badge>
-                <span className="text-sm">{uiText[language].banner}</span>
-                <Link href="#">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="cursor-pointer bg-white! text-blue-600 rounded-sm transition-all duration-500"
-                  >
-                    {uiText[language].tryNow}
-                  </Button>
-                </Link>
-              </div>
+      {/* Announcement Banner */}
+      <div className="bg-linear-to-tl from-blue-500 to-sky-500 text-white font-medium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-2">
+            <div className="flex items-center gap-3">
+              <Badge className="bg-white text-blue-500">
+                <Sparkles className="size-2.5! mr-0.5" />
+                {uiText[language].newBadge}
+              </Badge>
+              <span className="text-sm">{uiText[language].banner}</span>
+              <Link href="#">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="cursor-pointer bg-white! text-blue-600 rounded-sm transition-all duration-500"
+                >
+                  {uiText[language].tryNow}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
-      </nav>
-    </main>
+      </div>
+    </nav>
   );
 }

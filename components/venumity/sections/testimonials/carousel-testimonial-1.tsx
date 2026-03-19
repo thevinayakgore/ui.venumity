@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
-export default function CarouselTestimonial() {
+export default function CarouselTestimonial1() {
   const [isAnimating, setIsAnimating] = useState(false);
   const testimonials = [
     {

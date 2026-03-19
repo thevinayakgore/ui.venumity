@@ -1016,22 +1016,35 @@ export const COMPONENTS = createComponents([
     icon: "layout-grid",
     subcategories: [
       {
+        name: "Bento Grids",
+        description:
+          "A modern, responsive bento grid layout designed for showcasing features, dashboards, and product highlights. Built with flexibility, clean design, and optimized for performance across all devices.",
+        tags: [
+          "grid",
+          "layout",
+          "responsive",
+          "ui",
+          "dashboard",
+          "modern",
+          "cards",
+          "showcase",
+          "design",
+          "components",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
+        items: [{ itemName: "Bento Grid 1", githubUsername: "thevinayakgore" }],
+      },
+      {
         name: "FAQ",
         description:
           "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked. These smart accordion components improve SEO through structured data, enhance user experience with smooth interactions, and increase conversion through clear information architecture.",
         tags: ["faq", "accordion", "support", "schema", "collapsible"],
-        techs: [
-          "Next.js",
-          "Tailwind CSS",
-          "TypeScript",
-          "Shadcn UI",
-          "Lucide React",
-        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [{ itemName: "FAQ 1", githubUsername: "thevinayakgore" }],
       },
       {
         name: "Testimonials",
-        thumbnail: "company-testimonial",
+        thumbnail: "carousel-testimonial-2",
         description:
           "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof. These professional testimonial components increase credibility, improve engagement metrics, and drive purchasing decisions through authentic customer stories and strategic placement.",
         tags: ["testimonial", "social", "reviews", "trust", "carousel"],
@@ -1045,7 +1058,11 @@ export const COMPONENTS = createComponents([
           },
           { itemName: "Company Testimonial", githubUsername: "thevinayakgore" },
           {
-            itemName: "Carousel Testimonial",
+            itemName: "Carousel Testimonial 1",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Carousel Testimonial 2",
             githubUsername: "thevinayakgore",
           },
         ],

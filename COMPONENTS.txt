@@ -269,6 +269,7 @@
 ========================================
 -  404 - Not Found Pages  
 -  About Us Sections  
+-  Bento Grids
 -  Blog Sections  
 -  Contact Sections  
 -  CTA Sections  

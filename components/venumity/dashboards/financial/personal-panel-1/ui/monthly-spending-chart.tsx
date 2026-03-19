@@ -58,15 +58,16 @@ export default function MonthlySpendingChart() {
             <PieChart>
               <Pie
                 data={data}
-                cx="50%"
-                cy="50%"
                 innerRadius="50%" // relative to chart size
                 outerRadius="100%"
-                paddingAngle={2}
                 dataKey="value"
               >
                 {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} className="ml-10" />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={entry.color}
+                    className="ml-10"
+                  />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />

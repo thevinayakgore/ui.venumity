@@ -21,9 +21,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div>
           <PersonalSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
         </div>
-        <div className="flex pt-16 w-full flex-col transition-all duration-500 overflow-auto min-h-screen h-full">
+        <div className="flex pt-16 w-full flex-col transition-all duration-500 max-h-screen">
           <PersonalHeader />
-          <main className="flex-1 p-3 md:p-6 w-full">{children}</main>
+          <main className="flex-1 p-3 md:p-6 space-y-3 md:space-y-6 overflow-auto w-full">{children}</main>
           <PersonalFooter />
         </div>
       </div>

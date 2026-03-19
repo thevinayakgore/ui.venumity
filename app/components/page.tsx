@@ -128,7 +128,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
       className="relative cursor-pointer text-start p-3 group bg-foreground/3 border border-foreground/5 rounded-[1.2rem] overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
     >
       <div className="relative flex flex-col rounded-[1.2rem] transition-all duration-500 w-full h-full">
-        <div className="aspect-square relative border border-foreground/5 grayscale-100 group-hover:grayscale-0 w-full max-h-70 overflow-hidden rounded-xl transition-all duration-500">
+        <div className="aspect-square relative border border-foreground/5 w-full max-h-70 overflow-hidden rounded-xl transition-all duration-500">
           {!imageError && thumbnailSrc ? (
             <Image
               src={thumbnailSrc}
@@ -161,7 +161,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
 
         <div className="p-3 pt-6">
           <div className="flex items-start justify-between">
-            <h2 className="text-xl font-medium whitespace-nowrap truncate leading-none">
+            <h2 className="text-xl font-medium whitespace-nowrap truncate">
               {card.title}
             </h2>
             <span className="text-xs px-2 py-1 -mt-2 rounded bg-primary/10 text-primary/80">

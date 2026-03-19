@@ -272,7 +272,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           </Tooltip>
         </Link>
       </footer>
-      <section className="w-full h-full">
+      <section className="max-w-360 m-auto w-full h-full">
         {componentPath && (
           <ComponentPreview
             category={componentData.category}
