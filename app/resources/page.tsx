@@ -61,7 +61,7 @@ export default function Resources() {
   const isMainPage = pathname === "/resources";
 
   return (
-    <main className="flex flex-col items-start justify-start m-auto w-full">
+    <main className="flex flex-col items-start justify-start m-auto min-h-150 w-full">
       {/* Header - Only show on main page */}
       {isMainPage && (
         <header className="mb-8 pb-5 border-b w-full">
@@ -135,13 +135,13 @@ function ResourceCard({
       href={`/resources/${categorySlug}/${slug}`}
       className="flex flex-col items-start cursor-pointer group relative rounded-t-xl rounded-b-lg p-1 border border-foreground/5 bg-foreground/3 overflow-hidden transition-all duration-500 w-full h-fit"
     >
-      <div className="relative flex items-center justify-center m-auto py-15 px-25 bg-background rounded-[0.8rem] overflow-hidden duration-[1.5s] w-full h-full">
+      <div className="relative flex items-center justify-center m-auto p-7 md:p-10 xl:p-15 bg-background rounded-[0.8rem] overflow-hidden duration-[1.5s] w-full h-full">
         <Image
           src={page.coverImage || "/card.png"}
           alt={page.title}
           width={2000}
           height={2000}
-          className="rounded-sm w-full h-full object-cover"
+          className="rounded-sm w-1/2 h-auto"
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
             target.src = "/card.png";

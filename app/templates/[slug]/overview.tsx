@@ -101,7 +101,7 @@ export default function Overview({ template }: { template: TemplateData }) {
             ))}
           </div>
 
-          <div className="relative flex items-center justify-between w-full">
+          <div className="relative flex flex-col-reverse md:flex-row items-start md:items-center md:justify-between gap-8 md:gap-0 w-full">
             <div className="flex items-center gap-3 w-full">
               {tabs.map((tab) => (
                 <button
@@ -122,7 +122,7 @@ export default function Overview({ template }: { template: TemplateData }) {
                   damping: 30,
                   delay: 0.15,
                 }}
-                className={`absolute -bottom-5 -z-10 transform-gpu inset-shadow-sm inset-shadow-green-500/40 w-27 h-10 mb-5 border ${template.price === 0 ? "bg-green-500/10 border-green-500/50" : "bg-primary/10 border-primary/50"} leading-none rounded-sm`}
+                className={`absolute -bottom-5 -z-10 transform-gpu inset-shadow-sm inset-shadow-green-500/40 w-27 h-10 mb-3 md:mb-5 border ${template.price === 0 ? "bg-green-500/10 border-green-500/50" : "bg-primary/10 border-primary/50"} leading-none rounded-sm`}
                 style={{
                   left: activeTab === PREVIEW_TAB ? 0 : 129,
                 }}
@@ -176,15 +176,15 @@ export default function Overview({ template }: { template: TemplateData }) {
         </section>
 
         {/* Video + Features */}
-        <section className="grid grid-cols-3 items-stretch gap-3 px-3 bg-muted/50 border rounded-lg w-full h-full">
+        <section className="flex flex-col lg:flex-row items-stretch lg:gap-3 px-3 bg-muted/50 border rounded-lg w-full h-full">
           {/* Left: Video Preview & YT Tutorial */}
-          <div className="col-span-2 aspect-video w-full max-h-120 py-3 h-full">
+          <div className="aspect-video max-h-120 py-3 w-full lg:w-2/3 h-full">
             {mediaContent}
           </div>
 
           {/* Right: Features */}
           {template.features && (
-            <div className="col-span-1 flex flex-col pt-3 max-h-120 h-full">
+            <div className="flex flex-col pt-3 max-h-120 w-full lg:w-1/3 h-full">
               {/* Fixed height container for scrolling features */}
               <div className="flex flex-col h-full overflow-hidden">
                 <h2 className="shrink-0 p-3 text-2xl bg-background/60 backdrop-blur-sm border rounded-sm">

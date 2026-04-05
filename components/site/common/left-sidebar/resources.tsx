@@ -91,10 +91,10 @@ export default function LeftResources({
   };
 
   return (
-    <aside className="sticky top-0 overflow-auto w-full max-h-screen">
+    <aside className="block md:sticky top-0 z-30 bg-background overflow-auto w-full max-h-screen">
       <div
         ref={sidebarRef}
-        className="flex flex-col items-start pt-24 text-[0.8rem]  font-medium overflow-y-auto w-full h-full"
+        className="flex flex-col items-start pt-16 lg:pt-24 text-[0.8rem] font-medium overflow-y-auto w-full h-full"
       >
         {/* Category List */}
         <div className="border-b w-full">

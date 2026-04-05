@@ -211,7 +211,7 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!prevPage}
-                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-2/3 hover:w-full h-24! transition-all duration-500
+                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
               ${
                 prevPage
                   ? "border-border hover:bg-muted"
@@ -240,7 +240,7 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!nextPage}
-                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-2/3 hover:w-full h-24! transition-all duration-500
+                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
               ${
                 nextPage
                   ? "border-border hover:bg-muted"

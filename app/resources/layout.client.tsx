@@ -20,13 +20,13 @@ export default function ContentLayoutClient({
 
   return (
     <ResourcesProvider>
-      <main className="2xl:border-x-2 border-dashed 2xl:border-foreground/10 m-auto max-w-360 w-full h-full">
+      <main className="2xl:border-2 border-dashed 2xl:border-foreground/10 m-auto max-w-360 w-full h-full">
         <section
           className={`grid ${
             !hideRightSidebar
-              ? "grid-cols-[190px_1fr_195px]"
-              : "grid-cols-[190px_1fr]"
-          } m-auto px-10 w-full transition-all duration-500`}
+              ? "grid-cols-1 md:grid-cols-[190px_1fr] xl:grid-cols-[190px_1fr_195px]"
+              : "md:grid-cols-[190px_1fr]"
+          } m-auto px-4 md:px-10 w-full`}
         >
           <LeftResources
             initialCategories={initialCategories}
@@ -34,8 +34,8 @@ export default function ContentLayoutClient({
           />
           <div
             id="content"
-            className={`flex flex-col items-start justify-start pt-24 pb-10 m-auto ${
-              !hideRightSidebar ? "px-10 max-w-240" : "pl-10"
+            className={`flex flex-col items-center py-6 md:pt-16 lg:pt-24 m-auto ${
+              !hideRightSidebar ? "md:px-10 w-full md:max-w-240" : "md:pl-10"
             } w-full h-full`}
           >
             {children}

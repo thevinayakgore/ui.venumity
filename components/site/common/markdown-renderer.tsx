@@ -341,7 +341,7 @@ export function MarkdownRenderer({
 
       {isResourcesPage && (
         <div className="flex flex-col items-center gap-3 mt-10 mb-6 w-full">
-          <div className="flex items-center justify-between p-3 bg-primary/5 backdrop-blur-sm border-x-4 border-x-orange-500 border-y border-y-orange-500/30 w-full">
+          <div className="flex flex-col md:flex-row items-center justify-between p-3 bg-primary/5 backdrop-blur-sm border-x-4 border-x-orange-500 border-y border-y-orange-500/30 w-full">
             <div className="flex items-center text-center gap-3 leading-none font-bold uppercase w-full">
               <Image
                 src="/logo.png"

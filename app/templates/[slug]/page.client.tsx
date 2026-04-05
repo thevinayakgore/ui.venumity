@@ -13,7 +13,7 @@ interface PageClientProps {
 
 export default function PageClient({ template }: PageClientProps) {
   return (
-    <main className="flex flex-col items-center justify-between m-auto max-w-360 px-10 py-20 2xl:border-x-2 border-dashed border-foreground/10 overflow-x-hidden w-full">
+    <main className="flex flex-col items-center justify-between m-auto max-w-360 px-5 md:px-10 py-15 md:py-20 2xl:border-x-2 border-dashed border-foreground/10 overflow-x-hidden w-full">
       <section className="flex items-center justify-between m-auto text-sm py-4 mb-5 border-b border-foreground/15 w-full">
         <Link
           href="/templates"
@@ -40,7 +40,7 @@ export default function PageClient({ template }: PageClientProps) {
 
       {/* Gallery */}
       {template.gallery && template.gallery.length > 0 && (
-        <section className="grid grid-cols-2 gap-8 mt-20 mb-40">
+        <section className="grid grid-cols-2 gap-2 lg:gap-8 my-10 lg:mt-20 lg:mb-40">
           {template.gallery.map((imageUrl: string, idx: number) => (
             <div
               key={idx}

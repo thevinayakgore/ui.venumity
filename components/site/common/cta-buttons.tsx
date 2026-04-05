@@ -1,41 +1,28 @@
 import Link from "next/link";
 import { Button } from "../../ui/button";
-import { ArrowRight, SquareArrowOutUpRight } from "lucide-react";
-
-const CTA_CONFIG = [
-  {
-    href: "/components",
-    label: "Browse Components",
-    icon: SquareArrowOutUpRight,
-    buttonClass:
-      "hover:shadow-lg shadow-primary/30 bg-foreground text-secondary hover:bg-primary hover:text-white inset-shadow-sm hover:inset-shadow-white/70",
-    iconClass: "size-4!",
-  },
-  {
-    href: "/resources",
-    label: "Resources",
-    icon: ArrowRight,
-    buttonClass:
-      "group/btn text-foreground hover:text-white hover:bg-green-500 hover:shadow-lg shadow-green-500/30 hover:shadow-green-500/30! hover:inset-shadow-sm inset-shadow-white/70",
-    iconClass:
-      "size-4! group-hover/btn:translate-x-2.5 transition-all duration-500",
-  },
-];
+import { Globe, ChevronsRight } from "lucide-react";
 
 export default function CTAButtons() {
   return (
-    <div className="flex flex-col sm:flex-row justify-center gap-4 text-sm font-medium!">
-      {CTA_CONFIG.map(({ href, label, icon: Icon, buttonClass, iconClass }) => (
-        <Link key={href} href={href}>
-          <Button
-            variant="secondary"
-            className={`p-6! cursor-pointer border border-foreground/20 hover:border-white hover:scale-105 transition-all duration-500 ${buttonClass}`}
-          >
-            {label}
-            <Icon className={iconClass} />
-          </Button>
-        </Link>
-      ))}
+    <div className="flex flex-col sm:flex-row justify-center gap-4 my-3 text-sm font-medium!">
+      <Link href="/components" target="_blank">
+        <Button
+          variant="secondary"
+          className="pl-4! pr-5! py-6! group/btn bg-foreground! text-secondary! inset-shadow-sm inset-shadow-secondary/40 text-base font-medium cursor-pointer border-2 border-foreground/20"
+        >
+          <Globe className="size-5 group-hover/btn:animate-spin transition-all duration-500" />
+          Browse Components
+        </Button>
+      </Link>
+      <Link href="/resources" target="_blank">
+        <Button
+          variant="secondary"
+          className="gap-1.5 p-6! group/btn text-foreground inset-shadow-sm inset-shadow-foreground/20 text-base font-medium cursor-pointer border-2"
+        >
+          Get Resources
+          <ChevronsRight className="size-5 group-hover/btn:translate-x-2 transition-all duration-500" />
+        </Button>
+      </Link>
     </div>
   );
 }

@@ -159,12 +159,12 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
           </div>
         </div>
 
-        <div className="p-3 pt-6">
+        <div className="p-3">
           <div className="flex items-start justify-between">
             <h2 className="text-xl font-medium whitespace-nowrap truncate">
               {card.title}
             </h2>
-            <span className="text-xs px-2 py-1 -mt-2 rounded bg-primary/10 text-primary/80">
+            <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
               {card.itemCount > 0 && card.itemCount <= 9 && "0"}
               {card.itemCount}
             </span>
