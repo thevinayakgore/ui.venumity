@@ -260,7 +260,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
             <TooltipTrigger asChild>
               <Button
                 variant="secondary"
-                className="flex items-center gap-2 cursor-pointer bg-foreground text-secondary inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full hover:bg-green-500 hover:text-white hover:border-zinc-200 hover:inset-shadow-green-100 transition-all duration-500"
+                className="flex items-center gap-2 cursor-pointer bg-foreground! text-secondary! inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full"
               >
                 <Terminal />
                 <span>Code</span>

@@ -1,227 +1,241 @@
 # <img src="./public/logo.png" width="30" style="vertical-align: middle; margin-top: 5px;" /> Venu<span style="color:orange">mity</span> UI 🎉
 
-Add **Venu<span style="color:orange">mity</span> UI** components to your projects.
+**Beautiful, production-ready React components. Copy. Paste. Ship.**
 
-**Latest Components Library for Modern Web Development.**  
-Beautiful, production-ready components you can copy and paste directly into your projects.
+[![GitHub stars](https://img.shields.io/github/stars/thevinayakgore/ui.venumity?style=flat&color=orange&label=Stars)](https://github.com/thevinayakgore/ui.venumity/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/thevinayakgore/ui.venumity?style=flat&color=blue&label=Forks)](https://github.com/thevinayakgore/ui.venumity/network)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevinayakgore/ui.venumity/blob/main/CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://ui.venumity.com/legal/license)
+[![Last Commit](https://img.shields.io/github/last-commit/thevinayakgore/ui.venumity?color=green&label=Last%20Commit)](https://github.com/thevinayakgore/ui.venumity/commits)
 
-![Venumity UI banner](./public/banner.png)
+<br/>
 
-## ⚡ Why Venu<span style="color:orange">mity</span> UI ?
+![Venumity UI demo](./public/banner.png)
 
-Building modern web applications shouldn't be complicated. Venumity UI provides **components for React based projects** with clean, minimal code that works right out of the box. No bloated dependencies, no complex configurations - just copy, paste, and customize.
+<!-- 💡 TIP : Replace banner.png above with an animated demo.gif of your best components -->
 
-Perfect for SaaS dashboards, landing pages, portfolios, startups, agencies, and developers who want to ship faster without compromising on quality.
+<br/>
+
+> ⭐ **If Venumity UI saves you time, please star this repo** - it helps more developers discover it and motivates us to keep building. Takes 2 seconds and means a lot !
+
+<br/>
+
+[🌐 Live Site](https://ui.venumity.com) · [📦 Components](https://ui.venumity.com/components) · [📚 Docs](https://ui.venumity.com/docs/introduction) · [🧩 Templates](https://ui.venumity.com/templates) · [💬 Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
+
+</div>
+
+---
+
+## 🛠️ Components we want - pick one and build it !
+
+Want to contribute but don't know where to start ? Pick any unchecked component below, comment on its GitHub Issue so nobody duplicates work, then submit a PR !
+
+| Status | Component | Difficulty | Issue |
+|--------|-----------|------------|-------|
+| ⬜ | Spotlight Card (mouse-tracking glow on hover) | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Aurora Background (animated gradient blobs) | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Typewriter / Text Reveal Effect | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Glowing Border Card | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Infinite Marquee (logo / text scroll row) | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Floating Blur Navbar | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Animated Counter (count-up on scroll) | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Command Palette (Cmd+K popup) | Hard | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Timeline Component | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Step Indicator / Stepper | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Floating Dock (macOS-style icon dock) | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Hero Section Block (full ready-to-paste section) | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Pricing Section Block | Medium | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+| ⬜ | Stats Section with Animated Numbers | Easy | [#open](https://github.com/thevinayakgore/ui.venumity/issues) |
+
+> 💡 Don't see what you want to build ? [Open a Discussion](https://github.com/thevinayakgore/ui.venumity/discussions) and suggest a new component !
+
+---
+
+## ⚡ Why Venumity UI ?
+
+Building modern web apps shouldn't be complicated. Venumity UI gives you **beautiful, functional React components** with clean minimal code that works right out of the box - no bloated dependencies, no complex configuration. Just copy, paste, and customize.
+
+Perfect for SaaS dashboards, landing pages, portfolios, startups, and developers who want to ship faster without compromising on quality.
+
+---
 
 ## 🔑 Key Features
 
-### 🚀 **Developer First**
+### 🚀 Developer First
 - ✅ Zero runtime dependencies
-- ✅ TypeScript ready
-- ✅ Perfect for Next.js, React, Vite, and more
+- ✅ TypeScript ready — full type safety
+- ✅ Works with Next.js, React, and Vite
 - ✅ Clean, readable source code
 
-### 🎨 **Design That Scales**
+### 🎨 Design That Scales
 - ✅ Built with Tailwind CSS
-- ✅ Fully responsive
-- ✅ Dark mode support
+- ✅ Fully responsive — mobile first
+- ✅ Dark mode support on every component
 - ✅ Accessibility-first approach
 
-### 📦 **Easy Integration**
-- ✅ Copy-paste workflow
-- ✅ CLI tool included
-- ✅ Works with React framework
+### 📦 Easy Integration
+- ✅ Copy-paste workflow — no install needed
+- ✅ Works with any React framework
 - ✅ Simple customization
 
-## 💎 What Sets Us Apart
-
-We deliver more than just UI components - we provide **the building blocks for fast innovation**. Here's what makes our platform uniquely valuable :
-
-- ⚡ **Developer-Led Design**  
-  Crafted by developers, for developers. Work with clean, scalable code that fits seamlessly into your workflow - zero friction, maximum productivity.
-
-- 🔌 **Command-Line Integration**  
-  Accelerate development with our CLI tools. Generate components, install dependencies, and scaffold projects in seconds, right from your terminal.
-
-- 🎨 **Complete Customization Freedom**  
-  Every component is fully open for modification. Tweak styles, restructure layouts, or rewrite logic - own every aspect of your implementation.
-
-- 🚀 **Launch-Ready from Day One**  
-  Build and deploy production-ready interfaces immediately. Perfect for MVPs, prototypes, and rapid iteration cycles.
-
-- 📘 **Comprehensive Documentation**  
-  Clear, practical guides with real-world examples. Learn exactly how each component works and how to adapt it to your needs.
-
-- 📱 **Multi-Device Optimized**  
-  Preview components across all viewports. See exactly how they'll look on mobile, tablet, desktop, and beyond before you implement.
-
-- 🖱️ **Streamlined Interface**  
-  Browse, preview, and copy with one click. Our minimalist UI puts components first - no clutter, no distractions.
-
-- 🌱 **Community-Driven Ecosystem**  
-  Contribute your own creations. Share your best work with fellow developers and help build the future of UI development together.
+---
 
 ## 🚀 Getting Started
 
-### Basic Usage
-
-1. **Browse** components on our website
-2. **Copy** the component code
-3. **Paste** into your project
-4. **Customize** to fit your needs
+**1. Browse** → **2. Copy** → **3. Paste** → **4. Customize**
 
 ```tsx
-// Example : Using our HoverButton component
+// Example: using the HoverButton component
 import { HoverButton } from '@/components/ui/hover-button'
 
-export default function MyComponent() {
+export default function MyPage() {
   return (
-    <HoverButton variant="primary" size="lg" className="hover:scale-105 transition-all duration-500">
+    <HoverButton variant="primary" size="lg">
       Hover Me
     </HoverButton>
   )
 }
 ```
 
-## 🛠️ Tech Stacks
+👉 **[Browse all components →](https://ui.venumity.com/components)**
 
-- **Framework :** Next.js 16+
-- **Styling :** Tailwind CSS v4+
-- **Language :** TypeScript
-- **Animations :** Framer Motion
-- **Icons :** Lucide React
+---
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| Next.js 15+ | Framework |
+| Tailwind CSS v4+ | Styling |
+| TypeScript | Type safety |
+| Framer Motion | Animations |
+| Lucide React | Icons |
+
+---
+
+## 🤝 How to Contribute
+
+We welcome contributions from developers of all skill levels. Here is the exact step-by-step :
+
+### Step 1 - Fork and clone
+
+```bash
+# Fork the repo on GitHub, then:
+git clone https://github.com/YOUR_USERNAME/ui.venumity.git
+cd ui.venumity
+npm install
+npm run dev
+```
+
+### Step 2 - Create your component file
+
+```
+/components/[category]/[your-component-name].tsx
+```
+
+For example, a spotlight card goes in :
+```
+/components/cards/spotlight-card.tsx
+```
+
+### Step 3 - Add it to the registry
+
+Open `registry/components.ts` and add your component entry following the existing pattern.
+
+### Step 4 - Add a thumbnail screenshot
+
+Capture a **full-screen screenshot at 1280×800px** and save it to :
+```
+/public/thumbnails/[your-component-name].png
+```
+
+### Step 5 - Run and verify
+
+```bash
+npm run dev
+# Check your component renders correctly at localhost:3000
+```
+
+### Step 6 - Submit your PR
+
+```bash
+git checkout -b feat/spotlight-card
+git add .
+git commit -m "feat: add spotlight card component"
+git push origin feat/spotlight-card
+# Then open a Pull Request on GitHub
+```
+
+**PR title format :** `feat: add [ComponentName] component`
+
+> 📖 See the full [Contributing Guide](https://github.com/thevinayakgore/ui.venumity/blob/main/CONTRIBUTING.md) for detailed code style and quality standards.
+
+### Contribution Areas
+
+| Area | What to do |
+|------|------------|
+| 🐛 Bug fixes | Fix broken components or styling issues |
+| ✨ New components | Build from the wishlist table above |
+| 📚 Documentation | Improve component descriptions and examples |
+| 🎨 Design updates | Improve visual quality of existing components |
+| ♿ Accessibility | Add ARIA labels, keyboard nav, reduced motion |
+
+---
 
 ## 📚 Resources
 
-The **Resources page** is a dedicated space to help you learn, build, and ship websites faster with less confusion and more clarity.
+The **[Resources page](https://ui.venumity.com/resources)** is a curated learning hub for developers - framework guides, animation patterns, cheat sheets, and community-shared tips.
 
-It’s designed for beginners and growing developers who want practical knowledge, not just theory.
+---
 
-Explore a collection of curated content at 👉 [ui.venumity.com/resources](https://www.ui.venumity.com/resources)
+## 🌟 Who is it for ?
 
-What you’ll find here -
+**Startups** - launch 60% faster with polished components ready on day one.
 
-- 🧱 **Framework Guides** - Best practices and usage guides for modern frameworks
-- 🎞️ **Animation Libraries** - Motion patterns, animation techniques, and interaction ideas
-- 🛠️ **Tutorials** - Step-by-step guides for building UI components and layouts
-- ⚡ **Cheat Sheets** - Quick references for performance, accessibility, and workflows
+**Agencies** - deliver consistent quality across every client project.
 
-*🌍 **Community Shares** - Tips, tricks, and techniques by developers !*
+**Developers** - clean TypeScript code you can actually read, understand, and own.
 
-### 🙌🏻 Community-driven
-
-This page is community-powered. Developers can share :
-
-- 📝 useful techniques
-- 📝 productivity tips
-- 📝 common mistakes and solutions
-- 📝 better ways to build websites
-
-If it helps you build better and faster - it belongs here.
-
-## 🌟 Why Choose Venu<span style="color:orange">mity</span> UI ? 
-
-### For Startups
-- **Launch faster** - Reduce development time by 60%
-- **Professional look** - Polished components that impress
-- **Scalable** - Grows with your product
-
-### For Agencies
-- **Consistent quality** - Same high standard across projects
-- **Customizable** - Match any client's brand
-- **Time-saving** - Focus on business logic, not just UI
-
-### For Developers
-- **Clean code** - Easy to understand and modify
-- **TypeScript support** - Full type safety
-- **Active community** - Regular updates and support on github
-
-## 🤝 Contributing
-
-We welcome contributions from developers of all skill levels ! Whether you're fixing a bug, adding a feature, or improving documentation, your help is appreciated.
-
-### How to Contribute ?
-
-1. **Fork** the repository
-2. **Create** a feature branch
-3. **Make** your changes
-4. **Screenshot** of component
-5. **Submit** a pull request
-
-## 📌 Note on Component Thumbnails
-
-Contributors must capture a **screenshot of the full screen component** and place it in the `public/thumbnails` folder with component item name.
-
-- The first component item screenshot is used as the **default thumbnail preview for component cards**.
-- The **maintainer (@thevinayakgore)** may later replace this thumbnail with a **“best of” component showcase** if needed.
-
-This ensures consistency while allowing curated visual improvements over time.
-
-----
-
-### Contribution Areas
-- 🐛 **Bug fixes** - Help squash those pesky bugs
-- ✨ **New components** - Add missing UI elements
-- 📚 **Documentation** - Improve guides and examples
-- 🎨 **Design updates** - Enhance visual appeal
-- 🔧 **Tooling** - Build better developer tools
-
-Check our [Contributing Guide](https://github.com/thevinayakgore/ui.venumity/blob/main/CONTRIBUTING.md) for detailed instructions.
-
-### 📞 Getting Help & Support
-
-You can reach out through :
-
-- ⭐️ GitHub Repo : https://github.com/thevinayakgore/ui.venumity
-- 🌐 Contact Page : https://www.ui.venumity.com/contact
-- 📧 Email : thevinayakgore@gmail.com
-
-We review all contributions and feedback to make **Venu<span style="color:orange">mity</span> UI** better for everyone.
+---
 
 ## 📄 License
 
-**Venu<span style="color:orange">mity</span> UI** is released under the **MIT License**. You are free to :
-- Use commercially
-- Modify and distribute
-- Use privately
-- Sublicense
+Released under the **MIT License** - free to use commercially, modify, and distribute. The only restriction: don't resell components as-is.
 
-**🌐 MIT License -** See **[LICENSE](https://www.ui.venumity.com/legal/license)** for details.
-
-The only requirement is Just don’t resell components as-is.
-
-## 🙏 Acknowledgments
-
-- Designed to help developers get started faster
-- Actively evolving with new Ideas, Improvements and Contributions
-
-## ⭐ Support the Project
-
-If you find **Venu<span style="color:orange">mity</span> UI** helpful :
-
-1. 🌟 **Star** the repository on GitHub
-2. 🐞 **Report bugs or issues** – GitHub [Issues](https://github.com/thevinayakgore/ui.venumity/issues)
-3. ⭐ **Request new features or components** – GitHub [Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
-4. 💡 **Suggest improvements** – submit a PR or open an issue
-5. 📣 **Share feedback** – Let us know what works and what can be better
-6. 🤔 **Ask questions** – GitHub Discussions is the best place
+See [LICENSE](https://ui.venumity.com/legal/license) for full details.
 
 ---
 
-## 🚀 Ready to Build Better ?
+## 🤝 Contributors
 
-Start using **Venu<span style="color:orange">mity</span> UI** today and experience the difference professional components make.
+Thanks to everyone who has helped build Venumity UI !
 
-**[Explore Components →](https://ui.venumity.com/components)** 
+[![Contributors](https://contrib.rocks/image?repo=thevinayakgore/ui.venumity)](https://github.com/thevinayakgore/ui.venumity/graphs/contributors)
 
-**[Read Resources →](https://ui.venumity.com/resources)** 
+Want your avatar here ? [Pick a component from the wishlist above](#️-components-we-want--pick-one-and-build-it) and submit a PR !
 
 ---
 
-### Built with ❤️ by [The Vinayak Gore](https://thevinayakgore.vercel.app)
+## 📞 Get Help or Report Issues
 
-**Venu<span style="color:orange">mity</span> UI ⚡️** - Accelerate your development with production-ready components. Start building beautiful interfaces in minutes, not hours.
+| Channel | Link |
+|---------|------|
+| ⭐ GitHub Repo | [github.com/thevinayakgore/ui.venumity](https://github.com/thevinayakgore/ui.venumity) |
+| 💬 Discussions | [GitHub Discussions](https://github.com/thevinayakgore/ui.venumity/discussions) |
+| 🐛 Bug Reports | [GitHub Issues](https://github.com/thevinayakgore/ui.venumity/issues) |
+| 🌐 Contact Page | [ui.venumity.com/contact](https://ui.venumity.com/contact) |
+| 📧 Email | thevinayakgore@gmail.com |
 
-*Follow on - [GitHub](https://github.com/thevinayakgore/ui.venumity) • [Twitter](https://twitter.com/thevinayakgore) • [Instagram](https://twitter.com/thevinayakgore) • [LinkedIn](https://twitter.com/thevinayakgore)*
+---
 
-**🔔 Subscribe channel - [YouTube](https://www.youtube.com/@TheVinayakGore)**
+<div align="center">
+
+**Built with ❤️ by [Vinayak Gore](https://thevinayakgore.vercel.app)**
+
+[GitHub](https://github.com/thevinayakgore) · [Twitter / X](https://twitter.com/thevinayakgore) · [Instagram](https://instagram.com/thevinayakgore) · [LinkedIn](https://linkedin.com/in/thevinayakgore) · [YouTube](https://youtube.com/@TheVinayakGore)
+
+<br/>
+
+**Venumity UI ⚡ - Ship beautiful interfaces faster.**
+
+</div>

@@ -124,7 +124,7 @@ export default function LeftSidebar() {
                               <Link
                                 key={`${category.name}-${subcategory.name}`}
                                 href={subcategoryLink}
-                                className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] transition-all duration-500 ${
+                                className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] ${
                                   isSubcategoryActive
                                     ? "text-foreground bg-muted/60 border-primary"
                                     : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"

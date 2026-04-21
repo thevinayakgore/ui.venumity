@@ -176,6 +176,11 @@ html {
   display: none;
 }
 
+*::selection {
+  background: #ff68001c;
+  color: #fd6902;
+}
+
 /* ==========================================================================
    TAILWIND BASE LAYER
    Element-level resets and defaults
@@ -570,5 +575,32 @@ html {
   }
   100% {
     background-position: 100% 0;
+  }
+}
+
+@theme inline {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: 100% 50%;
   }
 }

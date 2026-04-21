@@ -111,6 +111,35 @@ export const COMPONENTS = createComponents([
     ],
   },
   {
+    category: "Background Effects",
+    icon: "sparkles",
+    subcategories: [
+      {
+        name: "Gradient Spotlight",
+        description:
+          "Modern background effect components featuring dynamic gradient spotlight animations designed to create depth, focus, and visual hierarchy in UI designs. Ideal for hero sections, landing pages, and immersive web experiences where ambient lighting and motion enhance user engagement.",
+        tags: [
+          "background",
+          "gradient",
+          "spotlight",
+          "animation",
+          "effects",
+          "ui",
+          "visual",
+          "hero",
+          "landing",
+        ],
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
+        items: [
+          {
+            itemName: "Gradient Spotlight 1",
+            githubUsername: "thevinayakgore",
+          },
+        ],
+      },
+    ],
+  },
+  {
     category: "Cards",
     icon: "square-slash",
     subcategories: [
@@ -965,6 +994,7 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [
           { itemName: "Standard Navbar", githubUsername: "thevinayakgore" },
+          { itemName: "Sticky Glass Navbar", githubUsername: "thevinayakgore" },
         ],
       },
       // {
@@ -1069,4 +1099,20 @@ export const COMPONENTS = createComponents([
       },
     ],
   },
+  // {
+  //   category: "Typography",
+  //   icon: "type",
+  //   subcategories: [
+  //     {
+  //       name: "Text Effects",
+  //       description:
+  //         "Comprehensive typography components designed to standardize text presentation across applications. These styles enhance readability, maintain visual hierarchy, and ensure consistent branding across headings, paragraphs, and UI text elements.",
+  //       tags: ["typography", "text", "fonts", "ui", "design"],
+  //       techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
+  //       items: [
+  //         { itemName: "------", githubUsername: "thevinayakgore" },
+  //       ],
+  //     },
+  //   ],
+  // },
 ] as const);

@@ -254,7 +254,7 @@ export default function Overview({
               <Link
                 href={`https://github.com/${githubUsername}`}
                 target="_blank"
-                className="absolute bottom-4 right-4 flex items-center gap-1 p-1 pr-3 leading-none bg-sky-500/10 backdrop-blur-md border border-sky-500/30 inset-shadow-sm inset-shadow-sky-500/40 text-xs font-medium rounded-full w-fit"
+                className="absolute bottom-4 right-4 z-50 flex items-center gap-1 p-1 pr-3 leading-none bg-sky-500/10 backdrop-blur-md border border-sky-500/30 inset-shadow-sm inset-shadow-sky-500/40 text-xs font-medium rounded-full w-fit"
               >
                 <Image
                   src={`https://github.com/${githubUsername}.png`}
