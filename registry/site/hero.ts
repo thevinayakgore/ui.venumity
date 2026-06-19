@@ -16,7 +16,7 @@ export const FEATURES = [
     description:
       "Ready-to-use UI components crafted for modern, scalable web applications.",
     gradient:
-      "bg-linear-to-bl from-orange-500/50 via-transparent to-transparent",
+      "bg-linear-to-t from-orange-500/50 via-orange-500/10 to-transparent",
     miniBg: "bg-orange-500/15",
     border: "border-orange-500/40",
   },
@@ -26,7 +26,7 @@ export const FEATURES = [
     description:
       "Cleanly grouped layouts, forms, navigation patterns, and many more things.",
     gradient:
-      "bg-linear-to-bl from-yellow-400/50 via-transparent to-transparent",
+      "bg-linear-to-t from-yellow-400/50 via-yellow-400/10 to-transparent",
     miniBg: "bg-yellow-400/15",
     border: "border-yellow-400/40",
   },
@@ -36,7 +36,7 @@ export const FEATURES = [
     description:
       "Permissive Open-Source MIT License allowing use, modification, and distribution.",
     gradient:
-      "bg-linear-to-bl from-green-500/50 via-transparent to-transparent",
+      "bg-linear-to-t from-green-500/50 via-green-500/10 to-transparent",
     miniBg: "bg-green-500/15",
     border: "border-green-500/40",
   },
@@ -44,7 +44,7 @@ export const FEATURES = [
     title: "TSX",
     subtitle: "Type Safety",
     description: "Type-safe components built with modern TypeScript standards.",
-    gradient: "bg-linear-to-bl from-blue-500/50 via-transparent to-transparent",
+    gradient: "bg-linear-to-t from-blue-500/50 via-blue-500/10 to-transparent",
     miniBg: "bg-blue-500/15",
     border: "border-blue-500/40",
   },
@@ -54,7 +54,7 @@ export const FEATURES = [
     description:
       "Optimized developer experience with copy-paste ready patterns.",
     gradient:
-      "bg-linear-to-bl from-purple-500/50 via-transparent to-transparent",
+      "bg-linear-to-t from-purple-500/50 via-purple-500/10 to-transparent",
     miniBg: "bg-purple-500/15",
     border: "border-purple-500/40",
   },
@@ -62,7 +62,7 @@ export const FEATURES = [
     title: "100",
     subtitle: "Customizable",
     description: "Fully customizable components to match your brand.",
-    gradient: "bg-linear-to-bl from-cyan-500/50 via-transparent to-transparent",
+    gradient: "bg-linear-to-t from-cyan-500/50 via-cyan-500/10 to-transparent",
     miniBg: "bg-cyan-500/15",
     border: "border-cyan-500/40",
   },

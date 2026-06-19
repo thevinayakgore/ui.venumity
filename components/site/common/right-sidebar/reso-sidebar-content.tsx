@@ -1,13 +1,11 @@
+// resources-sidebar-content.tsx
 "use client";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
-import {
-  smoothScrollToElement,
-  setupScrollSpy,
-  throttle,
-} from "./utils/scroll-utils";
+import { setupScrollSpy } from "./utils/scroll-utils";
 import CommonActions from "./common-actions";
 import { toast } from "sonner";
+import { useScrollContainer } from "@/contexts/scroll-container";
 
 interface HeadingItem {
   id: string;
@@ -23,22 +21,21 @@ export default function ResourcesSidebarContent() {
   const isManualScrollingRef = useRef(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const scrollContainerRef = useScrollContainer();
 
-  // Determine if we're on resources route
   const isResourcesRoute = pathname.startsWith("/resources");
   const showSidebar = isResourcesRoute;
 
-  // Extract headings from the page content
+  // Extract headings and setup IntersectionObserver with container as root
   useEffect(() => {
-    if (!showSidebar) return;
+    const container = scrollContainerRef?.current;
+    if (!showSidebar || !container) return;
 
     const extractHeadings = () => {
       try {
-        // Get the main article content
         const article = document.querySelector("article");
         if (!article) return;
 
-        // Get headings from article content only
         const headingElements = Array.from(
           article.querySelectorAll("h1[id], h2[id], h3[id], h4[id]"),
         );
@@ -47,7 +44,6 @@ export default function ResourcesSidebarContent() {
           .map((el): HeadingItem | null => {
             const tag = el.tagName.toLowerCase();
             if (tag === "h1" || tag === "h2" || tag === "h3" || tag === "h4") {
-              // Generate ID if not present
               if (!el.id) {
                 const text = el.textContent || "";
                 el.id = text
@@ -72,7 +68,6 @@ export default function ResourcesSidebarContent() {
 
         setHeadings(headingItems);
 
-        // Setup IntersectionObserver for scroll spy
         if (observerRef.current) {
           observerRef.current.disconnect();
         }
@@ -86,13 +81,13 @@ export default function ResourcesSidebarContent() {
               }
             },
             {
+              root: container, // 🔁 Watch inside the scroll container
               rootMargin: "-20% 0px -70% 0px",
               threshold: 0.1,
             },
           );
 
-          // Set initial active ID
-          if (!activeId && headingItems.length > 0) {
+          if (!activeId) {
             setActiveId(headingItems[0].id);
           }
         }
@@ -101,7 +96,6 @@ export default function ResourcesSidebarContent() {
       }
     };
 
-    // Wait for page to be fully rendered
     const timer = setTimeout(() => {
       extractHeadings();
       setMounted(true);
@@ -113,22 +107,21 @@ export default function ResourcesSidebarContent() {
         observerRef.current.disconnect();
       }
     };
-  }, [showSidebar, pathname, activeId]);
+  }, [showSidebar, pathname, scrollContainerRef, activeId]);
 
   const handleHeadingClick = useCallback((id: string) => {
     isManualScrollingRef.current = true;
     setActiveId(id);
 
-    // Use your existing smooth scroll utility
-    const success = smoothScrollToElement(id, -100);
-
-    if (success) {
-      // Update URL without full page reload
-      const newUrl = `${window.location.pathname}#${id}`;
-      window.history.pushState(null, "", newUrl);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.pushState(null, "", `#${id}`);
+    } else {
+      // fallback to old utility if element not found? No, just log error.
+      toast.error("Could not find the heading");
     }
 
-    // Reset manual scrolling flag
     setTimeout(() => {
       isManualScrollingRef.current = false;
     }, 800);
@@ -156,24 +149,14 @@ export default function ResourcesSidebarContent() {
     }
   }, [activeId, mounted]);
 
-  // Handle scroll events for better UX
-  useEffect(() => {
-    if (!showSidebar || !mounted) return;
-
-    const handleScroll = throttle(() => {
-      if (isManualScrollingRef.current) return;
-    }, 100);
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [showSidebar, mounted]);
+  // No need for window scroll listener – IntersectionObserver handles everything
 
   if (!showSidebar || !mounted) {
     return null;
   }
 
   return (
-    <aside className="flex flex-col items-start w-full max-h-3/4">
+    <aside className="flex flex-col items-start font-semibold! tracking-wide! w-full max-h-3/4">
       <h2 className="pb-2 mb-2 border-b w-full">On this page</h2>
       <div
         ref={sidebarRef}
@@ -189,15 +172,15 @@ export default function ResourcesSidebarContent() {
               key={heading.id}
               data-heading-id={heading.id}
               onClick={() => handleHeadingClick(heading.id)}
-              className={`inline-flex text-left items-center group cursor-pointer w-fit py-1.5 text-xs transition-all duration-500 ${
+              className={`inline-flex text-left items-center group cursor-pointer py-1.25 text-[0.8rem] transition-all duration-500 min-w-0 w-full ${
                 activeId === heading.id
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-foreground/40 hover:text-foreground"
               }`}
             >
               <span
                 title={heading.text}
-                className="truncate whitespace-nowrap overflow-hidden text-ellipsis w-full"
+                className="truncate whitespace-nowrap overflow-hidden min-w-0 w-full"
               >
                 {heading.text}
               </span>

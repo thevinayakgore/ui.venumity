@@ -12,45 +12,44 @@ export default function CarouselTestimonial1() {
       role: "Product Designer",
       content:
         "Working with this component library was a true game changer for our team. The UI feels premium, animations are smooth, and everything is production-ready for real-world applications.",
-      avatar: "/mem1.jpeg",
+      avatar: "/assets/mem1.jpeg",
     },
     {
       name: "Aarav Mehta",
       role: "Frontend Engineer",
       content:
         "The attention to detail in these components is outstanding and very noticeable. Everything works seamlessly, performance is solid, and customization is effortless even for complex layouts.",
-      avatar: "/mem2.jpeg",
+      avatar: "/assets/mem2.jpeg",
     },
     {
       name: "Sneha Kapoor",
       role: "Founder",
       content:
         "Beautifully designed components with excellent performance and thoughtful interactions. This library helped our startup ship faster while maintaining design quality and user experience.",
-      avatar: "/mem5.jpeg",
+      avatar: "/assets/mem5.jpeg",
     },
     {
       name: "Neha Singh",
       role: "Engineering Manager",
       content:
         "The components feel extremely polished, consistent, and thoughtfully designed. Our engineering team adopted them quickly, improving development speed and overall product reliability.",
-      avatar: "/mem3.jpeg",
+      avatar: "/assets/mem3.jpeg",
     },
     {
       name: "Rohit Varma",
       role: "UX Researcher",
       content:
         "Accessibility and design quality are both top-notch in this component library. It helped us improve usability, visual clarity, and overall user experience across multiple products.",
-      avatar: "/mem4.jpeg",
+      avatar: "/assets/mem4.jpeg",
     },
     {
       name: "Karan Patel",
       role: "Startup Founder",
       content:
         "Fast, reliable, and beautifully animated components that feel production-ready from day one. Exactly what a modern startup team needs to build and iterate quickly.",
-      avatar: "/mem6.jpeg",
+      avatar: "/assets/mem6.jpeg",
     },
   ];
-
 
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);

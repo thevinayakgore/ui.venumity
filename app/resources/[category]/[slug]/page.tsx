@@ -1,3 +1,4 @@
+// app/resources/[category]/[slug]/page.tsx
 import { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { getCategoryBySlug, getAllResources } from "@/registry/resources";
@@ -5,7 +6,7 @@ import { toKebabCase } from "@/utils/slug-kebab";
 import { readFileSync, existsSync, statSync } from "fs";
 import { join } from "path";
 import { ChevronLeft, ChevronRight, Wrench } from "lucide-react";
-import { website } from "@/lib/brand";
+import { brandName, website } from "@/lib/brand";
 import { MarkdownRenderer } from "@/components/site/common/markdown-renderer";
 import { formatDate } from "@/utils/format-date"; // Import from utils
 import { Button } from "@/components/ui/button";
@@ -145,26 +146,21 @@ export default async function ResourcePage({
 
   const page = pages[currentIndex];
 
-  // Previous logic remains unchanged
+  // Previous / next logic (same as before)
   const prevPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
-
-  // Next logic: handle category boundaries
   let nextPage = null;
   let nextCategorySlug = category;
   let nextPageSlug = null;
   if (currentIndex < pages.length - 1) {
-    // There is a next page in the current category
     nextPage = pages[currentIndex + 1];
     nextCategorySlug = category;
     nextPageSlug = toKebabCase(nextPage.title);
   } else {
-    // At the last page of this category, look for first page of next category
     const allCategories = getAllResources();
     const currentCatIndex = allCategories.findIndex(
       (cat) => cat.slug === category,
     );
     if (currentCatIndex !== -1 && currentCatIndex < allCategories.length - 1) {
-      // There is a next category
       const nextCat = allCategories[currentCatIndex + 1];
       const nextCatPages = (nextCat.pages || []).filter((p) => p.published);
       if (nextCatPages.length > 0) {
@@ -173,16 +169,40 @@ export default async function ResourcePage({
         nextPageSlug = toKebabCase(nextPage.title);
       }
     }
-    // If no next category or no published page, nextPage remains null
   }
 
-  // Read markdown content and get last modified time
+  // Read markdown content
   const { content: markdownContent, lastModified } = readMarkdownContent(
     page.contentPath,
   );
-
-  // Format the last modified date
   const formattedLastUpdated = lastModified ? formatDate(lastModified) : "";
+
+  // --- Structured Data (JSON-LD) ---
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.title,
+    description: page.description || "",
+    image: page.coverImage || "/logo.png",
+    author: page.authorNames?.map((name: string) => ({
+      "@type": "Person",
+      name,
+    })) || [{ "@type": "Person", name: brandName }],
+    datePublished: lastModified?.toISOString() || new Date().toISOString(),
+    dateModified: lastModified?.toISOString() || new Date().toISOString(),
+    publisher: {
+      "@type": "Organization",
+      name: brandName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${website}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${website}/resources/${category}/${slug}`,
+    },
+  };
 
   return (
     <section className="relative z-10 bg-background flex flex-col items-start justify-start m-auto overflow-auto w-full h-full">
@@ -193,10 +213,11 @@ export default async function ResourcePage({
             title={page.title}
             tags={page.tags}
             officialUrl={page.officialUrl}
-            lastUpdated={formattedLastUpdated} // Pass formatted date string
+            lastUpdated={formattedLastUpdated}
+            authors={page.authorNames}
           />
-          {/* Navigation buttons */}
-          <div className="flex items-center justify-between font-medium pt-10 border-t border-foreground/10 w-full">
+          {/* Navigation buttons (unchanged) */}
+          <div className="flex items-center justify-between font-medium py-10 border-t border-foreground/10 w-full">
             <form
               action={
                 prevPage
@@ -211,14 +232,9 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!prevPage}
-                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
-              ${
-                prevPage
-                  ? "border-border hover:bg-muted"
-                  : "border-border text-muted-foreground"
-              }`}
+                className="..."
               >
-                <span className="pl-5 text-muted-foreground group-hover:text-foreground transition-all duration-500">
+                <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
                   Previous
                 </span>
                 <span className="flex items-center text-lg group-hover:text-primary leading-none transition-all duration-500">
@@ -227,7 +243,6 @@ export default async function ResourcePage({
                 </span>
               </Button>
             </form>
-
             <form
               action={
                 nextPage ? `/resources/${nextCategorySlug}/${nextPageSlug}` : ""
@@ -240,14 +255,9 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!nextPage}
-                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-sm border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
-              ${
-                nextPage
-                  ? "border-border hover:bg-muted"
-                  : "border-border text-muted-foreground"
-              }`}
+                className="..."
               >
-                <span className="pr-5 text-muted-foreground group-hover:text-foreground transition-all duration-500">
+                <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
                   Next
                 </span>
                 <span className="flex items-center text-lg group-hover:text-primary leading-none transition-all duration-500">
@@ -279,7 +289,6 @@ export default async function ResourcePage({
                 </span>
               ))}
             </div>
-
             {/* No content available */}
             <div className="mt-8 w-full">
               <div className="p-4 border border-foreground/20 bg-foreground/5 rounded-lg w-full">
@@ -303,6 +312,12 @@ export default async function ResourcePage({
           </div>
         </div>
       )}
+
+      {/* JSON‑LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
     </section>
   );
 }

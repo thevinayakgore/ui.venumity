@@ -1,77 +1,117 @@
-export const FAQDATA = [
+import {
+  BookOpen,
+  FileText,
+  Gauge,
+  Globe,
+  Layers,
+  LayoutTemplate,
+  MessageCircleMore,
+  MonitorSmartphone,
+  Package,
+  PenTool,
+  Rocket,
+  Sparkles,
+  Zap,
+} from "lucide-react";
+
+export type Category = {
+  title: string;
+  articles: string;
+  description: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+};
+
+export const CATEGORIES: Category[] = [
   {
-    question: "What technologies does this component library use ?",
-    answer:
-      "⚡ Built with modern tech stack - Next.js, Typescript, Javascript, Tailwind CSS, Framer Motion, React, Vite for maximum performance.",
+    title: "UI Components",
+    articles: "50+ Components",
+    description:
+      "Browse production-ready UI components, landing page sections, navigation systems, hero layouts, testimonials, pricing blocks, footers, and reusable interface patterns.",
+    icon: Layers,
   },
   {
-    question: "Is this an open-source project ?",
-    answer:
-      "🌱 Yes ! This is completely open-source. We welcome all contributions - no contribution is too small. Join us on GitHub to help improve the library.",
+    title: "Animations & Interactive UI",
+    articles: "Motion Blocks",
+    description:
+      "Explore Framer Motion powered components, micro-interactions, hover effects, animated sections, transitions, and engaging user experiences.",
+    icon: Sparkles,
   },
   {
-    question: "Can I use these in commercial projects ?",
-    answer:
-      "✅ Yes ! Free components are MIT licensed - use in unlimited personal, commercial projects.",
+    title: "TypeScript & Modern Stack",
+    articles: "Next.js Ready",
+    description:
+      "Built for Next.js, React, TypeScript, Tailwind CSS, Framer Motion, and Vite with type-safe implementations and scalable architecture patterns.",
+    icon: FileText,
   },
   {
-    question: "What features do components include ?",
-    answer:
-      "🎨 All components have dark + light mode, fully responsive, TypeScript support, accessibility features, and are ready-to-use.",
+    title: "AI-Friendly Development",
+    articles: "AI Optimized",
+    description:
+      "Use components seamlessly with ChatGPT, Claude, Gemini, V0, Lovable, GitHub Copilot, Replit, Windsurf, and other modern AI-assisted workflows.",
+    icon: Zap,
   },
   {
-    question: "Are components mobile-responsive ?",
+    title: "Resources & Learning",
+    articles: "Guides & Docs",
+    description:
+      "Access implementation guides, development resources, design inspiration, workflow improvements, and practical references for building modern interfaces.",
+    icon: BookOpen,
+  },
+];
+
+export const FAQ_DATA = [
+  {
+    icon: Globe,
+    question: "What is Venumity UI?",
     answer:
-      "📱 Yes ! All components follow mobile-first design principles and work perfectly across all device sizes and seamless.",
+      "Venumity UI is a modern component library featuring beautifully crafted UI components, sections, blocks, templates, and layouts designed for Next.js, React, Tailwind CSS, and modern web applications.",
   },
   {
-    question: "Is TypeScript must required ?",
+    icon: Zap,
+    question: "What can I find on Venumity UI?",
     answer:
-      "📘 No, but recommended ! Components work with both TypeScript and JavaScript. Full type definitions provided for TS users.",
+      "You can discover reusable UI components, landing page sections, animations, navigation systems, hero sections, testimonials, pricing blocks, footers, interactive elements, and other production-ready interface components.",
   },
   {
-    question: "Can I use components with AI tools ?",
+    icon: LayoutTemplate,
+    question: "Are all components open source?",
     answer:
-      "🤖 Absolutely ! Components work with AI tools like V0, Lovable, ChatGPT, Claude, Gemini, Perplexity, GitHub Copilot, Windsurf, and Replit.",
+      "Yes. Venumity UI focuses on free and open-source components that you can inspect, customize, learn from, and use in your own projects.",
   },
   {
-    question: "Can I customize styles and animations ?",
+    icon: Package,
+    question: "Are the components reusable and customizable?",
     answer:
-      "🎛️ Yes ! All components are built with Tailwind and Framer Motion, so you can easily tweak colors, layouts, and animations to match your brand.",
+      "Absolutely. Every component is built to be reusable, responsive, customizable, and easy to integrate into Next.js, React, and Tailwind CSS projects.",
   },
   {
-    question: "Are there templates available ?",
+    icon: Rocket,
+    question: "Who is Venumity UI built for?",
     answer:
-      "📁 Yes ! Navigate to Templates page for starter templates (free + paid) - perfect for kickstarting your projects with best practices.",
+      "Venumity UI is designed for developers, designers, freelancers, startups, agencies, and creators who want to build beautiful interfaces faster.",
   },
   {
-    question: "How often is the library updated ?",
+    icon: MonitorSmartphone,
+    question: "Are the components responsive?",
     answer:
-      "🔄 Regular updates with new components, bug fixes, and feature enhancements. Follow our GitHub for latest releases.",
+      "Yes. Components and templates are designed with responsive layouts and adaptive design principles to work seamlessly across mobile, tablet, and desktop devices.",
   },
   {
-    question: "How do I get support or report issues for components ?",
+    icon: PenTool,
+    question: "Can I use Venumity UI for commercial projects?",
     answer:
-      "🆘 Contact via - GitHub Issues, Social Media or Email (thevinayakgore@gmail.com).",
+      "Yes. The open-source components can be used in personal, freelance, startup, agency, and commercial projects according to the applicable license.",
   },
   {
-    question: "How can I contribute to the project ?",
+    icon: Gauge,
+    question: "Does Venumity UI focus on performance?",
     answer:
-      "🤝 You can contribute via GitHub pull requests, report issues, suggest features, or improve documentation.",
+      "Performance is a key priority. Components are built with clean structures, optimized patterns, accessibility considerations, and scalable implementation practices.",
   },
   {
-    question: "Will there be a CLI tool ?",
+    icon: MessageCircleMore,
+    question: "How often is Venumity UI updated?",
     answer:
-      "🚀 Yes ! CLI is coming soon for easy component installation and project scaffolding directly from terminal.",
-  },
-  {
-    question: "How can I share components ?",
-    answer:
-      "📢 Please do share on social media ! Use share button in rightsidebar on content pages - Copy URL, Email, X (Twitter), WhatsApp, Facebook, Instagram and more.",
-  },
-  {
-    question: "What's the benefit of sharing components ?",
-    answer:
-      "🌍 Sharing helps to grow our community, brings more contributors, and creates better results for everyone. Your support matters !",
+      "New open-source components, sections, animations, improvements, and developer resources are added regularly to keep the library modern and useful.",
   },
 ];

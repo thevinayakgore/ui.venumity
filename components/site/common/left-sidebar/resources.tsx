@@ -2,11 +2,26 @@
 "use client";
 import { ResourceCategory, getAllCategories } from "@/registry/resources";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useRef, useEffect } from "react";
-import { Boxes, ChevronsLeft, Star } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { Boxes, ChevronsLeft, Star, ChevronDown } from "lucide-react";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { useResources } from "@/contexts/resources";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  SidebarGroup,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 
 interface LeftResourcesProps {
   initialCategories: ResourceCategory[];
@@ -17,8 +32,6 @@ export default function LeftResources({
   initialCategories,
 }: LeftResourcesProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const { selectedCategory, setSelectedCategory } = useResources();
 
   // Extract category and slug from pathname
@@ -37,11 +50,9 @@ export default function LeftResources({
   // Update selected category when URL changes
   useEffect(() => {
     if (!categorySlug) return;
-
     const id = setTimeout(() => {
       setSelectedCategory(categorySlug);
     }, 0);
-
     return () => clearTimeout(id);
   }, [categorySlug, setSelectedCategory]);
 
@@ -50,189 +61,181 @@ export default function LeftResources({
     (cat) => cat.slug === selectedCategory,
   );
 
-  // Handle category selection
-  const handleCategorySelect = (categorySlug: string) => {
-    setSelectedCategory(categorySlug);
-
-    // If we're on a resource detail page, navigate to first page of selected category
-    if (isResourcePage) {
-      // Find the selected category
-      const selectedCategoryData = categories.find(
-        (cat) => cat.slug === categorySlug,
-      );
-
-      if (selectedCategoryData && selectedCategoryData.pages.length > 0) {
-        // Find the first published page in the selected category
-        const firstPage = selectedCategoryData.pages.filter(
-          (p) => p.published,
-        )[0];
-
-        if (firstPage) {
-          // Navigate to the first page of the selected category
-          const slug = toKebabCase(firstPage.title);
-          router.push(`/resources/${categorySlug}/${slug}`);
-        }
-      }
-    }
-    // If we're on main resources page, just update context (cards will update automatically)
-  };
-
-  // Helper function to get the first published page for a category
-  const getFirstPublishedPageSlug = (categorySlug: string): string | null => {
-    const category = categories.find((cat) => cat.slug === categorySlug);
-    if (!category || category.pages.length === 0) return null;
-
-    const publishedPages = category.pages.filter((p) => p.published);
-    if (publishedPages.length === 0) return null;
-
-    // Sort by order to get first page
-    const firstPage = publishedPages[0];
-    return toKebabCase(firstPage.title);
-  };
-
   return (
-    <aside className="block md:sticky top-0 z-30 bg-background overflow-auto w-full max-h-screen">
-      <div
-        ref={sidebarRef}
-        className="flex flex-col items-start pt-16 lg:pt-24 text-[0.8rem] font-medium overflow-y-auto w-full h-full"
-      >
-        {/* Category List */}
-        <div className="border-b w-full">
-          <div className="flex items-center gap-2 pb-3 border-b border-foreground/15 text-sm font-semibold w-full">
-            <Boxes className="size-4" />
-            <span>Categories</span>
-          </div>
-          <div className="flex flex-col gap-0.5 py-2 overflow-hidden w-full">
-            {categoryDisplay.map((categoryConfig) => {
-              // Find the corresponding category in fetched data
-              const fetchedCategory = categories.find(
-                (cat) => cat.slug === categoryConfig.slug,
-              );
-              // Only show if category exists and has published pages
-              if (
-                !fetchedCategory ||
-                fetchedCategory.pages.filter((p) => p.published).length === 0
-              ) {
-                return null;
-              }
-
-              const isActive = categoryConfig.slug === selectedCategory;
-              const publishedCount =
-                fetchedCategory.pages.filter((p) => p.published).length || 0;
-
-              // Get the href for the category button
-              const firstPageSlug = getFirstPublishedPageSlug(
-                categoryConfig.slug,
-              );
-
-              // Determine if we should use a Link or button
-              const shouldUseLink = isResourcePage && firstPageSlug;
-
-              return shouldUseLink ? (
-                <Link
-                  key={categoryConfig.id}
-                  href={`/resources/${categoryConfig.slug}/${firstPageSlug}`}
-                  className={`flex justify-between items-center cursor-pointer truncate leading-none border-x rounded-[3px] group w-full py-2.5 pl-5 pr-2.5 text-left ${
-                    isActive
-                      ? "text-foreground bg-muted/60 border-primary"
-                      : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                  }`}
-                  onClick={() => setSelectedCategory(categoryConfig.slug)}
+    <SidebarProvider className="hidden md:block sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
+      <SidebarGroup>
+        <SidebarMenu>
+          {/* ─── Categories Section (Collapsible) ──────────────── */}
+          <Collapsible
+            asChild
+            defaultOpen={true}
+            className="group/categories w-full"
+          >
+            <SidebarMenuItem className="w-full">
+              <CollapsibleTrigger asChild className="mb-1 w-full">
+                <SidebarMenuButton
+                  tooltip="Categories"
+                  className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
                 >
-                  <span>{categoryConfig.label}</span>
-                  <span
-                    className={`text-[10px] px-1 py-0.5 rounded ${
-                      isActive
-                        ? "bg-primary text-white"
-                        : "bg-foreground/10 text-muted-foreground"
-                    }`}
-                  >
-                    {publishedCount > 0 && publishedCount < 10
-                      ? `0${publishedCount}`
-                      : publishedCount}
-                  </span>
-                </Link>
-              ) : (
-                <button
-                  key={categoryConfig.id}
-                  onClick={() => handleCategorySelect(categoryConfig.slug)}
-                  className={`flex justify-between items-center cursor-pointer truncate leading-none border-x rounded-[3px] group w-full py-2.5 pl-5 pr-2.5 text-left ${
-                    isActive
-                      ? "text-foreground bg-muted/60 border-primary"
-                      : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                  }`}
-                >
-                  <span>{categoryConfig.label}</span>
-                  <span
-                    className={`text-[10px] px-1 py-0.5 rounded ${
-                      isActive
-                        ? "bg-primary text-white"
-                        : "bg-foreground/10 text-muted-foreground"
-                    }`}
-                  >
-                    {publishedCount > 0 && publishedCount < 10
-                      ? `0${publishedCount}`
-                      : publishedCount}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+                  <div className="flex items-center gap-2">
+                    <Boxes className="size-4" />
+                    <span className="font-semibold">Categories</span>
+                  </div>
+                  <ChevronDown className="size-4 opacity-80 group-data-[state=open]/categories:rotate-180 transition-all duration-500" />
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pr-2">
+                <SidebarMenuSub className="border-l-foreground/20 gap-0.5! w-full">
+                  {categoryDisplay.map((categoryConfig) => {
+                    const fetchedCategory = categories.find(
+                      (cat) => cat.slug === categoryConfig.slug,
+                    );
+                    if (
+                      !fetchedCategory ||
+                      fetchedCategory.pages.filter((p) => p.published)
+                        .length === 0
+                    ) {
+                      return null;
+                    }
 
-        {/* All Items in Selected Category */}
-        {currentCategory && currentCategory.pages.length > 0 && (
-          <div className="border-b w-full">
-            <div className="flex items-center gap-2 text-sm font-medium w-full py-3 border-b border-foreground/15">
-              <Star className="size-4" />
-              <span>
-                {categoryDisplay.find((cat) => cat.slug === selectedCategory)
-                  ?.label || currentCategory.name}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 py-2 text-sm overflow-hidden w-full">
-              {currentCategory.pages
-                .filter((p) => p.published)
-                .map((resource) => {
-                  const slug = toKebabCase(resource.title);
-                  const isActive = slug === pageSlug;
-                  return (
-                    <Link
-                      key={resource.title}
-                      href={`/resources/${currentCategory.slug}/${slug}`}
-                      className={`flex items-center justify-between text-[0.8rem]  truncate font-medium leading-none border-x rounded-[3px] group w-full py-2.5 px-5 ${
-                        isActive
-                          ? "text-foreground bg-muted/60 border-primary"
-                          : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                      } truncate`}
-                    >
-                      {resource.title}
-                    </Link>
-                  );
-                })}
-            </div>
-          </div>
-        )}
+                    const isActive = categoryConfig.slug === selectedCategory;
+                    const publishedCount =
+                      fetchedCategory.pages.filter((p) => p.published).length ||
+                      0;
 
-        {/* Back to All Resources (shown on resource pages only) */}
-        {isResourcePage && (
-          <div className="mt-3 w-full">
-            <Link
-              href="/resources"
-              className="flex items-center justify-center gap-2 text-[11px] leading-none font-medium text-muted-foreground/80 hover:text-foreground bg-foreground/5 border hover:border-foreground/20 rounded w-full py-3 px-5 uppercase"
-              onClick={() => {
-                // Keep the current category selected when going back
-                if (categorySlug) {
-                  setSelectedCategory(categorySlug);
-                }
-              }}
+                    const firstPageSlug = (() => {
+                      if (!fetchedCategory) return null;
+                      const published = fetchedCategory.pages.filter(
+                        (p) => p.published,
+                      );
+                      if (published.length === 0) return null;
+                      return toKebabCase(published[0].title);
+                    })();
+
+                    const href = firstPageSlug
+                      ? `/resources/${categoryConfig.slug}/${firstPageSlug}`
+                      : `/resources`;
+
+                    return (
+                      <SidebarMenuSubItem
+                        key={categoryConfig.id}
+                        className="w-full"
+                      >
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={isActive}
+                          className="border-0! pl-2.5! pr-1.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                          onClick={() =>
+                            setSelectedCategory(categoryConfig.slug)
+                          }
+                        >
+                          <Link
+                            href={href}
+                            className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
+                          >
+                            <span>{categoryConfig.label}</span>
+                            <span
+                              className={`text-[10px] px-1 py-0.5 rounded ${
+                                isActive
+                                  ? "bg-primary text-white"
+                                  : "bg-foreground/10 text-muted-foreground"
+                              }`}
+                            >
+                              {publishedCount > 0 && publishedCount < 10
+                                ? `0${publishedCount}`
+                                : publishedCount}
+                            </span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    );
+                  })}
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </SidebarMenuItem>
+          </Collapsible>
+
+          {/* ─── Pages Section (Collapsible) ───────────────────── */}
+          {currentCategory && currentCategory.pages.length > 0 && (
+            <Collapsible
+              asChild
+              defaultOpen={true}
+              className="group/pages w-full"
             >
-              <ChevronsLeft className="size-4" />
-              <span>Back to Resources</span>
-            </Link>
-          </div>
-        )}
-      </div>
-    </aside>
+              <SidebarMenuItem className="w-full">
+                <CollapsibleTrigger asChild className="mb-1 w-full">
+                  <SidebarMenuButton
+                    tooltip={
+                      categoryDisplay.find(
+                        (cat) => cat.slug === selectedCategory,
+                      )?.label || currentCategory.name
+                    }
+                    className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Star className="size-4" />
+                      <span className="font-semibold">
+                        {categoryDisplay.find(
+                          (cat) => cat.slug === selectedCategory,
+                        )?.label || currentCategory.name}
+                      </span>
+                    </div>
+                    <ChevronDown className="size-4 opacity-80 group-data-[state=open]/pages:rotate-180 transition-all duration-500" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pr-2">
+                  <SidebarMenuSub className="border-l-foreground/20 gap-0.5! w-full">
+                    {currentCategory.pages
+                      .filter((p) => p.published)
+                      .map((resource) => {
+                        const slug = toKebabCase(resource.title);
+                        const isActive = slug === pageSlug;
+
+                        return (
+                          <SidebarMenuSubItem
+                            key={resource.title}
+                            className="w-full"
+                          >
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={isActive}
+                              className="border-0! px-2.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                            >
+                              <Link
+                                href={`/resources/${currentCategory.slug}/${slug}`}
+                                className="text-foreground/50! hover:text-foreground! transition-all duration-500 w-full truncate"
+                              >
+                                {resource.title}
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          )}
+
+          {/* Back to Resources Button */}
+          {isResourcePage && (
+            <SidebarMenuItem className="w-full mt-4 pt-3 border-t">
+              <Link
+                href="/resources"
+                className="flex items-center justify-center gap-2 text-[11px] font-bold tracking-wide leading-none text-foreground/40 hover:text-foreground bg-foreground/5 border hover:border-foreground/20 rounded-md w-full py-3 px-5 uppercase"
+                onClick={() => {
+                  if (categorySlug) {
+                    setSelectedCategory(categorySlug);
+                  }
+                }}
+              >
+                <ChevronsLeft className="size-4" />
+                <span>Back to Resources</span>
+              </Link>
+            </SidebarMenuItem>
+          )}
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarProvider>
   );
 }

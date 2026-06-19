@@ -56,8 +56,6 @@ const baseItems: ProcessAccordionItemBase[] = [
   },
 ];
 
-/* PHASE CONTENT BLOCKS – each with different elements */
-
 function Pill({ label }: { label: string }) {
   return (
     <span className="bg-background border px-2 py-1 text-[11px] text-foreground/60 rounded-sm">
@@ -319,12 +317,12 @@ function MaintenanceContent() {
   );
 }
 
-export default function IconAccordion() {
+export default function StepsAccordionDemo() {
   const [openItem, setOpenItem] = useState<string | null>("item1");
 
-  const toggleItem = (id: string) => {
+  function toggleItem(id: string) {
     setOpenItem((prev) => (prev === id ? null : id));
-  };
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-6 md:p-10">
@@ -385,3 +383,13 @@ export default function IconAccordion() {
     </main>
   );
 }
+
+export {
+  Pill,
+  ChecklistItem,
+  DesignContent,
+  DevelopmentContent,
+  TestingContent,
+  DeploymentContent,
+  MaintenanceContent,
+};

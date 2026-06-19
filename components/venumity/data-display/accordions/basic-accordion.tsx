@@ -1,15 +1,168 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+  type ReactNode,
+} from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { cn } from "@/lib/utils";
 
 interface AccordionItem {
   id: string;
   title: string;
-  content: React.ReactNode;
+  content: ReactNode;
   badge?: string;
 }
 
-const items: AccordionItem[] = [
+interface AccordionRootContextValue {
+  openItem: string | null;
+  toggleItem: (id: string) => void;
+}
+const AccordionRootContext = createContext<AccordionRootContextValue | null>(
+  null,
+);
+
+interface AccordionItemContextValue {
+  id: string;
+}
+const AccordionItemContext = createContext<AccordionItemContextValue | null>(
+  null,
+);
+
+function useAccordionRoot() {
+  const ctx = useContext(AccordionRootContext);
+  if (!ctx)
+    throw new Error("Accordion components must be used within <Accordion />");
+  return ctx;
+}
+
+function useAccordionItem() {
+  const ctx = useContext(AccordionItemContext);
+  if (!ctx)
+    throw new Error(
+      "AccordionItem components must be used within <AccordionItem />",
+    );
+  return ctx;
+}
+
+interface AccordionProps {
+  defaultValue?: string;
+  children: ReactNode;
+  className?: string;
+}
+
+function Accordion({ defaultValue, children, className }: AccordionProps) {
+  const [openItem, setOpenItem] = useState<string | null>(defaultValue ?? null);
+
+  function toggleItem(id: string) {
+    setOpenItem((prev) => (prev === id ? null : id));
+  }
+
+  return (
+    <AccordionRootContext.Provider value={{ openItem, toggleItem }}>
+      <div className={cn("space-y-2", className)}>{children}</div>
+    </AccordionRootContext.Provider>
+  );
+}
+
+interface AccordionItemComponentProps {
+  id: string;
+  children: ReactNode;
+  className?: string;
+}
+
+function AccordionItem({
+  id,
+  children,
+  className,
+}: AccordionItemComponentProps) {
+  return (
+    <AccordionItemContext.Provider value={{ id }}>
+      <div
+        className={cn(
+          "border rounded-lg overflow-hidden hover:shadow-lg/10 transition-all duration-500",
+          className,
+        )}
+      >
+        {children}
+      </div>
+    </AccordionItemContext.Provider>
+  );
+}
+
+interface AccordionTriggerProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function AccordionTrigger({ children, className }: AccordionTriggerProps) {
+  const { id } = useAccordionItem();
+  const { openItem, toggleItem } = useAccordionRoot();
+  const isOpen = openItem === id;
+
+  return (
+    <button
+      onClick={() => toggleItem(id)}
+      className={cn(
+        "w-full px-6 py-4 text-left flex justify-between items-center cursor-pointer",
+        className,
+      )}
+    >
+      <span className="flex-1">{children}</span>
+      <svg
+        className={cn(
+          "size-5 shrink-0 transition-transform duration-300",
+          isOpen && "rotate-180",
+        )}
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </button>
+  );
+}
+
+interface AccordionContentProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function AccordionContent({ children, className }: AccordionContentProps) {
+  const { id } = useAccordionItem();
+  const { openItem } = useAccordionRoot();
+  const isOpen = openItem === id;
+  const ref = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (ref.current) {
+      setHeight(ref.current.scrollHeight);
+    }
+  }, [children]);
+
+  return (
+    <div
+      className="overflow-hidden transition-all duration-300 ease-in-out"
+      style={{ maxHeight: isOpen ? height : 0 }}
+    >
+      <div ref={ref} className={cn("px-6 pb-4 pt-2 border-t", className)}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+const demoItems: AccordionItem[] = [
   {
     id: "item1",
     title: "Account Settings",
@@ -138,41 +291,13 @@ const items: AccordionItem[] = [
   },
 ];
 
-export default function BasicAccordion() {
-  const [openItem, setOpenItem] = useState<string | null>("item1");
-  const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [heights, setHeights] = useState<Record<string, number>>({});
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const newHeights: Record<string, number> = {};
-      for (const key in contentRefs.current) {
-        const el = contentRefs.current[key];
-        if (el) newHeights[key] = el.scrollHeight;
-      }
-      setHeights(newHeights);
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const toggleItem = (id: string) => {
-    setOpenItem(openItem === id ? null : id);
-  };
-
+export default function BasicAccordionDemo() {
   return (
-    <main className="space-y-2 max-w-2xl mx-auto p-6 md:p-10">
-      <h2 className="text-xl lg:text-3xl font-semibold mb-6">Settings Panel</h2>
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className="border rounded-lg overflow-hidden hover:shadow-lg/10 transition-all duration-500"
-        >
-          <button
-            onClick={() => toggleItem(item.id)}
-            className="w-full px-6 py-4 text-left flex justify-between items-center cursor-pointer"
-          >
-            <div className="flex items-center space-x-3">
+    <Accordion defaultValue="item1" className="max-w-2xl mx-auto p-6 md:p-10">
+      {demoItems.map((item) => (
+        <AccordionItem key={item.id} id={item.id}>
+          <AccordionTrigger>
+            <div className="flex items-center gap-3">
               <span className="font-semibold">{item.title}</span>
               {item.badge && (
                 <span className="text-xs px-2 py-0.5 bg-blue-500 text-white rounded-full">
@@ -180,42 +305,12 @@ export default function BasicAccordion() {
                 </span>
               )}
             </div>
-            <div className="flex items-center space-x-4">
-              <span
-                className={`transform transition-transform duration-300 ${
-                  openItem === item.id ? "rotate-180" : ""
-                }`}
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </span>
-            </div>
-          </button>
-          <div
-            ref={(el) => {
-              contentRefs.current[item.id] = el;
-            }}
-            className="overflow-hidden transition-all duration-300 ease-in-out"
-            style={{
-              maxHeight:
-                openItem === item.id ? `${heights[item.id] || 0}px` : "0px",
-            }}
-          >
-            <div className="px-6 pb-4 pt-2 border-t">{item.content}</div>
-          </div>
-        </div>
+          </AccordionTrigger>
+          <AccordionContent>{item.content}</AccordionContent>
+        </AccordionItem>
       ))}
-    </main>
+    </Accordion>
   );
 }
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

@@ -108,7 +108,10 @@ export default function HorizontalBarChart() {
               barSize={40}
               label={{
                 position: "right",
-                formatter: (value: number) => `$${value / 1000}K`,
+                formatter: (value) =>
+                  typeof value === "number"
+                    ? `$${value / 1000}K`
+                    : String(value ?? ""),
                 fontSize: 13,
               }}
               className="fill-blue-500"

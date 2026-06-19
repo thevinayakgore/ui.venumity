@@ -66,36 +66,44 @@ export default function ChartLineDotsCustom() {
             type="natural"
             stroke="var(--color-desktop)"
             strokeWidth={3}
-            dot={({ cx, cy, payload }) => (
-              <GitCommitVertical
-                key={payload.month}
-                x={cx - 12}
-                y={cy - 12}
-                width={24}
-                height={24}
-                fill="white"
-                stroke="var(--color-desktop)"
-                strokeWidth={2}
-              />
-            )}
+            dot={({ cx, cy, payload }) => {
+              if (cx == null || cy == null) return null;
+
+              return (
+                <GitCommitVertical
+                  key={payload.month}
+                  x={cx - 12}
+                  y={cy - 12}
+                  width={24}
+                  height={24}
+                  fill="white"
+                  stroke="var(--color-desktop)"
+                  strokeWidth={2}
+                />
+              );
+            }}
           />
           <Line
             dataKey="mobile"
             type="natural"
             stroke="var(--color-mobile)"
             strokeWidth={3}
-            dot={({ cx, cy, payload }) => (
-              <GitCommitVertical
-                key={payload.month}
-                x={cx - 12}
-                y={cy - 12}
-                width={24}
-                height={24}
-                fill="white"
-                stroke="var(--color-mobile)"
-                strokeWidth={2}
-              />
-            )}
+            dot={({ cx, cy, payload }) => {
+              if (cx == null || cy == null) return null;
+
+              return (
+                <GitCommitVertical
+                  key={payload.month}
+                  x={cx - 12}
+                  y={cy - 12}
+                  width={24}
+                  height={24}
+                  fill="white"
+                  stroke="var(--color-mobile)"
+                  strokeWidth={2}
+                />
+              );
+            }}
           />
         </LineChart>
       </ChartContainer>

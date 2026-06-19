@@ -1,5 +1,5 @@
 "use client";
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, createContext, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronRight,
@@ -19,20 +19,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
 
-interface NestedItem {
+interface NestedFeature {
   title: string;
   content: string;
   features: string[];
 }
 
-interface AccordionItemType {
+interface CategoryItem {
   title: string;
   icon: ReactNode;
-  nestedItems: NestedItem[];
+  nestedItems: NestedFeature[];
 }
 
-const categories: AccordionItemType[] = [
+const defaultCategories: CategoryItem[] = [
   {
     title: "Frontend development",
     icon: <Globe className="size-7" />,
@@ -90,7 +91,7 @@ const categories: AccordionItemType[] = [
       {
         title: "Node.js",
         content:
-          "Node.js is a server-side JavaScript runtime built on Chrome’s V8 engine. Its event-driven, non-blocking architecture makes it ideal for building high-throughput APIs, real-time services, and microservice-based backends.",
+          "Node.js is a server-side JavaScript runtime built on Chrome's V8 engine. Its event-driven, non-blocking architecture makes it ideal for building high-throughput APIs, real-time services, and microservice-based backends.",
         features: [
           "Event-driven, non-blocking I/O model",
           "Perfect for real-time applications and APIs",
@@ -240,7 +241,7 @@ const categories: AccordionItemType[] = [
       {
         title: "Google Cloud",
         content:
-          "Google Cloud Platform delivers powerful infrastructure alongside industry-leading data analytics and machine learning services, leveraging Google’s internal expertise in distributed systems.",
+          "Google Cloud Platform delivers powerful infrastructure alongside industry-leading data analytics and machine learning services, leveraging Google's internal expertise in distributed systems.",
         features: [
           "Advanced data analytics and ML services",
           "High-performance global network",
@@ -285,8 +286,26 @@ const categories: AccordionItemType[] = [
   },
 ];
 
-export default function NestedAccordion() {
-  const [openCategories, setOpenCategories] = useState<string[]>([]);
+interface NestedRootContextValue {
+  openNestedItems: Set<string>;
+  toggleNestedItem: (content: string) => void;
+}
+
+const NestedRootContext = createContext<NestedRootContextValue | null>(null);
+
+function useNestedRoot() {
+  const ctx = useContext(NestedRootContext);
+  if (!ctx)
+    throw new Error("Nested components must be used within <NestedRoot />");
+  return ctx;
+}
+
+interface NestedRootProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function NestedRoot({ children, className }: NestedRootProps) {
   const [openNestedItems, setOpenNestedItems] = useState<Set<string>>(
     new Set(),
   );
@@ -302,132 +321,436 @@ export default function NestedAccordion() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-3xl p-6 md:p-10">
-      <header className="mb-6 flex flex-col gap-2">
-        <h2 className="text-xl font-semibold tracking-tight md:text-3xl">
-          Technology stack
-        </h2>
-        <p className="max-w-xl text-sm text-muted-foreground">
-          Expand categories to see the tools we recommend for each layer of your
-          product.
-        </p>
-      </header>
+    <NestedRootContext.Provider value={{ openNestedItems, toggleNestedItem }}>
+      <div className={cn("mx-auto w-full max-w-3xl p-6 md:p-10", className)}>
+        {children}
+      </div>
+    </NestedRootContext.Provider>
+  );
+}
 
-      <Accordion
-        type="multiple"
-        value={openCategories}
-        onValueChange={setOpenCategories}
-        className="space-y-3"
+interface NestedHeaderProps {
+  title?: string;
+  subtitle?: string;
+  className?: string;
+  titleClassName?: string;
+  subtitleClassName?: string;
+}
+
+export function NestedHeader({
+  title = "Technology stack",
+  subtitle = "Expand categories to see the tools we recommend for each layer of your product.",
+  className,
+  titleClassName,
+  subtitleClassName,
+}: NestedHeaderProps) {
+  return (
+    <header className={cn("mb-6 flex flex-col gap-2", className)}>
+      <h2
+        className={cn(
+          "text-xl font-semibold tracking-tight md:text-3xl",
+          titleClassName,
+        )}
       >
-        {categories.map((category) => (
-          <AccordionItem
-            key={category.title}
-            value={category.title}
-            className="overflow-hidden rounded-lg border border-border/70 bg-card/95 transition-all duration-300 hover:shadow-lg/10 data-[state=open]:border-border"
+        {title}
+      </h2>
+      <p
+        className={cn(
+          "max-w-xl text-sm text-muted-foreground",
+          subtitleClassName,
+        )}
+      >
+        {subtitle}
+      </p>
+    </header>
+  );
+}
+
+interface NestedAccordionContainerProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function NestedAccordionContainer({
+  children,
+  className,
+}: NestedAccordionContainerProps) {
+  return (
+    <Accordion type="multiple" className={cn("space-y-3", className)}>
+      {children}
+    </Accordion>
+  );
+}
+
+interface NestedCategoryProps {
+  category: CategoryItem;
+  children: ReactNode;
+  className?: string;
+}
+
+export function NestedCategory({
+  category,
+  children,
+  className,
+}: NestedCategoryProps) {
+  return (
+    <AccordionItem
+      value={category.title}
+      className={cn(
+        "overflow-hidden rounded-lg border border-border/70 bg-card/95 transition-all duration-300 hover:shadow-lg/10 data-[state=open]:border-border",
+        className,
+      )}
+    >
+      {children}
+    </AccordionItem>
+  );
+}
+
+interface NestedCategoryTriggerProps {
+  category: CategoryItem;
+  className?: string;
+  contentClassName?: string;
+  titleClassName?: string;
+  badgeClassName?: string;
+  descriptionClassName?: string;
+}
+
+export function NestedCategoryTrigger({
+  category,
+  className,
+  contentClassName,
+  titleClassName,
+  badgeClassName,
+  descriptionClassName,
+}: NestedCategoryTriggerProps) {
+  const [openCategories] = useState<string[]>([]);
+
+  return (
+    <AccordionTrigger
+      className={cn(
+        "flex w-full cursor-pointer items-center justify-between p-3 text-left transition-colors hover:bg-muted/60 hover:no-underline rounded-none",
+        className,
+      )}
+    >
+      <div className={cn("flex items-center gap-3", contentClassName)}>
+        <div className="mx-1">{category.icon}</div>
+        <div className="flex flex-col gap-0.5">
+          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                "text-sm font-semibold text-foreground",
+                titleClassName,
+              )}
+            >
+              {category.title}
+            </span>
+            <Badge
+              variant="outline"
+              className={cn(
+                "rounded-full px-2 py-0.5 text-[11px]",
+                badgeClassName,
+              )}
+            >
+              {category.nestedItems.length} tools
+            </Badge>
+          </div>
+          <span
+            className={cn(
+              "text-xs text-muted-foreground",
+              descriptionClassName,
+            )}
           >
-            <AccordionTrigger className="flex w-full cursor-pointer items-center justify-between p-3 text-left transition-colors hover:bg-muted/60 hover:no-underline rounded-none">
-              <div className="flex items-center gap-3">
-                <div className="mx-1">{category.icon}</div>
-                <div className="flex flex-col gap-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-foreground">
-                      {category.title}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className="rounded-full px-2 py-0.5 text-[11px]"
-                    >
-                      {category.nestedItems.length} tools
-                    </Badge>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    {openCategories.includes(category.title)
-                      ? "Collapse to focus on another layer"
-                      : "Click to see recommended technologies"}
-                  </span>
-                </div>
-              </div>
-            </AccordionTrigger>
+            {openCategories.includes(category.title)
+              ? "Collapse to focus on another layer"
+              : "Click to see recommended technologies"}
+          </span>
+        </div>
+      </div>
+    </AccordionTrigger>
+  );
+}
 
-            <AccordionContent className="p-0">
-              <div className="divide-y divide-border/70 border-t border-border/70 bg-muted/30">
-                {category.nestedItems.map((nested) => {
-                  const nestedOpen = openNestedItems.has(nested.content);
+interface NestedCategoryContentProps {
+  category: CategoryItem;
+  children: ReactNode;
+  className?: string;
+}
 
-                  return (
-                    <div key={nested.title} className="relative">
-                      <button
-                        type="button"
-                        onClick={() => toggleNestedItem(nested.content)}
-                        className="flex w-full cursor-pointer items-center justify-between px-6 py-3.5 text-left text-sm transition-colors hover:bg-muted/60"
-                      >
-                        <div className="flex items-center gap-3">
-                          <Webhook className="size-4" />
-                          <span className="font-medium text-foreground">
-                            {nested.title}
-                          </span>
-                        </div>
-                        <span className="flex h-5 w-5 items-center justify-center text-muted-foreground">
-                          <ChevronRight
-                            className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                              nestedOpen ? "rotate-90" : ""
-                            }`}
-                          />
-                        </span>
-                      </button>
+export function NestedCategoryContent({
+  children,
+  className,
+}: NestedCategoryContentProps) {
+  return (
+    <AccordionContent className={cn("p-0", className)}>
+      <div className="divide-y divide-border/70 border-t border-border/70 bg-muted/30">
+        {children}
+      </div>
+    </AccordionContent>
+  );
+}
 
-                      <AnimatePresence initial={false}>
-                        {nestedOpen && (
-                          <motion.div
-                            key={nested.title}
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{
-                              duration: 0.4,
-                              ease: "easeInOut",
-                            }}
-                            className="overflow-hidden"
-                          >
-                            <div className="px-10 py-4 border-t border-dashed border-foreground/5 text-sm">
-                              <p className="text-xs text-muted-foreground">
-                                {nested.content}
-                              </p>
-                              <ul className="mt-3 mb-5 space-y-1 text-xs text-muted-foreground">
-                                {nested.features.map((feature) => (
-                                  <li
-                                    key={feature}
-                                    className="flex items-start gap-2"
-                                  >
-                                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                                    <span>{feature}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                              <Button
-                                type="button"
-                                size="sm"
-                                variant="outline"
-                                className="inline-flex h-7 cursor-pointer items-center gap-1 rounded-full px-3 text-[11px]"
-                              >
-                                Learn more about{" "}
-                                <span className="font-medium text-primary">
-                                  {nested.title}
-                                </span>
-                                <ArrowUpRight className="size-3 text-primary" />
-                              </Button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
+interface NestedItemRootProps {
+  nested: NestedFeature;
+  children: ReactNode;
+  className?: string;
+}
+
+export function NestedItemRoot({
+  nested,
+  children,
+  className,
+}: NestedItemRootProps) {
+  const { openNestedItems } = useNestedRoot();
+  const isOpen = openNestedItems.has(nested.content);
+
+  return (
+    <div
+      className={cn("relative", className)}
+      data-state={isOpen ? "open" : "closed"}
+    >
+      {children}
+    </div>
+  );
+}
+
+interface NestedItemTriggerProps {
+  nested: NestedFeature;
+  className?: string;
+  contentClassName?: string;
+  titleClassName?: string;
+  iconClassName?: string;
+}
+
+export function NestedItemTrigger({
+  nested,
+  className,
+  contentClassName,
+  titleClassName,
+  iconClassName,
+}: NestedItemTriggerProps) {
+  const { openNestedItems, toggleNestedItem } = useNestedRoot();
+  const isOpen = openNestedItems.has(nested.content);
+
+  return (
+    <button
+      type="button"
+      onClick={() => toggleNestedItem(nested.content)}
+      className={cn(
+        "flex w-full cursor-pointer items-center justify-between px-6 py-3.5 text-left text-sm transition-colors hover:bg-muted/60",
+        className,
+      )}
+      data-state={isOpen ? "open" : "closed"}
+    >
+      <div className={cn("flex items-center gap-3", contentClassName)}>
+        <Webhook className={cn("size-4", iconClassName)} />
+        <span className={cn("font-medium text-foreground", titleClassName)}>
+          {nested.title}
+        </span>
+      </div>
+      <span className="flex h-5 w-5 items-center justify-center text-muted-foreground">
+        <ChevronRight
+          className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200",
+            isOpen && "rotate-90",
+          )}
+        />
+      </span>
+    </button>
+  );
+}
+
+interface NestedItemContentProps {
+  nested: NestedFeature;
+  children: ReactNode;
+  className?: string;
+}
+
+export function NestedItemContent({
+  nested,
+  children,
+  className,
+}: NestedItemContentProps) {
+  const { openNestedItems } = useNestedRoot();
+  const isOpen = openNestedItems.has(nested.content);
+
+  return (
+    <AnimatePresence initial={false}>
+      {isOpen && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="overflow-hidden"
+        >
+          <div
+            className={cn(
+              "px-10 py-4 border-t border-dashed border-foreground/5 text-sm",
+              className,
+            )}
+          >
+            {children}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+interface NestedDescriptionProps {
+  nested: NestedFeature;
+  className?: string;
+}
+
+export function NestedDescription({
+  nested,
+  className,
+}: NestedDescriptionProps) {
+  return (
+    <p className={cn("text-xs text-muted-foreground", className)}>
+      {nested.content}
+    </p>
+  );
+}
+
+interface NestedFeaturesListProps {
+  features: string[];
+  className?: string;
+  itemClassName?: string;
+  bulletClassName?: string;
+}
+
+export function NestedFeaturesList({
+  features,
+  className,
+  itemClassName,
+  bulletClassName,
+}: NestedFeaturesListProps) {
+  return (
+    <ul
+      className={cn(
+        "mt-3 mb-5 space-y-1 text-xs text-muted-foreground",
+        className,
+      )}
+    >
+      {features.map((feature) => (
+        <li
+          key={feature}
+          className={cn("flex items-start gap-2", itemClassName)}
+        >
+          <span
+            className={cn(
+              "mt-1 h-1.5 w-1.5 rounded-full bg-primary",
+              bulletClassName,
+            )}
+          />
+          <span>{feature}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+interface NestedLearnMoreProps {
+  title: string;
+  className?: string;
+  buttonClassName?: string;
+  textClassName?: string;
+}
+
+export function NestedLearnMore({
+  title,
+  className,
+  buttonClassName,
+  textClassName,
+}: NestedLearnMoreProps) {
+  return (
+    <Button
+      type="button"
+      size="sm"
+      variant="outline"
+      className={cn(
+        "inline-flex h-7 cursor-pointer items-center gap-1 rounded-full px-3 text-[11px]",
+        className,
+        buttonClassName,
+      )}
+    >
+      Learn more about{" "}
+      <span className={cn("font-medium text-primary", textClassName)}>
+        {title}
+      </span>
+      <ArrowUpRight className="size-3 text-primary" />
+    </Button>
+  );
+}
+
+interface NestedAccordionProps {
+  categories?: CategoryItem[];
+  className?: string;
+  headerClassName?: string;
+  accordionClassName?: string;
+  categoryClassName?: string;
+  triggerClassName?: string;
+  contentClassName?: string;
+  itemClassName?: string;
+  itemTriggerClassName?: string;
+  itemContentClassName?: string;
+}
+
+export default function NestedAccordion({
+  categories = defaultCategories,
+  className,
+  headerClassName,
+  accordionClassName,
+  categoryClassName,
+  triggerClassName,
+  contentClassName,
+  itemClassName,
+  itemTriggerClassName,
+  itemContentClassName,
+}: NestedAccordionProps) {
+  return (
+    <NestedRoot className={className}>
+      <NestedHeader className={headerClassName} />
+      <NestedAccordionContainer className={accordionClassName}>
+        {categories.map((category) => (
+          <NestedCategory
+            key={category.title}
+            category={category}
+            className={categoryClassName}
+          >
+            <NestedCategoryTrigger
+              category={category}
+              className={triggerClassName}
+            />
+            <NestedCategoryContent
+              category={category}
+              className={contentClassName}
+            >
+              {category.nestedItems.map((nested) => (
+                <NestedItemRoot
+                  key={nested.title}
+                  nested={nested}
+                  className={itemClassName}
+                >
+                  <NestedItemTrigger
+                    nested={nested}
+                    className={itemTriggerClassName}
+                  />
+                  <NestedItemContent
+                    nested={nested}
+                    className={itemContentClassName}
+                  >
+                    <NestedDescription nested={nested} />
+                    <NestedFeaturesList features={nested.features} />
+                    <NestedLearnMore title={nested.title} />
+                  </NestedItemContent>
+                </NestedItemRoot>
+              ))}
+            </NestedCategoryContent>
+          </NestedCategory>
         ))}
-      </Accordion>
-    </main>
+      </NestedAccordionContainer>
+    </NestedRoot>
   );
 }

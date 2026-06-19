@@ -44,7 +44,7 @@ export default function BasicPieChart() {
               cy="50%"
               labelLine={true}
               label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
+                `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`
               }
               outerRadius={140}
               fill="#8884d8"

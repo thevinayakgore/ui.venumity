@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { COMPONENTS } from "@/registry/components";
 import { toKebabCase } from "@/utils/slug-kebab";
 import NoComponentMessage from "./no-comp-message";
+import { useScrollContainer } from "@/contexts/scroll-container";
 
 export default function ComponentsSidebarContent() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -11,6 +12,7 @@ export default function ComponentsSidebarContent() {
   const isManualScrollingRef = useRef(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const scrollContainerRef = useScrollContainer();
 
   // Get item names for current URL category/subcategory
   useEffect(() => {
@@ -62,9 +64,11 @@ export default function ComponentsSidebarContent() {
     const el = document.getElementById(id);
     if (!el) return;
 
-    const yOffset = -120;
-    const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    // Use the browser’s native smooth scrolling – no manual offset!
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Update URL hash if desired
+    window.history.pushState(null, "", `#${id}`);
 
     setTimeout(() => {
       isManualScrollingRef.current = false;
@@ -73,6 +77,9 @@ export default function ComponentsSidebarContent() {
 
   // Scroll spy logic
   useEffect(() => {
+    const container = scrollContainerRef?.current;
+    if (!container) return;
+
     const handleScrollSpy = () => {
       if (isManualScrollingRef.current) return;
 
@@ -90,7 +97,7 @@ export default function ComponentsSidebarContent() {
         .sort((a, b) => a.top - b.top);
 
       if (sectionElements.length === 0) return;
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = container.scrollTop + 200;
       let currentActiveIndex = -1;
 
       for (let i = 0; i < sectionElements.length; i++) {
@@ -118,26 +125,10 @@ export default function ComponentsSidebarContent() {
         }, 0);
       }
     };
-
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScrollSpy();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    const timeoutId = setTimeout(() => handleScrollSpy(), 500);
-
-    return () => {
-      window.removeEventListener("scroll", throttledScroll);
-      clearTimeout(timeoutId);
-    };
-  }, [activeIndex, itemNames]);
+    
+    container.addEventListener("scroll", handleScrollSpy, { passive: true });
+    return () => container.removeEventListener("scroll", handleScrollSpy);
+  }, [activeIndex, itemNames, scrollContainerRef]);
 
   // Scroll active button into view
   useEffect(() => {
@@ -158,7 +149,7 @@ export default function ComponentsSidebarContent() {
   }
 
   return (
-    <div className="flex flex-col items-start w-full h-fit! max-h-3/4">
+    <div className="flex flex-col items-start font-semibold! tracking-wide! w-full h-fit! max-h-3/4">
       <h2 className="pb-2 mb-2 border-b w-full">On this page</h2>
       <div
         ref={sidebarRef}
@@ -176,15 +167,15 @@ export default function ComponentsSidebarContent() {
             <button
               key={itemName}
               onClick={() => handleScroll(sectionId, index)}
-              className={`inline-flex text-left text-[0.8rem] items-center group cursor-pointer py-1.5 leading-none w-fit transition-all duration-500 ${
+              className={`inline-flex text-left text-[0.8rem] items-center group cursor-pointer py-1.5 leading-none transition-all duration-500 min-w-0 w-full ${
                 isActive
                   ? "text-foreground"
-                  : "text-muted-foreground/70 hover:text-foreground"
+                  : "text-foreground/40 hover:text-foreground"
               }`}
             >
               <span
                 title={itemName}
-                className="truncate whitespace-nowrap overflow-hidden text-ellipsis w-full"
+                className="truncate whitespace-nowrap overflow-hidden text-ellipsis min-w-0 w-full"
               >
                 {itemName}
               </span>

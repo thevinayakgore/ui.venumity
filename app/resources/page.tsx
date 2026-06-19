@@ -61,25 +61,26 @@ export default function Resources() {
   const isMainPage = pathname === "/resources";
 
   return (
-    <main className="flex flex-col items-start justify-start m-auto min-h-150 w-full">
+    <main className="flex flex-col items-start justify-start m-auto w-full min-h-screen">
       {/* Header - Only show on main page */}
       {isMainPage && (
         <header className="mb-8 pb-5 border-b w-full">
           <Badge
             variant="secondary"
-            className="flex items-center gap-2 mb-5.5 h-8 px-2 text-sm! leading-none  font-medium capitalize bg-foreground/5 border-foreground/10 shadow-xl/5! rounded"
+            className="gap-1.5 h-8 pl-2 pr-3 mb-5 font-semibold! tracking-wider! bg-foreground/5 border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4!"
           >
-            <ScrollText className="size-4!" />
+            <ScrollText />
             <BadgeTextAnimate
               leftWords={LEFT_WORDS}
               rightWords={RIGHT_WORDS}
               interval={4000}
             />
           </Badge>
-          <h1 className="text-2xl md:text-4xl orbitron uppercase font-extrabold bg-clip-text text-transparent bg-linear-to-b from-foreground to-background opacity-30 leading-none">
+          <h1 className="satisfy text-5xl md:text-7xl py-3 tracking-tight text-transparent bg-clip-text bg-linear-to-b from-foreground/30 via-foreground/10">
             Resources
           </h1>
-          <p className="text-sm md:text-base font-normal bg-clip-text text-transparent bg-linear-to-l from-foreground/15 via-foreground/70 to-foreground/15 w-full">
+
+          <p className="text-sm md:text-base tracking-wide opacity-40 w-full">
             Curated guides, libraries, and references to help you build faster
             with modern tools. From frameworks and animations to patterns and
             cheatsheets, everything in one place.
@@ -91,7 +92,7 @@ export default function Resources() {
       <section className="w-full">
         {publishedPages.length > 0 ? (
           // Cards Grid for selected category
-          <div className="columns-1 sm:columns-2 lg:columns-4 gap-4 space-y-4 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {publishedPages.map((page) => (
               <ResourceCard
                 key={page.title}
@@ -115,13 +116,13 @@ export default function Resources() {
 }
 
 // ResourceCard component
-interface ResourceCardProps {
+export interface ResourceCardProps {
   page: ResourcePage;
   categorySlug: string;
   fallbackDescription: string;
 }
 
-function ResourceCard({
+export function ResourceCard({
   page,
   categorySlug,
   fallbackDescription,
@@ -133,15 +134,15 @@ function ResourceCard({
   return (
     <Link
       href={`/resources/${categorySlug}/${slug}`}
-      className="flex flex-col items-start cursor-pointer group relative rounded-t-xl rounded-b-lg p-1 border border-foreground/5 bg-foreground/3 overflow-hidden transition-all duration-500 w-full h-fit"
+      className="flex flex-col items-start cursor-pointer group relative rounded-3xl p-2 bg-foreground/3 hover:shadow-xl/10 overflow-hidden transition-all duration-500 w-full h-fit"
     >
-      <div className="relative flex items-center justify-center m-auto p-7 md:p-10 xl:p-15 bg-background rounded-[0.8rem] overflow-hidden duration-[1.5s] w-full h-full">
+      <div className="relative flex items-center justify-center m-auto shadow-xl/15 rounded-2xl overflow-hidden duration-[1.5s] w-full h-full">
         <Image
           src={page.coverImage || "/card.png"}
           alt={page.title}
           width={2000}
           height={2000}
-          className="rounded-sm w-1/2 h-auto"
+          className="object-cover rounded-sm group-hover:scale-110 transition-all duration-500 w-full"
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
             target.src = "/card.png";
@@ -150,26 +151,45 @@ function ResourceCard({
         <span className="absolute bottom-0 left-0 opacity-10 group-hover:opacity-30 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-[1.5s] w-full h-px" />
         <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-10 opacity-10 group-hover:opacity-100 bg-linear-to-l from-transparent via-primary to-transparent blur-lg rounded-full transition-all duration-[1.5s] w-full h-3" />
       </div>
-      <div className="flex flex-col items-start text-start gap-0.5 py-3 px-2 group-hover:border-transparent font-normal w-full">
-        <h3 className="text-lg uppercase font-semibold">{page.title}</h3>
-        <p className="text-sm leading-5 text-muted-foreground line-clamp-2">
+      <div className="flex flex-col items-start text-start gap-0.5 pt-4! p-3 group-hover:border-transparent w-full">
+        <h3 className="text-base tracking-wide font-semibold">{page.title}</h3>
+        <p className="text-sm text-foreground/40 tracking-wide line-clamp-2">
           {description}
         </p>
-        <div className="flex flex-wrap gap-1 mt-2">
-          {(page.tags || []).slice(0, 3).map((tag: string) => (
+        <div className="flex flex-wrap gap-1 mt-2 font-semibold!">
+          {(page.tags || []).slice(0, 2).map((tag: string) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 bg-foreground/5 border rounded"
+              className="flex items-center text-xs px-2.5 h-6 bg-foreground/5 text-foreground/70 capitalize border rounded-full"
             >
               {tag}
             </span>
           ))}
-          {page.tags && page.tags.length > 3 && (
-            <span className="text-xs px-2 py-0.5 bg-foreground/5 border rounded">
-              +{(page.tags || []).length - 3}
+          {page.tags && page.tags.length > 2 && (
+            <span className="flex items-center text-xs px-2.5 h-6 bg-foreground/5 text-foreground/70 capitalize border rounded-full">
+              +{(page.tags || []).length - 2}
             </span>
           )}
         </div>
+        {page.authorNames && page.authorNames.length > 0 && (
+          <div className="flex items-center gap-3 p-1.5 bg-foreground/5 backdrop-blur-sm rounded-full mt-3 overflow-auto min-w-fit max-w-full">
+            {page.authorNames.map((item, idx) => (
+              <div
+                key={item ?? idx}
+                className="size-7 rounded-full overflow-hidden shrink-0"
+              >
+                <Image
+                  src={`https://github.com/${item}.png`}
+                  alt={item}
+                  width={500}
+                  height={500}
+                  priority
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );

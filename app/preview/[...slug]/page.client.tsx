@@ -145,13 +145,22 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
 
   return (
     <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
-      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 p-1.5 bg-background border rounded-full">
+      <section className="max-w-400 m-auto w-full h-full">
+        {componentPath && (
+          <ComponentPreview
+            category={componentData.category}
+            subcategory={componentData.subcategory}
+            componentName={toKebabCase(componentData.itemName)}
+          />
+        )}
+      </section>
+      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 py-1 px-1.5 bg-background border rounded-full">
         <Link href="/components">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex items-center gap-2 cursor-pointer text-foreground/60 hover:text-foreground rounded-full"
+                className="flex items-center gap-2 bg-foreground/10! text-foreground! pl-3! pr-4! font-semibold rounded-full"
               >
                 <ArrowLeft />
                 <span>Components</span>
@@ -170,7 +179,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
               onClick={() =>
                 setTheme(mounted && theme === "dark" ? "light" : "dark")
               }
-              className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! group border rounded-full"
+              className="cursor-pointer bg-foreground/10! group border rounded-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +214,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
               <Button
                 size="icon"
                 variant="secondary"
-                className="cursor-pointer group border rounded-full overflow-hidden"
+                className="cursor-pointer group p-px border rounded-full overflow-hidden"
               >
                 <Image
                   src={`https://github.com/${githubUsername}.png`}
@@ -227,7 +236,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
               size="icon"
               variant="secondary"
               onClick={() => window.location.reload()}
-              className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! group border rounded-full"
+              className="cursor-pointer bg-foreground/10! group border rounded-full"
               title="Refresh preview"
             >
               <svg
@@ -260,7 +269,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
             <TooltipTrigger asChild>
               <Button
                 variant="secondary"
-                className="flex items-center gap-2 cursor-pointer bg-foreground! text-secondary! inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full"
+                className="flex items-center gap-2 cursor-pointer bg-foreground! text-secondary! font-bold inset-shadow-sm inset-shadow-secondary/30 border-2 border-foreground rounded-full"
               >
                 <Terminal />
                 <span>Code</span>
@@ -272,15 +281,6 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           </Tooltip>
         </Link>
       </footer>
-      <section className="max-w-360 m-auto w-full h-full">
-        {componentPath && (
-          <ComponentPreview
-            category={componentData.category}
-            subcategory={componentData.subcategory}
-            componentName={toKebabCase(componentData.itemName)}
-          />
-        )}
-      </section>
     </main>
   );
 }

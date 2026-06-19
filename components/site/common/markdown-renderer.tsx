@@ -1,29 +1,40 @@
+// components/site/common/markdown-renderer.tsx
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { CalendarClock, SquareArrowOutUpRight } from "lucide-react";
 import CodeBlock from "./code-block";
 import { formatDate } from "@/utils/format-date";
-import Image from "next/image";
-import { brandName } from "@/lib/brand";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface MarkdownRendererProps {
   content: string;
+  className?: string;
   title?: string;
   tags?: string[];
   lastUpdated?: string | Date;
   officialUrl?: string;
   showHeader?: boolean;
+  authors?: string[];
 }
 
 export function MarkdownRenderer({
   content,
+  className,
   title,
   tags: rawTags,
   lastUpdated,
   officialUrl,
   showHeader = true,
+  authors,
 }: MarkdownRendererProps) {
   const [html, setHtml] = useState<string>("");
   const articleRef = useRef<HTMLDivElement>(null);
@@ -48,7 +59,7 @@ export function MarkdownRenderer({
             .replace(/[^\w\s-]/g, "")
             .replace(/\s+/g, "-")
             .replace(/--+/g, "-");
-          return `<h1 id="${id}" class="text-2xl sm:text-4xl font-semibold tracking-tight">${text}</h1>`;
+          return `<h1 id="${id}" class="text-2xl sm:text-4xl font-semibold text-foreground my-5">${text}</h1>`;
         })
         .replace(/^## (.+)$/gm, (match, text) => {
           const id = text
@@ -56,19 +67,19 @@ export function MarkdownRenderer({
             .replace(/[^\w\s-]/g, "")
             .replace(/\s+/g, "-")
             .replace(/--+/g, "-");
-          return `<h2 id="${id}" class="text-xl sm:text-3xl font-semibold tracking-tight">${text}</h2>`;
+          return `<h2 id="${id}" class="text-xl sm:text-3xl font-semibold text-foreground my-5">${text}</h2>`;
         })
         .replace(/^### (.+)$/gm, (match, text) => {
-          return `<h3 class="text-lg sm:text-2xl font-medium tracking-tight my-3">${text}</h3>`;
+          return `<h3 class="text-lg sm:text-2xl font-semibold text-foreground my-5">${text}</h3>`;
         })
         .replace(/^#### (.+)$/gm, (match, text) => {
-          return `<h4 class="text-base sm:text-xl font-medium tracking-tight my-3">${text}</h4>`;
+          return `<h4 class="text-base sm:text-xl font-semibold text-foreground my-5">${text}</h4>`;
         })
         .replace(/^##### (.+)$/gm, (match, text) => {
-          return `<h5 class="text-sm sm:text-lg tracking-tight my-3">${text}</h5>`;
+          return `<h5 class="text-sm sm:text-lg font-semibold text-foreground my-5">${text}</h5>`;
         })
         .replace(/^###### (.+)$/gm, (match, text) => {
-          return `<h6 class="text-xs sm:text-base">${text}</h6>`;
+          return `<h6 class="text-xs sm:text-base font-semibold tracking-wide">${text}</h6>`;
         });
 
       // Code blocks (handle this before inline processing)
@@ -155,7 +166,7 @@ export function MarkdownRenderer({
       // Blockquotes
       html = html.replace(
         /^>\s+(.+)$/gm,
-        '<blockquote class="border-l-2 pl-4 sm:pl-6 italic text-muted-foreground leading-relaxed">$1</blockquote>',
+        '<blockquote class="flex items-center border-l-5 pl-4 sm:pl-6 min-h-12! italic text-muted-foreground leading-relaxed">$1</blockquote>',
       );
 
       // Lists - process in a single pass to avoid nested wrapping
@@ -165,10 +176,10 @@ export function MarkdownRenderer({
           .split("\n")
           .map((line: string) => {
             const content = line.replace(/^\s*[-*+]\s+/, "").trim();
-            return `<li class="relative pl-3 sm:pl-4 before:absolute before:left-0 before:content-['-']">${content}</li>`;
+            return `<li class="relative pl-3 sm:pl-4 my-3 tracking-wide before:absolute before:left-0 before:content-['-']">${content}</li>`;
           })
           .join("");
-        return `<ul class="ml-1 list-none text-sm sm:text-base font-normal text-foreground/80 my-3">${items}</ul>`;
+        return `<ul class="ml-1 list-none text-sm sm:text-base text-muted-foreground my-3">${items}</ul>`;
       });
 
       // Process ordered lists
@@ -183,7 +194,7 @@ export function MarkdownRenderer({
             })
             .join("");
 
-          return `\n<ol class="ml-3 sm:ml-5 list-decimal text-sm sm:text-base font-normal text-foreground/80 my-3">${items}</ol>`;
+          return `\n<ol class="ml-3 sm:ml-5 list-decimal text-sm sm:text-base text-muted-foreground my-3 space-y-3">${items}</ol>`;
         },
       );
 
@@ -191,18 +202,18 @@ export function MarkdownRenderer({
       html = html
         .replace(
           /`([^`]+)`/g,
-          '<code class="bg-foreground/10 px-1 sm:px-1.5 py-0.5 rounded text-sm sm:text-base font-mono">$1</code>',
+          '<code class="bg-foreground/8 mx-1.5 p-1 sm:px-1.5 rounded-sm text-xs sm:text-sm font-mono">$1</code>',
         )
         .replace(
           /\*\*(.+?)\*\*/g,
-          '<strong class="text-foreground! font-medium">$1</strong>',
+          '<strong class="text-foreground! font-semibold">$1</strong>',
         )
         .replace(/\*(.+?)\*/g, '<em class="italic">$1</em>')
         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, href) => {
           const isExternal = href.startsWith("http");
           const target = isExternal ? "_blank" : "";
           const rel = isExternal ? "noopener noreferrer" : "";
-          return `<a href="${href}" ${target ? `target="${target}" rel="${rel}"` : ""} class="text-blue-500! hover:text-green-500! transition-all duration-500">${text}</a>`;
+          return `<a href="${href}" ${target ? `target="${target}" rel="${rel}"` : ""} class="text-blue-500! hover:underline underline-offset-2 decoration-1 transition-all duration-500">${text}</a>`;
         });
 
       // Paragraphs - only wrap text blocks that aren't already wrapped
@@ -228,7 +239,7 @@ export function MarkdownRenderer({
             return "";
           }
 
-          return `<p class="text-sm sm:text-base font-normal text-foreground/80 leading-relaxed my-3">${trimmedLine}</p>`;
+          return `<p class="text-sm sm:text-base tracking-wide leading-relaxed my-5">${trimmedLine}</p>`;
         })
         .filter(Boolean)
         .join("\n");
@@ -290,15 +301,17 @@ export function MarkdownRenderer({
   };
 
   return (
-    <div className="font-normal w-full">
+    <div className={cn("text-muted-foreground w-full", className)}>
       {showHeader && title && (
-        <header className="mb-5 sm:mb-10 pb-5 sm:pb-10 border-b w-full">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight opacity-20 leading-none">
+        <header
+          className={`flex flex-col gap-3 ${isResourcesPage ? "mb-5 sm:mb-10 pb-5 sm:pb-10" : "mb-5 sm:mb-10 pb-5"} border-b w-full`}
+        >
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground opacity-90 leading-none">
             {title}
           </h1>
 
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 my-2 sm:my-3 leading-none">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 leading-none">
               {tags.map((tag) => (
                 <span
                   key={tag}
@@ -310,28 +323,66 @@ export function MarkdownRenderer({
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0 text-xs font-medium text-muted-foreground">
-            <span className="flex items-center gap-1.5 uppercase">
-              <CalendarClock className="size-3 sm:size-3.5" />
-              Last updated - {formatDate(lastUpdated)}
-            </span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0 text-sm font-semibold tracking-wide">
+            {isResourcesPage && (
+              <span className="flex items-center gap-1.5 uppercase">
+                <CalendarClock className="size-4" />
+                Last updated - {formatDate(lastUpdated)}
+              </span>
+            )}
             {officialUrl && (
               <>
-                <span className="leading-none mx-2 text-base font-light hidden sm:inline">
-                  |
-                </span>
+                <Separator
+                  orientation="vertical"
+                  className="mx-3 bg-foreground/30!"
+                />
                 <Link
                   href={officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-blue-500 hover:underline underline-offset-6"
+                  className="flex items-center gap-1 text-blue-500 hover:underline underline-offset-2"
                 >
-                  <SquareArrowOutUpRight className="size-3" />
+                  <SquareArrowOutUpRight className="size-4" />
                   Official Docs
                 </Link>
               </>
             )}
           </div>
+
+          {authors && authors.length > 0 && (
+            <div className="flex flex-col items-start gap-3 text-sm font-semibold text-muted-foreground">
+              <span className="whitespace-nowrap">
+                This document prepared by -
+              </span>
+              <div className="flex items-center gap-2">
+                {authors.map((author, index) => (
+                  <Tooltip key={index}>
+                    <TooltipTrigger asChild>
+                      <Link
+                        href={`https://github.com/${author}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="size-9 rounded-full overflow-hidden"
+                      >
+                        <Image
+                          src={`https://github.com/${author}.png`}
+                          alt={author}
+                          width={500}
+                          height={500}
+                          priority
+                          className="object-cover w-full h-full"
+                        />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent className="flex items-center gap-0! py-1.25! font-semibold">
+                      <span className="text-sm mb-0.5">@</span>
+                      <span>{author}</span>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
+          )}
         </header>
       )}
 
@@ -340,58 +391,10 @@ export function MarkdownRenderer({
       </article>
 
       {isResourcesPage && (
-        <div className="flex flex-col items-center gap-3 mt-10 mb-6 w-full">
-          <div className="flex flex-col md:flex-row items-center justify-between p-3 bg-primary/5 backdrop-blur-sm border-x-4 border-x-orange-500 border-y border-y-orange-500/30 w-full">
-            <div className="flex items-center text-center gap-3 leading-none font-bold uppercase w-full">
-              <Image
-                src="/logo.png"
-                alt={brandName}
-                width={1000}
-                height={1000}
-                className="size-9 leading-none"
-              />
-              <span className="flex items-center font-bold text-3xl opacity-30 leading-none text-foreground">
-                <span>{brandName.slice(0, 4)}</span>
-                <span className="text-primary">{brandName.slice(4, 8)}</span>
-                <span className="ml-1">{brandName.slice(8, 12)}</span>
-              </span>
-            </div>
-            <div className="flex flex-col items-end m-auto w-full">
-              <span className="orbitron tracking-wide text-primary font-bold uppercase">
-                ✨ Happy Coding !
-              </span>
-              <span className="flex items-center gap-2 text-xs text-foreground/70">
-                <Link
-                  href="https://ui.venumity.com/"
-                  target="_blank"
-                  className="hover:text-primary transition-all duration-500"
-                >
-                  ui.venumity.com
-                </Link>
-                |
-                <Link
-                  href="https://www.venumity.com/"
-                  target="_blank"
-                  className="hover:text-primary transition-all duration-500"
-                >
-                  venumity.com
-                </Link>
-                |
-                <Link
-                  href="https://thevinayakgore.vercel.app/"
-                  target="_blank"
-                  className="hover:text-primary transition-all duration-500"
-                >
-                  thevinayakgore.vercel.app
-                </Link>
-              </span>
-            </div>
-          </div>
-          <span className="text-xs italic text-center opacity-30">
-            ^For educational purposes only, we do not claim it to be original or accurate,
-            refer to official docs for details.^
-          </span>
-        </div>
+        <p className="text-xs tracking-wide font-semibold italic text-center my-5 md:my-10 opacity-30 w-full">
+          ** For educational purposes only, we do not claim it to be original or
+          accurate, refer to official docs for more details.
+        </p>
       )}
     </div>
   );

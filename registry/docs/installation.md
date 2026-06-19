@@ -1,48 +1,58 @@
-# Quick Installation
-
-Refer this page to install frameworks and build projects in modern tech stacks and start building modern web apps for future.
+#### Get up and running with Venu<span style="color:orange">mity</span> UI components and resources in your project.
 
 ---
 
-## # Method 1 : Copy Individual Components
+## Method 1 - Install with the CLI (Recommended)
 
-- Browse to the component you need
-- Click the "Copy Code" button
-- Paste into your project
-- Adjust imports if needed
-
----
-
-## # Method 2 : Using Our CLI (Coming Soon)
+The CLI adds components instantly and handles all dependencies for you.
 
 ```bash
-# Coming soon!
-npx venumity add button
+npx venumity@latest add button
 ```
+
+### CLI Features
+
+- Adds the component file directly to your `src/components/ui` folder
+- Installs any required third‑party packages automatically
+- Supports Tailwind CSS configuration updates
+- Works with existing Next.js, Vite, or CRA projects
 
 ---
 
-## # Method 3 : Manual Setup
+## Method 2 - Copy & Paste Individual Components
 
-##### 1. Create Components Directory
+1. Browse to the component page (e.g., `/components/button`)
+2. Click the **“Copy Code”** button
+3. Paste the code into your project’s component file
+4. Adjust imports if necessary
+
+This method gives you full visibility and control - no CLI required.
+
+---
+
+## Method 3 - Manual Setup (for full customisation)
+
+#### 1. Create your components directory
 
 ```bash
 mkdir -p src/components/ui
 ```
 
-##### 2. Copy Component Files
+#### 2. Copy the component file
 
-Copy the component `.tsx` file to your `src/components/ui` directory.
+Download the `.tsx` file from our repository and place it inside `src/components/ui`.
 
-##### 3. Install Required Dependencies
+#### 3. Install required dependencies
 
-Check the component's documentation for any required packages:
+Some components use `framer-motion` and `lucide-react`. Install them once -
 
 ```bash
 npm install framer-motion lucide-react
 ```
 
-##### 4. Import and Use
+Check individual component docs for any extra packages.
+
+#### 4. Import and use
 
 ```tsx
 import { Button } from "@/components/ui/button";
@@ -54,71 +64,26 @@ export default function HomePage() {
 
 ---
 
-# Project Setup
+## Setting up Resources (Learning Materials)
 
-#### Tailwind CSS Configuration
-
-If you're using Tailwind CSS (recommended), add our colors to your `tailwind.config.js` :
-
-```javascript
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: "#eff6ff",
-          100: "#dbeafe",
-          500: "#3b82f6",
-          600: "#2563eb",
-        },
-      },
-    },
-  },
-};
-```
-
----
-
-#### TypeScript Configuration
-
-For TypeScript projects, ensure you have these settings :
-
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  }
-}
-```
+If you want to **contribute** a new resource article, follow the detailed guide on the [How to contribute resources ?](/docs/add-resources).  
+All resource pages live under `/registry/reso/` and are registered in `registry/resources.ts`.
 
 ---
 
 ## Common Setup Issues
 
-### CSS Not Loading ?
+| Problem                     | Solution                                                     |
+| --------------------------- | ------------------------------------------------------------ |
+| **TypeScript errors**       | Ensure React 18+ and TypeScript 4.9+, import types correctly |
+| **Component not rendering** | Check browser console; verify all dependencies installed     |
+| **CLI not found**           | Use `npx` prefix; Node.js 18+ required                       |
 
-- Check Tailwind imports in your CSS file
-- Ensure component classes aren't being purged
-- Verify PostCSS configuration
-
-### TypeScript Errors ?
-
-- Make sure types are properly imported
-- Check React version compatibility
-- Verify TypeScript version (4.9+ recommended)
-
-### Component Not Rendering ?
-
-- Check console for error messages
-- Verify all dependencies are installed
-- Ensure proper import paths
+---
 
 ## Testing Components
 
-We recommend testing components in isolation first :
+Test in isolation before integrating into your app -
 
 ```tsx
 // test-component.tsx
@@ -136,12 +101,12 @@ export default function TestPage() {
 
 ---
 
-# Updating Components
+## Updating Components
 
-When we update components :
+When we release updates -
 
-- Check the component page for changelog
-- Compare your version with the latest
+- Check the [Changelog](/changelog) page for changelog notes (**Changelog** will be updated by **Admin** only)
+- Compare your version with the latest code
 - Update props or styles as needed
 - Test thoroughly before deploying
 
@@ -149,8 +114,8 @@ When we update components :
 
 ## Need Help ?
 
-- **Documentation** : Check component pages for specific usage
-- **GitHub** : [Open an issue](https://github.com/thevinayakgore/ui.venumity/issues)
-- **Email** : [thevinayakgore@gmail.com](mailto:thevinayakgore@gmail.com)
-- **Community** : [GitHub Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
-- **Quick Links** : [Components](/components) • [Resources](/resources) • [GitHub](https://github.com/thevinayakgore/ui.venumity)
+- **Documentation** – Each component and resource has detailed usage pages
+- **GitHub Issues** – [Report a bug or request a feature](https://github.com/thevinayakgore/ui.venumity/issues)
+- **Email** – [thevinayakgore@gmail.com](mailto:thevinayakgore@gmail.com)
+- **Community** – [GitHub Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
+- **Quick Links** – [Components](/components) • [Resources](/resources) • [GitHub](https://github.com/thevinayakgore/ui.venumity)

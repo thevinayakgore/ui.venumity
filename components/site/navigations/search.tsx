@@ -1,5 +1,14 @@
+// components/search.tsx
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
 import {
   Search as SearchIcon,
@@ -10,16 +19,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { brandName } from "@/lib/brand";
 import { COMPONENTS } from "@/registry/components";
 import { DOCS_DATA } from "@/registry/site/docs";
-import { TEMPLATES } from "@/registry/site/templates";
 import { RESOURCE_CATEGORIES } from "@/registry/resources";
-import { FAQDATA } from "@/registry/site/faq";
+import { FAQ_DATA } from "@/registry/site/faq";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { cn } from "@/lib/utils";
 
-// ======================= TYPES =======================
+// ----------------------- TYPES -----------------------
 interface SearchResult {
   id: string;
   type: SearchResultType;
@@ -29,24 +36,59 @@ interface SearchResult {
   path: string;
 }
 
-type SearchResultType =
-  | "component"
-  | "docs"
-  | "template"
-  | "resource"
-  | "faq"
-  | "sidebar";
+type SearchResultType = "component" | "docs" | "resource" | "faq" | "sidebar";
 
-interface SearchProps {
+interface SearchContextType {
   isOpen: boolean;
-  onClose: () => void;
+  openSearch: () => void;
+  closeSearch: () => void;
 }
 
+// ----------------------- CONTEXT -----------------------
+const SearchContext = createContext<SearchContextType | undefined>(undefined);
+
+export function SearchProvider({ children }: { children: ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openSearch = useCallback(() => setIsOpen(true), []);
+  const closeSearch = useCallback(() => setIsOpen(false), []);
+
+  // Global keyboard shortcut (⌘K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+        event.preventDefault();
+        setIsOpen(true);
+      }
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  return (
+    <SearchContext.Provider value={{ isOpen, openSearch, closeSearch }}>
+      {children}
+      <SearchModal isOpen={isOpen} onClose={closeSearch} />
+    </SearchContext.Provider>
+  );
+}
+
+export function useSearch() {
+  const context = useContext(SearchContext);
+  if (!context) {
+    throw new Error("useSearch must be used within a SearchProvider");
+  }
+  return context;
+}
+
+// ----------------------- SEARCH LOGIC -----------------------
 function getResultColor(type: SearchResultType): string {
   const colorMap: Record<SearchResultType, string> = {
     component: "text-primary",
     docs: "text-green-500",
-    template: "text-cyan-500",
     resource: "text-yellow-400",
     faq: "text-purple-500",
     sidebar: "text-pink-500",
@@ -58,12 +100,13 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
   const searchTerm = query.toLowerCase().trim();
 
-  // Search Components
+  // Components (with subcategories)
   COMPONENTS.forEach((category) => {
     category.subcategories.forEach((subcategory) => {
       subcategory.items.forEach((item) => {
         const title = item.itemName.toLowerCase();
-        const desc = item.description?.toLowerCase() || "";
+        const desc =
+          subcategory.description?.toLowerCase() || item.itemName.toLowerCase();
         const tags = item.tags?.join(" ").toLowerCase() || "";
 
         if (
@@ -75,7 +118,7 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
             id: `${category.name}-${subcategory.name}-${item.itemName}`,
             type: "component",
             title: item.itemName,
-            description: item.description,
+            description: subcategory.description || item.itemName,
             category: `${category.name} > ${subcategory.name}`,
             path: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
           });
@@ -84,7 +127,7 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
     });
   });
 
-  // Search Docs
+  // Docs
   DOCS_DATA.forEach((section) => {
     section.pages.forEach((page) => {
       const title = page.page.toLowerCase();
@@ -102,29 +145,7 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
     });
   });
 
-  // Search Templates
-  TEMPLATES.forEach((template) => {
-    const title = template.name.toLowerCase();
-    const desc = template.desc.toLowerCase();
-    const category = template.category.toLowerCase();
-
-    if (
-      title.includes(searchTerm) ||
-      desc.includes(searchTerm) ||
-      category.includes(searchTerm)
-    ) {
-      results.push({
-        id: `template-${template.name}`,
-        type: "template",
-        title: template.name,
-        description: template.desc,
-        category: "Templates",
-        path: `/templates/${toKebabCase(template.name)}`,
-      });
-    }
-  });
-
-  // Search Resources
+  // Resources
   RESOURCE_CATEGORIES.forEach((category) => {
     category.pages.forEach((page) => {
       const title = page.title.toLowerCase();
@@ -148,8 +169,8 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
     });
   });
 
-  // Search FAQs
-  FAQDATA.forEach((faq) => {
+  // FAQs
+  FAQ_DATA.forEach((faq) => {
     const question = faq.question.toLowerCase();
     const answer = faq.answer.toLowerCase();
 
@@ -168,8 +189,14 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
   return results.slice(0, 50);
 }
 
-// ======================= MAIN COMPONENT =======================
-export function Search({ isOpen, onClose }: SearchProps) {
+// ----------------------- SEARCH MODAL (YOUR ORIGINAL DESIGN) -----------------------
+function SearchModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -178,7 +205,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const router = useRouter();
 
-  // Flatten all subcategories
+  // Flatten subcategories for empty-state display
   const allSubcategories = COMPONENTS.flatMap((category) =>
     category.subcategories.map((subcategory) => ({
       id: `${category.name}-${subcategory.name}`,
@@ -191,7 +218,6 @@ export function Search({ isOpen, onClose }: SearchProps) {
   const handleResultClick = useCallback(
     (result: SearchResult) => {
       const targetPath = result.type === "faq" ? "/faq" : result.path;
-
       if (targetPath) {
         router.push(targetPath);
         onClose();
@@ -212,7 +238,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
     [router, onClose],
   );
 
-  // Handle keyboard shortcuts
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
@@ -223,26 +249,22 @@ export function Search({ isOpen, onClose }: SearchProps) {
           query.length === 0 ? allSubcategories.length - 1 : results.length - 1;
         setSelectedIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
       }
-
       if (event.key === "ArrowUp") {
         event.preventDefault();
         const maxIndex =
           query.length === 0 ? allSubcategories.length - 1 : results.length - 1;
         setSelectedIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
       }
-
       if (event.key === "Enter") {
         event.preventDefault();
         if (isLoading) return;
 
         if (query.length === 0 && allSubcategories.length > 0) {
-          const selectedSubcategory = allSubcategories[selectedIndex];
-          handleSubcategoryClick(selectedSubcategory.path);
+          handleSubcategoryClick(allSubcategories[selectedIndex].path);
         } else if (results.length > 0) {
           handleResultClick(results[selectedIndex]);
         }
       }
-
       if (event.key === "Escape") {
         event.preventDefault();
         onClose();
@@ -273,6 +295,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
     }
   }, [selectedIndex]);
 
+  // Focus input on open / clear on close
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
@@ -316,6 +339,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-1000" onClick={onClose}>
+          {/* GLASS CONTAINER - EXACT ORIGINAL DESIGN */}
           <motion.div
             className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-3 bg-foreground/5 backdrop-blur-xl rounded-4xl! shadow-2xl w-full max-w-130"
             onClick={(e) => e.stopPropagation()}
@@ -325,12 +349,14 @@ export function Search({ isOpen, onClose }: SearchProps) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             <div className="relative p-3 pt-5 bg-muted border rounded-3xl! shadow-xl/10 w-full h-full">
+              {/* Decorative dots */}
               <div className="absolute top-1.5 left-1/4 translate-x-16 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
               <div className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-muted-foreground/30 dark:bg-popover rounded-full h-2 w-1/5" />
               <div className="absolute top-1.5 left-1/2 translate-x-13 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
+
               <div className="relative flex flex-col items-center justify-between p-3 bg-background border border-foreground/15 rounded-2xl! overflow-hidden w-full h-130">
                 {/* Search Input */}
-                <header className="relative z-50 font-medium tracking-tight bg-popover border-2 rounded-lg w-full h-12">
+                <header className="relative z-50 font-semibold tracking-wide bg-popover border rounded-lg w-full h-12">
                   <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
                   <Input
                     ref={inputRef}
@@ -373,7 +399,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                             className={cn(
                               "flex items-center gap-5 py-3 px-5 border border-foreground/10 bg-muted/10 text-foreground rounded-md transition-all duration-200 group w-full",
                               selectedIndex === index &&
-                                "bg-primary/10 border-primary/50",
+                                "bg-primary/10 border-primary/30",
                             )}
                           >
                             <div className="flex-1 min-w-0">
@@ -399,7 +425,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                               </p>
                             </div>
                             <ArrowRight
-                              className={`size-4 ${selectedIndex === index ? "text-primary translate-x-2" : "text-muted-foreground group-hover:text-primary group-hover:translate-x-2"}  transition-all duration-500`}
+                              className={`size-4 ${selectedIndex === index ? "text-primary translate-x-2" : "text-muted-foreground group-hover:text-primary group-hover:translate-x-2"} transition-all duration-500`}
                             />
                           </Link>
                         </motion.div>
@@ -422,6 +448,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                       </p>
                     </div>
                   ) : (
+                    // Subcategories list (empty state)
                     <div className="flex flex-col gap-1 text-start px-3 py-18 overflow-y-auto w-full h-full">
                       {allSubcategories.map((subcategory, index) => (
                         <Link
@@ -438,7 +465,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                           className={cn(
                             "flex items-center justify-between text-sm px-3 py-2 rounded-md text-foreground/40 border border-transparent transition-all duration-200",
                             selectedIndex === index &&
-                              "bg-primary/5 border-primary/30 text-primary/90",
+                              "bg-primary/10 border-primary/30 text-primary/90",
                           )}
                         >
                           <span className="flex items-center gap-3">
@@ -459,7 +486,7 @@ export function Search({ isOpen, onClose }: SearchProps) {
                 </section>
 
                 {/* Footer */}
-                <footer className="flex flex-col items-center gap-2 p-2 z-50 bg-popover border-2 rounded-lg overflow-hidden w-full">
+                <footer className="flex flex-col items-center gap-2 p-2 z-50 bg-popover border rounded-lg overflow-hidden w-full">
                   <div className="flex items-start justify-between m-auto text-[0.6rem] leading-none w-full">
                     <div className="flex items-center justify-end px-3 bg-background border dark:border-foreground/15 rounded-sm w-fit h-7">
                       <span>Use</span>
@@ -509,42 +536,21 @@ export function Search({ isOpen, onClose }: SearchProps) {
   );
 }
 
-// ======================= SEARCH TRIGGER =======================
+// ----------------------- NEW TRIGGER (LIKE THE SECOND EXAMPLE) -----------------------
 export function SearchTrigger() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
-        event.preventDefault();
-        setIsSearchOpen(true);
-      }
-      if (event.key === "Escape" && isSearchOpen) {
-        setIsSearchOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isSearchOpen]);
+  const { openSearch } = useSearch();
 
   return (
-    <>
-      <Button
-        variant="secondary"
-        className="relative group flex items-center justify-start px-2! text-muted-foreground hover:text-foreground hover:border-foreground/30 cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded w-full md:w-28 hover:w-62 max-w-62 overflow-hidden transition-all duration-500"
-        onClick={() => setIsSearchOpen(true)}
-      >
-        <SearchIcon className="size-4 shrink-0" />
-        <span className="flex-1 text-left lowercase font-normal truncate text-sm tracking-wider leading-4">
-          build with {brandName}...
-        </span>
-        <kbd className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 hidden h-6 select-none items-center gap-0.5 rounded border border-foreground/15 group-hover:border-foreground/30 bg-muted px-2 font-mono text-[10px] font-medium sm:flex">
-          <span className="text-xs">⌘</span>K
-        </kbd>
-      </Button>
-
-      <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-    </>
+    <Button
+      size="sm"
+      variant="outline"
+      onClick={openSearch}
+      className="relative group flex items-center justify-between pl-2! pr-0.5! h-8! bg-foreground/5! border-foreground/15! transition-all duration-500 cursor-pointer rounded-sm"
+    >
+      <SearchIcon className="size-3.5! shrink-0 mr-1" />
+      <kbd className="pointer-events-none hidden sm:flex h-6 select-none items-center gap-0.5 rounded bg-foreground/7! border border-foreground/15 px-1.5 font-mono text-[10px] font-medium">
+        <span className="text-xs">⌘</span>K
+      </kbd>
+    </Button>
   );
 }

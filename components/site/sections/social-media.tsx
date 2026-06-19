@@ -81,7 +81,7 @@ export const socialLinks = [
 export default function SocialMedia() {
   return (
     <>
-      <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 z-10">
+      <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2 z-10">
         {socialLinks.map((link, index) => (
           <Link
             key={index}
@@ -89,14 +89,8 @@ export default function SocialMedia() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button
-              size="icon"
-              variant="ghost"
-              className="cursor-pointer rounded border border-transparent hover:border-border hover:scale-110 transition-all duration-500"
-            >
-              <span className="flex items-center justify-center size-5!">
-                {link.icon}
-              </span>
+            <Button size="icon" variant="ghost" className="rounded-sm">
+              {link.icon}
             </Button>
           </Link>
         ))}

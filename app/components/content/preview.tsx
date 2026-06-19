@@ -121,7 +121,7 @@ export default function ComponentPreview({
             Component Load Error
           </div>
           <div className="text-sm text-red-600 mb-4">{error}</div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-muted-foreground">
             Path: {category}/{subcategory ? `${subcategory}/` : ""}
             {componentName}
           </div>
@@ -159,11 +159,11 @@ export default function ComponentPreview({
       <Button
         size="icon"
         variant="secondary"
+        title="Refresh preview"
         onClick={handleRefresh}
         className={`absolute top-4 right-4 z-100 transform-gpu bg-foreground/5 backdrop-blur-sm ${
           !pathname.startsWith("/components") && "hidden"
-        } cursor-pointer transition-all duration-500 rounded-sm`}
-        title="Refresh preview"
+        } transition-all duration-500`}
       >
         <RotateCcw />
       </Button>

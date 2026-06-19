@@ -1,18 +1,61 @@
 // app/components/content/component-item-with-tabs.tsx
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { FolderTree, Package } from "lucide-react";
+import { PencilRuler, Terminal } from "lucide-react";
 import Overview from "./overview";
-import FolderStructure from "./folder-structure";
-import Setup from "./setup";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { ComponentItemData } from "../[...slug]/page.client";
+import Manual from "./manual";
+import CodeBlock from "@/components/site/common/code-block";
+import { formatCount } from "@/utils/format-count";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ComponentItemWithTabsProps {
-  item: ComponentItemData; // Replace with proper type
+  item: ComponentItemData;
   index: number;
 }
+
+// Package manager configurations
+const packageManagers = [
+  {
+    name: "npm",
+    command: (componentName: string) =>
+      `npx venumityui@latest add ${componentName}`,
+    activeClass: "bg-background text-foreground border border-foreground/20",
+    inactiveClass:
+      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  },
+  {
+    name: "pnpm",
+    command: (componentName: string) =>
+      `pnpm dlx venumityui@latest add ${componentName}`,
+    activeClass: "bg-background text-foreground border border-foreground/20",
+    inactiveClass:
+      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  },
+  {
+    name: "yarn",
+    command: (componentName: string) =>
+      `yarn dlx venumityui@latest add ${componentName}`,
+    activeClass: "bg-background text-foreground border border-foreground/20",
+    inactiveClass:
+      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  },
+  {
+    name: "bun",
+    command: (componentName: string) =>
+      `bunx venumityui@latest add ${componentName}`,
+    activeClass: "bg-background text-foreground border border-foreground/20",
+    inactiveClass:
+      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  },
+];
 
 export default function ComponentItemWithTabs({
   item,
@@ -20,14 +63,53 @@ export default function ComponentItemWithTabs({
 }: ComponentItemWithTabsProps) {
   const itemSlugPath = `${toKebabCase(item.category)}/${toKebabCase(item.subcategory || "")}/${toKebabCase(item.itemName)}`;
   const componentFolderPath = `${toKebabCase(item.category)}/${toKebabCase(item.subcategory || "")}/${toKebabCase(item.itemName)}`;
+  const componentId = toKebabCase(item.itemName);
 
-  const showFolderStructure = item.hasFolderStructure;
-  const showSetup = item.hasSetup;
-  const showAnyExtra = showFolderStructure || showSetup;
+  const showManual = Boolean(item.code);
+  const showCli = true;
+  const showAnyExtra = showCli || showManual;
 
-  const [componentActiveTab, setComponentActiveTab] = useState<string>(
-    showFolderStructure ? "structure" : showSetup ? "setup" : "",
-  );
+  const [componentActiveTab, setComponentActiveTab] = useState<string>("cli");
+  const [copyCount, setCopyCount] = useState(0);
+  const [selectedPackageManager, setSelectedPackageManager] =
+    useState<string>("npm");
+
+  // Fetch initial count on mount
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const res = await fetch(
+          `/api/components/cli-copy-count?componentId=${componentId}`,
+        );
+        const data = await res.json();
+        setCopyCount(data.copyCount || 0);
+      } catch (error) {
+        console.error("Failed to fetch copy count:", error);
+      }
+    };
+    fetchCount();
+  }, [componentId]);
+
+  const handleCopy = async () => {
+    try {
+      const res = await fetch("/api/components/cli-copy-count", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ componentId }),
+      });
+      const data = await res.json();
+      setCopyCount(data.copyCount);
+    } catch (error) {
+      console.error("Failed to update copy count:", error);
+    }
+  };
+
+  // Get the current command based on selected package manager
+  const currentCommand =
+    packageManagers
+      .find((pm) => pm.name === selectedPackageManager)
+      ?.command(toKebabCase(item.itemName)) ||
+    `npx venumityui@latest add ${toKebabCase(item.itemName)}`;
 
   return (
     <section
@@ -35,7 +117,6 @@ export default function ComponentItemWithTabs({
       id={toKebabCase(item.itemName)}
       className="scroll-mt-24 w-full"
     >
-      {/* Component Overview */}
       <Overview
         itemName={item.itemName}
         componentName={item.category}
@@ -51,54 +132,94 @@ export default function ComponentItemWithTabs({
         githubUsername={item.githubUsername}
       />
 
-      {/* Component-specific Folder Structure & Installation */}
       {showAnyExtra && (
-        <div className="w-full mt-8">
+        <div className="w-full py-5 md:py-10 mb-5 md:mb-10 border-b">
           <Tabs
             value={componentActiveTab}
             onValueChange={setComponentActiveTab}
             className="w-full"
           >
             <TabsList
-              className={`grid mb-3 w-full bg-accent dark:bg-popover border border-foreground/3 rounded-md max-w-fit h-11! ${
-                showFolderStructure && showSetup ? "grid-cols-2" : "grid-cols-1"
+              className={`grid p-1.25 mb-3 w-full bg-accent dark:bg-popover border-0! rounded-lg max-w-fit! h-12! ${
+                [showCli, showManual].filter(Boolean).length === 3
+                  ? "grid-cols-3"
+                  : [showCli, showManual].filter(Boolean).length === 2
+                    ? "grid-cols-2"
+                    : "grid-cols-1"
               }`}
             >
-              {showFolderStructure && (
+              {showCli && (
                 <TabsTrigger
-                  value="structure"
-                  className="flex items-center gap-2 px-3! cursor-pointer rounded-sm"
+                  value="cli"
+                  className="flex items-center gap-2 px-3! border-0! data-active:bg-white! dark:data-active:bg-foreground/10! rounded-md"
                 >
-                  <FolderTree className="size-4" />
-                  Structure
+                  <Terminal className="size-4" />
+                  CLI
                 </TabsTrigger>
               )}
-              {showSetup && (
+              {showManual && (
                 <TabsTrigger
-                  value="setup"
-                  className="flex items-center gap-2 px-3! cursor-pointer rounded-sm"
+                  value="manual"
+                  className="flex items-center gap-2 px-3! border-0! data-active:bg-white! dark:data-active:bg-foreground/10! rounded-md"
                 >
-                  <Package className="size-4" />
-                  Setup
+                  <PencilRuler className="size-4" />
+                  Manual
                 </TabsTrigger>
               )}
             </TabsList>
 
-            {showFolderStructure && (
-              <TabsContent value="structure">
-                <FolderStructure
-                  basePath={componentFolderPath}
-                  componentName=""
-                />
+            {showCli && (
+              <TabsContent value="cli">
+                <div className="p-1.5 bg-foreground/5 backdrop-blur-md rounded-xl">
+                  <div className="flex items-center justify-between px-1.5 w-full">
+                    <div className="flex items-center gap-1.5 pt-1 pb-2 text-xs font-semibold text-foreground/50">
+                      <Terminal className="size-5 p-0.75 mr-1 bg-foreground/70 text-background rounded-[3px]" />
+                      {packageManagers.map((pm) => (
+                        <button
+                          key={pm.name}
+                          onClick={() => setSelectedPackageManager(pm.name)}
+                          className={`px-2 py-1 rounded-sm transition-all duration-200 ${
+                            selectedPackageManager === pm.name
+                              ? pm.activeClass
+                              : pm.inactiveClass
+                          }`}
+                        >
+                          {pm.name}
+                        </button>
+                      ))}
+                    </div>
+                    {copyCount > 0 && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="text-xs text-foreground/30 font-semibold tracking-wide cursor-help">
+                              {formatCount(copyCount)} copies
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent className="text-center font-semibold tracking-wide max-w-fit!">
+                            <p>
+                              {copyCount} used this CLI <br /> command line
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                  </div>
+                  <div className="border border-foreground/6 rounded-lg overflow-hidden">
+                    <div onClick={handleCopy}>
+                      <CodeBlock code={currentCommand} language="txt" />
+                    </div>
+                  </div>
+                </div>
               </TabsContent>
             )}
 
-            {showSetup && (
-              <TabsContent value="setup">
-                <Setup
+            {showManual && item.code && (
+              <TabsContent value="manual">
+                <Manual
                   componentName={item.itemName}
                   componentPath={componentFolderPath}
-                  dependencies={item.techs || []}
+                  code={item.code}
                 />
               </TabsContent>
             )}

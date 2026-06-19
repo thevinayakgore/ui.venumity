@@ -63,7 +63,7 @@ export default function DragDropTreeView() {
   ]);
 
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(
-    new Set(["projects", "website", "mobile"])
+    new Set(["projects", "website", "mobile"]),
   );
 
   const toggleNode = (nodeId: string) => {
@@ -133,6 +133,7 @@ export default function DragDropTreeView() {
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
+            style={provided.draggableProps.style as React.CSSProperties}
             className="mb-2"
           >
             <div
@@ -222,7 +223,7 @@ export default function DragDropTreeView() {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="border rounded-lg p-4 h-[500px] overflow-y-auto"
+              className="border rounded-lg p-4 h-125 overflow-y-auto"
             >
               {treeData.map((node) => (
                 <div key={node.id}>{renderTreeNode(node, 0, "root")}</div>

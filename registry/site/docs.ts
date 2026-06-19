@@ -1,3 +1,4 @@
+// registry/site/docs.ts
 export interface DocsPage {
   page: string;
   slug: string;
@@ -21,7 +22,7 @@ export const DOCS_DATA: DocsSection[] = [
   {
     title: "Documents",
     type: "docs",
-    icon: "NotebookPen",
+    icon: "Terminal",
     pages: [
       {
         page: "Getting Started",
@@ -43,6 +44,13 @@ export const DOCS_DATA: DocsSection[] = [
         contentPath: "/registry/docs/installation.md", // Add /
         published: true,
         tags: ["setup"],
+      },
+      {
+        page: "Add Resources",
+        slug: "add-resources",
+        contentPath: "/registry/docs/add-resources.md", // Add /
+        published: true,
+        tags: ["resource", "learningmaterials", "buildtogether"],
       },
     ],
   },

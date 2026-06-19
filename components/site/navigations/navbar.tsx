@@ -1,384 +1,216 @@
+// components/navigations/navbar.tsx
 "use client";
-import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { motion, LayoutGroup } from "motion/react";
+import { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { motion } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
-import { brandName, gitRepo } from "@/lib/brand";
+import { gitRepo, handle } from "@/lib/brand";
+import { Separator } from "@/components/ui/separator";
+import { COMPANY_SECTION } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { SearchTrigger } from "./search";
-import { DOCS_DATA } from "@/registry/site/docs";
-import { COMPONENTS } from "@/registry/components";
-import { toKebabCase } from "@/utils/slug-kebab";
-import { getLucideIcon } from "@/registry/component-utils";
-import * as LucideIcons from "lucide-react";
-import { Menu } from "lucide-react";
-
-type NavLinkItem = {
-  name: string;
-  href: string;
-  isExternal?: boolean;
-};
-
-type NavLinks = {
-  title: string;
-  links: NavLinkItem[];
-};
-
-export const COMPANY_SECTION: NavLinks = {
-  title: "Company",
-  links: [
-    { name: "Components", href: "/components" },
-    { name: "Resources", href: "/resources" },
-    { name: "Templates", href: "/templates" },
-  ],
-};
-
-// Mobile Sidebar Content Component
-function MobileSidebarContent() {
-  const pathname = usePathname();
-  const icons = LucideIcons as unknown as Record<
-    string,
-    React.ComponentType<{ className?: string }>
-  >;
-
-  return (
-    <div className="flex flex-col items-start text-[0.8rem] font-medium leading-none px-2 py-4 overflow-auto w-full h-full">
-      <div className="w-full space-y-3">
-        {/* Company/Page Links */}
-        <div className="space-y-2 px-2 pb-3 border-b border-dashed">
-          <div className="flex items-center gap-2 text-sm font-semibold px-3">
-            <LucideIcons.Paperclip className="size-3.5" />
-            <span>Pages</span>
-          </div>
-          <div className="flex flex-col gap-0.5">
-            {COMPANY_SECTION.links.map((link) => {
-              const href = `/${link.name.toLowerCase()}`;
-              const isActive = pathname === href;
-              return (
-                <Link
-                  key={link.name}
-                  href={href}
-                  className={`flex items-center tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                    isActive
-                      ? "text-foreground bg-muted/60 border-primary"
-                      : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ------------------------------ DOCS ----------------------------- */}
-        {DOCS_DATA.map((section) => {
-          const IconComponent =
-            icons[
-              section.icon.charAt(0).toUpperCase() + section.icon.slice(1)
-            ] || icons.File;
-
-          return (
-            <div
-              key={`docs-${section.title}`}
-              className="space-y-2 w-full px-2"
-            >
-              <div className="flex items-center gap-2 text-sm font-semibold px-3">
-                <IconComponent className="size-3.5" />
-                <span>{section.title}</span>
-              </div>
-
-              <div className="flex flex-col gap-0.5">
-                {section.pages
-                  ?.filter((p) => p.published !== false)
-                  .map((page) => {
-                    const href = `/docs/${page.slug}`;
-                    const isActive = pathname === href;
-
-                    return (
-                      <Link
-                        key={page.slug}
-                        href={href}
-                        className={`flex items-center tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                          isActive
-                            ? "text-foreground bg-muted/60 border-primary"
-                            : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                        }`}
-                      >
-                        {page.page}
-                      </Link>
-                    );
-                  })}
-              </div>
-            </div>
-          );
-        })}
-
-        {/* --------------------------- COMPONENTS --------------------------- */}
-        <div className="flex flex-col w-full px-2">
-          {[...COMPONENTS]
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((category) => {
-              const hasSubcategories = category.subcategories.length > 0;
-              const CategoryIcon = getLucideIcon(category.icon);
-
-              if (!hasSubcategories) {
-                const categoryLink = `/components/${toKebabCase(category.name)}`;
-                const isCategoryActive = pathname.startsWith(
-                  `/components/${toKebabCase(category.name)}`,
-                );
-
-                return (
-                  <Link
-                    key={category.name}
-                    href={categoryLink}
-                    className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                      isCategoryActive
-                        ? "text-foreground bg-muted/60 border-primary"
-                        : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                    }`}
-                  >
-                    <CategoryIcon className="size-3.5" />
-                    <span>{category.name}</span>
-                  </Link>
-                );
-              }
-
-              return (
-                <div key={category.name} className="w-full">
-                  <div className="py-3 border-y border-dashed w-full last:border-b-0">
-                    <div className="flex items-center gap-2 text-sm font-semibold opacity-90 mb-2 px-3">
-                      <CategoryIcon className="size-4!" />
-                      <span>{category.name}</span>
-                    </div>
-
-                    <div className="space-y-0.5 w-full">
-                      {[...category.subcategories]
-                        .filter((sub) => sub.items.length > 0)
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((subcategory) => {
-                          const subcategoryLink = `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
-                          const isSubcategoryActive =
-                            pathname === subcategoryLink ||
-                            pathname.startsWith(`${subcategoryLink}/`);
-
-                          const SubcategoryIcon = getLucideIcon(
-                            subcategory.icon ? subcategory.icon : "",
-                          );
-
-                          return (
-                            <Link
-                              key={`${category.name}-${subcategory.name}`}
-                              href={subcategoryLink}
-                              className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] transition-all duration-500 ${
-                                isSubcategoryActive
-                                  ? "text-foreground bg-muted/60 border-primary"
-                                  : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                              }`}
-                            >
-                              {subcategory.icon ? (
-                                <SubcategoryIcon className="size-3.5" />
-                              ) : null}
-                              <span>{subcategory.name}</span>
-                            </Link>
-                          );
-                        })}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      </div>
-    </div>
-  );
-}
+import Feedback from "./feedback";
 
 export default function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const [sheetOpen, setSheetOpen] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
 
   useEffect(() => {
-    setTimeout(() => setMounted(true), 0);
+    // We use a short timeout to guarantee the theme has resolved on the client
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Close sheet when pathname changes
-  // Close sheet when pathname changes (deferred)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSheetOpen(false);
-    }, 0);
+  const toggleTheme = useCallback(() => {
+    if (!resolvedTheme) return; // safety: only toggle when theme is known
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
 
-    return () => clearTimeout(timer);
-  }, [pathname]);
-
-  if (!mounted || pathname.startsWith("/preview")) return null;
+  // If we're still mounting, we can show nothing (as originally) to avoid flashing,
+  // or show a skeleton – we'll keep the original behaviour.
+  if (!mounted || pathname?.startsWith("/preview")) return null;
 
   return (
     <>
-      <main className="relative flex items-center justify-center m-auto w-full">
-        <div className="fixed top-0 z-1000! flex items-center justify-center m-auto bg-background border-b w-full">
-          <nav className="flex items-center justify-between m-auto py-2 px-4 sm:px-6 lg:px-10 max-w-360 2xl:border-x-2 border-dashed w-full">
-            <div className="flex items-center m-auto w-full">
-              {/* Logo & Desktop Navigation */}
-              <section className="flex items-center justify-start gap-10 m-auto whitespace-nowrap w-full">
+      <div className="z-1000! transform-gpu mb-1 w-full">
+        <nav className="relative flex items-center justify-between p-1 px-1.5 bg-background border rounded-md overflow-hidden max-w-400 m-auto w-full">
+          {/* Logo & navigation links – unchanged */}
+          <div className="hidden md:flex items-center max-w-fit">
+            <Link href="/" className="flex items-center gap-2 z-10 max-w-fit">
+              <div className="relative p-0.75 w-auto h-8 overflow-hidden rounded-sm">
+                <Image
+                  src="/logo.png"
+                  alt="logo"
+                  width={200}
+                  height={200}
+                  className="rounded z-10 transform-gpu w-full h-full"
+                />
+                <motion.span
+                  animate={{
+                    rotate: [0, 360],
+                    background: [
+                      "linear-gradient(to top left, #f97316, transparent)",
+                      "linear-gradient(to top left, #ef4444, transparent)",
+                      "linear-gradient(to top left, #ec4899, transparent)",
+                      "linear-gradient(to top left, #a855f7, transparent)",
+                      "linear-gradient(to top left, #6366f1, transparent)",
+                      "linear-gradient(to top left, #3b82f6, transparent)",
+                      "linear-gradient(to top left, #06b6d4, transparent)",
+                      "linear-gradient(to top left, #14b8a6, transparent)",
+                      "linear-gradient(to top left, #22c55e, transparent)",
+                      "linear-gradient(to top left, #84cc16, transparent)",
+                      "linear-gradient(to top left, #eab308, transparent)",
+                      "linear-gradient(to top left, #f59e0b, transparent)",
+                    ],
+                  }}
+                  transition={{
+                    rotate: { duration: 3, repeat: Infinity, ease: "linear" },
+                    background: {
+                      duration: 12,
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                  }}
+                  className="absolute inset-0 -z-10 scale-[1.3] w-full h-full"
+                />
+              </div>
+              <h2 className="font-bold text-xl pb-0.5">
+                Venu<span className="text-primary">mity</span> UI
+              </h2>
+            </Link>
+
+            <Separator
+              orientation="vertical"
+              className="h-6 my-auto bg-foreground/15 ml-6 mr-3"
+            />
+
+            <motion.div
+              onMouseLeave={() => setHovered(null)}
+              className={cn(
+                "hidden flex-1 flex-row items-center justify-center space-x-1 text-[0.8rem] font-semibold transition-all duration-500 lg:flex lg:space-x-1 w-auto",
+              )}
+            >
+              {COMPANY_SECTION.links.map((item, idx) => (
                 <Link
-                  href="/"
-                  className="flex items-center justify-start gap-2 text-lg sm:text-2xl stackSans font-medium! leading-none"
+                  key={`link-${idx}`}
+                  onMouseEnter={() => setHovered(idx)}
+                  onClick={() => setHovered(idx)}
+                  className="relative group/link px-3.5 py-[0.35rem]"
+                  href={item.href}
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="logo"
-                    width={1000}
-                    height={1000}
-                    className="size-7"
-                  />
-                  <div className="flex items-center">
-                    <span>{brandName.slice(0, -7)}</span>
-                    <span className="text-primary">
-                      {brandName.slice(-7, -3)}
-                    </span>
-                    <span className="ml-2">{brandName.slice(9)}</span>
-                  </div>
+                  {hovered === idx && (
+                    <motion.div
+                      layoutId="hovered"
+                      className="absolute inset-0 h-full w-full rounded-[5px] bg-foreground/8"
+                    />
+                  )}
+                  <span className="relative z-20">{item.name}</span>
+                  {(item.href.startsWith("http://") ||
+                    item.href.startsWith("https://")) && (
+                    <ArrowUpRight className="absolute top-0 right-0 z-20 group-hover/link:top-0.5 group-hover/link:right-0.5 size-3 opacity-0 group-hover/link:opacity-100 text-green-500 transition-all duration-500" />
+                  )}
                 </Link>
+              ))}
+            </motion.div>
+          </div>
 
-                {/* Desktop Navigation Links */}
-                <div className="hidden lg:flex items-center justify-start">
-                  <LayoutGroup>
-                    {COMPANY_SECTION.links.map((link) => (
-                      <Link
-                        key={link.name}
-                        href={`/${link.name.toLowerCase()}`}
-                        className="text-sm font-normal group py-2 px-4 hover:bg-foreground/5 rounded-sm transition-all duration-500 w-fit"
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </LayoutGroup>
-                </div>
-
-                {/* Mobile Menu Button with Sheet */}
-                <div className="flex md:hidden ml-auto">
-                  <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-                    <SheetTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="cursor-pointer rounded"
-                        aria-label="Menu"
-                      >
-                        {sheetOpen ? (
-                          <LucideIcons.X className="size-5" />
-                        ) : (
-                          <Menu className="size-5" />
-                        )}
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent
-                      side="left"
-                      className="w-70 p-0! overflow-y-auto bg-background"
-                    >
-                      <SheetHeader className="sticky top-0 z-10 bg-background">
-                        <SheetTitle className="sr-only" />
-                      </SheetHeader>
-                      <MobileSidebarContent />
-                    </SheetContent>
-                  </Sheet>
-                </div>
-              </section>
-
-              {/* Searchbar and Dark Mode - Desktop */}
-              <section className="hidden md:flex items-center justify-end gap-2">
-                <SearchTrigger />
-                <Button
-                  asChild
-                  size="icon"
-                  variant="secondary"
-                  className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
+          {/* Right side actions – unchanged except for the theme button below */}
+          <div className="flex items-center gap-1.5 z-10">
+            <SearchTrigger />
+            <Separator
+              orientation="vertical"
+              className="h-6 mx-1 my-auto bg-foreground/15"
+            />
+            <Link href="https://www.venumity.com/contact/#cal" className="ml-1">
+              <Button
+                size="sm"
+                className="relative group flex items-center justify-between px-3! h-8! font-bold! bg-foreground! border-0! text-secondary! text-xs hover:shadow-lg shadow-foreground/30 transition-all duration-500 cursor-pointer rounded-sm"
+              >
+                Schedule
+              </Button>
+            </Link>
+            <Feedback />
+            <Button size="icon" variant="ghost">
+              <Link href={gitRepo} target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 438.549 438.549" className="w-full h-full">
+                  <path
+                    fill="currentColor"
+                    d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 01-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"
+                  ></path>
+                </svg>
+              </Link>
+            </Button>
+            <Separator
+              orientation="vertical"
+              className="h-6 my-auto bg-foreground/15"
+            />
+            <Button size="icon" variant="ghost">
+              <Link href={handle} target="_blank" rel="noopener noreferrer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={20}
+                  height={20}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-brand-x fill-background! w-full h-full"
                 >
-                  <Link
-                    href={gitRepo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg viewBox="0 0 438.549 438.549" className="size-4">
-                      <path
-                        fill="currentColor"
-                        d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 01-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"
-                      />
-                    </svg>
-                  </Link>
-                </Button>
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  onClick={() =>
-                    setTheme(mounted && theme === "dark" ? "light" : "dark")
-                  }
-                  className="cursor-pointer bg-zinc-50! dark:bg-zinc-900! border rounded"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-4.5"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                    <path d="M12 3l0 18" />
-                    <path d="M12 9l4.65 -4.65" />
-                    <path d="M12 14.3l7.37 -7.37" />
-                    <path d="M12 19.6l8.85 -8.85" />
-                  </svg>
-                </Button>
-              </section>
-            </div>
-          </nav>
-        </div>
-
-        {/* Background Gradient Animation */}
-        {(pathname === "/" || pathname.startsWith("/legal")) && (
-          <motion.div
-            className="absolute top-0 left-1/2 -translate-x-1/2 -z-10 opacity-40 rounded-3xl blur-[5rem] h-20 max-w-300 m-auto w-full"
-            animate={{
-              background: [
-                "radial-gradient(circle at top left, #3b82f6, #a855f7, #ec4899)",
-                "radial-gradient(circle at top right, #6366f1, #8b5cf6, #d946ef)",
-                "radial-gradient(circle at bottom right, #14b8a6, #0ea5e9, #3b82f6)",
-                "radial-gradient(circle at bottom left, #f59e0b, #f97316, #ef4444)",
-                "radial-gradient(circle at top left, #22c55e, #84cc16, #f59e0b)",
-                "radial-gradient(circle at top right, #06b6d4, #3b82f6, #8b5cf6)",
-                "radial-gradient(circle at bottom right, #ec4899, #f43f5e, #f97316)",
-                "radial-gradient(circle at bottom left, #8b5cf6, #6366f1, #3b82f6)",
-                "radial-gradient(circle at top right, #f43f5e, #ef4444, #f59e0b)",
-                "radial-gradient(circle at bottom left, #0ea5e9, #06b6d4, #22c55e)",
-              ],
-            }}
-            transition={{
-              duration: 50,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-          />
-        )}
-      </main>
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 4l11.733 16h4.267l-11.733 -16l-4.267 0" />
+                  <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+                </svg>
+              </Link>
+            </Button>
+            <Separator
+              orientation="vertical"
+              className="h-6 my-auto bg-foreground/15"
+            />
+            {/* Theme toggle – stronger implementation */}
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={toggleTheme}
+              disabled={!mounted} // only cosmetic: button is already hidden when !mounted
+              title={
+                resolvedTheme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4.5"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                <path d="M12 3l0 18" />
+                <path d="M12 9l4.65 -4.65" />
+                <path d="M12 14.3l7.37 -7.37" />
+                <path d="M12 19.6l8.85 -8.85" />
+              </svg>
+            </Button>
+          </div>
+        </nav>
+      </div>
     </>
   );
 }

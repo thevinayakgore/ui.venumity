@@ -101,18 +101,14 @@ export default function DraggableList() {
             >
               {items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className={`flex items-center p-4 border rounded-lg transition-all ${
-                        snapshot.isDragging
-                          ? "bg-purple-50 shadow-lg"
-                          : "hover:bg-gray-50"
-                      } ${
-                        playingId === item.id ? "ring-2 ring-purple-500" : ""
-                      }`}
+                      style={
+                        provided.draggableProps.style as React.CSSProperties
+                      }
                     >
                       <div className="flex items-center space-x-4 flex-1">
                         <div className="text-gray-400 font-mono w-8">

@@ -1,89 +1,231 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { usePathname } from "next/navigation";
-import { FAQDATA } from "@/registry/site/faq";
+import { Minus, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CATEGORIES, Category, FAQ_DATA } from "@/registry/site/faq";
+
+function CategoryCard({
+  title,
+  articles,
+  description,
+  icon: Icon,
+  isOpen,
+  onToggle,
+}: Category & {
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div
+      className={`relative group/cat bg-foreground/10 ${isOpen ? "p-1" : "p-0"} rounded-lg overflow-hidden transition-all duration-700 w-full`}
+    >
+      <Button
+        type="button"
+        onClick={onToggle}
+        className={cn(
+          "relative flex items-start justify-between text-start gap-3 w-full cursor-pointer rounded-lg transition-all duration-700",
+          isOpen ? "p-1 pb-2 h-auto" : "p-2 h-auto",
+          "bg-transparent! text-foreground!",
+        )}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="flex p-3 shrink-0 items-center justify-center rounded-md bg-white text-black shadow-lg/10">
+            <Icon className="size-5" />
+          </div>
+
+          <div className="min-w-0 space-y-0.5">
+            <p className="truncate text-base">{title}</p>
+            <p className="text-xs text-foreground/50">{articles}</p>
+          </div>
+        </div>
+
+        <div className="absolute top-3 right-8 shrink-0 opacity-20 group-hover/cat:opacity-100 transition-all duration-700">
+          <Minus
+            className={`absolute inset-0 size-5 ${isOpen && "-rotate-180"} transition-all duration-700`}
+          />
+          <Minus
+            className={`absolute inset-0 size-5 rotate-90 ${isOpen && "rotate-180"} transition-all duration-700`}
+          />
+        </div>
+      </Button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              filter: "blur(15px)",
+              height: 0,
+            }}
+            animate={{
+              opacity: 1,
+              filter: "blur(0px)",
+              height: "auto",
+            }}
+            exit={{
+              opacity: 0,
+              filter: "blur(15px)",
+              height: 0,
+            }}
+            transition={{
+              duration: 0.8,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="w-full"
+          >
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
+                delay: 0.2,
+              }}
+              className="text-sm md:text-[0.85rem] tracking-wide! text-foreground/50 font-semibold py-4 px-5 bg-background rounded-md"
+            >
+              {description}
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function FAQ() {
-  const pathname = usePathname();
-  const isFaqPage = pathname === "/faq";
+  const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const toggleFAQ = (index: number) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   return (
-    <section
-      className={`relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 md:px-8 lg:px-10 ${isFaqPage && "pt-12 sm:pt-16 md:pt-20 lg:pt-24 2xl:border-x-2 border-dashed m-auto max-w-360 overflow-x-hidden w-full"}`}
-    >
-      <h1
-        className={`absolute ${isFaqPage ? "top-15 lg:top-10" : "top-10 md:-top-5 xl:-top-15"} left-1/2 -translate-x-1/2 text-center text-7xl md:text-[12rem] lg:text-[14rem] xl:text-[20rem] uppercase tracking-wide whitespace-nowrap font-extrabold text-transparent bg-clip-text bg-linear-to-b from-foreground/15 via-foreground/5 leading-none`}
-      >
-        Queries
-      </h1>
+    <main id="faq" className="p-5 md:p-10 m-auto max-w-400 w-full">
+      <div className="relative z-10 flex flex-col gap-5 md:gap-10 m-auto w-full">
+        <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-20 xl:p-30 text-white rounded-2xl overflow-hidden w-full">
+          <motion.div
+            className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom_right,#f97316,#fb923c,#fdba74,#f59e0b,#facc15,#fde047,#84cc16,#22c55e,#14b8a6,#06b6d4,#3b82f6,#a855f7)] bg-size-[300%_300%]"
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
+            transition={{
+              duration: 5,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          />
 
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 sm:gap-4 space-y-3 sm:space-y-4 pt-24 sm:pt-32 md:pt-36 lg:pt-40 w-full h-full">
-        {FAQDATA.map((item, idx) => (
-          <div
-            key={idx}
-            className="relative group block p-2 sm:p-3 w-full break-inside-avoid"
-            onMouseEnter={() => setHoveredIndex(idx)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <AnimatePresence>
-              {hoveredIndex === idx && (
-                <motion.span
-                  className="absolute inset-0 -z-10 backdrop-blur-xl block rounded-lg sm:rounded-xl w-full"
-                  layoutId="hoverBackground"
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    background: [
-                      "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                      "linear-gradient(135deg, #8b5cf6, #ec4899)",
-                      "linear-gradient(135deg, #ec4899, #f43f5e)",
-                      "linear-gradient(135deg, #f43f5e, #f97316)",
-                      "linear-gradient(135deg, #f97316, #eab308)",
-                      "linear-gradient(135deg, #eab308, #22c55e)",
-                      "linear-gradient(135deg, #22c55e, #06b6d4)",
-                      "linear-gradient(135deg, #06b6d4, #0ea5e9)",
-                      "linear-gradient(135deg, #0ea5e9, #3b82f6)",
-                      "linear-gradient(135deg, #3b82f6, #6366f1)",
-                      "linear-gradient(135deg, #6366f1, #22c55e)",
-                      "linear-gradient(135deg, #22c55e, #ec4899)",
-                    ],
-                    transition: {
-                      opacity: { duration: 0.15 },
-                      background: {
-                        duration: 6,
-                        ease: "linear",
-                        repeat: Infinity,
-                      },
-                    },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transition: { duration: 0.15, delay: 0.2 },
-                  }}
-                />
-              )}
-            </AnimatePresence>
-            <div className="bg-background rounded-lg w-full">
-              <div className="relative p-2 sm:p-3 z-20 overflow-hidden border-2 border-transparent dark:border-foreground/5 hover:border-white dark:hover:border-transparent bg-zinc-500/5 backdrop-blur-sm rounded-lg transition-all duration-300 w-full">
-                <div className="relative z-50 bg-background border group-hover:shadow-lg/10 transition-all duration-700 rounded-lg w-full">
-                  <div className="p-4 sm:p-5 md:p-6 lg:p-7 w-full h-fit">
-                    <h1 className="text-sm md:text-base xl:text-lg text-foreground">
-                      {item.question}
-                    </h1>
-                    <p className="mt-2 font-light text-foreground/80 tracking-wide leading-relaxed text-xs xl:text-sm">
-                      {item.answer}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute inset-0 z-10 transform-gpu bg-primary/40 blur-[3rem] sm:blur-3xl md:blur-[5rem] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-[2s] w-full" />
-            </div>
+          <div className="flex flex-col items-center text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="satisfy p-5 text-2xl md:text-4xl lg:text-6xl font-medium text-white text-shadow-lg"
+            >
+              Frequently Asked Questions
+            </motion.h2>
+
+            <p className="mt-5 max-w-3xl text-sm sm:text-base lg:text-lg font-semibold">
+              Explore everything about Venumity UI from beautifully crafted
+              components and modern layouts to customization, development
+              workflow, integrations, and building stunning digital experiences
+              faster.
+            </p>
           </div>
-        ))}
+        </section>
+
+        <section className="flex items-start gap-3 w-full">
+          <div className="flex flex-col gap-3 w-1/3">
+            {CATEGORIES.map((category, index) => (
+              <CategoryCard
+                key={category.title}
+                {...category}
+                isOpen={openCategoryIndex === index}
+                onToggle={() =>
+                  setOpenCategoryIndex((prev) =>
+                    prev === index ? null : index,
+                  )
+                }
+              />
+            ))}
+          </div>
+
+          <section className="flex flex-col gap-3 items-center justify-center w-2/3">
+            {FAQ_DATA.map((item, index) => {
+              const IconComponent = item.icon;
+              const isOpen = openIndex === index;
+              return (
+                <div
+                  key={index}
+                  className={`relative group/faq bg-foreground/10 ${isOpen && "p-1"} cursor-pointer rounded-lg overflow-hidden transition-all duration-700 w-full`}
+                >
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-1 pb-2" : "p-2"} transition-all duration-700 w-full`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="bg-white text-black shadow-lg/10 p-3 rounded-md shrink-0">
+                        <IconComponent className="size-5" />
+                      </div>
+                      <h3 className="text-base md:text-lg font-medium">
+                        {item.question}
+                      </h3>
+                    </div>
+
+                    <div className="absolute top-4 right-10 shrink-0 opacity-20 group-hover/faq:opacity-100 transition-all duration-700">
+                      <ChevronUp
+                        className={`absolute inset-0 size-6 ${isOpen ? "rotate-y-180 rotate-x-180" : ""} transition-all duration-700`}
+                      />
+                    </div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          filter: "blur(15px)",
+                          height: 0,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          filter: "blur(0px)",
+                          height: "auto",
+                        }}
+                        exit={{ opacity: 0, filter: "blur(15px)", height: 0 }}
+                        transition={{
+                          duration: 0.8,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="w-full"
+                      >
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{
+                            duration: 0.8,
+                            ease: [0.22, 1, 0.36, 1],
+                            delay: 0.2,
+                          }}
+                          className="text-sm md:text-base tracking-wider! text-foreground/50 py-4 px-5 bg-background rounded-md"
+                        >
+                          {item.answer}
+                        </motion.p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </section>
+        </section>
       </div>
-    </section>
+    </main>
   );
 }

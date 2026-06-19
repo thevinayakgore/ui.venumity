@@ -141,7 +141,7 @@ export default function DocsSidebarContent({}: DocsSidebarContentProps) {
   };
 
   return (
-    <aside className="relative flex flex-col items-start w-full max-h-3/4">
+    <aside className="relative flex flex-col items-start font-semibold! tracking-wide! w-full max-h-3/4">
       <h2 className="pb-2 mb-2 border-b w-full">On this page</h2>
 
       <div
@@ -158,15 +158,15 @@ export default function DocsSidebarContent({}: DocsSidebarContentProps) {
               key={`${heading.id}-${index}`}
               ref={(el) => void (buttonRefs.current[heading.id] = el)}
               onClick={() => handleHeadingClick(heading.id)}
-              className={`inline-flex text-left items-center group cursor-pointer w-fit py-1.5 text-xs transition-all duration-500 ${
+              className={`inline-flex text-left items-center group cursor-pointer py-1.5 text-xs transition-all duration-500 min-w-0 w-full ${
                 activeId === heading.id
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-foreground/40 hover:text-foreground"
               }`}
             >
               <span
                 title={heading.text}
-                className="truncate whitespace-nowrap overflow-hidden text-ellipsis w-full"
+                className="truncate whitespace-nowrap overflow-hidden min-w-0 w-full"
               >
                 {heading.text}
               </span>

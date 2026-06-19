@@ -1,9 +1,9 @@
 // app/components/content/overview.tsx
 "use client";
 import { useMemo, useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Fullscreen } from "lucide-react";
+import { Fullscreen, Proportions, Terminal, Play } from "lucide-react";
 import CodeBlock from "@/components/site/common/code-block";
 import ComponentPreview from "./preview";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -47,13 +47,14 @@ export default function Overview({
 
   const tabs = useMemo<TabType[]>(() => {
     const base: TabType[] = [PREVIEW_TAB, CODE_TAB];
-    return youtubeUrl ? [...base, VIDEO_TAB] : base;
+    if (youtubeUrl) base.push(VIDEO_TAB);
+    return base;
   }, [youtubeUrl]);
 
   useEffect(() => {
     if (!tabs.includes(activeTab)) {
-      const id = setTimeout(() => setActiveTab(PREVIEW_TAB), 0);
-      return () => clearTimeout(id);
+      const id = window.setTimeout(() => setActiveTab(PREVIEW_TAB), 0);
+      return () => window.clearTimeout(id);
     }
   }, [tabs, activeTab]);
 
@@ -64,37 +65,14 @@ export default function Overview({
 
   const resolvedSubcategory = useMemo(() => {
     if (subcategory) return subcategory;
-
     const parts = slugPath.split("/").filter(Boolean);
-    if (parts.length >= 2) {
-      return parts[1];
-    }
-
-    if (kebabItemName.includes("alert")) return "alert";
-    if (kebabItemName.includes("button")) return "button";
-    if (kebabItemName.includes("input")) return "input";
-    if (kebabItemName.includes("card")) return "card";
-
+    if (parts.length >= 2) return parts[1];
     return null;
-  }, [subcategory, slugPath, kebabItemName]);
-
-  // IMPORTANT: Use the EXACT code from the API without any modifications
-  const currentCode = useMemo(() => {
-    // Return the raw code as received from the API
-    // No import stripping, no modifications - keep the EXACT file content
-    return code || "";
-  }, [code]);
+  }, [subcategory, slugPath]);
 
   const liveDemoUrl = useMemo(() => {
     const kebabCategory = toKebabCase(componentName);
-    const baseUrl = `/preview/${kebabCategory}/${kebabItemName}`;
-
-    const params = new URLSearchParams({
-      ref: "overview",
-      source: kebabCategory,
-    });
-
-    return `${baseUrl}?${params.toString()}`;
+    return `/preview/${kebabCategory}/${kebabItemName}?ref=overview&source=${kebabCategory}`;
   }, [componentName, kebabItemName]);
 
   const youtubeEmbedUrl = useMemo(() => {
@@ -116,43 +94,49 @@ export default function Overview({
   }, [youtubeUrl]);
 
   const mainContent = useMemo(() => {
-    if (activeTab === PREVIEW_TAB) {
-      return (
-        <ComponentPreview
-          category={componentName}
-          subcategory={resolvedSubcategory}
-          componentName={kebabItemName}
-        />
-      );
-    }
-
-    if (activeTab === VIDEO_TAB && youtubeEmbedUrl) {
-      return (
-        <div className="w-full h-full rounded-md overflow-hidden">
-          <iframe
-            src={youtubeEmbedUrl}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full border-0"
+    switch (activeTab) {
+      case PREVIEW_TAB:
+        return (
+          <ComponentPreview
+            category={componentName}
+            subcategory={resolvedSubcategory}
+            componentName={kebabItemName}
           />
-        </div>
-      );
+        );
+      case CODE_TAB:
+        return (
+          <div className="w-full h-full">
+            <CodeBlock code={code || ""} language="tsx" />
+          </div>
+        );
+      case VIDEO_TAB:
+        return youtubeEmbedUrl ? (
+          <div className="w-full h-full rounded-md overflow-hidden">
+            <iframe
+              src={youtubeEmbedUrl}
+              title="YouTube video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
+          </div>
+        ) : null;
+      default:
+        return null;
     }
-
-    return (
-      <div className="w-full">
-        <CodeBlock code={currentCode} language="tsx" aspectVideo />
-      </div>
-    );
   }, [
     activeTab,
+    code,
     componentName,
     resolvedSubcategory,
     kebabItemName,
     youtubeEmbedUrl,
-    currentCode,
   ]);
+
+  // Tab slider position
+  const tabWidth = 120;
+  const tabIndex = tabs.indexOf(activeTab);
+  const sliderLeft = tabIndex * tabWidth;
 
   return (
     <section className="w-full">
@@ -167,23 +151,32 @@ export default function Overview({
         )}
       </header>
 
-      <div className="relative flex flex-col items-start p-1.5 md:p-3.5 bg-foreground/3 border border-foreground/5 rounded-[0.7rem] overflow-hidden w-full">
+      <div className="relative flex flex-col items-start p-2 bg-foreground/5 rounded-t-xl rounded-b-2xl overflow-hidden w-full">
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 md:pt-0.5 pb-3 w-full">
-          <div className="relative flex items-center gap-2 mb-1 md:mb-0 w-auto">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className={`text-xs md:text-sm uppercase z-10 w-24 font-medium cursor-pointer transition-all duration-300 ${
-                  activeTab === tab
-                    ? "text-foreground"
-                    : "text-foreground/40 hover:text-foreground"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
+          <div className="relative flex items-center gap-2 w-auto">
+            {tabs.map((tab) => {
+              const icons = {
+                preview: Proportions,
+                code: Terminal,
+                video: Play,
+              };
+              const Icon = icons[tab] || Proportions;
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex items-center justify-center m-auto gap-2 text-sm uppercase z-10 w-28 font-semibold tracking-wider cursor-pointer transition-all duration-300 ${
+                    activeTab === tab
+                      ? "text-foreground/80"
+                      : "text-foreground/40 hover:text-foreground/80"
+                  }`}
+                >
+                  <Icon className="size-4" />
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              );
+            })}
             <motion.span
               layout
               transition={{
@@ -192,28 +185,14 @@ export default function Overview({
                 damping: 30,
                 delay: 0.2,
               }}
-              className="absolute -bottom-5 w-24 h-9 mb-3 border border-foreground/15 bg-background transform-gpu leading-none rounded-sm"
-              style={{
-                left:
-                  activeTab === PREVIEW_TAB
-                    ? 0
-                    : activeTab === CODE_TAB
-                      ? 105
-                      : 207,
-              }}
+              className="absolute -bottom-5 w-28 h-9 mb-3 bg-card! dark:bg-muted! border transform-gpu leading-none rounded-md"
+              style={{ left: sliderLeft }}
             />
             <motion.span
               layout
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="hidden md:block absolute -bottom-5 z-500! w-24 h-1 bg-primary leading-none rounded-full"
-              style={{
-                left:
-                  activeTab === PREVIEW_TAB
-                    ? 0
-                    : activeTab === CODE_TAB
-                      ? 105
-                      : 207,
-              }}
+              className="absolute -bottom-5.5 z-50! w-28 h-1 bg-primary leading-none rounded-full"
+              style={{ left: sliderLeft }}
             />
           </div>
 
@@ -222,21 +201,21 @@ export default function Overview({
               componentName={itemName || componentName}
               description={description || ""}
               filePath={code ? `${componentName}/${kebabItemName}.tsx` : ""}
-              currentCode={currentCode}
+              currentCode={code || ""}
             />
 
             <Button
               size="sm"
               variant="outline"
-              onClick={() => {
-                window.open(liveDemoUrl, "_blank", "noopener,noreferrer");
-              }}
-              disabled={!currentCode}
-              className="relative group cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/60 hover:text-foreground rounded-sm overflow-hidden"
+              onClick={() =>
+                window.open(liveDemoUrl, "_blank", "noopener,noreferrer")
+              }
+              disabled={!code}
+              className="relative group px-4! h-9! border-foreground/10! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/50 hover:text-foreground overflow-hidden"
             >
               <span
                 aria-hidden
-                className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-zinc-300/70 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
+                className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-green-500/50 dark:via-blue-500/50 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
               />
               <Fullscreen className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
               <span>Live</span>
@@ -246,7 +225,9 @@ export default function Overview({
         </div>
 
         <div
-          className={`flex flex-col items-center justify-center m-auto border border-foreground/7 rounded-lg ${activeTab === "preview" && "bg-background rounded-tl-none"} aspect-square md:aspect-video max-h-screen overflow-hidden! transition-all duration-700 w-full`}
+          className={`flex flex-col items-center justify-center m-auto border border-foreground/7 rounded-xl ${
+            activeTab === "preview" && "bg-background rounded-tl-none"
+          } aspect-square md:aspect-video max-h-screen overflow-hidden! transition-all duration-700 w-full`}
         >
           <div className="relative flex flex-col overflow-hidden bg-background w-full h-full">
             {mainContent}

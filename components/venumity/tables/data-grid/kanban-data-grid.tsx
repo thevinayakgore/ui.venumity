@@ -99,7 +99,7 @@ export default function DataGrid2_3() {
 
     const sourceColumn = columns.find((col) => col.id === source.droppableId);
     const destColumn = columns.find(
-      (col) => col.id === destination.droppableId
+      (col) => col.id === destination.droppableId,
     );
     if (!sourceColumn || !destColumn) return;
 
@@ -113,7 +113,7 @@ export default function DataGrid2_3() {
         if (col.id === sourceColumn.id) return { ...col, tasks: sourceTasks };
         if (col.id === destColumn.id) return { ...col, tasks: destTasks };
         return col;
-      })
+      }),
     );
   };
 
@@ -197,6 +197,10 @@ export default function DataGrid2_3() {
                                   ? "ring-2 ring-blue-500"
                                   : ""
                               }`}
+                              style={
+                                provided.draggableProps
+                                  .style as React.CSSProperties
+                              }
                             >
                               <div className="flex items-start justify-between mb-3">
                                 <h4 className="font-medium text-gray-900 dark:text-white">
@@ -216,7 +220,7 @@ export default function DataGrid2_3() {
                                 </div>
                                 <span
                                   className={`px-2 py-1 text-xs rounded ${getPriorityColor(
-                                    task.priority
+                                    task.priority,
                                   )}`}
                                 >
                                   {task.priority}

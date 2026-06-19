@@ -26,7 +26,7 @@ export default function BadgeTextAnimate({
   }, [leftWords.length, interval]);
 
   return (
-    <span className="flex items-center text-xs leading-none font-sans font-medium uppercase">
+    <span className="flex items-center text-xs leading-none uppercase">
       {/* LEFT WORD */}
       <AnimatePresence mode="wait">
         <motion.span

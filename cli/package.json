@@ -1,0 +1,47 @@
+{
+  "name": "venumityui",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "CLI for Venumity UI – Install React components with ease",
+  "bin": {
+    "venumityui": "./bin/venumity.js"
+  },
+  "scripts": {
+    "dev": "node bin/venumity.js"
+  },
+  "files": ["bin", "README.md", "package.json"],
+  "keywords": [
+    "venumity",
+    "ui",
+    "components",
+    "cli",
+    "react",
+    "nextjs",
+    "tailwindcss",
+    "shadcn",
+    "open-source"
+  ],
+  "author": "The Vinayak Gore",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thevinayakgore/ui.venumity.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/thevinayakgore/ui.venumity/issues"
+  },
+  "homepage": "https://ui.venumity.com",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.5",
+    "gradient-string": "^3.0.0",
+    "inquirer": "^10.1.8",
+    "ora": "^8.1.0"
+  }
+}

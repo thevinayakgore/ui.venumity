@@ -1,8 +1,8 @@
 // registry/component-utils.ts
-import { toKebabCase } from "@/utils/slug-kebab";
 import * as LucideIcons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { COMPONENTS } from "./components";
+import { toKebabCase } from "@/utils/slug-kebab";
 
 // ==================== TYPE DEFINITIONS ====================
 export interface ComponentItem {
@@ -15,8 +15,6 @@ export interface ComponentItem {
   subcategory?: string;
   folderPath?: string;
   isFolderBased?: boolean;
-  hasFolderStructure?: boolean;
-  hasSetup?: boolean;
   githubUsername?: string;
 }
 
@@ -28,8 +26,6 @@ export interface ComponentSubcategory {
   tags?: string[];
   techs?: string[];
   items: ComponentItem[];
-  hasFolderStructure?: boolean;
-  hasSetup?: boolean;
 }
 
 export interface ComponentCategory {
@@ -55,74 +51,6 @@ export function getLucideIcon(iconName: string) {
     icons[iconName as LucideIconName] ??
     icons.Folder
   );
-}
-
-// ==================== COMPONENT CREATION ====================
-export function createComponents(
-  data: {
-    category: string;
-    icon: string;
-    tags?: string[];
-    techs?: string[];
-    subcategories: {
-      name: string;
-      description?: string;
-      icon?: string;
-      thumbnail?: string; // Only here for category cards
-      tags: string[];
-      techs: string[];
-      hasFolderStructure?: boolean;
-      hasSetup?: boolean;
-      items: {
-        itemName: string;
-        tags?: string[];
-        techs?: string[];
-        video?: string;
-        hasFolderStructure?: boolean;
-        hasSetup?: boolean;
-        githubUsername?: string;
-      }[];
-    }[];
-  }[],
-): ComponentCategory[] {
-  return data.map((categoryData) => ({
-    name: categoryData.category,
-    icon: categoryData.icon,
-    tags: categoryData.tags || [],
-    techs: categoryData.techs || [],
-    subcategories: categoryData.subcategories.map((subcategoryData) => ({
-      name: subcategoryData.name,
-      description: subcategoryData.description,
-      icon: subcategoryData.icon,
-      thumbnail: subcategoryData.thumbnail, // Pass through for category cards
-      tags: subcategoryData.tags,
-      techs: subcategoryData.techs,
-      hasFolderStructure: subcategoryData.hasFolderStructure || false,
-      hasSetup: subcategoryData.hasSetup || false,
-      items: subcategoryData.items.map((itemData) => {
-        const categoryKebab = toKebabCase(categoryData.category);
-        const subcategoryKebab = toKebabCase(subcategoryData.name);
-        const itemKebab = toKebabCase(itemData.itemName);
-
-        return {
-          ...itemData,
-          tags: [
-            ...new Set([...(itemData.tags || []), ...subcategoryData.tags]),
-          ],
-          techs: [
-            ...new Set([...(itemData.techs || []), ...subcategoryData.techs]),
-          ],
-          category: categoryKebab,
-          subcategory: subcategoryKebab,
-          folderPath: `${categoryKebab}/${subcategoryKebab}/${itemKebab}`,
-          hasFolderStructure: itemData.hasFolderStructure || false,
-          hasSetup: itemData.hasSetup || false,
-          isFolderBased: itemData.hasFolderStructure || false,
-          githubUsername: itemData.githubUsername,
-        };
-      }),
-    })),
-  }));
 }
 
 // ==================== PATH UTILS ====================
@@ -319,14 +247,6 @@ export function getComponentFolderPath(componentPath: string): string | null {
   return component?.folderPath || null;
 }
 
-// Helper to check if a component is likely folder-based
-export function isFolderBasedComponent(componentName: string): boolean {
-  const folderBasedKeywords = ["dashboard", "layout", "complex", "page", "app"];
-  return folderBasedKeywords.some((keyword) =>
-    componentName.toLowerCase().includes(keyword),
-  );
-}
-
 // ==================== GITHUB UTILS ====================
 export function getGitHubIssueUrl(
   componentPath: string,
@@ -365,26 +285,11 @@ export function getGitHubIssueUrl(
   return `${baseUrl}?${params.toString()}`;
 }
 
-export function getGitHubEditUrl(componentPath: string): string {
-  const component = getComponentByPath(componentPath);
-
-  if (component && component.folderPath) {
-    return `https://github.com/thevinayakgore/ui.venumity/components/venumity/${component.folderPath}`;
-  }
-
-  const parts = componentPath.split("/").filter(Boolean);
-  if (parts.length >= 3) {
-    return `https://github.com/thevinayakgore/ui.venumity/components/venumity/${parts.slice(0, 3).join("/")}`;
-  }
-
-  return "https://github.com/thevinayakgore/ui.venumity";
-}
-
 // ==================== THUMBNAIL HELPERS ====================
 
 /**
  * Get thumbnail path for category cards
- * Priority: 
+ * Priority:
  * 1. Subcategory.thumbnail (custom thumbnail)
  * 2. First item's name (fallback)
  * Returns: /thumbnails/[thumbnail-name].png
@@ -396,14 +301,14 @@ export function getCategoryCardThumbnailPath(
     // Use custom thumbnail from subcategory
     return `/thumbnails/${toKebabCase(subcategory.thumbnail)}.png`;
   }
-  
+
   if (subcategory.items && subcategory.items.length > 0) {
     // Use first item's name as fallback
     return `/thumbnails/${toKebabCase(subcategory.items[0].itemName)}.png`;
   }
-  
+
   // No items, return empty string (will show default box)
-  return '';
+  return "";
 }
 
 /**
@@ -411,8 +316,24 @@ export function getCategoryCardThumbnailPath(
  * Always uses the component item name
  * Returns: /thumbnails/[component-item-name].png
  */
-export function getOGThumbnailPath(
-  itemName: string,
-): string {
+export function getOGThumbnailPath(itemName: string): string {
   return `/thumbnails/${toKebabCase(itemName)}.png`;
+}
+
+export function getAllPaths(): string[] {
+  const paths: string[] = [];
+  COMPONENTS.forEach((cat) => {
+    const catSlug = toKebabCase(cat.name);
+    cat.subcategories.forEach((sub) => {
+      const subSlug = toKebabCase(sub.name);
+      // subcategory listing page
+      paths.push(`${catSlug}/${subSlug}`);
+      // individual component pages
+      sub.items.forEach((item) => {
+        const itemSlug = toKebabCase(item.itemName);
+        paths.push(`${catSlug}/${subSlug}/${itemSlug}`);
+      });
+    });
+  });
+  return paths;
 }

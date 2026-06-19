@@ -5,6 +5,7 @@ import LeftResources from "@/components/site/common/left-sidebar/resources";
 import { ResourceCategory } from "@/registry/resources";
 import { ResourcesProvider } from "@/contexts/resources";
 import RightSidebar from "@/components/site/common/right-sidebar";
+import { BottomFooter } from "@/components/site/navigations/footer";
 
 export default function ContentLayoutClient({
   children,
@@ -20,13 +21,13 @@ export default function ContentLayoutClient({
 
   return (
     <ResourcesProvider>
-      <main className="2xl:border-2 border-dashed 2xl:border-foreground/10 m-auto max-w-360 w-full h-full">
+      <main className="mx-auto w-full">
         <section
           className={`grid ${
             !hideRightSidebar
-              ? "grid-cols-1 md:grid-cols-[190px_1fr] xl:grid-cols-[190px_1fr_195px]"
-              : "md:grid-cols-[190px_1fr]"
-          } m-auto px-4 md:px-10 w-full`}
+              ? "grid-cols-1 md:grid-cols-[280px_1fr] xl:grid-cols-[280px_1fr_260px]"
+              : "md:grid-cols-[280px_1fr]"
+          } m-auto max-w-400 w-full`}
         >
           <LeftResources
             initialCategories={initialCategories}
@@ -34,14 +35,15 @@ export default function ContentLayoutClient({
           />
           <div
             id="content"
-            className={`flex flex-col items-center py-6 md:pt-16 lg:pt-24 m-auto ${
-              !hideRightSidebar ? "md:px-10 w-full md:max-w-240" : "md:pl-10"
-            } w-full h-full`}
+            className={`flex flex-col items-center p-5 md:p-10 m-auto ${
+              !hideRightSidebar ? "max-w-215" : ""
+            } w-full`}
           >
             {children}
           </div>
           {!hideRightSidebar && <RightSidebar />}
         </section>
+        <BottomFooter />
       </main>
     </ResourcesProvider>
   );

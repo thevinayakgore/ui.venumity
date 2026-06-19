@@ -103,35 +103,46 @@ const timeRangeData = {
   quarterly: quarterlyData,
 };
 
-import type { TooltipProps } from "recharts";
-import type {
-  ValueType,
-  NameType,
-} from "recharts/types/component/DefaultTooltipContent";
-
 const CustomTooltip = ({
   active,
   payload,
   label,
-}: TooltipProps<ValueType, NameType>) => {
+}: {
+  active?: boolean;
+  payload?: Array<{
+    value?: number;
+    name?: string;
+    color?: string;
+  }>;
+  label?: string;
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
         <p className="font-semibold mb-2">{label}</p>
-        {payload.map((entry, index) => (
-          <div key={index} className="flex items-center gap-2 text-sm">
-            <div
-              className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: entry.color }}
-            />
-            <span className="text-muted-foreground">{entry.name}:</span>
-            <span className="font-medium">
-              {entry.name === "revenue"
-                ? `$${entry.value?.toLocaleString?.()}`
-                : entry.value}
-            </span>
-          </div>
-        ))}
+        {payload.map(
+          (
+            entry: {
+              value?: number;
+              name?: string;
+              color?: string;
+            },
+            index: number,
+          ) => (
+            <div key={index} className="flex items-center gap-2 text-sm">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: entry.color }}
+              />
+              <span className="text-muted-foreground">{entry.name}:</span>
+              <span className="font-medium">
+                {entry.name === "revenue"
+                  ? `$${entry.value?.toLocaleString?.()}`
+                  : entry.value}
+              </span>
+            </div>
+          ),
+        )}
       </div>
     );
   }
@@ -371,7 +382,7 @@ export default function ChartsDashboard() {
                 dataKey="value"
                 animationDuration={1500}
                 label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
+                  `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`
                 }
                 labelLine={false}
               >

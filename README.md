@@ -7,6 +7,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevinayakgore/ui.venumity/blob/main/CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://ui.venumity.com/legal/license)
 [![Last Commit](https://img.shields.io/github/last-commit/thevinayakgore/ui.venumity?color=green&label=Last%20Commit)](https://github.com/thevinayakgore/ui.venumity/commits)
+[![CLI Version](https://img.shields.io/npm/v/venumityui.svg?color=orange&label=CLI)](https://www.npmjs.com/package/venumityui)
+[![CLI Downloads](https://img.shields.io/npm/dm/venumityui.svg?color=blue&label=Downloads)](https://www.npmjs.com/package/venumityui)
 
 <br/>
 
@@ -20,9 +22,52 @@
 
 <br/>
 
-[🌐 Live Site](https://ui.venumity.com) · [📦 Components](https://ui.venumity.com/components) · [📚 Docs](https://ui.venumity.com/docs/introduction) · [🧩 Templates](https://ui.venumity.com/templates) · [💬 Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
+[🌐 Live Site](https://ui.venumity.com) · [📦 Components](https://ui.venumity.com/components) · [📚 Docs](https://ui.venumity.com/docs/introduction) · [🧩 Templates](https://ui.venumity.com/templates) · [⚡ CLI](https://www.npmjs.com/package/venumityui) · [💬 Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
 
-</div>
+---
+
+## ⚡ Install Components via CLI
+
+The fastest way to add Venumity UI components to your Next.js project:
+
+```bash
+npx venumityui@latest add <component-name>
+```
+
+**Examples:**
+
+```bash
+# Add a single component
+npx venumityui@latest add profile-card-1
+
+# Add a folder-based component (with all files)
+npx venumityui@latest add personal-panel-1
+
+# Add multiple components
+npx venumityui@latest add profile-card-1 basic-accordion ai-chat-bot-1
+
+# Install all available components
+npx venumityui@latest add --all
+```
+
+### CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx venumityui@latest add <component>` | Add one or more components |
+| `npx venumityui@latest add --all` | Install all components |
+| `npx venumityui@latest list` | List all components |
+| `npx venumityui@latest search <query>` | Search components |
+| `npx venumityui@latest info <component>` | Component details |
+| `npx venumityui@latest categories` | List categories |
+| `npx venumityui@latest subcategory <category>` | List subcategories |
+
+### Features
+
+- ✅ **Auto-dependency installation** - Detects and installs npm & shadcn/ui dependencies
+- ✅ **Folder-based components** - Supports multi-file components like `personal-panel-1`
+- ✅ **Next.js + TypeScript** - Optimized for modern React development
+- ✅ **Zero configuration** - Just run and go
 
 ---
 
@@ -66,6 +111,7 @@ Perfect for SaaS dashboards, landing pages, portfolios, startups, and developers
 - ✅ TypeScript ready — full type safety
 - ✅ Works with Next.js, React, and Vite
 - ✅ Clean, readable source code
+- ✅ **CLI support** - Install components with one command
 
 ### 🎨 Design That Scales
 - ✅ Built with Tailwind CSS
@@ -77,22 +123,30 @@ Perfect for SaaS dashboards, landing pages, portfolios, startups, and developers
 - ✅ Copy-paste workflow — no install needed
 - ✅ Works with any React framework
 - ✅ Simple customization
+- ✅ **Auto-dependency installation** - npm & shadcn/ui
 
 ---
 
 ## 🚀 Getting Started
 
+### Option 1: Using CLI (Recommended)
+
+```bash
+# Install components directly
+npx venumityui@latest add profile-card-1
+```
+
+### Option 2: Manual Copy-Paste
+
 **1. Browse** → **2. Copy** → **3. Paste** → **4. Customize**
 
 ```tsx
-// Example: using the HoverButton component
-import { HoverButton } from '@/components/ui/hover-button'
+// Example: using the Profile Card component
+import ProfileCard1 from '@/components/ui/profile-card-1'
 
 export default function MyPage() {
   return (
-    <HoverButton variant="primary" size="lg">
-      Hover Me
-    </HoverButton>
+    <ProfileCard1 />
   )
 }
 ```
@@ -108,8 +162,9 @@ export default function MyPage() {
 | Next.js 15+ | Framework |
 | Tailwind CSS v4+ | Styling |
 | TypeScript | Type safety |
-| Framer Motion | Animations |
+| Framer Motion / Motion | Animations |
 | Lucide React | Icons |
+| shadcn/ui | Component primitives |
 
 ---
 
@@ -236,6 +291,6 @@ Want your avatar here ? [Pick a component from the wishlist above](#️-componen
 
 <br/>
 
-**Venumity UI ⚡ - Ship beautiful interfaces faster.**
+**Venumity UI ⚡ Ship beautiful interfaces faster.**
 
 </div>

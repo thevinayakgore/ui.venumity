@@ -7,7 +7,6 @@ import { toKebabCase } from "@/utils/slug-kebab";
 const readFile = (filePath: string): string | null => {
   try {
     if (fs.existsSync(filePath)) {
-      // Read file synchronously and return EXACT content without any modifications
       return fs.readFileSync(filePath, "utf-8");
     }
     return null;
@@ -15,6 +14,35 @@ const readFile = (filePath: string): string | null => {
     console.error("Error reading file:", error);
     return null;
   }
+};
+
+const readAllFilesInFolder = (folderPath: string, basePath: string): Array<{ path: string; content: string }> => {
+  const files: Array<{ path: string; content: string }> = [];
+  
+  if (!fs.existsSync(folderPath)) return files;
+  
+  const items = fs.readdirSync(folderPath, { withFileTypes: true });
+  
+  for (const item of items) {
+    const fullPath = path.join(folderPath, item.name);
+    const relativePath = path.relative(basePath, fullPath);
+    
+    if (item.isDirectory()) {
+      // Recursively read subdirectories
+      const subFiles = readAllFilesInFolder(fullPath, basePath);
+      files.push(...subFiles);
+    } else if (item.isFile() && (item.name.endsWith('.tsx') || item.name.endsWith('.ts') || item.name.endsWith('.css'))) {
+      const content = readFile(fullPath);
+      if (content) {
+        files.push({
+          path: relativePath,
+          content: content
+        });
+      }
+    }
+  }
+  
+  return files;
 };
 
 const findComponentFile = (
@@ -87,8 +115,8 @@ const getAllComponentsInSubcategory = (
   basePath: string,
   category: string,
   subcategory: string,
-): Array<{ name: string; code: string }> => {
-  const components: Array<{ name: string; code: string }> = [];
+): Array<{ name: string; code: string; isFolder: boolean; files?: Array<{ path: string; content: string }> }> => {
+  const components: Array<{ name: string; code: string; isFolder: boolean; files?: Array<{ path: string; content: string }> }> = [];
   const subcategoryPath = path.join(basePath, category, subcategory);
 
   if (!fs.existsSync(subcategoryPath)) {
@@ -107,19 +135,28 @@ const getAllComponentsInSubcategory = (
         components.push({
           name: componentName,
           code: code,
+          isFolder: false
         });
       }
     } else if (item.isDirectory()) {
       // Check if directory contains an index.tsx file
       const indexPath = path.join(subcategoryPath, item.name, "index.tsx");
       if (fs.existsSync(indexPath)) {
-        const componentName = item.name; // Use folder name as component name
+        const componentName = item.name;
         const code = readFile(indexPath);
+        
+        // Read all files in the folder
+        const allFiles = readAllFilesInFolder(
+          path.join(subcategoryPath, item.name),
+          path.join(subcategoryPath, item.name)
+        );
         
         if (code) {
           components.push({
             name: componentName,
             code: code,
+            isFolder: true,
+            files: allFiles
           });
         }
       }
@@ -127,6 +164,26 @@ const getAllComponentsInSubcategory = (
   }
 
   return components;
+};
+
+// Check if a component is folder-based
+const isFolderBasedComponent = (
+  basePath: string,
+  category: string,
+  componentParts: string[],
+): boolean => {
+  const componentPath = path.join(basePath, category, ...componentParts);
+  return fs.existsSync(componentPath) && fs.statSync(componentPath).isDirectory();
+};
+
+// Get all files from a folder-based component
+const getFolderComponentFiles = (
+  basePath: string,
+  category: string,
+  componentParts: string[],
+): Array<{ path: string; content: string }> => {
+  const folderPath = path.join(basePath, category, ...componentParts);
+  return readAllFilesInFolder(folderPath, folderPath);
 };
 
 export async function GET(
@@ -161,6 +218,39 @@ export async function GET(
       });
     }
 
+    // Check if this is a folder-based component
+    const isFolder = isFolderBasedComponent(
+      basePath,
+      toKebabCase(category),
+      component.map(toKebabCase)
+    );
+
+    if (isFolder) {
+      // Get all files from the folder
+      const files = getFolderComponentFiles(
+        basePath,
+        toKebabCase(category),
+        component.map(toKebabCase)
+      );
+      
+      // Get the main index.tsx content
+      const indexPath = path.join(
+        basePath,
+        toKebabCase(category),
+        ...component.map(toKebabCase),
+        "index.tsx"
+      );
+      const code = readFile(indexPath);
+      
+      return NextResponse.json({
+        code: code || "",
+        isFolder: true,
+        files: files,
+        isSubcategory: false,
+      });
+    }
+
+    // Single file component
     const filePath = findComponentFile(
       basePath,
       toKebabCase(category),
@@ -174,7 +264,6 @@ export async function GET(
       );
     }
 
-    // Read EXACT file content without any modifications
     const code = readFile(filePath);
 
     if (!code) {
@@ -184,9 +273,9 @@ export async function GET(
       );
     }
 
-    // Return the EXACT code as read from the file
     return NextResponse.json({
       code: code,
+      isFolder: false,
       isSubcategory: false,
     });
   } catch (error) {

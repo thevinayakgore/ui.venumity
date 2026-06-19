@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { CheckLine, Clipboard } from "lucide-react";
+import { CheckCheck, Clipboard } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
 
@@ -48,21 +48,23 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div
+      className={`relative ${!pathname?.startsWith("/components") && "p-1 bg-background border rounded-xl"} w-full h-full`}
+    >
       <div
         className={`${aspectVideo && "aspect-video"} group/main overflow-auto w-full h-full`}
       >
         {hasCopyBtn && (
           <button
             onClick={handleCopy}
-            className={`group/btn absolute top-2.5 right-2.5 z-10! cursor-pointer! bg-background/70 backdrop-blur-sm text-muted-foreground/70 hover:text-foreground ${
+            className={`group/btn absolute z-10! cursor-pointer! bg-background/20 backdrop-blur-sm text-foreground/40 hover:text-foreground ${
               isComponentsPage
-                ? "size-7 p-1.5 rounded!"
-                : "size-7 p-1.5 bg-background! border border-foreground/15 rounded!"
+                ? "top-2 right-2 size-8 p-2 rounded-sm"
+                : "top-1 right-1 size-9 p-2.5 pr-2 pt-2 bg-background! border border-t-0 border-r-0 rounded-tr-lg rounded-bl-lg"
             } transition-all duration-500`}
           >
             {copied ? (
-              <CheckLine className="w-full h-full text-green-500" />
+              <CheckCheck className="w-full h-full text-green-500" />
             ) : (
               <Clipboard className="w-full h-full group-hover/btn:text-foreground transition-all duration-500" />
             )}
@@ -70,7 +72,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         )}
 
         <div
-          className={`${!isComponentsPage && "border rounded-md overflow-hidden"}`}
+          className={`${!isComponentsPage && "border rounded-lg overflow-hidden"}`}
         >
           {mounted && (
             <SyntaxHighlighter

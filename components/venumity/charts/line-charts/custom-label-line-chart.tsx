@@ -83,9 +83,10 @@ export default function ChartLineLabelCustom() {
               className="fill-foreground font-medium"
               fontSize={12}
               dataKey="browser"
-              formatter={(value: keyof typeof chartConfig) =>
-                chartConfig[value]?.label
-              }
+              formatter={(value) => {
+                const key = String(value) as keyof typeof chartConfig;
+                return chartConfig[key]?.label ?? String(value ?? "");
+              }}
             />
           </Line>
         </LineChart>

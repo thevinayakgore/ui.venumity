@@ -2,11 +2,12 @@
 export interface ResourcePage {
   title: string;
   published: boolean;
-  contentPath: string; // Path to .md file (relative from /app directory)
+  contentPath: string;
   description?: string;
   officialUrl?: string;
   tags?: string[];
   coverImage?: string;
+  authorNames?: string[];
 }
 
 export interface ResourceCategory {
@@ -27,7 +28,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
       {
         title: "Next.js",
         published: true,
-        contentPath: "/registry/reso/frameworks/nextjs.md", // Add /
+        contentPath: "/registry/reso/frameworks/next-js.md", // Add /
         description:
           "A comprehensive Next.js guide covering server components, routing, data fetching, performance optimization, and best practices for building scalable, production-ready web applications.",
         officialUrl: "https://nextjs.org/",
@@ -40,7 +41,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "fullstack",
           "performance",
         ],
-        coverImage: "/icons/nextjs.png",
+        coverImage: "/covers/nextjs.png",
+        authorNames: ["thevinayakgore"],
       },
       {
         title: "React",
@@ -57,7 +59,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "javascript",
           "ui",
         ],
-        coverImage: "/icons/react.png",
+        coverImage: "/covers/react.png",
+        authorNames: ["thevinayakgore"],
       },
     ],
   },
@@ -81,7 +84,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "motiondesign",
           "microinteractions",
         ],
-        coverImage: "/icons/motion.png",
+        coverImage: "/covers/motion.png",
+        authorNames: ["thevinayakgore"],
       },
       {
         title: "GSAP",
@@ -97,7 +101,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "scrollanimations",
           "performance",
         ],
-        coverImage: "/icons/gsap.png",
+        coverImage: "/covers/gsap.png",
+        authorNames: ["thevinayakgore"],
       },
     ],
   },
@@ -115,7 +120,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "A step-by-step Sanity CMS tutorial explaining schema design, content modeling, GROQ queries, and integration with modern frontend frameworks.",
         officialUrl: "https://www.sanity.io/",
         tags: ["sanity", "headlesscms", "content", "groq", "backend"],
-        coverImage: "/icons/sanity.png",
+        coverImage: "/covers/sanity.png",
+        authorNames: ["thevinayakgore"],
       },
       {
         title: "Strapi",
@@ -125,7 +131,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "A complete Strapi CMS guide covering API creation, authentication, content types, and integration with frontend applications.",
         officialUrl: "https://strapi.io/",
         tags: ["strapi", "headlesscms", "api", "cms", "backend"],
-        coverImage: "/icons/strapi.png",
+        coverImage: "/covers/strapi.png",
+        authorNames: ["thevinayakgore"],
       },
     ],
   },
@@ -142,16 +149,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "A concise JavaScript ES6+ cheat sheet covering modern syntax, language features, and commonly used patterns for efficient development.",
         tags: ["javascript", "es6", "syntax", "reference", "cheatsheet"],
-        coverImage: "/icons/javascript.png",
-      },
-      {
-        title: "C++",
-        published: true,
-        contentPath: "/registry/reso/cheat-sheets/c++.md",
-        description:
-          "A comprehensive C++ cheat sheet covering syntax, standard libraries, common idioms, and best practices for efficient C++ programming.",
-        tags: ["c++", "cpp", "syntax", "reference", "cheatsheet"],
-        coverImage: "/icons/c++.png",
+        coverImage: "/covers/javascript.png",
+        authorNames: ["thevinayakgore"],
       },
       {
         title: "TypeScript",
@@ -160,7 +159,8 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "A practical TypeScript cheat sheet covering types, interfaces, generics, and common patterns for building scalable and type-safe applications.",
         tags: ["typescript", "javascript", "types", "reference", "cheatsheet"],
-        coverImage: "/icons/typescript.png",
+        coverImage: "/covers/typescript.png",
+        authorNames: ["thevinayakgore"],
       },
       {
         title: "Git Commands",
@@ -169,7 +169,18 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "100s of handy Git commands in this cheat sheet covering essential commands, workflows, and tips for effective version control and collaboration.",
         tags: ["git", "versioncontrol", "commands", "reference", "cheatsheet"],
-        coverImage: "/icons/git.png",
+        coverImage: "/covers/gitcommands.png",
+        authorNames: ["thevinayakgore"],
+      },
+      {
+        title: "C++",
+        published: true,
+        contentPath: "/registry/reso/cheat-sheets/c++.md",
+        description:
+          "A comprehensive C++ cheat sheet covering syntax, standard libraries, common idioms, and best practices for efficient C++ programming.",
+        tags: ["c++", "cpp", "syntax", "reference", "cheatsheet"],
+        coverImage: "/covers/c++.png",
+        authorNames: ["thevinayakgore"],
       },
     ],
   },

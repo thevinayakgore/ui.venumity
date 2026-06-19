@@ -1,5 +1,4 @@
 "use client";
-import { useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
@@ -7,146 +6,170 @@ import { DOCS_DATA } from "@/registry/site/docs";
 import { COMPONENTS } from "@/registry/components";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { getLucideIcon } from "@/registry/component-utils";
+import { ChevronDown, File } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  SidebarGroup,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 
 export default function LeftSidebar() {
   const pathname = usePathname();
-  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const icons = LucideIcons as unknown as Record<
     string,
     React.ComponentType<{ className?: string }>
   >;
 
+  // ─── Build docs sections ──────────────────────────────────
+  const docsSections = DOCS_DATA.map((section) => {
+    const IconComponent =
+      icons[section.icon.charAt(0).toUpperCase() + section.icon.slice(1)] ||
+      File;
+
+    return {
+      title: section.title,
+      icon: IconComponent,
+      isActive: section.pages?.some((p) => pathname === `/docs/${p.slug}`),
+      items: section.pages
+        ?.filter((p) => p.published !== false)
+        .map((page) => ({
+          title: page.page,
+          url: `/docs/${page.slug}`,
+        })),
+    };
+  });
+
+  // ─── Build components sections ────────────────────────────
+  const componentSections = [...COMPONENTS]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((category) => {
+      const CategoryIcon = getLucideIcon(category.icon);
+
+      if (category.subcategories.length === 0) {
+        // No subcategories → single link
+        const url = `/components/${toKebabCase(category.name)}`;
+        return {
+          title: category.name,
+          icon: CategoryIcon,
+          url, // direct link, no children
+          isActive: pathname.startsWith(url),
+        };
+      }
+
+      return {
+        title: category.name,
+        icon: CategoryIcon,
+        isActive: pathname.startsWith(
+          `/components/${toKebabCase(category.name)}`,
+        ),
+        items: [...category.subcategories]
+          .filter((sub) => sub.items.length > 0)
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((subcategory) => ({
+            title: subcategory.name,
+            url: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
+          })),
+      };
+    });
+
+  // ─── Combine all nav items ────────────────────────────────
+  const navItems = [...docsSections, ...componentSections].filter(Boolean);
+
   return (
-    <aside className="hidden md:block sticky top-0 overflow-auto w-full max-h-screen">
-      <div
-        ref={sidebarRef}
-        className="flex flex-col items-start text-[0.8rem] font-medium leading-none pt-24 overflow-y-auto w-full h-full"
-      >
-        <div className="w-full">
-          {/* ------------------------------ DOCS ----------------------------- */}
-          {DOCS_DATA.map((section) => {
-            const IconComponent =
-              icons[
-                section.icon.charAt(0).toUpperCase() + section.icon.slice(1)
-              ] || icons.File;
+    <SidebarProvider className="hidden md:block sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
+      <SidebarGroup>
+        <SidebarMenu>
+          {navItems.map((item) => {
+            // If no sub-items, render a simple link
+            if (!item.items || item.items.length === 0) {
+              const href =
+                "url" in item && typeof item.url === "string"
+                  ? item.url
+                  : `/components/${toKebabCase(item.title)}`;
+              const isActive = pathname.startsWith(href);
 
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive}
+                    tooltip={item.title}
+                     className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                  >
+                    <Link href={href}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            }
+
+            // Has sub-items → collapsible
             return (
-              <div
-                key={`docs-${section.title}`}
-                className="space-y-2 w-full mb-2"
+              <Collapsible
+                key={item.title}
+                asChild
+                defaultOpen={true}
+                className="group/collapsible w-full"
               >
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <IconComponent className="size-3.5" />
-                  <span>{section.title}</span>
-                </div>
+                <SidebarMenuItem className="w-full">
+                  <CollapsibleTrigger asChild className="w-full">
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                    >
+                      <div className="flex items-center gap-2">
+                        {item.icon && <item.icon />}
+                        <span className="font-semibold">{item.title}</span>
+                      </div>
+                      <ChevronDown className="size-4 opacity-80 group-data-[state=open]/collapsible:rotate-y-180 group-data-[state=open]/collapsible:rotate-x-180 transition-all duration-500" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pr-2">
+                    <SidebarMenuSub className="border-l-foreground/20 gap-0.5! w-full">
+                      {item.items.map((subItem) => {
+                        const isActive = pathname === subItem.url;
 
-                <div className="flex flex-col gap-0.5">
-                  {section.pages
-                    ?.filter((p) => p.published !== false)
-                    .map((page) => {
-                      const href = `/docs/${page.slug}`;
-                      const isActive = pathname === href;
-
-                      return (
-                        <Link
-                          key={page.slug}
-                          href={href}
-                          className={`flex items-center tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                            isActive
-                              ? "text-foreground bg-muted/60 border-primary"
-                              : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                          }`}
-                        >
-                          {page.page}
-                        </Link>
-                      );
-                    })}
-                </div>
-              </div>
+                        return (
+                          <SidebarMenuSubItem
+                            key={subItem.title}
+                            className="w-full"
+                          >
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={isActive}
+                              className="border-0! px-2.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                            >
+                              <Link
+                                href={subItem.url}
+                                className="text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
+                              >
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
             );
           })}
-
-          {/* --------------------------- COMPONENTS --------------------------- */}
-          <div className="flex flex-col w-full">
-            {[...COMPONENTS]
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((category) => {
-                const hasSubcategories = category.subcategories.length > 0;
-                const CategoryIcon = getLucideIcon(category.icon);
-
-                if (!hasSubcategories) {
-                  const categoryLink = `/components/${toKebabCase(category.name)}`;
-                  const isCategoryActive = pathname.startsWith(
-                    `/components/${toKebabCase(category.name)}`,
-                  );
-
-                  return (
-                    <Link
-                      key={category.name}
-                      href={categoryLink}
-                      className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                        isCategoryActive
-                          ? "text-foreground bg-muted/60 border-primary"
-                          : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                      }`}
-                    >
-                      <CategoryIcon className="size-3.5" />
-                      <span>{category.name}</span>
-                    </Link>
-                  );
-                }
-
-                return (
-                  <div key={category.name} className="w-full">
-                    <div className="py-3 border-y border-dashed w-full last:border-b-0">
-                      <div className="flex items-center gap-2 text-sm font-semibold opacity-90 mb-2">
-                        <CategoryIcon className="size-4!" />
-                        <span>{category.name}</span>
-                      </div>
-
-                      <div className="space-y-0.5 w-full">
-                        {[...category.subcategories]
-                          .filter((sub) => sub.items.length > 0)
-                          .sort((a, b) => a.name.localeCompare(b.name))
-                          .map((subcategory) => {
-                            const subcategoryLink = `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
-                            const isSubcategoryActive =
-                              pathname === subcategoryLink ||
-                              pathname.startsWith(`${subcategoryLink}/`);
-
-                            // Get subcategory icon or use folder icon as fallback
-                            const SubcategoryIcon = getLucideIcon(
-                              subcategory.icon ? subcategory.icon : "",
-                            );
-
-                            return (
-                              <Link
-                                key={`${category.name}-${subcategory.name}`}
-                                href={subcategoryLink}
-                                className={`flex items-center gap-2 tracking-wide px-5 py-2 border-x rounded-[3px] ${
-                                  isSubcategoryActive
-                                    ? "text-foreground bg-muted/60 border-primary"
-                                    : "text-muted-foreground/80 hover:text-foreground hover:bg-muted/60 border-transparent hover:border-primary"
-                                }`}
-                              >
-                                {subcategory.icon ? (
-                                  <SubcategoryIcon className="size-3.5" />
-                                ) : (
-                                  ""
-                                )}
-                                <span>{subcategory.name}</span>
-                              </Link>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      </div>
-    </aside>
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarProvider>
   );
 }

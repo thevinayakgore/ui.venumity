@@ -81,13 +81,13 @@ export const HeroMovingCards = ({
       >
         {items.map((item, idx) => (
           <li
-            className="p-3 bg-white/5 backdrop-blur-sm border-2 border-foreground/5 max-w-100 rounded-2xl shrink-0 h-60"
+            className="p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm max-w-110 rounded-3xl shrink-0"
             key={idx}
           >
             <div
-              className={`relative flex flex-col items-start justify-between rounded-xl overflow-hidden ${item.gradient} w-full h-ull`}
+              className={`relative flex flex-col items-start justify-between rounded-xl overflow-hidden ${item.gradient} w-full`}
             >
-              <div className="flex flex-col items-start gap-2 w-full h-full">
+              <div className="flex flex-col items-start w-full h-full">
                 {item.image && (
                   <Image
                     src={item.image || "/card.png"}
@@ -122,13 +122,13 @@ export const HeroMovingCards = ({
                     </span>
                   </div>
 
-                  <h3 className="absolute top-20 right-10 transform-gpu text-4xl scale-120 font-sans font-medium uppercase opacity-70 tracking-wider!">
+                  <h3 className="absolute top-20 right-10 transform-gpu text-white text-4xl scale-120 font-semibold uppercase tracking-wider!">
                     {item.subtitle}
                   </h3>
 
                   {item.description && (
                     <p
-                      className={`mt-28 text-sm font-sans font-normal! py-2.5 pb-6! px-3.5 text-foreground! ${item.miniBg} backdrop-blur-3xl border-2 ${item.border} rounded-lg`}
+                      className={`mt-28 text-sm tracking-wide text-white font-semibold py-2.5 px-3.5 ${item.miniBg} backdrop-blur-3xl border-2 ${item.border} rounded-lg`}
                     >
                       {item.description}
                     </p>

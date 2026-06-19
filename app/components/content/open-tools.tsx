@@ -140,11 +140,11 @@ export function OpenTools({
             size="sm"
             variant="outline"
             disabled={!currentCode}
-            className="relative group cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/60 hover:text-foreground rounded-sm overflow-hidden"
+            className="relative group px-4! h-9! border-foreground/10! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/50 hover:text-foreground overflow-hidden"
           >
             <span
               aria-hidden
-              className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-zinc-300/70 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
+              className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-green-500/50 dark:via-blue-500/50 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
             />
             <Zap className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
             <span>OPEN</span>
