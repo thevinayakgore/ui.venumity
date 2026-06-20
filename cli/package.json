@@ -1,15 +1,19 @@
 {
   "name": "venumityui",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "CLI for Venumity UI – Install React components with ease",
   "bin": {
-    "venumityui": "./bin/venumity.js"
+    "venumityui": "bin/venumity.js"
   },
   "scripts": {
     "dev": "node bin/venumity.js"
   },
-  "files": ["bin", "README.md", "package.json"],
+  "files": [
+    "bin",
+    "README.md",
+    "package.json"
+  ],
   "keywords": [
     "venumity",
     "ui",
@@ -25,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thevinayakgore/ui.venumity.git",
+    "url": "git+https://github.com/thevinayakgore/ui.venumity.git",
     "directory": "cli"
   },
   "bugs": {

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "fb_1781927332088_sesfoyd",
+    "username": "thevinayakgore",
+    "email": "thevinayakgore@gmail.com",
+    "message": "Test Message !",
+    "rating": 5,
+    "dateTime": "Sat 20 Jun 2026 | 9:18 AM",
+    "userDetails": "Location unknown | Desktop (macOS, Chrome)",
+    "sitePageUrl": "http://localhost:3000/",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "ip": "::1",
+    "referer": "http://localhost:3000/"
+  }
+]

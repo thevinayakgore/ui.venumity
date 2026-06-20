@@ -45,11 +45,20 @@ export function MarkdownRenderer({
 
   useEffect(() => {
     const convertMarkdown = (md: string) => {
-      // First, remove YAML frontmatter
+      // 1️⃣ Remove YAML frontmatter
       let html = md.replace(/^---\n[\s\S]*?\n---\n/, "");
 
       // Normalize line endings and remove trailing spaces
       html = html.replace(/\r\n/g, "\n").replace(/[ \t]+\n/g, "\n");
+
+      // 2️⃣ Extract code blocks FIRST – this ensures any "#" inside them
+      //    is never seen by the header regex below.
+      html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+        const language = lang || "text";
+        return `<div data-code-block data-language="${language}" data-code="${encodeURIComponent(code.trim())}"></div>`;
+      });
+
+      // 3️⃣ Now process all other Markdown elements (headings, tables, lists, etc.)
 
       // Headers
       html = html
@@ -82,13 +91,7 @@ export function MarkdownRenderer({
           return `<h6 class="text-xs sm:text-base font-semibold tracking-wide">${text}</h6>`;
         });
 
-      // Code blocks (handle this before inline processing)
-      html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
-        const language = lang || "text";
-        return `<div data-code-block data-language="${language}" data-code="${encodeURIComponent(code.trim())}"></div>`;
-      });
-
-      // Tables - Handle before other inline processing
+      // Tables
       html = html.replace(/\n((?:\|.*\|(?:\n|$))+)/g, (match, tableContent) => {
         // Split table into rows
         const rows = tableContent.trim().split("\n");

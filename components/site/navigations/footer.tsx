@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 import { COMPONENTS } from "@/registry/components";
 import { Button } from "@/components/ui/button";
-import { BASE_IMAGES } from "@/registry/site/footer";
+import { BASE_IMAGES, SOCIAL_LINKS } from "@/registry/site/footer";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { cn } from "@/lib/utils";
 import { RESOURCE_CATEGORIES } from "@/registry/resources";
@@ -31,107 +31,6 @@ function shuffleImages(images: string[]) {
 
   return shuffled;
 }
-
-const socialLinks = [
-  {
-    src: "/social/instagram.png",
-    alt: "Instagram",
-    href: "https://instagram.com/thevinayakgore",
-    rotate: "-rotate-12",
-    left: "left-0",
-  },
-  {
-    src: "/social/twitter.png",
-    alt: "Twitter",
-    href: "https://twitter.com/thevinayakgore",
-    rotate: "-rotate-10",
-    left: "left-10",
-  },
-  {
-    src: "/social/threads.png",
-    alt: "Threads",
-    href: "https://threads.net/@thevinayakgore",
-    rotate: "-rotate-8",
-    left: "left-20",
-  },
-  {
-    src: "/social/linkedin.png",
-    alt: "LinkedIn",
-    href: "https://linkedin.com/in/thevinayakgore",
-    rotate: "-rotate-6",
-    left: "left-30",
-  },
-  {
-    src: "/social/reddit.png",
-    alt: "Reddit",
-    href: "https://reddit.com/user/thevinayakgore",
-    rotate: "-rotate-4",
-    left: "left-40",
-  },
-  {
-    src: "/social/facebook.png",
-    alt: "Facebook",
-    href: "https://facebook.com/thevinayakgore",
-    rotate: "-rotate-2",
-    left: "left-50",
-  },
-  {
-    src: "/social/dribbble.png",
-    alt: "Dribbble",
-    href: "https://dribbble.com/thevinayakgore",
-    rotate: "rotate-0",
-    left: "left-60",
-  },
-  {
-    src: "/social/linktree.png",
-    alt: "Linktree",
-    href: "https://linktr.ee/thevinayakgore",
-    rotate: "rotate-2",
-    left: "left-70",
-  },
-  {
-    src: "/social/upwork.png",
-    alt: "Upwork",
-    href: "https://www.upwork.com/freelancers/~015ebda394a4770870?mp_source=share",
-    rotate: "rotate-4",
-    left: "left-80",
-  },
-  {
-    src: "/social/fiverr.jpg",
-    alt: "Fiverr",
-    href: "https://www.fiverr.com/thevinayakgore?public_mode=true",
-    rotate: "rotate-6",
-    left: "left-90",
-  },
-  {
-    src: "/social/gumroad.png",
-    alt: "Gumroad",
-    href: "https://gumroad.com/thevinayakgore",
-    rotate: "rotate-8",
-    left: "left-100",
-  },
-  {
-    src: "/social/youtube.png",
-    alt: "YouTube",
-    href: "https://youtube.com/@thevinayakgore",
-    rotate: "rotate-10",
-    left: "left-110",
-  },
-  {
-    src: "/social/github.webp",
-    alt: "GitHub",
-    href: "https://github.com/thevinayakgore",
-    rotate: "rotate-12",
-    left: "left-120",
-  },
-  {
-    src: "/social/happenstance.png",
-    alt: "Happenstance",
-    href: "https://happenstance.ai/u/thevinayakgore",
-    rotate: "rotate-14",
-    left: "left-130",
-  },
-];
 
 export const BottomFooter = () => {
   const pathname = usePathname();
@@ -170,7 +69,7 @@ export const BottomFooter = () => {
       </div>
 
       <div className="absolute inset-x-0 -bottom-5 left-1/2 -translate-x-1/2 flex items-center -space-x-4 z-30 w-fit">
-        {socialLinks.map((item, index) => (
+        {SOCIAL_LINKS.map((item, index) => (
           <Tooltip key={index}>
             <TooltipTrigger
               asChild
@@ -355,7 +254,7 @@ export default function Footer() {
 
         <section className="relative mt-3 w-full">
           {/* Brand & Links Columns */}
-          <div className="p-5 grid grid-cols-8 items-start justify-between gap-5 md:gap-10 w-full">
+          <div className="p-5 grid grid-cols-7 items-start justify-between gap-5 md:gap-10 w-full">
             <div className="w-xs col-span-2 space-y-3">
               <div className="flex items-center gap-3">
                 <Image
@@ -471,7 +370,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="flex flex-col gap-3 justify-center mx-auto w-fit">
+            {/* <div className="flex flex-col gap-3 justify-center mx-auto w-fit">
               <p className="text-base font-semibold">Company</p>
               <ul className="space-y-1.5">
                 <FooterLink href="https://ui.venumity.com" external>
@@ -487,7 +386,7 @@ export default function Footer() {
                   www.venumity
                 </FooterLink>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           <BottomFooter />

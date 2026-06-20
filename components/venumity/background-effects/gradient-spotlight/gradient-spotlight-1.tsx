@@ -125,7 +125,7 @@ export default function GradientSpotlight1() {
         )}
       />
 
-      <Spotlight className="-top-40 left-0 md:-top-40 md:left-50" />
+      <Spotlight className="-top-50 -left-50" />
 
       <div className="relative z-10 m-auto w-full p-4 pt-20 md:pt-0">
         <h1 className="bg-opacity-50 pb-2 bg-linear-to-b from-foreground to-foreground/30 bg-clip-text text-center text-4xl font-bold text-transparent md:text-7xl">

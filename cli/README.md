@@ -270,68 +270,6 @@ When you install `personal-panel-1`, the CLI will:
 
 ---
 
-## 🧪 Development
-
-### Test Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/thevinayakgore/ui.venumity.git
-cd ui.venumity/cli
-
-# Install dependencies
-npm install
-
-# Link globally
-npm link
-
-# Test commands
-venumityui list
-venumityui search card
-venumityui add profile-card-1
-venumityui add personal-panel-1
-venumityui add --all
-```
-
-### Run without Linking
-
-```bash
-node bin/venumity.js list
-node bin/venumity.js add profile-card-1
-```
-
----
-
-## 📝 Publishing
-
-### Update Version
-
-```bash
-# Patch (1.0.0 -> 1.0.1)
-npm version patch
-
-# Minor (1.0.0 -> 1.1.0)
-npm version minor
-
-# Major (1.0.0 -> 2.0.0)
-npm version major
-```
-
-### Publish to npm
-
-```bash
-# Login to npm
-npm login
-
-# Publish
-npm publish --access public
-
-# Publish beta version
-npm publish --tag beta
-```
-
----
-
 ## 🛠️ Tech Stack
 
 - **Node.js** - Runtime environment
@@ -378,7 +316,7 @@ MIT © [The Vinayak Gore](https://github.com/thevinayakgore)
 
 ## 💖 Support
 
-- ⭐ Star this repository
+- ⭐ Star this repository (ui.venumity)
 - 👨‍💻 Follow [@thevinayakgore](https://github.com/thevinayakgore)
 - 💬 Join our community discussions
 - 🐛 Report issues on [GitHub Issues](https://github.com/thevinayakgore/ui.venumity/issues)

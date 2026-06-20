@@ -74,3 +74,105 @@ export const BASE_IMAGES = [
   "/thumbnails/toast-1.png",
   "/thumbnails/winloss-sparkline.png"
 ];
+
+
+export const SOCIAL_LINKS = [
+  {
+    src: "/social/instagram.png",
+    alt: "Instagram",
+    href: "https://instagram.com/thevinayakgore",
+    rotate: "-rotate-12",
+    left: "left-0",
+  },
+  {
+    src: "/social/twitter.png",
+    alt: "Twitter",
+    href: "https://twitter.com/thevinayakgore",
+    rotate: "-rotate-10",
+    left: "left-10",
+  },
+  {
+    src: "/social/threads.png",
+    alt: "Threads",
+    href: "https://threads.net/@thevinayakgore",
+    rotate: "-rotate-8",
+    left: "left-20",
+  },
+  {
+    src: "/social/linkedin.png",
+    alt: "LinkedIn",
+    href: "https://linkedin.com/in/thevinayakgore",
+    rotate: "-rotate-6",
+    left: "left-30",
+  },
+  {
+    src: "/social/reddit.png",
+    alt: "Reddit",
+    href: "https://reddit.com/user/thevinayakgore",
+    rotate: "-rotate-4",
+    left: "left-40",
+  },
+  {
+    src: "/social/facebook.png",
+    alt: "Facebook",
+    href: "https://facebook.com/thevinayakgore",
+    rotate: "-rotate-2",
+    left: "left-50",
+  },
+  {
+    src: "/social/dribbble.png",
+    alt: "Dribbble",
+    href: "https://dribbble.com/thevinayakgore",
+    rotate: "rotate-0",
+    left: "left-60",
+  },
+  {
+    src: "/social/linktree.png",
+    alt: "Linktree",
+    href: "https://linktr.ee/thevinayakgore",
+    rotate: "rotate-2",
+    left: "left-70",
+  },
+  {
+    src: "/social/upwork.png",
+    alt: "Upwork",
+    href: "https://www.upwork.com/freelancers/~015ebda394a4770870?mp_source=share",
+    rotate: "rotate-4",
+    left: "left-80",
+  },
+  {
+    src: "/social/fiverr.jpg",
+    alt: "Fiverr",
+    href: "https://www.fiverr.com/thevinayakgore?public_mode=true",
+    rotate: "rotate-6",
+    left: "left-90",
+  },
+  {
+    src: "/social/gumroad.png",
+    alt: "Gumroad",
+    href: "https://gumroad.com/thevinayakgore",
+    rotate: "rotate-8",
+    left: "left-100",
+  },
+  {
+    src: "/social/youtube.png",
+    alt: "YouTube",
+    href: "https://youtube.com/@thevinayakgore",
+    rotate: "rotate-10",
+    left: "left-110",
+  },
+  {
+    src: "/social/github.webp",
+    alt: "GitHub",
+    href: "https://github.com/thevinayakgore",
+    rotate: "rotate-12",
+    left: "left-120",
+  },
+  {
+    src: "/social/happenstance.png",
+    alt: "Happenstance",
+    href: "https://happenstance.ai/u/thevinayakgore",
+    rotate: "rotate-14",
+    left: "left-130",
+  },
+];

@@ -21,7 +21,7 @@ export default function ContentLayoutClient({
           <LogSidebar />
           <div
             id="content"
-            className={`flex flex-col items-center p-10 max-w-3xl m-auto w-full h-full`}
+            className={`flex flex-col items-center p-10 max-w-4xl m-auto w-full h-full`}
           >
             {children}
           </div>

@@ -1,9 +1,8 @@
+// components/site/navigations/feedback.tsx
 "use client";
-
 import { useState } from "react";
 import { toast } from "sonner";
 import { MessageSquareQuote, Star } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -99,15 +98,13 @@ export default function Feedback() {
       <PopoverContent
         align="end"
         sideOffset={10}
-        className="absolute top-5 left-0 -translate-x-full w-lg! p-0 rounded-2xl overflow-hidden border bg-background shadow-xl"
+        className="absolute top-5 left-0 -translate-x-full font-semibold tracking-wide w-lg! p-0 rounded-2xl overflow-hidden border bg-background shadow-xl"
       >
         <div className="p-6 pb-2">
           <div className="flex items-center gap-2">
             <MessageSquareQuote className="size-5 text-blue-500" />
 
-            <h3 className="text-xl font-semibold">
-              Share your feedback
-            </h3>
+            <h3 className="text-xl font-semibold">Share your feedback</h3>
           </div>
 
           <p className="text-sm text-muted-foreground mt-1">
@@ -115,15 +112,9 @@ export default function Feedback() {
           </p>
         </div>
 
-        <form
-          onSubmit={handleFeedbackSubmit}
-          className="p-6 pt-2 space-y-5"
-        >
+        <form onSubmit={handleFeedbackSubmit} className="p-6 pt-2 space-y-5">
           <div className="space-y-2">
-            <Label
-              htmlFor="feedback-name"
-              className="text-sm font-medium"
-            >
+            <Label htmlFor="feedback-name" className="text-sm font-medium">
               Username <span className="text-red-400">*</span>
             </Label>
 
@@ -137,14 +128,8 @@ export default function Feedback() {
           </div>
 
           <div className="space-y-2">
-            <Label
-              htmlFor="feedback-email"
-              className="text-sm font-medium"
-            >
-              Email{" "}
-              <span className="text-muted-foreground">
-                (optional)
-              </span>
+            <Label htmlFor="feedback-email" className="text-sm font-medium">
+              Email <span className="text-muted-foreground">(optional)</span>
             </Label>
 
             <Input
@@ -162,10 +147,7 @@ export default function Feedback() {
           </div>
 
           <div className="space-y-2">
-            <Label
-              htmlFor="feedback-message"
-              className="text-sm font-medium"
-            >
+            <Label htmlFor="feedback-message" className="text-sm font-medium">
               Message <span className="text-red-400">*</span>
             </Label>
 
@@ -175,7 +157,7 @@ export default function Feedback() {
               rows={4}
               value={feedbackMessage}
               onChange={(e) => setFeedbackMessage(e.target.value)}
-              className="px-4! py-3! placeholder:text-foreground/40! border-input resize-y min-h-20 max-h-35"
+              className="px-4! py-3! placeholder:text-foreground/40! border-input resize-none min-h-20 max-h-35"
             />
           </div>
 
@@ -198,7 +180,7 @@ export default function Feedback() {
                     className="transition-transform duration-200 hover:scale-110 cursor-pointer"
                   >
                     <Star
-                      className={`size-6.5 transition-all duration-500 ${
+                      className={`size-6.5 stroke-1 transition-all duration-500 ${
                         active
                           ? "fill-yellow-400 text-yellow-400"
                           : "text-muted-foreground/40"
@@ -234,10 +216,8 @@ export default function Feedback() {
           </div>
 
           <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground pt-2">
-            <Star className="h-3 w-3 fill-muted-foreground/30" />
-            <span>
-              Your feedback helps us build better products
-            </span>
+            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+            <span>Your feedback helps us build better products</span>
           </div>
         </form>
       </PopoverContent>

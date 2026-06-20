@@ -232,7 +232,12 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!prevPage}
-                className="..."
+                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-5 w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
+              ${
+                prevPage
+                  ? "border-border hover:bg-muted"
+                  : "border-border text-muted-foreground"
+              }`}
               >
                 <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
                   Previous
@@ -255,7 +260,12 @@ export default async function ResourcePage({
                 variant="outline"
                 size="lg"
                 disabled={!nextPage}
-                className="..."
+                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-5 w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
+              ${
+                nextPage
+                  ? "border-border hover:bg-muted"
+                  : "border-border text-muted-foreground"
+              }`}
               >
                 <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
                   Next

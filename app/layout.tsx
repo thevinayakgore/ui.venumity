@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(baseUrl),
-    title: "Venumity UI – Open Source React & Next.js Component Library",
+    title: "Venumity UI",
     description,
     keywords: [
       "Venumity UI",
@@ -80,14 +80,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       url: baseUrl,
-      title: "Venumity UI – Free React & Next.js Components",
+      title: "Venumity UI – Beautiful React Next.js Components",
       description,
       siteName: "Venumity UI",
       images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Venumity UI – Free React Components",
+      title: "Venumity UI – Free Open Source React Components",
       description,
       images: ogImages.map((img) => img.url),
       creator: "@thevinayakgore",

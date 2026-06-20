@@ -92,14 +92,15 @@ export default function ChangelogClient({ entries }: ChangelogClientProps) {
                     key={`${slug}-${index}`}
                     type="button"
                     onClick={() => setPreviewImage(image)}
-                    className="overflow-hidden rounded-lg cursor-zoom-in"
+                    className="border overflow-hidden rounded-xl cursor-zoom-in"
                   >
                     <Image
-                      src={image}
+                      src={`/assets/changelog${image}`}
                       alt={`${entry.title} ${index + 1}`}
                       width={2000}
                       height={2000}
-                      className="object-cover hover:scale-110 transition-all duration-500 w-full"
+                      priority
+                      className="hover:scale-110 transition-all duration-500 w-full h-full"
                     />
                   </button>
                 ))}
@@ -120,15 +121,16 @@ export default function ChangelogClient({ entries }: ChangelogClientProps) {
           onClick={() => setPreviewImage(null)}
         >
           <div
-            className="relative rounded-2xl overflow-hidden max-w-3xl"
+            className="relative border shadow-xl rounded-2xl min-w-2xl max-w-4xl overflow-auto min-h-100 max-h-[calc(100%-5rem)]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={previewImage}
+              src={`/assets/changelog${previewImage}`}
               alt="Preview"
-              width={5000}
-              height={5000}
-              className="object-cover w-full"
+              width={2000}
+              height={2000}
+              priority
+              className="w-full h-full"
             />
           </div>
         </div>

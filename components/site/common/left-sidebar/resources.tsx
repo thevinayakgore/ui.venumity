@@ -2,7 +2,7 @@
 "use client";
 import { ResourceCategory, getAllCategories } from "@/registry/resources";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Boxes, ChevronsLeft, Star, ChevronDown } from "lucide-react";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -32,14 +32,17 @@ export default function LeftResources({
   initialCategories,
 }: LeftResourcesProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { selectedCategory, setSelectedCategory } = useResources();
 
   // Extract category and slug from pathname
   const pathSegments = pathname.split("/").filter(Boolean);
-  const isResourcePage =
+  const isOnMainResourcesPage =
+    pathSegments[0] === "resources" && pathSegments.length === 1;
+  const isOnResourcePage =
     pathSegments[0] === "resources" && pathSegments.length === 3;
-  const categorySlug = isResourcePage ? pathSegments[1] : null;
-  const pageSlug = isResourcePage ? pathSegments[2] : null;
+  const categorySlug = isOnResourcePage ? pathSegments[1] : null;
+  const pageSlug = isOnResourcePage ? pathSegments[2] : null;
 
   // Use categories from props
   const categories = initialCategories;
@@ -60,6 +63,39 @@ export default function LeftResources({
   const currentCategory = categories.find(
     (cat) => cat.slug === selectedCategory,
   );
+
+  // Helper function to get the first published page for a category
+  const getFirstPublishedPageSlug = (categorySlug: string): string | null => {
+    const category = categories.find((cat) => cat.slug === categorySlug);
+    if (!category || category.pages.length === 0) return null;
+
+    const publishedPages = category.pages.filter((p) => p.published);
+    if (publishedPages.length === 0) return null;
+
+    // Sort by order to get first page
+    const firstPage = publishedPages[0];
+    return toKebabCase(firstPage.title);
+  };
+
+  // Handle category click - selects category and navigates appropriately
+  const handleCategoryClick = (categorySlug: string) => {
+    // Update the selected category in context
+    setSelectedCategory(categorySlug);
+
+    // Check if we're on the main resources page or a resource detail page
+    if (isOnMainResourcesPage) {
+      // If on "/resources", just update the context and stay on the page
+      // The cards will update automatically based on the selected category
+      return;
+    } else {
+      // If on a resource detail page (like "/resources/tutorials/sanity-cms"),
+      // navigate to the first page of the selected category
+      const firstPageSlug = getFirstPublishedPageSlug(categorySlug);
+      if (firstPageSlug) {
+        router.push(`/resources/${categorySlug}/${firstPageSlug}`);
+      }
+    }
+  };
 
   return (
     <SidebarProvider className="hidden md:block sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
@@ -103,36 +139,19 @@ export default function LeftResources({
                       fetchedCategory.pages.filter((p) => p.published).length ||
                       0;
 
-                    const firstPageSlug = (() => {
-                      if (!fetchedCategory) return null;
-                      const published = fetchedCategory.pages.filter(
-                        (p) => p.published,
-                      );
-                      if (published.length === 0) return null;
-                      return toKebabCase(published[0].title);
-                    })();
-
-                    const href = firstPageSlug
-                      ? `/resources/${categoryConfig.slug}/${firstPageSlug}`
-                      : `/resources`;
-
                     return (
                       <SidebarMenuSubItem
                         key={categoryConfig.id}
                         className="w-full"
                       >
                         <SidebarMenuSubButton
-                          asChild
                           isActive={isActive}
-                          className="border-0! pl-2.5! pr-1.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                          className="border-0! pl-2.5! pr-1.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full cursor-pointer"
                           onClick={() =>
-                            setSelectedCategory(categoryConfig.slug)
+                            handleCategoryClick(categoryConfig.slug)
                           }
                         >
-                          <Link
-                            href={href}
-                            className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
-                          >
+                          <div className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full">
                             <span>{categoryConfig.label}</span>
                             <span
                               className={`text-[10px] px-1 py-0.5 rounded ${
@@ -145,7 +164,7 @@ export default function LeftResources({
                                 ? `0${publishedCount}`
                                 : publishedCount}
                             </span>
-                          </Link>
+                          </div>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     );
@@ -218,7 +237,7 @@ export default function LeftResources({
           )}
 
           {/* Back to Resources Button */}
-          {isResourcePage && (
+          {isOnResourcePage && (
             <SidebarMenuItem className="w-full mt-4 pt-3 border-t">
               <Link
                 href="/resources"

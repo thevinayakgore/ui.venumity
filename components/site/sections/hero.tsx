@@ -55,7 +55,7 @@ export default function Hero() {
 
         <div className="flex flex-col items-center justify-center gap-5 z-70 p-5 sm:pt-10 md:pt-20 lg:pt-30 text-6xl text-center font-semibold overflow-hidden w-full">
           <Link
-            href="/"
+            href="/components/data-display/tables#expandable-row-table"
             target="_blank"
             className={cn(
               buttonVariants({
@@ -79,7 +79,7 @@ export default function Hero() {
               orientation="vertical"
               className="mx-3 bg-foreground/20 h-7 my-auto"
             />
-            Premium Wave Loader
+            Expandable Row Table
             <span className="ml-2 px-2 py-0.5 text-xs uppercase rounded-full bg-primary/10 text-primary border border-primary/20">
               NEW
             </span>

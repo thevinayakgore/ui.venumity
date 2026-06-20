@@ -6,47 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-
-const videos = [
-  {
-    id: "5eYQwEv5fpk",
-    title:
-      "🔥 Build this Footer for Next.js project using Tailwind CSS ⚡️ | #webdesign #coding #footer",
-    description:
-      "Let’s build a stunning, ready-to-use Footer for your React / Next.js 16 projects with clean, responsive, and developer-friendly code !",
-    channel: "The Vinayak Gore",
-    channelAvatar: "/vinu.jpg",
-    date: "2025-01-15",
-  },
-  {
-    id: "nz_4wrytljc",
-    title:
-      "🔥 Developer Portfolio - Ready to use for your Project ! | Next.Js 15 | #readytouse #ui #gumroad",
-    description:
-      "Modern Developer Portfolio - Next.Js Template | Framer Motion | Dark mode | Typescript. Grab it now on my Gumroad !",
-    channel: "The Vinayak Gore",
-    channelAvatar: "/vinu.jpg",
-    date: "2025-02-01",
-  },
-  {
-    id: "Irbh9fLByIE",
-    title: "3D Card Effects",
-    description:
-      "Parallax and 3D tilt cards using CSS transforms and Framer Motion.",
-    channel: "The Vinayak Gore",
-    channelAvatar: "/vinu.jpg",
-    date: "2025-02-20",
-  },
-  {
-    id: "QfsW8EHxX-Q",
-    title: "Magnetic Menu",
-    description:
-      "Interactive navbar with magnetic hover effect and smooth transitions.",
-    channel: "The Vinayak Gore",
-    channelAvatar: "/vinu.jpg",
-    date: "2025-03-05",
-  },
-];
+import { VIDEOS } from "@/registry/site/videos";
 
 const MOTION_HIDDEN = { opacity: 0, y: 50 } as const;
 const MOTION_VISIBLE = { opacity: 1, y: 0 } as const;
@@ -74,7 +34,7 @@ const VideoCard = memo(function VideoCard({
   video,
   active,
 }: {
-  video: (typeof videos)[0];
+  video: (typeof VIDEOS)[0];
   active: boolean;
 }) {
   const embedUrl = `https://www.youtube.com/embed/${video.id}?modestbranding=1&rel=0&controls=1&showinfo=0&color=white`;
@@ -196,7 +156,7 @@ const VideoCarousel = memo(function VideoCarousel() {
     autoplay.current,
   ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const totalSlides = videos.length;
+  const totalSlides = VIDEOS.length;
 
   // Update selected index on scroll
   useEffect(() => {
@@ -223,12 +183,12 @@ const VideoCarousel = memo(function VideoCarousel() {
     <div className="mt-12">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex gap-5 md:gap-10 touch-pan-y p-5 md:p-10 lg:p-15">
-          {videos.map((video, index) => (
+          {VIDEOS.map((item, index) => (
             <div
-              key={video.id}
+              key={item.id}
               className="min-w-0 shrink-0 grow-0 basis-[88%] sm:basis-[52%] lg:basis-[65%]"
             >
-              <VideoCard video={video} active={index === selectedIndex} />
+              <VideoCard video={item} active={index === selectedIndex} />
             </div>
           ))}
         </div>
