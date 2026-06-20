@@ -1,4 +1,10 @@
-# <img src="./public/logo.png" width="30" style="vertical-align: middle; margin-top: 5px;" /> Community Code of Conduct
+<div align="center">
+
+<img src="./public/logo.png" width="50" alt="Venumity UI Logo" />
+
+# Community Code of Conduct
+
+</div>
 
 ## Our Commitment
 

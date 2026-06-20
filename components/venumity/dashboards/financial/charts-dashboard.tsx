@@ -370,46 +370,50 @@ export default function ChartsDashboard() {
 
       case "pie":
         return (
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={categoryData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={4}
-                dataKey="value"
-                animationDuration={1500}
-                label={({ name, percent }) =>
-                  `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`
-                }
-                labelLine={false}
-              >
-                {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    return (
-                      <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
-                        <p className="font-semibold">{payload[0].name}</p>
-                        <p className="text-sm">
-                          <span className="text-muted-foreground">Value: </span>
-                          <span className="font-medium">
-                            ${payload[0].value?.toLocaleString()}
-                          </span>
-                        </p>
-                      </div>
-                    );
+          <div className="h-100 w-full min-w-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={categoryData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={4}
+                  dataKey="value"
+                  animationDuration={1500}
+                  label={({ name, percent }) =>
+                    `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`
                   }
-                  return null;
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+                  labelLine={false}
+                >
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
+                          <p className="font-semibold">{payload[0].name}</p>
+                          <p className="text-sm">
+                            <span className="text-muted-foreground">
+                              Value:{" "}
+                            </span>
+                            <span className="font-medium">
+                              ${payload[0].value?.toLocaleString()}
+                            </span>
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         );
 
       default:

@@ -592,3 +592,41 @@ body {
     background-position: 100% 0;
   }
 }
+
+/* ✅ Badge styling - ensures small, inline, borderless */
+.markdown-badge,
+.prose .markdown-badge,
+.prose img[src*="shields.io"],
+.prose img[src*="img.shields.io"],
+.prose img[src*="badge"] {
+  display: inline-block !important;
+  height: 25px !important;
+  width: auto !important;
+  max-height: 25px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 2 !important;
+  vertical-align: middle !important;
+}
+
+/* Remove block-level wrapping for badge containers */
+.prose a:has(img.markdown-badge),
+.prose a:has(img[src*="shields.io"]),
+.prose a:has(img[src*="img.shields.io"]) {
+  display: inline-block !important;
+  border: none !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+}
+
+/* Ensure badge wrapper doesn't become block */
+.prose p:has(img.markdown-badge),
+.prose p:has(img[src*="shields.io"]),
+.prose p:has(img[src*="img.shields.io"]) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 2px !important;
+}

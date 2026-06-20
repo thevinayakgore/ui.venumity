@@ -100,7 +100,7 @@ export default function ChangelogClient({ entries }: ChangelogClientProps) {
                       width={2000}
                       height={2000}
                       priority
-                      className="hover:scale-110 transition-all duration-500 w-full h-full"
+                      className="aspect-16/10 object-cover hover:scale-110 transition-all duration-500 w-full"
                     />
                   </button>
                 ))}

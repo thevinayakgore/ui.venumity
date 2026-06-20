@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Flame, Loader2 } from "lucide-react";
+import { Flame, Loader2, Terminal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -13,6 +13,7 @@ import {
   getSubcategoryTechs,
 } from "@/registry/component-utils";
 import { getCategoryCardThumbnailPath } from "@/registry/component-utils";
+import Link from "next/link";
 
 const LEFT_WORDS = [
   "Tech",
@@ -211,7 +212,29 @@ export function Components() {
   const [hasMore, setHasMore] = useState(true);
   const [initialLoading, setInitialLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [downloads, setDownloads] = useState<number | null>(null);
+  const [downloadsLoading, setDownloadsLoading] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
+
+  // Fetch npm downloads
+  useEffect(() => {
+    async function fetchDownloads() {
+      try {
+        const res = await fetch(
+          "https://api.npmjs.org/downloads/point/last-month/venumityui",
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setDownloads(data.downloads || 0);
+        }
+      } catch (error) {
+        console.error("Failed to fetch downloads:", error);
+      } finally {
+        setDownloadsLoading(false);
+      }
+    }
+    fetchDownloads();
+  }, []);
 
   // Build the full list once on mount
   useEffect(() => {
@@ -280,20 +303,52 @@ export function Components() {
     router.push(`/components${path}`);
   };
 
+  const formatDownloads = (num: number): string => {
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
+    if (num >= 1000) return (num / 1000).toFixed(1) + "K";
+    return num.toString();
+  };
+
   return (
     <main className="w-full">
       <header className="mb-5 md:mb-10 w-full">
-        <Badge
-          variant="secondary"
-          className="gap-1.5 h-8 pl-2 pr-3 mb-5 font-semibold! tracking-wider! bg-foreground/5 border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4!"
-        >
-          <Flame />
-          <BadgeTextAnimate
-            leftWords={LEFT_WORDS}
-            rightWords={RIGHT_WORDS}
-            interval={4000}
-          />
-        </Badge>
+        <div className="flex items-center justify-between mb-5 w-full">
+          <Badge
+            variant="secondary"
+            className="gap-1.5 h-8 pl-2 pr-3 font-semibold! tracking-wider! bg-foreground/5 border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4!"
+          >
+            <Flame />
+            <BadgeTextAnimate
+              leftWords={LEFT_WORDS}
+              rightWords={RIGHT_WORDS}
+              interval={4000}
+            />
+          </Badge>
+          <div className="space-y-1">
+            <Link
+              href="https://www.npmjs.com/package/venumityui"
+              target="_blank"
+            >
+              <Badge
+                variant="secondary"
+                className="group gap-1.5 h-8 pl-2 pr-3 font-bold! tracking-wider! bg-foreground/5 hover:bg-blue-500 hover:text-white border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4! transition-all duration-500"
+              >
+                <Terminal className="size-3.5" />
+                <span>CLI -</span>
+                {downloadsLoading ? (
+                  <Loader2 className="size-3.5 animate-spin text-blue-500 group-hover:text-white transition-all duration-500" />
+                ) : (
+                  <span className="text-sm font-semibold text-blue-500 group-hover:text-white transition-all duration-500">
+                    {formatDownloads(downloads || 0)}
+                  </span>
+                )}
+              </Badge>
+            </Link>
+            <p className="text-[0.7rem] text-foreground/40 italic font-semibold tracking-wide">
+              Weekly Downloads
+            </p>
+          </div>
+        </div>
 
         <h1 className="satisfy text-5xl md:text-7xl py-3 tracking-tight text-transparent bg-clip-text bg-linear-to-b from-foreground/30 via-foreground/10">
           Components

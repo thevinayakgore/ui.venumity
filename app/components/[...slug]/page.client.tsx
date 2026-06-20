@@ -121,7 +121,11 @@ export default function PageClient({
   }, [component, slugPath, pathInfo, subcategoryData]);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted || loading) {

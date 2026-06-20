@@ -105,7 +105,7 @@ export default function LeftSidebar() {
                     asChild
                     isActive={isActive}
                     tooltip={item.title}
-                     className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                    className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
                   >
                     <Link href={href}>
                       {item.icon && <item.icon />}
@@ -150,13 +150,19 @@ export default function LeftSidebar() {
                             <SidebarMenuSubButton
                               asChild
                               isActive={isActive}
-                              className="border-0! px-2.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
                             >
                               <Link
                                 href={subItem.url}
-                                className="text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
+                                className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
                               >
                                 <span>{subItem.title}</span>
+                                {(subItem.title === "CLI Guide" ||
+                                  subItem.title === "Add Resources") && (
+                                  <span className="flex items-center justify-center px-1.5 py-0.5 h-5 text-[0.6rem] leading-0 font-bold tracking-wider uppercase bg-green-500/20 backdrop-blur-sm border border-green-500/50 text-green-500 rounded-full">
+                                    New
+                                  </span>
+                                )}
                               </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>

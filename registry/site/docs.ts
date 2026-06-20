@@ -52,6 +52,13 @@ export const DOCS_DATA: DocsSection[] = [
         published: true,
         tags: ["resource", "learningmaterials", "buildtogether"],
       },
+      {
+        page: "CLI Guide",
+        slug: "cli-guide",
+        contentPath: "/registry/docs/cli-guide.md", // Add /
+        published: true,
+        tags: ["cli", "guide", "installcomponents", "buildfaster"],
+      },
     ],
   },
 ];

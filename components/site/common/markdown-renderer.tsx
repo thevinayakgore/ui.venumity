@@ -51,15 +51,34 @@ export function MarkdownRenderer({
       // Normalize line endings and remove trailing spaces
       html = html.replace(/\r\n/g, "\n").replace(/[ \t]+\n/g, "\n");
 
-      // 2️⃣ Extract code blocks FIRST – this ensures any "#" inside them
-      //    is never seen by the header regex below.
+      // 2️⃣ Extract code blocks FIRST
       html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
         const language = lang || "text";
         return `<div data-code-block data-language="${language}" data-code="${encodeURIComponent(code.trim())}"></div>`;
       });
 
-      // 3️⃣ Now process all other Markdown elements (headings, tables, lists, etc.)
+      // ─── CRITICAL FIX: Process badge links FIRST ──────────────────────────
+      // 3️⃣ Image links (badge style): [![alt](img)](link)
+      // This MUST be processed before standalone images
+      html = html.replace(
+        /\[!\[([^\]]*?)\]\(([^)]+?)\)\]\(([^)]+?)\)/g,
+        (match, alt, imgSrc, linkUrl) => {
+          imgSrc = imgSrc.trim();
+          linkUrl = linkUrl.trim();
 
+          // Return as inline badge with no extra wrapping
+          return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="inline-block no-underline" style="display:inline-block !important; border:none !important; text-decoration:none !important; line-height:1 !important; margin:0 2px !important;">
+            <img src="${imgSrc}" alt="${alt || ""}" class="markdown-badge" style="display:inline-block !important; height:20px !important; width:auto !important; border:none !important; border-radius:0 !important; box-shadow:none !important; margin:0 !important; padding:0 !important; vertical-align:middle !important;" />
+          </a>`;
+        },
+      );
+
+      // 4️⃣ Standalone images: ![alt](src) - only if not already a badge
+      html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+        return `<img src="${src}" alt="${alt || ""}" class="rounded-md my-4 max-w-full" />`;
+      });
+
+      // 5️⃣ Now process all other Markdown elements
       // Headers
       html = html
         .replace(/^# (.+)$/gm, (match, text) => {
@@ -93,25 +112,20 @@ export function MarkdownRenderer({
 
       // Tables
       html = html.replace(/\n((?:\|.*\|(?:\n|$))+)/g, (match, tableContent) => {
-        // Split table into rows
         const rows = tableContent.trim().split("\n");
-
-        // Check if it's actually a table (has at least one pipe)
         if (!rows[0].includes("|")) return match;
 
-        // Clean rows and remove empty ones
         const cleanedRows = rows
           .map((row: string) => row.trim())
           .filter((row: string) => row.length > 0);
 
-        if (cleanedRows.length < 2) return match; // Need at least header and separator
+        if (cleanedRows.length < 2) return match;
 
         let tableHtml = '<div class="overflow-x-auto my-6">\n';
         tableHtml +=
           '<table class="min-w-full divide-y divide-foreground/10 text-foreground/80 font-medium border border-foreground/10">\n';
         tableHtml += '<thead class="bg-foreground/5">\n';
 
-        // Process header row
         const headerCells = cleanedRows[0]
           .split("|")
           .map((cell: string) => cell.trim())
@@ -127,7 +141,6 @@ export function MarkdownRenderer({
         tableHtml +=
           '<tbody class="bg-background divide-y divide-foreground/10">\n';
 
-        // Process data rows (skip separator row which is index 1)
         for (let i = 2; i < cleanedRows.length; i++) {
           const rowCells = cleanedRows[i]
             .split("|")
@@ -152,9 +165,9 @@ export function MarkdownRenderer({
         return tableHtml;
       });
 
-      // Images
+      // Images (HTML images - kept for compatibility)
       html = html.replace(/<img src="([^"]*)"[^>]*>/g, (match, src) => {
-        return `<div class="image-container my-4 sm:my-6 rounded-md overflow-hidden border border-foreground/10"><img src="${src}" class="w-full h-auto" /></div>`;
+        return `<div class="image-container my-4 sm:my-6 rounded-md overflow-hidden"><img src="${src}" class="w-full h-auto" /></div>`;
       });
 
       // Videos
@@ -172,8 +185,7 @@ export function MarkdownRenderer({
         '<blockquote class="flex items-center border-l-5 pl-4 sm:pl-6 min-h-12! italic text-muted-foreground leading-relaxed">$1</blockquote>',
       );
 
-      // Lists - process in a single pass to avoid nested wrapping
-      // Process unordered lists first
+      // Lists
       html = html.replace(/^(\s*[-*+]\s+.+(\n\s*[-*+]\s+.+)*)/gm, (match) => {
         const items = match
           .split("\n")
@@ -185,7 +197,6 @@ export function MarkdownRenderer({
         return `<ul class="ml-1 list-none text-sm sm:text-base text-muted-foreground my-3">${items}</ul>`;
       });
 
-      // Process ordered lists
       html = html.replace(
         /(?:^|\n)(\s*\d+\.\s+.+(?:\n\s*\d+\.\s+.+)*)/g,
         (match, list) => {
@@ -213,14 +224,16 @@ export function MarkdownRenderer({
         )
         .replace(/\*(.+?)\*/g, '<em class="italic">$1</em>')
         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, href) => {
+          if (text.trim().startsWith("<img")) {
+            return match;
+          }
           const isExternal = href.startsWith("http");
           const target = isExternal ? "_blank" : "";
           const rel = isExternal ? "noopener noreferrer" : "";
           return `<a href="${href}" ${target ? `target="${target}" rel="${rel}"` : ""} class="text-blue-500! hover:underline underline-offset-2 decoration-1 transition-all duration-500">${text}</a>`;
         });
 
-      // Paragraphs - only wrap text blocks that aren't already wrapped
-      // Split by double newlines, but preserve existing HTML tags
+      // Paragraphs - skip wrapping if it contains badge images
       const lines = html.split(/\n\n+/);
 
       html = lines
@@ -228,9 +241,9 @@ export function MarkdownRenderer({
           const trimmedLine = line.trim();
           if (!trimmedLine) return "";
 
-          // Skip if line already starts with a HTML tag
+          // Skip if line already has HTML or is a badge
           if (
-            /^<(h[1-6]|div|ul|ol|blockquote|hr|p|table|tr|td|th)/.test(
+            /^<(h[1-6]|div|ul|ol|blockquote|hr|p|table|tr|td|th|img|a|span)/.test(
               trimmedLine,
             )
           ) {
@@ -242,12 +255,20 @@ export function MarkdownRenderer({
             return "";
           }
 
+          // If line contains shields.io badges, don't wrap in p
+          if (
+            trimmedLine.includes("shields.io") ||
+            trimmedLine.includes("img.shields.io")
+          ) {
+            return trimmedLine;
+          }
+
           return `<p class="text-sm sm:text-base tracking-wide leading-relaxed my-5">${trimmedLine}</p>`;
         })
         .filter(Boolean)
         .join("\n");
 
-      // Clean up: remove empty paragraphs and excessive whitespace
+      // Clean up
       html = html.replace(/<p[^>]*>\s*<\/p>/g, "");
       html = html.replace(/\n\s*\n/g, "\n");
 
@@ -282,6 +303,7 @@ export function MarkdownRenderer({
   const renderContent = () => {
     if (!html) return null;
 
+    // Split by code blocks, but preserve inline elements
     const parts = html.split(/(<div data-code-block[^>]*><\/div>)/);
 
     return parts.map((part, index) => {
@@ -299,6 +321,7 @@ export function MarkdownRenderer({
         );
       }
 
+      // Use dangerouslySetInnerHTML for the rest
       return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
     });
   };

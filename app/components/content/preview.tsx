@@ -93,7 +93,11 @@ export default function ComponentPreview({
   }, [category, subcategory, componentName]);
 
   useEffect(() => {
-    loadComponent();
+    const id = setTimeout(() => {
+      void loadComponent();
+    }, 0);
+
+    return () => clearTimeout(id);
   }, [loadComponent, refreshKey]);
 
   const handleRefresh = () => {

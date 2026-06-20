@@ -1,4 +1,10 @@
+<div align="center">
+
+<img src="./public/logo.png" width="50" alt="Venumity UI Logo" />
+
 # Security Policy for Venumity UI
+
+</div>
 
 ## Which Versions Are Supported
 

@@ -1,6 +1,10 @@
-# <img src="./public/logo.png" width="30" style="vertical-align: middle; margin-top: 5px;" /> Venu<span style="color:orange">mity</span> UI 🎉
+<div align="center">
 
-**Beautiful, production-ready React components. Copy. Paste. Ship.**
+<img src="./public/logo.png" width="50" alt="Venumity UI Logo" />
+
+# Venu<span style="color:orange">mity</span> UI 🙌🏻
+
+**Beautiful, production-ready React components. Copy. Paste. Ship. ⚡️**
 
 [![GitHub stars](https://img.shields.io/github/stars/thevinayakgore/ui.venumity?style=flat&color=orange&label=Stars)](https://github.com/thevinayakgore/ui.venumity/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/thevinayakgore/ui.venumity?style=flat&color=blue&label=Forks)](https://github.com/thevinayakgore/ui.venumity/network)
@@ -9,6 +13,8 @@
 [![Last Commit](https://img.shields.io/github/last-commit/thevinayakgore/ui.venumity?color=green&label=Last%20Commit)](https://github.com/thevinayakgore/ui.venumity/commits)
 [![CLI Version](https://img.shields.io/npm/v/venumityui.svg?color=orange&label=CLI)](https://www.npmjs.com/package/venumityui)
 [![CLI Downloads](https://img.shields.io/npm/dm/venumityui.svg?color=blue&label=Downloads)](https://www.npmjs.com/package/venumityui)
+</div>
+
 
 <br/>
 

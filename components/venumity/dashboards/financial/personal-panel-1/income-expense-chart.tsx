@@ -37,14 +37,14 @@ export default function IncomeExpenseChart() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pl-0">
+      <CardContent className="pl-0 min-h-70">
         <ChartContainer
           config={{
             income: { label: "Income", color: "#10b981" },
             expenses: { label: "Expenses", color: "#ef4444" },
             net: { label: "Net", color: "#3b82f6" },
           }}
-          className="h-full w-full"
+          className="min-h-70 w-full"
         >
           <BarChart data={data}>
             <CartesianGrid vertical={true} />

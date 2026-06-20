@@ -1,6 +1,6 @@
 // app/components/content/component-item-with-tabs.tsx
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PencilRuler, Terminal } from "lucide-react";
 import Overview from "./overview";
@@ -8,13 +8,6 @@ import { toKebabCase } from "@/utils/slug-kebab";
 import { ComponentItemData } from "../[...slug]/page.client";
 import Manual from "./manual";
 import CodeBlock from "@/components/site/common/code-block";
-import { formatCount } from "@/utils/format-count";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface ComponentItemWithTabsProps {
   item: ComponentItemData;
@@ -63,46 +56,14 @@ export default function ComponentItemWithTabs({
 }: ComponentItemWithTabsProps) {
   const itemSlugPath = `${toKebabCase(item.category)}/${toKebabCase(item.subcategory || "")}/${toKebabCase(item.itemName)}`;
   const componentFolderPath = `${toKebabCase(item.category)}/${toKebabCase(item.subcategory || "")}/${toKebabCase(item.itemName)}`;
-  const componentId = toKebabCase(item.itemName);
 
   const showManual = Boolean(item.code);
   const showCli = true;
   const showAnyExtra = showCli || showManual;
 
   const [componentActiveTab, setComponentActiveTab] = useState<string>("cli");
-  const [copyCount, setCopyCount] = useState(0);
   const [selectedPackageManager, setSelectedPackageManager] =
     useState<string>("npm");
-
-  // Fetch initial count on mount
-  useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const res = await fetch(
-          `/api/components/cli-copy-count?componentId=${componentId}`,
-        );
-        const data = await res.json();
-        setCopyCount(data.copyCount || 0);
-      } catch (error) {
-        console.error("Failed to fetch copy count:", error);
-      }
-    };
-    fetchCount();
-  }, [componentId]);
-
-  const handleCopy = async () => {
-    try {
-      const res = await fetch("/api/components/cli-copy-count", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ componentId }),
-      });
-      const data = await res.json();
-      setCopyCount(data.copyCount);
-    } catch (error) {
-      console.error("Failed to update copy count:", error);
-    }
-  };
 
   // Get the current command based on selected package manager
   const currentCommand =
@@ -188,25 +149,9 @@ export default function ComponentItemWithTabs({
                         </button>
                       ))}
                     </div>
-                    {copyCount > 0 && (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div className="text-xs text-foreground/30 font-semibold tracking-wide cursor-help">
-                              {formatCount(copyCount)} copies
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent className="text-center font-semibold tracking-wide max-w-fit!">
-                            <p>
-                              {copyCount} used this CLI <br /> command line
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    )}
                   </div>
                   <div className="border border-foreground/6 rounded-lg overflow-hidden">
-                    <div onClick={handleCopy}>
+                    <div>
                       <CodeBlock code={currentCommand} language="txt" />
                     </div>
                   </div>

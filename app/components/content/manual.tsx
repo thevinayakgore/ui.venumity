@@ -1,6 +1,6 @@
 // app/components/content/manual.tsx
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import CodeBlock from "@/components/site/common/code-block";
 import { toKebabCase } from "@/utils/slug-kebab";
 import {
@@ -27,6 +27,55 @@ interface TreeNode {
   path: string;
   children?: TreeNode[];
 }
+
+// StepItem component moved OUTSIDE of the main component
+interface StepItemProps {
+  multiPage?: boolean;
+  number: number;
+  title: string;
+  children: React.ReactNode;
+  fileName?: string;
+  isLast?: boolean;
+  showTitle?: boolean;
+}
+
+const StepItem = ({
+  multiPage,
+  number,
+  title,
+  children,
+  fileName,
+  isLast = false,
+  showTitle,
+}: StepItemProps) => (
+  <div className="relative flex gap-4 pl-3.25">
+    <div className="absolute top-0 left-0 size-7 rounded-full bg-foreground/5 backdrop-blur-lg border flex items-center justify-center">
+      <span className="text-xs font-bold text-foreground/70">{number}</span>
+    </div>
+    <div
+      className={`flex-1 space-y-3 pl-5 md:pl-10 ${isLast ? "pb-0" : "pb-5"} border-l w-full`}
+    >
+      <div>
+        {showTitle && <h3 className="text-base font-semibold">{title}</h3>}
+        <span
+          className={`${multiPage ? "text-sm text-foreground/50" : "text-base font-semibold text-foreground"}`}
+        >
+          {multiPage ? `Add ${fileName}` : title}
+        </span>
+        {fileName && !multiPage && (
+          <p className="text-sm text-foreground/50 font-mono mt-1">
+            {fileName}
+          </p>
+        )}
+      </div>
+      <div className="p-1.5 bg-foreground/5 backdrop-blur-md rounded-xl w-full">
+        <div className="border border-foreground/5 rounded-lg overflow-hidden w-full">
+          {children}
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 function isMultiPage(code: string): boolean {
   return /from\s+["']\.\.?\//.test(code);
@@ -62,7 +111,10 @@ export default function Manual({
   // ── Fetch folder tree for multi‑page components ────────
   useEffect(() => {
     if (!multiPage || !code) {
-      setLoading(false);
+      // Wrap in setTimeout to avoid synchronous setState in effect
+      setTimeout(() => {
+        setLoading(false);
+      }, 0);
       return;
     }
 
@@ -89,7 +141,11 @@ export default function Manual({
         if (!cancelled) {
           setFiles(tsxFiles);
           setError(null);
-          if (tsxFiles.length === 0) setLoading(false);
+          if (tsxFiles.length === 0) {
+            setTimeout(() => {
+              setLoading(false);
+            }, 0);
+          }
         }
       } catch (err) {
         if (!cancelled) {
@@ -97,7 +153,9 @@ export default function Manual({
             err instanceof Error ? err.message : "Could not load file list",
           );
           setFiles([]);
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 0);
         }
       }
     }
@@ -129,7 +187,9 @@ export default function Manual({
       }
       if (!cancelled) {
         setFileContents(contents);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 0);
       }
     }
     fetchAllFiles();
@@ -141,7 +201,9 @@ export default function Manual({
   // ── Single‑page sub‑import fetching ────────────────────
   useEffect(() => {
     if (multiPage || !code) {
-      setSubFileContents([]);
+      queueMicrotask(() => {
+        setSubFileContents([]);
+      });
       return;
     }
 
@@ -153,13 +215,17 @@ export default function Manual({
     }
     const uniquePaths = [...new Set(paths)];
     if (uniquePaths.length === 0) {
-      setSubFileContents([]);
+      queueMicrotask(() => {
+        setSubFileContents([]);
+      });
       return;
     }
 
     const baseDir = componentPath;
     let cancelled = false;
-    setSubFilesLoading(true);
+    queueMicrotask(() => {
+      if (!cancelled) setSubFilesLoading(true);
+    });
 
     async function fetchSubFiles() {
       const results: { name: string; code: string }[] = [];
@@ -192,8 +258,12 @@ export default function Manual({
         }
       }
       if (!cancelled) {
-        setSubFileContents(results);
-        setSubFilesLoading(false);
+        queueMicrotask(() => {
+          if (!cancelled) {
+            setSubFileContents(results);
+            setSubFilesLoading(false);
+          }
+        });
       }
     }
 
@@ -238,53 +308,109 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }`;
 
-  // Step component with left numbering and right content
-  const StepItem = ({
-    multiPage,
-    number,
-    title,
-    children,
-    fileName,
-    isLast = false,
-    showTitle,
-  }: {
-    multiPage?: boolean;
-    number: number;
-    title: string;
-    children: React.ReactNode;
-    fileName?: string;
-    isLast?: boolean;
-    showTitle?: boolean;
-  }) => (
-    <div className="relative flex gap-4 pl-3.25">
-      <div className="absolute top-0 left-0 size-7 rounded-full bg-foreground/5 backdrop-blur-lg border flex items-center justify-center">
-        <span className="text-xs font-bold text-foreground/70">{number}</span>
-      </div>
-      <div
-        className={`flex-1 space-y-3 pl-5 md:pl-10 ${isLast ? "pb-0" : "pb-5"} border-l w-full`}
-      >
-        <div>
-          {showTitle && <h3 className="text-base font-semibold">{title}</h3>}
-          <span
-            className={`${multiPage ? "text-sm text-foreground/50" : "text-base font-semibold text-foreground"}`}
-          >
-            {multiPage ? `Add ${fileName}` : title}
-          </span>
-          {fileName && !multiPage && (
-            <p className="text-sm text-foreground/50 font-mono mt-1">
-              {fileName}
-            </p>
-          )}
-        </div>
-        <div className="p-1.5 bg-foreground/5 backdrop-blur-md rounded-xl w-full">
-          <div className="border border-foreground/5 rounded-lg overflow-hidden w-full">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  // Memoized render function to avoid creating components during render
+  const renderStepItems = useCallback(() => {
+    const items = [];
 
+    // Step 1: Install Dependencies
+    items.push(
+      <StepItem key="step-1" number={1} title="Install Dependencies">
+        <CodeBlock
+          code={`npm install ${installDeps.join(" ")}`}
+          language="bash"
+        />
+      </StepItem>,
+    );
+
+    // Step 2: Add util file
+    items.push(
+      <StepItem
+        key="step-2"
+        number={2}
+        title="Add util file"
+        fileName="lib/utils.ts"
+      >
+        <CodeBlock code={utilsCode} language="tsx" />
+      </StepItem>,
+    );
+
+    // Step 3: Copy-Paste source code
+    if (multiPage) {
+      // Multi-page: Show each file as a separate StepItem
+      files.forEach((file, idx) => {
+        const content = fileContents[file.path];
+        if (!content) return;
+        const isLast = idx === files.length - 1;
+        items.push(
+          <StepItem
+            key={file.path}
+            number={3 + idx}
+            multiPage={multiPage}
+            showTitle={idx === 0}
+            title="Copy-Paste the source code"
+            fileName={file.name}
+            isLast={isLast}
+          >
+            <div className="w-full">
+              <CodeBlock
+                code={filterShadcnImports(content)}
+                language="tsx"
+                aspectVideo
+              />
+            </div>
+          </StepItem>,
+        );
+      });
+    } else {
+      // Single-page: Show one StepItem
+      items.push(
+        <StepItem
+          key="step-3"
+          number={3}
+          title="Copy-Paste the source code"
+          fileName={`components/ui/${kebabName}.tsx`}
+          isLast={subFileContents.length === 0}
+        >
+          <div className="w-full">
+            {code && <CodeBlock code={code} language="tsx" aspectVideo />}
+          </div>
+        </StepItem>,
+      );
+    }
+
+    // Sub-components for single-page
+    if (!multiPage && subFileContents.length > 0) {
+      subFileContents.forEach((sub, idx) => {
+        const isLast = idx === subFileContents.length - 1;
+        items.push(
+          <StepItem
+            key={sub.name}
+            number={4 + idx}
+            title="Copy-Paste the source code"
+            fileName={`components/ui/${sub.name}`}
+            isLast={isLast}
+          >
+            <div className="w-full">
+              <CodeBlock code={sub.code} language="tsx" aspectVideo />
+            </div>
+          </StepItem>,
+        );
+      });
+    }
+
+    return items;
+  }, [
+    installDeps,
+    utilsCode,
+    multiPage,
+    files,
+    fileContents,
+    code,
+    subFileContents,
+    kebabName,
+  ]);
+
+  // Handle loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center p-12 h-96">
@@ -298,6 +424,7 @@ export function cn(...inputs: ClassValue[]) {
     );
   }
 
+  // Handle error state
   if (multiPage && error && files.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
@@ -309,100 +436,27 @@ export function cn(...inputs: ClassValue[]) {
     );
   }
 
+  // Main render
+  const stepItems = renderStepItems();
+
   return (
     <div className="w-full">
-      <div className="w-full">
-        {/* Step 1: Install Dependencies */}
-        <StepItem number={1} title="Install Dependencies">
-          <CodeBlock
-            code={`npm install ${installDeps.join(" ")}`}
-            language="bash"
-          />
-        </StepItem>
+      <div className="w-full">{stepItems}</div>
 
-        {/* Step 2: Add util file */}
-        <StepItem number={2} title="Add util file" fileName="lib/utils.ts">
-          <CodeBlock code={utilsCode} language="tsx" />
-        </StepItem>
+      {subFilesLoading && (
+        <div className="flex items-center justify-center py-4">
+          <div className="size-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <span className="ml-2 text-xs text-muted-foreground">
+            Loading sub-components…
+          </span>
+        </div>
+      )}
 
-        {/* Step 3: Copy-Paste source code */}
-        {multiPage ? (
-          // Multi-page: Show each file as a separate StepItem
-          files.map((file, idx) => {
-            const content = fileContents[file.path];
-            if (!content) return null;
-            const isLast = idx === files.length - 1;
-            return (
-              <StepItem
-                key={file.path}
-                number={3 + idx}
-                multiPage={multiPage}
-                showTitle={idx === 0}
-                title={`Copy-Paste the source code`}
-                fileName={file.name}
-                isLast={isLast}
-              >
-                <div className="w-full">
-                  <CodeBlock
-                    code={filterShadcnImports(content)}
-                    language="tsx"
-                    aspectVideo
-                  />
-                </div>
-              </StepItem>
-            );
-          })
-        ) : (
-          // Single-page: Show one StepItem
-          <StepItem
-            number={3}
-            title="Copy-Paste the source code"
-            fileName={`components/ui/${kebabName}.tsx`}
-            isLast
-          >
-            <div className="w-full">
-              {code && <CodeBlock code={code} language="tsx" aspectVideo />}
-            </div>
-          </StepItem>
-        )}
-
-        {/* Sub-components for single-page */}
-        {!multiPage && subFileContents.length > 0 && (
-          <>
-            {subFileContents.map((sub, idx) => {
-              const isLast = idx === subFileContents.length - 1;
-              return (
-                <StepItem
-                  key={sub.name}
-                  number={4 + idx}
-                  title="Copy-Paste the source code"
-                  fileName={`components/ui/${sub.name}`}
-                  isLast={isLast}
-                >
-                  <div className="w-full">
-                    <CodeBlock code={sub.code} language="tsx" aspectVideo />
-                  </div>
-                </StepItem>
-              );
-            })}
-          </>
-        )}
-
-        {subFilesLoading && (
-          <div className="flex items-center justify-center py-4">
-            <div className="size-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            <span className="ml-2 text-xs text-muted-foreground">
-              Loading sub-components…
-            </span>
-          </div>
-        )}
-
-        {!code && files.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            No source code available for this component.
-          </div>
-        )}
-      </div>
+      {!code && files.length === 0 && (
+        <div className="text-center py-8 text-muted-foreground">
+          No source code available for this component.
+        </div>
+      )}
     </div>
   );
 }
