@@ -142,6 +142,7 @@ export function ResourceCard({
           alt={page.title}
           width={2000}
           height={2000}
+          loading="eager"
           className="object-cover rounded-sm group-hover:scale-110 transition-all duration-500 w-full"
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;

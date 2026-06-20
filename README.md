@@ -275,7 +275,7 @@ Want your avatar here ? [Pick a component from the wishlist above](#️-componen
 
 | Channel | Link |
 |---------|------|
-| ⭐ GitHub Repo | [github.com/thevinayakgore/ui.venumity](https://github.com/thevinayakgore/ui.venumity) |
+| ⭐ GitHub Repo | [ui.venumity](https://github.com/thevinayakgore/ui.venumity) |
 | 💬 Discussions | [GitHub Discussions](https://github.com/thevinayakgore/ui.venumity/discussions) |
 | 🐛 Bug Reports | [GitHub Issues](https://github.com/thevinayakgore/ui.venumity/issues) |
 | 🌐 Contact Page | [ui.venumity.com/contact](https://ui.venumity.com/contact) |

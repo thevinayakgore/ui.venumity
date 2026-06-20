@@ -1,6 +1,6 @@
 // components/site/navigations/feedback.tsx
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { MessageSquareQuote, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { sendFeedbackEmail } from "@/app/actions/send-feedback";
 
 export default function Feedback() {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -21,9 +22,17 @@ export default function Feedback() {
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const currentPageUrl =
     typeof window !== "undefined" ? window.location.href : "";
+
+  // Email validation function (only if provided)
+  const isValidEmail = (email: string): boolean => {
+    if (!email) return true; // Empty is valid (optional)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,28 +52,36 @@ export default function Feedback() {
       return;
     }
 
+    // Validate email only if provided
+    if (feedbackEmail.trim() && !isValidEmail(feedbackEmail.trim())) {
+      toast.error("Please enter a valid email address or leave it empty");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: feedbackName.trim(),
-          email: feedbackEmail.trim(),
-          message: feedbackMessage.trim(),
-          rating,
-          sitePageUrl: currentPageUrl,
-        }),
-      });
+      // Get user agent and IP info
+      const userAgent = navigator.userAgent;
 
-      const result = await response.json();
+      // Create FormData for server action
+      const formData = new FormData();
+      formData.append("username", feedbackName.trim());
+      formData.append("email", feedbackEmail.trim());
+      formData.append("message", feedbackMessage.trim());
+      formData.append("rating", rating.toString());
+      formData.append("sitePageUrl", currentPageUrl);
+      formData.append("userAgent", userAgent);
+
+      // Try to get IP from Cloudflare or other headers (will be added server-side)
+      formData.append("ip", "unknown");
+      formData.append("referer", document.referrer || "");
+
+      const result = await sendFeedbackEmail(formData);
 
       if (result.success) {
         toast.success("Thank you for your feedback!", {
-          description: "We'll use it to improve your experience.",
+          description: "We'll review it and get back to you if needed.",
         });
 
         setFeedbackName("");
@@ -74,7 +91,9 @@ export default function Feedback() {
         setHoveredRating(null);
         setFeedbackOpen(false);
       } else {
-        toast.error("Failed to submit feedback. Please try again.");
+        toast.error(
+          result.message || "Failed to submit feedback. Please try again.",
+        );
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
@@ -112,7 +131,11 @@ export default function Feedback() {
           </p>
         </div>
 
-        <form onSubmit={handleFeedbackSubmit} className="p-6 pt-2 space-y-5">
+        <form
+          ref={formRef}
+          onSubmit={handleFeedbackSubmit}
+          className="p-6 pt-2 space-y-5"
+        >
           <div className="space-y-2">
             <Label htmlFor="feedback-name" className="text-sm font-medium">
               Username <span className="text-red-400">*</span>
@@ -142,7 +165,7 @@ export default function Feedback() {
             />
 
             <p className="text-[11px] text-muted-foreground">
-              We will only use this to reply if you would like an answer.
+              We&apos;ll use this to reply if you&apos;d like a response.
             </p>
           </div>
 

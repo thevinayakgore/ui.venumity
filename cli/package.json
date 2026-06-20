@@ -1,6 +1,6 @@
 {
   "name": "venumityui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "CLI for Venumity UI – Install React components with ease",
   "bin": {

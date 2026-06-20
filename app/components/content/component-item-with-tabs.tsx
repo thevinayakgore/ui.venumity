@@ -31,30 +31,30 @@ const packageManagers = [
     inactiveClass:
       "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
   },
-  {
-    name: "pnpm",
-    command: (componentName: string) =>
-      `pnpm dlx venumityui@latest add ${componentName}`,
-    activeClass: "bg-background text-foreground border border-foreground/20",
-    inactiveClass:
-      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
-  },
-  {
-    name: "yarn",
-    command: (componentName: string) =>
-      `yarn dlx venumityui@latest add ${componentName}`,
-    activeClass: "bg-background text-foreground border border-foreground/20",
-    inactiveClass:
-      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
-  },
-  {
-    name: "bun",
-    command: (componentName: string) =>
-      `bunx venumityui@latest add ${componentName}`,
-    activeClass: "bg-background text-foreground border border-foreground/20",
-    inactiveClass:
-      "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
-  },
+  // {
+  //   name: "pnpm",
+  //   command: (componentName: string) =>
+  //     `pnpm dlx venumityui@latest add ${componentName}`,
+  //   activeClass: "bg-background text-foreground border border-foreground/20",
+  //   inactiveClass:
+  //     "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  // },
+  // {
+  //   name: "yarn",
+  //   command: (componentName: string) =>
+  //     `yarn dlx venumityui@latest add ${componentName}`,
+  //   activeClass: "bg-background text-foreground border border-foreground/20",
+  //   inactiveClass:
+  //     "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  // },
+  // {
+  //   name: "bun",
+  //   command: (componentName: string) =>
+  //     `bunx venumityui@latest add ${componentName}`,
+  //   activeClass: "bg-background text-foreground border border-foreground/20",
+  //   inactiveClass:
+  //     "hover:bg-background hover:text-foreground border border-transparent hover:border-foreground/20",
+  // },
 ];
 
 export default function ComponentItemWithTabs({

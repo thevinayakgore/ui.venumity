@@ -130,8 +130,8 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
               alt={card.title}
               width={5000}
               height={5000}
-              priority
               unoptimized
+              loading="eager"
               onError={handleImageError}
               className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
             />

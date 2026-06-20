@@ -56,7 +56,6 @@ export default function Hero() {
         <div className="flex flex-col items-center justify-center gap-5 z-70 p-5 sm:pt-10 md:pt-20 lg:pt-30 text-6xl text-center font-semibold overflow-hidden w-full">
           <Link
             href="/components/data-display/tables#expandable-row-table"
-            target="_blank"
             className={cn(
               buttonVariants({
                 variant: "outline",
@@ -220,6 +219,7 @@ export default function Hero() {
           alt="Brand Image"
           width={5000}
           height={5000}
+          loading="eager"
           className="absolute inset-x-0 top-1/5 -translate-y-1/4 left-1/4 -translate-x-1/3 z-0 scale-120 transform-gpu opacity-3 w-full h-auto rotate-20"
         />
 

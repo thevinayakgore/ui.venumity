@@ -202,7 +202,9 @@ export default async function Page({ params }: PageProps) {
         <form
           action={prevPage ? `/docs/${prevPage.slug}` : ""}
           method="get"
-          className="w-full"
+          className={
+            prevPage ? "p-1 bg-foreground/5 rounded-[0.8rem] border w-full" : "w-full"
+          }
         >
           <Button
             type="submit"
@@ -229,7 +231,7 @@ export default async function Page({ params }: PageProps) {
         <form
           action={nextButtonSlug}
           method="get"
-          className="text-end ml-4 w-full"
+          className="text-end ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
         >
           <Button
             type="submit"

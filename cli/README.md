@@ -318,7 +318,7 @@ MIT © [The Vinayak Gore](https://github.com/thevinayakgore)
 
 - ⭐ Star this repository (ui.venumity)
 - 👨‍💻 Follow [@thevinayakgore](https://github.com/thevinayakgore)
-- 💬 Join our community discussions
+- 💬 Join our Community [Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
 - 🐛 Report issues on [GitHub Issues](https://github.com/thevinayakgore/ui.venumity/issues)
 
 ---
