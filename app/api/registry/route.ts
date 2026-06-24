@@ -1,3 +1,4 @@
+// app/api/registry/route.ts
 import { COMPONENTS } from '@/registry/components';
 import { NextResponse } from 'next/server';
 

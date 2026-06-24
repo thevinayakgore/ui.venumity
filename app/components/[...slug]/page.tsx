@@ -10,6 +10,7 @@ import {
 } from "@/registry/component-utils";
 import { authorName, gitRepo, handle, website } from "@/lib/brand";
 import PageClient from "./page.client";
+import Script from "next/script";
 
 export const dynamic = "force-static";
 export const revalidate = 86400; // 24h
@@ -308,6 +309,45 @@ export default async function ComponentPage({
   const { slug } = await params;
   const path = slug.join("/");
 
+  const baseUrl = website || "https://ui.venumity.com";
+  const categorySlug = slug[0] ?? "";
+  const subcategorySlug = slug[1] ?? "";
+  const category = formatTitle(categorySlug);
+  const subcategory = formatTitle(subcategorySlug);
+  const componentName = formatTitle(slug[slug.length - 1] ?? "component");
+  const currentUrl = `${baseUrl}/components/${path}`;
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: category,
+        item: `${baseUrl}/components/${categorySlug}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: subcategory,
+        item: `${baseUrl}/components/${categorySlug}/${subcategorySlug}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: componentName,
+        item: currentUrl,
+      },
+    ],
+  };
+
   let component = null;
   let subcategoryData = null;
   let error: "not-found" | "unknown" | null = null;
@@ -342,10 +382,15 @@ export default async function ComponentPage({
     );
 
   return (
-    <PageClient
-      component={component}
-      slugPath={path}
-      subcategoryData={subcategoryData}
-    />
+    <>
+      <Script id="breadcrumb-jsonld" type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </Script>
+      <PageClient
+        component={component}
+        slugPath={path}
+        subcategoryData={subcategoryData}
+      />
+    </>
   );
 }

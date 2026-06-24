@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { SearchProvider } from "@/components/site/navigations/search";
 import { COMPONENTS } from "@/registry/components";
 import { toKebabCase } from "@/utils/slug-kebab";
+import Script from "next/script";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -126,6 +127,69 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("font-sans", manrope.variable)}
     >
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ff7200" />
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  name: "Venumity UI",
+                  url: "https://ui.venumity.com",
+                  description:
+                    "Free React and Next.js components, resources, and documentation.",
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target:
+                      "https://ui.venumity.com/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string",
+                  },
+                },
+                {
+                  "@type": "Organization",
+                  name: "Venumity",
+                  url: "https://www.venumity.com",
+                  logo: "https://ui.venumity.com/logo.png",
+                  description:
+                    "Venumity is a design system and component library ecosystem for React and Next.js.",
+                  sameAs: [
+                    "https://github.com/thevinayakgore",
+                    "https://twitter.com/thevinayakgore",
+                    "https://linkedin.com/in/thevinayakgore",
+                    "https://youtube.com/@TheVinayakGore",
+                  ],
+                  contactPoint: {
+                    "@type": "ContactPoint",
+                    contactType: "Support",
+                    url: "https://github.com/thevinayakgore/ui.venumity/issues",
+                  },
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Venumity UI",
+                  applicationCategory: "DeveloperApplication",
+                  operatingSystem: "Web",
+                  description:
+                    "Free, open-source React and Next.js component library built with Tailwind CSS and shadcn/ui.",
+                  offers: {
+                    "@type": "Offer",
+                    price: "0",
+                    priceCurrency: "USD",
+                  },
+                  license: "https://opensource.org/licenses/MIT",
+                  downloadUrl: "https://ui.venumity.com",
+                  softwareVersion: "1.0.0",
+                },
+              ],
+            }),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-medium antialiased`}
       >

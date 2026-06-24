@@ -1,3 +1,4 @@
+<!-- cli/README.md -->
 # Venumity UI CLI
 
 <div align="center">

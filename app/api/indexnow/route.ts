@@ -1,3 +1,4 @@
+// app/api/indexnow/route.ts
 import { NextResponse } from "next/server";
 import { website } from "@/lib/brand";
 

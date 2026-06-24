@@ -1,3 +1,4 @@
+// app/api/registry/components/route.ts
 import { COMPONENTS } from '@/registry/components';
 import { NextResponse } from 'next/server';
 import type { ComponentCategory, ComponentItem } from '@/registry/types';

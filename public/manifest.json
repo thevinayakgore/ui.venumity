@@ -1,0 +1,28 @@
+{
+  "name": "Venumity UI - Free React Components Library",
+  "short_name": "Venumity",                       
+  "description": "🎉 Open-Source UI library providing ready-to-use components, templates and developer resources built with Next.js, Tailwind CSS, ShadCN UI, and Framer Motion.", 
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",                 
+  "theme_color": "#ff7200",             
+  "icons": [
+    {
+      "src": "/logo.png", 
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",    
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null,
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "categories": ["productivity", "design", "developer-tools"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "iarc_rating_id": ""
+}

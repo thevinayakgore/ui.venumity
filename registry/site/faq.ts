@@ -1,3 +1,4 @@
+// registry/site/faq.ts
 import {
   BookOpen,
   FileText,

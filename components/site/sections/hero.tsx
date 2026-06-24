@@ -63,7 +63,7 @@ export default function Hero() {
               "pl-0! h-12! hover:pr-6 z-20 group/intro text-sm tracking-wide truncate shadow-lg rounded-full transition-all duration-500",
             )}
           >
-            <div className="relative size-12 z-40 mr-1 p-1 rounded-full overflow-hidden">
+            <div className="relative size-11.5 z-40 mr-1 p-1 rounded-full overflow-hidden">
               <Image
                 src="/brand-logo.png"
                 alt="Logo"

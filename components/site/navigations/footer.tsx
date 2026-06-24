@@ -121,7 +121,8 @@ export default function Footer() {
     pathname?.startsWith("/docs") ||
     pathname?.startsWith("/resources") ||
     pathname?.startsWith("/preview") ||
-    pathname?.startsWith("/changelog")
+    pathname?.startsWith("/changelog") ||
+    pathname?.startsWith("/not-found")
   )
     return null;
 

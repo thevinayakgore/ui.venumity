@@ -1,10 +1,8 @@
 <div align="center">
 
-<img src="./public/logo.png" width="50" alt="Venumity UI Logo" />
+<img src="./vui-badge.png" width="320" alt="Venumity UI Logo" />
 
-# Venu<span style="color:orange">mity</span> UI 🙌🏻
-
-**Beautiful, production-ready React components. Copy. Paste. Ship. ⚡️**
+### Beautiful, production-ready React components. Copy. Paste. Ship. ⚡️
 
 [![GitHub stars](https://img.shields.io/github/stars/thevinayakgore/ui.venumity?style=flat&color=orange&label=Stars)](https://github.com/thevinayakgore/ui.venumity/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/thevinayakgore/ui.venumity?style=flat&color=blue&label=Forks)](https://github.com/thevinayakgore/ui.venumity/network)
@@ -28,7 +26,7 @@
 
 <br/>
 
-[🌐 Live Site](https://ui.venumity.com) · [📦 Components](https://ui.venumity.com/components) · [📚 Docs](https://ui.venumity.com/docs/introduction) · [🧩 Templates](https://ui.venumity.com/templates) · [⚡ CLI](https://www.npmjs.com/package/venumityui) · [💬 Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
+[Live Site](https://ui.venumity.com) - [Components](https://ui.venumity.com/components) - [Docs](https://ui.venumity.com/docs/introduction) - [Templates](https://ui.venumity.com/templates) - [⚡ CLI](https://www.npmjs.com/package/venumityui) - [Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
 
 ---
 
@@ -275,7 +273,6 @@ Thanks to everyone who has helped build Venumity UI !
 
 Want your avatar here ? [Pick a component from the wishlist above](#️-components-we-want--pick-one-and-build-it) and submit a PR !
 
----
 
 ## 📞 Get Help or Report Issues
 
@@ -289,14 +286,14 @@ Want your avatar here ? [Pick a component from the wishlist above](#️-componen
 
 ---
 
+<br/>
+
 <div align="center">
 
 **Built with ❤️ by [Vinayak Gore](https://thevinayakgore.vercel.app)**
 
-[GitHub](https://github.com/thevinayakgore) · [Twitter / X](https://twitter.com/thevinayakgore) · [Instagram](https://instagram.com/thevinayakgore) · [LinkedIn](https://linkedin.com/in/thevinayakgore) · [YouTube](https://youtube.com/@TheVinayakGore)
+[GitHub](https://github.com/thevinayakgore) ~ [Twitter / X](https://twitter.com/thevinayakgore) ~ [Instagram](https://instagram.com/thevinayakgore) ~ [LinkedIn](https://linkedin.com/in/thevinayakgore) ~ [YouTube](https://youtube.com/@TheVinayakGore)
 
-<br/>
-
-**Venumity UI ⚡ Ship beautiful interfaces faster.**
+Venumity UI ⚡ Ship beautiful interfaces faster.
 
 </div>

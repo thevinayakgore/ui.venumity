@@ -1,4 +1,4 @@
-// components/search.tsx
+// components/site/navigations/search.tsx
 "use client";
 import {
   createContext,
@@ -14,19 +14,30 @@ import {
   Search as SearchIcon,
   ArrowRight,
   CircleFadingArrowUp,
+  Mic,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { COMPONENTS } from "@/registry/components";
-import { DOCS_DATA } from "@/registry/site/docs";
-import { RESOURCE_CATEGORIES } from "@/registry/resources";
-import { FAQ_DATA } from "@/registry/site/faq";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 // ----------------------- TYPES -----------------------
+type SearchResultType =
+  | "component"
+  | "docs"
+  | "resource"
+  | "faq"
+  | "sidebar"
+  | "changelog"
+  | "video"
+  | "contributor"
+  | "category"
+  | "subcategory";
+
 interface SearchResult {
   id: string;
   type: SearchResultType;
@@ -35,8 +46,6 @@ interface SearchResult {
   category: string;
   path: string;
 }
-
-type SearchResultType = "component" | "docs" | "resource" | "faq" | "sidebar";
 
 interface SearchContextType {
   isOpen: boolean;
@@ -53,7 +62,7 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   const openSearch = useCallback(() => setIsOpen(true), []);
   const closeSearch = useCallback(() => setIsOpen(false), []);
 
-  // Global keyboard shortcut (⌘K / Ctrl+K)
+  // Global keyboard shortcut (⌘K / Ctrl+K) AND (⌘S / Ctrl+S)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
@@ -84,7 +93,65 @@ export function useSearch() {
   return context;
 }
 
-// ----------------------- SEARCH LOGIC -----------------------
+// ----------------------- WEB SPEECH API TYPES -----------------------
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence?: number;
+}
+
+interface SpeechRecognitionResultLike {
+  0: SpeechRecognitionAlternative;
+  isFinal: boolean;
+  length: number;
+  [index: number]: SpeechRecognitionAlternative;
+}
+
+interface SpeechRecognitionResultListLike {
+  length: number;
+  [index: number]: SpeechRecognitionResultLike;
+}
+
+interface SpeechRecognitionEventLike extends Event {
+  resultIndex: number;
+  results: SpeechRecognitionResultListLike;
+}
+
+interface SpeechRecognitionErrorEventLike extends Event {
+  error: string;
+  message?: string;
+}
+
+interface SpeechRecognitionInstance extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognitionInstance;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
+
+// ----------------------- SEARCH LOGIC (UPDATED - uses API) -----------------------
+interface ApiSearchResult {
+  type?: string;
+  title: string;
+  description?: string;
+  category?: string;
+  url: string;
+}
 function getResultColor(type: SearchResultType): string {
   const colorMap: Record<SearchResultType, string> = {
     component: "text-primary",
@@ -92,104 +159,58 @@ function getResultColor(type: SearchResultType): string {
     resource: "text-yellow-400",
     faq: "text-purple-500",
     sidebar: "text-pink-500",
+    changelog: "text-blue-400",
+    video: "text-red-400",
+    contributor: "text-cyan-400",
+    category: "text-orange-400",
+    subcategory: "text-teal-400",
   };
   return colorMap[type] || "text-foreground/70";
 }
 
+// ============================================================
+// IMPORTANT FIX: Use the API endpoint instead of local search
+// ============================================================
 async function searchAllContent(query: string): Promise<SearchResult[]> {
-  const results: SearchResult[] = [];
-  const searchTerm = query.toLowerCase().trim();
+  try {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
 
-  // Components (with subcategories)
-  COMPONENTS.forEach((category) => {
-    category.subcategories.forEach((subcategory) => {
-      subcategory.items.forEach((item) => {
-        const title = item.itemName.toLowerCase();
-        const desc =
-          subcategory.description?.toLowerCase() || item.itemName.toLowerCase();
-        const tags = item.tags?.join(" ").toLowerCase() || "";
-
-        if (
-          title.includes(searchTerm) ||
-          desc.includes(searchTerm) ||
-          tags.includes(searchTerm)
-        ) {
-          results.push({
-            id: `${category.name}-${subcategory.name}-${item.itemName}`,
-            type: "component",
-            title: item.itemName,
-            description: subcategory.description || item.itemName,
-            category: `${category.name} > ${subcategory.name}`,
-            path: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
-          });
-        }
-      });
-    });
-  });
-
-  // Docs
-  DOCS_DATA.forEach((section) => {
-    section.pages.forEach((page) => {
-      const title = page.page.toLowerCase();
-      const tags = page.tags?.join(" ").toLowerCase() || "";
-
-      if (title.includes(searchTerm) || tags.includes(searchTerm)) {
-        results.push({
-          id: `docs-${page.slug}`,
-          type: "docs",
-          title: page.page,
-          category: "Documentation",
-          path: `/docs/${page.slug}`,
-        });
-      }
-    });
-  });
-
-  // Resources
-  RESOURCE_CATEGORIES.forEach((category) => {
-    category.pages.forEach((page) => {
-      const title = page.title.toLowerCase();
-      const desc = page.description?.toLowerCase() || "";
-      const tags = page.tags?.join(" ").toLowerCase() || "";
-
-      if (
-        title.includes(searchTerm) ||
-        desc.includes(searchTerm) ||
-        tags.includes(searchTerm)
-      ) {
-        results.push({
-          id: `resource-${category.slug}-${page.title}`,
-          type: "resource",
-          title: page.title,
-          description: page.description,
-          category: `Resources > ${category.name}`,
-          path: `/resources/${category.slug}/${toKebabCase(page.title)}`,
-        });
-      }
-    });
-  });
-
-  // FAQs
-  FAQ_DATA.forEach((faq) => {
-    const question = faq.question.toLowerCase();
-    const answer = faq.answer.toLowerCase();
-
-    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-      results.push({
-        id: `faq-${faq.question.substring(0, 20)}`,
-        type: "faq",
-        title: faq.question,
-        description: faq.answer.substring(0, 100) + "...",
-        category: "FAQ",
-        path: "/faq",
-      });
+    if (!data.results || !Array.isArray(data.results)) {
+      return [];
     }
-  });
 
-  return results.slice(0, 50);
+    // Map API results to the SearchResult format expected by the UI
+    return data.results.map((item: ApiSearchResult, index: number) => {
+      // Determine the type mapping
+      let type: SearchResultType = "component";
+      const typeMap: Record<string, SearchResultType> = {
+        component: "component",
+        resource: "resource",
+        changelog: "changelog",
+        docs: "docs",
+        faq: "faq",
+        video: "video",
+      };
+      const apiType = item.type ?? "component";
+      type = typeMap[apiType] ?? "component";
+
+      return {
+        id: `api-result-${index}-${item.title}`,
+        type: type,
+        title: item.title,
+        description: item.description || "",
+        category: item.category || "General",
+        path: item.url,
+      };
+    });
+  } catch (error) {
+    console.error("Search API error:", error);
+    return [];
+  }
 }
 
-// ----------------------- SEARCH MODAL (YOUR ORIGINAL DESIGN) -----------------------
+// ----------------------- SEARCH MODAL -----------------------
 function SearchModal({
   isOpen,
   onClose,
@@ -204,6 +225,28 @@ function SearchModal({
   const inputRef = useRef<HTMLInputElement>(null);
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const router = useRouter();
+
+  // ---------- Voice recognition state ----------
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const cleanupTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // ---------------------------------------------
+
+  const clearVoiceTimeout = useCallback(() => {
+    if (voiceTimeoutRef.current) {
+      clearTimeout(voiceTimeoutRef.current);
+      voiceTimeoutRef.current = null;
+    }
+  }, []);
+
+  const clearCleanupTimeout = useCallback(() => {
+    if (cleanupTimeoutRef.current) {
+      clearTimeout(cleanupTimeoutRef.current);
+      cleanupTimeoutRef.current = null;
+    }
+  }, []);
 
   // Flatten subcategories for empty-state display
   const allSubcategories = COMPONENTS.flatMap((category) =>
@@ -238,7 +281,109 @@ function SearchModal({
     [router, onClose],
   );
 
-  // Keyboard navigation
+  // ---------- Voice recognition setup ----------
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const SpeechRecognitionAPI =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognitionAPI) {
+      const recognition = new SpeechRecognitionAPI();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
+        clearVoiceTimeout();
+        let finalTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const chunk = event.results[i][0]?.transcript ?? "";
+          if (event.results[i].isFinal) {
+            finalTranscript += chunk;
+          }
+        }
+        if (finalTranscript) {
+          setQuery(finalTranscript);
+          setIsListening(false);
+        }
+      };
+
+      recognition.onerror = (event: SpeechRecognitionErrorEventLike) => {
+        clearVoiceTimeout();
+        console.error("Speech recognition error:", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        clearVoiceTimeout();
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    } else {
+      console.warn("Speech recognition not supported in this browser");
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.abort();
+      }
+      clearVoiceTimeout();
+      clearCleanupTimeout();
+    };
+  }, [clearVoiceTimeout, clearCleanupTimeout]);
+
+  const toggleListening = useCallback(() => {
+    if (!recognitionRef.current) {
+      alert("Speech recognition is not supported in your browser.");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      clearVoiceTimeout();
+      setToast(null);
+      return;
+    }
+    setToast(null);
+    setIsListening(true);
+    try {
+      recognitionRef.current.start();
+      // Set 5-second timeout for inactivity
+      voiceTimeoutRef.current = setTimeout(() => {
+        if (recognitionRef.current) {
+          recognitionRef.current.stop();
+        }
+        setIsListening(false);
+        setToast("You have to speak something to search !");
+        // Close modal after 2 seconds to let user read toast
+        cleanupTimeoutRef.current = setTimeout(() => {
+          onClose();
+          setToast(null);
+        }, 2000);
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to start recognition:", error);
+      setIsListening(false);
+      clearVoiceTimeout();
+    }
+  }, [isListening, onClose, clearVoiceTimeout]);
+
+  // Clean up when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      clearVoiceTimeout();
+      clearCleanupTimeout();
+      setTimeout(() => {
+        setToast(null);
+      }, 0);
+      if (isListening && recognitionRef.current) {
+        recognitionRef.current.stop();
+        setIsListening(false);
+      }
+    }
+  }, [isOpen, clearVoiceTimeout, clearCleanupTimeout, isListening]);
+
+  // Keyboard navigation (unchanged)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
@@ -295,18 +440,29 @@ function SearchModal({
     }
   }, [selectedIndex]);
 
-  // Focus input on open / clear on close
+  // Focus input on open / clear on close - FIXED with setTimeout
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
-    } else if (!isOpen) {
-      setResults([]);
-      setQuery("");
-      setSelectedIndex(0);
     }
-  }, [isOpen]);
 
-  // Debounced search
+    if (!isOpen) {
+      // Use setTimeout to avoid synchronous setState cascade
+      const timeoutId = setTimeout(() => {
+        setResults([]);
+        setQuery("");
+        setSelectedIndex(0);
+        if (isListening) {
+          recognitionRef.current?.stop();
+          setIsListening(false);
+        }
+      }, 0);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isOpen, isListening]);
+
+  // Debounced search (UPDATED - uses API)
   useEffect(() => {
     const handleSearch = async () => {
       if (query.trim().length < 2) {
@@ -355,7 +511,7 @@ function SearchModal({
               <div className="absolute top-1.5 left-1/2 translate-x-13 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
 
               <div className="relative flex flex-col items-center justify-between p-3 bg-background border border-foreground/15 rounded-2xl! overflow-hidden w-full h-130">
-                {/* Search Input */}
+                {/* Search Input with Voice Button */}
                 <header className="relative z-50 font-semibold tracking-wide bg-popover border rounded-lg w-full h-12">
                   <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
                   <Input
@@ -364,10 +520,31 @@ function SearchModal({
                     placeholder="Start searching here..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="pl-10 pr-20 bg-transparent! placeholder:text-foreground/40 text-foreground/90 h-full text-base border-none rounded-none shadow-none focus-visible:ring-0"
+                    className="pl-10 pr-16 bg-transparent! placeholder:text-foreground/40 text-foreground/90 h-full text-base border-none rounded-none shadow-none focus-visible:ring-0"
                     autoComplete="off"
                     spellCheck="false"
                   />
+                  {/* Microphone button with pulse animation when listening */}
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    className={cn(
+                      "absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-muted rounded-full transition-all duration-500 flex items-center justify-center",
+                    )}
+                    title={
+                      isListening ? "Stop listening" : "Start voice search"
+                    }
+                  >
+                    {isListening ? (
+                      <div className="relative">
+                        <Mic className="size-4 text-primary! relative z-30" />
+                        <span className="absolute inset-0 z-0 bg-primary/80! animate-ping rounded-full w-full h-full" />
+                        <span className="absolute inset-0 z-0 bg-primary/80! scale-110 animate-ping rounded-full w-full h-full" />
+                      </div>
+                    ) : (
+                      <Mic className="size-4" />
+                    )}
+                  </button>
                 </header>
 
                 {/* Results Container */}
@@ -528,6 +705,13 @@ function SearchModal({
                   </div>
                 </footer>
               </div>
+
+              {/* Toast notification */}
+              {toast && (
+                <div className="absolute bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 text-center bg-red-500 text-white p-3 rounded-md text-base text-shadow-lg text-shadow-black/20 tracking-wide shadow-lg shadow-red-500/40 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300 w-[75%]">
+                  {toast}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
@@ -536,7 +720,7 @@ function SearchModal({
   );
 }
 
-// ----------------------- NEW TRIGGER (LIKE THE SECOND EXAMPLE) -----------------------
+// ----------------------- TRIGGER (unchanged) -----------------------
 export function SearchTrigger() {
   const { openSearch } = useSearch();
 
@@ -547,7 +731,12 @@ export function SearchTrigger() {
       onClick={openSearch}
       className="relative group flex items-center justify-between pl-2! pr-0.5! h-8! bg-foreground/5! border-foreground/15! transition-all duration-500 cursor-pointer rounded-sm"
     >
-      <SearchIcon className="size-3.5! shrink-0 mr-1" />
+      <SearchIcon className="size-3.5! shrink-0" />
+      <Separator
+        orientation="vertical"
+        className="h-4 my-auto bg-foreground/40 mx-1 rotate-8"
+      />
+      <Mic className="size-3.5! shrink-0 mr-1" />
       <kbd className="pointer-events-none hidden sm:flex h-6 select-none items-center gap-0.5 rounded bg-foreground/7! border border-foreground/15 px-1.5 font-mono text-[10px] font-medium">
         <span className="text-xs">⌘</span>K
       </kbd>

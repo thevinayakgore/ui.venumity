@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./public/logo.png" width="50" alt="Venumity UI Logo" />
+<img src="./vui-badge.png" width="250" alt="Venumity UI Logo" />
 
 # Security Policy for Venumity UI
 
