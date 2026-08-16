@@ -132,7 +132,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
 
   if (!componentData) {
     return (
-      <div className="flex items-center justify-center m-auto w-full max-w-4xl min-h-screen">
+      <div className="flex items-center justify-center m-auto w-full max-w-4xl h-full">
         <NotFound />
       </div>
     );
@@ -144,8 +144,8 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
   const githubUsername = componentData.githubUsername;
 
   return (
-    <main className="flex flex-col items-center justify-center m-auto overflow-auto w-full min-h-screen">
-      <section className="max-w-400 m-auto w-full h-full">
+    <main className="h-full w-full bg-background">
+      <section className="h-full w-full">
         {componentPath && (
           <ComponentPreview
             category={componentData.category}

@@ -379,7 +379,7 @@ export default async function ContributorsPage() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-3 gap-2 text-start text-sm tracking-wide">
+                <div className="grid grid-cols-3 gap-2 text-start text-sm tracking-wide w-full">
                   <div>
                     <div className="text-2xl opacity-30 font-bold">
                       {String(user.followers ?? 0).padStart(2, "0")}
@@ -401,7 +401,7 @@ export default async function ContributorsPage() {
                 </div>
 
                 {/* New Achievements Section - based on actual GitHub data */}
-                <div className="relative flex items-end gap-5 md:gap-10 text-sm capitalize tracking-wide pt-5 w-full">
+                <div className="relative flex items-start gap-5 md:gap-10 text-sm capitalize tracking-wide pt-5 w-full">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 opacity-60 bg-linear-to-l from-transparent via-sky-500 to-transparent rounded-full h-px w-full" />
                   <div className="absolute -top-5 left-0 bg-linear-to-l from-transparent via-sky-500 to-transparent opacity-20 blur-xl rounded-full h-10 w-full" />
                   <div className="flex flex-col items-center gap-1">

@@ -481,7 +481,7 @@ export default function AISummaryBlock() {
 
   return (
     <main className="flex m-auto p-6 md:p-10 overflow-auto w-full max-h-screen h-full">
-      <section className="relative flex flex-col xl:flex-row bg-foreground/3 backdrop-blur-md border-7 rounded-3xl overflow-hidden mx-auto max-w-4xl">
+      <section className="relative flex flex-col xl:flex-row bg-foreground/3 backdrop-blur-md border-10 rounded-[2rem] overflow-hidden mx-auto max-w-4xl w-full">
         {/* Original Text Section */}
         {!showSummary && (
           <section className="relative flex flex-col overflow-auto w-full">
@@ -525,7 +525,7 @@ export default function AISummaryBlock() {
                 <motion.p
                   key={idx}
                   variants={itemVariants}
-                  className="text-foreground/70 leading-relaxed mb-4 text-sm"
+                  className="text-base text-foreground/50 leading-relaxed"
                 >
                   {paragraph}
                 </motion.p>

@@ -618,7 +618,8 @@ body {
   display: inline-block !important;
   border: none !important;
   text-decoration: none !important;
-  line-height: 1 !important;
+  line-height: 0 !important;
+  padding: 0 !important;
 }
 
 /* Ensure badge wrapper doesn't become block */
@@ -629,4 +630,5 @@ body {
   flex-wrap: wrap !important;
   align-items: center !important;
   gap: 2px !important;
+  padding: 0 !important;
 }

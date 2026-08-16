@@ -9,6 +9,7 @@ import {
 } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 interface AccordionItem {
   id: string;
@@ -112,22 +113,12 @@ function AccordionTrigger({ children, className }: AccordionTriggerProps) {
       )}
     >
       <span className="flex-1">{children}</span>
-      <svg
+      <ChevronDown
         className={cn(
           "size-5 shrink-0 transition-transform duration-300",
           isOpen && "rotate-180",
         )}
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19 9l-7 7-7-7"
-        />
-      </svg>
+      />
     </button>
   );
 }
@@ -207,19 +198,15 @@ const demoItems: AccordionItem[] = [
         <p>Customize how and when you receive notifications.</p>
         <RadioGroup defaultValue="email" className="text-xs font-medium">
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="email"
-              id="email"
-              className="cursor-pointer"
-            />
+            <RadioGroupItem value="email" id="email" />
             <label htmlFor="email">Email notifications</label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="push" id="push" className="cursor-pointer" />
+            <RadioGroupItem value="push" id="push" />
             <label htmlFor="push">Push notifications</label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="sms" id="sms" className="cursor-pointer" />
+            <RadioGroupItem value="sms" id="sms" />
             <label htmlFor="sms">SMS alerts</label>
           </div>
         </RadioGroup>

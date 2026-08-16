@@ -13,7 +13,6 @@ import { Separator } from "@/components/ui/separator";
 import { COMPANY_SECTION } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { SearchTrigger } from "./search";
-import Feedback from "./feedback";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -129,15 +128,14 @@ export default function Navbar() {
               orientation="vertical"
               className="h-6 mx-1 my-auto bg-foreground/15"
             />
-            <Link href="https://www.venumity.com/contact/#cal" className="ml-1">
+            <Link href="https://tvg.venumity.com/#contact">
               <Button
                 size="sm"
                 className="relative group flex items-center justify-between px-3! h-8! font-bold! bg-foreground! border-0! text-secondary! text-xs hover:shadow-lg shadow-foreground/30 transition-all duration-500 cursor-pointer rounded-sm"
               >
-                Schedule
+                Contact
               </Button>
             </Link>
-            <Feedback />
             <Button size="icon" variant="ghost">
               <Link href={gitRepo} target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 438.549 438.549" className="w-full h-full">

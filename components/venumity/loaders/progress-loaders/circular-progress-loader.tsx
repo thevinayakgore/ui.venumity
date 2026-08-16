@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, X } from "lucide-react";
 
 interface CircularProgressLoaderProps {
   progress?: number;
@@ -96,8 +96,8 @@ export function CircularProgressLoader({
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
-              <CheckCircle2
-                className={`text-red-500 rotate-45`}
+              <X
+                className={`text-red-500`}
                 size={sizes[size].icon}
               />
             </motion.div>

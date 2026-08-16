@@ -16,10 +16,11 @@ const rotatingWords = [
   "ready-to-use",
   "production-ready",
   "customizable",
+  "amazing",
   "animated",
+  "accessible",
   "responsive",
   "modern",
-  "accessible",
   "open-source",
 ];
 
@@ -60,7 +61,7 @@ export default function Hero() {
               buttonVariants({
                 variant: "outline",
               }),
-              "pl-0! h-12! hover:pr-6 z-20 group/intro text-sm tracking-wide truncate shadow-lg rounded-full transition-all duration-500",
+              "pl-0! h-12! hover:pr-6 z-20 group/intro bg-foreground/5! backdrop-blur-md text-sm tracking-wide truncate shadow-lg rounded-full transition-all duration-500",
             )}
           >
             <div className="relative size-11.5 z-40 mr-1 p-1 rounded-full overflow-hidden">
@@ -86,7 +87,7 @@ export default function Hero() {
           </Link>
           <span>
             <span className="text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent leading-16 tracking-tight">
-              Build your next website with <br /> these set of amazing{" "}
+              Build your next website with <br /> these set of{" "}
               <AnimatePresence mode="wait">
                 <span
                   key={rotatingWords[wordIndex]}
@@ -215,7 +216,9 @@ export default function Hero() {
         </div>
 
         <Image
-          src={mounted && resolvedTheme === "dark" ? "/brand.webp" : "/brand2.webp"}
+          src={
+            mounted && resolvedTheme === "dark" ? "/brand.webp" : "/brand2.webp"
+          }
           alt="Brand Image"
           width={5000}
           height={5000}

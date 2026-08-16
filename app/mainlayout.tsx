@@ -14,27 +14,38 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const isPreviewPage = pathname?.startsWith("/preview");
+
   return (
     <ScrollContainerContext.Provider value={scrollContainerRef}>
       <NextTopLoader
         color="oklch(0.73 0.21 47)"
-        height={4}
+        height={3}
         showSpinner={false}
       />
+
       <main
-        className={`absolute top-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "p-1.5 bg-zinc-200 dark:bg-zinc-900"}`}
+        className={
+          isPreviewPage
+            ? "fixed inset-0 w-screen overflow-hidden bg-background"
+            : "fixed inset-0 w-screen overflow-hidden p-1.5 bg-zinc-200 dark:bg-zinc-900"
+        }
       >
         <Navbar />
-        <section
-          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video overflow-auto bg-background border rounded-lg h-[calc(100%-3.2rem)]"}`}
-        >
-          <div
-            ref={scrollContainerRef}
-            className={`overflow-auto w-full ${!pathname?.startsWith("/preview") && "h-full"}`}
-          >
-            {children}
-          </div>
-        </section>
+
+        {isPreviewPage ? (
+          <section className="w-full h-full">
+            <div ref={scrollContainerRef} className="h-full w-full overflow-auto">
+              {children}
+            </div>
+          </section>
+        ) : (
+          <section className="h-[calc(100%-3.2rem)] w-full overflow-hidden rounded-lg border bg-background">
+            <div ref={scrollContainerRef} className="h-full w-full overflow-auto">
+              {children}
+            </div>
+          </section>
+        )}
       </main>
     </ScrollContainerContext.Provider>
   );
