@@ -18,10 +18,9 @@ npx venumityui@latest add <component-name>
 ## Categories & Components
 - **AI Features**
   - [AI Chats](/components/ai-features/ai-chats) — Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.
-    - [Gemini Style Chat Shell](/components/ai-features/ai-chats/gemini-style-chat-shell)
-    - [Cursor Style AI Prompt Panel](/components/ai-features/ai-chats/cursor-style-ai-prompt-panel)
+    - [AI Chat Bot 1](/components/ai-features/ai-chats/ai-chat-bot-1)
   - [AI Suggestions](/components/ai-features/ai-suggestions) — Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.
-    - [AI Inline Suggestion Bar](/components/ai-features/ai-suggestions/ai-inline-suggestion-bar)
+    - [Enhance Mail](/components/ai-features/ai-suggestions/enhance-mail)
   - [AI Summary](/components/ai-features/ai-summary) — Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights.
     - [Summary Block](/components/ai-features/ai-summary/summary-block)
 - **Badges**
@@ -33,11 +32,7 @@ npx venumityui@latest add <component-name>
     - [Connection Status Badge](/components/badges/status-badges/connection-status-badge)
 - **Background Effects**
   - [Gradient Spotlight](/components/background-effects/gradient-spotlight) — Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.
-    - [Background Gradient Spotlight](/components/background-effects/gradient-spotlight/background-gradient-spotlight)
-- **Buttons**
-  - [Action Buttons](/components/buttons/action-buttons) — Interactive action button components designed to improve user workflows with smooth motion-driven interactions.
-    - [Delete Confirm Button](/components/buttons/action-buttons/delete-confirm-button)
-    - [Magnetic Drag Button](/components/buttons/action-buttons/magnetic-drag-button)
+    - [Gradient Spotlight 1](/components/background-effects/gradient-spotlight/gradient-spotlight-1)
 - **Cards**
   - [Profile Cards](/components/cards/profile-cards) — Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.
     - [Profile Card 1](/components/cards/profile-cards/profile-card-1)
@@ -157,6 +152,7 @@ npx venumityui@latest add <component-name>
   - [Progress Loaders](/components/loaders/progress-loaders) — Track operation completion with visual progress indicators that manage user expectations during longer waits.
     - [Linear Progress Loader](/components/loaders/progress-loaders/linear-progress-loader)
     - [Circular Progress Loader](/components/loaders/progress-loaders/circular-progress-loader)
+    - [Progress Loader 2](/components/loaders/progress-loaders/progress-loader-2)
   - [Pulse Loaders](/components/loaders/pulse-loaders) — Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.
     - [Basic Pulse Loader](/components/loaders/pulse-loaders/basic-pulse-loader)
     - [Multi Pulse Loader](/components/loaders/pulse-loaders/multi-pulse-loader)
@@ -172,6 +168,8 @@ npx venumityui@latest add <component-name>
     - [Gradient Spinner](/components/loaders/spinners/gradient-spinner)
   - [Wave Loaders](/components/loaders/wave-loaders) — Dynamic wave animations that create engaging loading experiences for modern applications.
     - [Basic Wave Loader](/components/loaders/wave-loaders/basic-wave-loader)
+    - [Pulse Wave Loader](/components/loaders/wave-loaders/pulse-wave-loader)
+    - [Circle Wave Loader](/components/loaders/wave-loaders/circle-wave-loader)
     - [Gradient Wave Loader](/components/loaders/wave-loaders/gradient-wave-loader)
     - [Premium Wave Loader](/components/loaders/wave-loaders/premium-wave-loader)
 - **Navigations**

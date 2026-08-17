@@ -6,8 +6,6 @@ import { toKebabCase } from "@/utils/slug-kebab";
 import { brandName, website } from "@/lib/brand";
 import { formatDate } from "@/utils/format-date";
 import ResourcePageClient from "./page.client";
-import fs from "fs";
-import path from "path";
 
 // Helper function to find resource by slug
 function findResourceBySlug(categorySlug: string, pageSlug: string) {
@@ -21,28 +19,29 @@ function findResourceBySlug(categorySlug: string, pageSlug: string) {
   return page || null;
 }
 
-// Read markdown content directly (not via API)
-function readMarkdownContent(contentPath: string): {
+// Fetch markdown content from API
+async function fetchMarkdownContent(contentPath: string): Promise<{
   content: string | null;
   lastModified: string | null;
-} {
+}> {
   try {
-    const fullPath = path.join(process.cwd(), contentPath);
-
-    if (!fs.existsSync(fullPath)) {
-      console.error("Markdown file not found:", fullPath);
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const res = await fetch(
+      `${baseUrl}/api/resources?path=${encodeURIComponent(contentPath)}`,
+      { cache: 'force-cache' } // Static cache for build time
+    );
+    
+    if (!res.ok) {
       return { content: null, lastModified: null };
     }
-
-    const stats = fs.statSync(fullPath);
-    const content = fs.readFileSync(fullPath, "utf-8");
-
+    
+    const data = await res.json();
     return {
-      content,
-      lastModified: stats.mtime.toISOString(),
+      content: data.content || null,
+      lastModified: data.lastModified || null,
     };
   } catch (error) {
-    console.error("Error reading markdown file:", error);
+    console.error("Error fetching markdown:", error);
     return { content: null, lastModified: null };
   }
 }
@@ -166,8 +165,8 @@ export default async function ResourcePage({
     }
   }
 
-  // Read markdown content directly
-  const { content: markdownContent, lastModified } = readMarkdownContent(
+  // Fetch markdown content from API
+  const { content: markdownContent, lastModified } = await fetchMarkdownContent(
     page.contentPath,
   );
   const formattedLastUpdated = lastModified

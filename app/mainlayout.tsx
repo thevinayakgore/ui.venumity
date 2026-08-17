@@ -18,7 +18,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     <ScrollContainerContext.Provider value={scrollContainerRef}>
       <NextTopLoader
         color="oklch(0.73 0.21 47)"
-        height={4}
+        height={1.5}
         showSpinner={false}
       />
       <main
