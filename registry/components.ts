@@ -85,7 +85,14 @@ export const COMPONENTS = createComponents([
         tags: ["ai", "chat", "assistant", "conversation", "messaging"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
         items: [
-          { itemName: "AI Chat Bot 1", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Gemini Style Chat Shell",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Cursor Style AI Prompt Panel",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       // {
@@ -122,7 +129,12 @@ export const COMPONENTS = createComponents([
           "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.",
         tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [{ itemName: "Enhance Mail", githubUsername: "thevinayakgore" }],
+        items: [
+          {
+            itemName: "AI Inline Suggestion Bar",
+            githubUsername: "thevinayakgore",
+          },
+        ],
       },
       {
         name: "AI Summary",
@@ -185,7 +197,40 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
         items: [
           {
-            itemName: "Gradient Spotlight 1",
+            itemName: "Background Gradient Spotlight",
+            githubUsername: "thevinayakgore",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Buttons",
+    icon: "pointer",
+    subcategories: [
+      {
+        name: "Action Buttons",
+        description:
+          "Interactive action button components designed to improve user workflows with smooth motion-driven interactions.",
+        tags: [
+          "button",
+          "magnetic",
+          "action",
+          "interactive",
+          "delete",
+          "drag",
+          "animation",
+          "motion",
+        ],
+        thumbnail: "delete-confirm-button",
+        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
+        items: [
+          {
+            itemName: "Delete Confirm Button",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Magnetic Drag Button",
             githubUsername: "thevinayakgore",
           },
         ],
@@ -901,7 +946,6 @@ export const COMPONENTS = createComponents([
             itemName: "Circular Progress Loader",
             githubUsername: "thevinayakgore",
           },
-          { itemName: "Progress Loader 2", githubUsername: "thevinayakgore" },
         ],
       },
       {
@@ -974,8 +1018,6 @@ export const COMPONENTS = createComponents([
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
           { itemName: "Basic Wave Loader", githubUsername: "thevinayakgore" },
-          { itemName: "Pulse Wave Loader", githubUsername: "thevinayakgore" },
-          { itemName: "Circle Wave Loader", githubUsername: "thevinayakgore" },
           {
             itemName: "Gradient Wave Loader",
             githubUsername: "thevinayakgore",

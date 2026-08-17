@@ -109,7 +109,7 @@ export const Spotlight = ({ className }: SpotlightProps) => {
   );
 };
 
-export default function GradientSpotlight1() {
+export default function BackgroundGradientSpotlight() {
   return (
     <div className="relative flex md:items-center md:justify-center overflow-hidden m-auto w-full h-screen">
       <div

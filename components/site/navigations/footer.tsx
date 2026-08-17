@@ -160,8 +160,9 @@ export default function Footer() {
                   <Image
                     src="/logo.png"
                     alt="logo"
-                    width={200}
-                    height={200}
+                    width={2000}
+                    height={2000}
+                    unoptimized
                     className="z-20 transform-gpu border-5 border-white rounded-[1.3rem] w-full h-full"
                   />
                   <motion.span
@@ -183,7 +184,11 @@ export default function Footer() {
                       ],
                     }}
                     transition={{
-                      rotate: { duration: 3, repeat: Infinity, ease: "linear" },
+                      rotate: {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                      },
                       background: {
                         duration: 12,
                         repeat: Infinity,
@@ -202,7 +207,7 @@ export default function Footer() {
                 </h2>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
@@ -211,7 +216,8 @@ export default function Footer() {
                     >
                       <Button
                         size="icon"
-                        className="p-5! bg-white! text-black! border-3 border-white! inset-shadow-sm inset-shadow-black/20 hover:shadow-lg shadow-white/30 rounded-full transition-all duration-500"
+                        variant="outline"
+                        className="p-5! bg-white! text-black! border-[0.5px]! border-black/60! ring-2 ring-white! hover:shadow-lg shadow-white/30 rounded-full transition-all duration-500"
                       >
                         <svg viewBox="0 0 438.549 438.549" className="size-5">
                           <path
@@ -222,8 +228,8 @@ export default function Footer() {
                       </Button>
                     </Link>
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Contribute & Star on GitHub</p>
+                  <TooltipContent className="font-semibold!">
+                    <p>Contribute & Star</p>
                   </TooltipContent>
                 </Tooltip>
                 <Tooltip>
@@ -231,15 +237,14 @@ export default function Footer() {
                     <Link
                       href="https://ui.venumity.com/components"
                       target="_blank"
-                      className="inline-flex items-center gap-1 group/btn font-semibold rounded-full bg-white text-black cursor-pointer pl-3 pr-4 py-2.5 text-sm border-3 border-white inset-shadow-sm inset-shadow-black/20 hover:shadow-lg shadow-white/30 transition-all duration-500 w-auto"
+                      className="inline-flex items-center gap-1.5 group/btn text-sm font-semibold bg-white text-black rounded-full border-[0.5px]! border-black/60! ring-2 ring-white! px-4 py-2.5 hover:shadow-lg shadow-white/30 transition-all duration-500 w-auto"
                     >
-                      Browse{" "}
-                      <span className="text-primary ml-0.5">ui.venumity</span>
-                      <ArrowRight className="size-4 ml-1.5 opacity-30 group-hover/btn:opacity-80 group-hover/btn:translate-x-2 transition-all duration-500" />
+                      Browse <span className="text-primary">ui.venumity</span>
+                      <ArrowRight className="size-4 opacity-30 group-hover/btn:opacity-80 group-hover/btn:translate-x-2 transition-all duration-500" />
                     </Link>
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Use & share components with others</p>
+                  <TooltipContent className="font-semibold!">
+                    <p>Use UI blocks & share them</p>
                   </TooltipContent>
                 </Tooltip>
               </div>

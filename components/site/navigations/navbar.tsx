@@ -128,12 +128,12 @@ export default function Navbar() {
               orientation="vertical"
               className="h-6 mx-1 my-auto bg-foreground/15"
             />
-            <Link href="https://www.venumity.com/contact/#cal" className="ml-1">
+            <Link href="https://tvg.venumity.com/#contact">
               <Button
                 size="sm"
                 className="relative group flex items-center justify-between px-3! h-8! font-bold! bg-foreground! border-0! text-secondary! text-xs hover:shadow-lg shadow-foreground/30 transition-all duration-500 cursor-pointer rounded-sm"
               >
-                Schedule
+                Contact
               </Button>
             </Link>
             <Button size="icon" variant="ghost">

@@ -14,7 +14,7 @@ export const COMPANY_SECTION: NavLinks = {
   links: [
     { name: "Components", href: "/components" },
     { name: "Resources", href: "/resources" },
-    { name: "Templates", href: "https://pro.venumity.com/templates" },
+    // { name: "Templates", href: "https://pro.venumity.com/templates" },
     { name: "Contributors", href: "/contributors" },
     { name: "Changelog", href: "/changelog" },
     // { name: "Pricing", href: "https://pro.venumity.com/pricing" },

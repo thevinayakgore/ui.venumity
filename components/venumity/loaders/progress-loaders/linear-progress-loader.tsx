@@ -57,9 +57,7 @@ export function LinearProgressLoader({
   };
 
   return (
-    <div
-      className="space-y-3 w-full"
-    >
+    <div className="space-y-3 w-full">
       {/* Label section */}
       {(label || sublabel) && (
         <div className="flex items-center justify-between w-full">
@@ -146,7 +144,7 @@ export function LinearProgressLoader({
 
 export default function CircularProgressLoaderDemo() {
   return (
-      <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 md:p-10 max-w-3xl w-full">
+    <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 md:p-10 max-w-3xl w-full h-full">
       <LinearProgressLoader
         progress={45}
         size="sm"

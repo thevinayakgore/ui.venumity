@@ -192,7 +192,7 @@ function MobileFirstDesign() {
     <div className="absolute top-0 hover:-top-10 group/dummyCard flex items-center gap-5 p-3 bg-zinc-800 shadow-2xl shadow-yellow-400/50 rounded-t-[2.3rem] transition-all duration-500 w-full h-120">
       <div className="relative p-5 bg-black rounded-t-4xl w-full h-full">
         <Camera className="-mt-2" />
-        <div className="flex flex-col items-start gap-2 z-50 transform-gpu group-hover/dummyCard:-translate-y-30 transition-all duration-500 mt-4 p-3 bg-white/15 backdrop-blur-lg text-white shadow-xl rounded-2xl w-full">
+        <div className="flex flex-col items-start gap-2 z-50 transform-gpu group-hover/dummyCard:-translate-y-30 transition-all duration-500 mt-4 p-3 bg-white/10 backdrop-blur-lg text-white shadow-xl rounded-2xl w-full">
           <Image
             src="/ui.venumity.png"
             alt="Banner Image"
@@ -211,13 +211,13 @@ function MobileFirstDesign() {
             <div className="flex items-center gap-3 tracking-normal mt-5">
               <Button
                 size="sm"
-                className="bg-white! text-black! hover:shadow-lg shadow-white/30 hover:scale-105 transition-all duration-500 border-0! px-4! font-semibold rounded-sm"
+                className="bg-white! text-black! border-0! px-4! font-semibold rounded-sm"
               >
                 Button A
               </Button>
               <Button
                 size="sm"
-                className="bg-white/5! hover:shadow-lg shadow-white/20 hover:scale-105 transition-all duration-500 border border-white/10 text-white/40! px-4! font-semibold rounded-sm"
+                className="bg-white/5! border border-white/10 text-white/40! px-4! font-semibold rounded-sm"
               >
                 Button B
               </Button>

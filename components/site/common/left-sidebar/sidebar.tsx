@@ -105,7 +105,7 @@ export default function LeftSidebar() {
                     asChild
                     isActive={isActive}
                     tooltip={item.title}
-                    className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                    className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-md w-full"
                   >
                     <Link href={href}>
                       {item.icon && <item.icon />}
@@ -128,7 +128,7 @@ export default function LeftSidebar() {
                   <CollapsibleTrigger asChild className="w-full">
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                      className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-md w-full"
                     >
                       <div className="flex items-center gap-2">
                         {item.icon && <item.icon />}
@@ -150,7 +150,7 @@ export default function LeftSidebar() {
                             <SidebarMenuSubButton
                               asChild
                               isActive={isActive}
-                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-md w-full"
                             >
                               <Link
                                 href={subItem.url}
