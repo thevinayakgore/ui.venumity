@@ -26,28 +26,30 @@ function CategoryCard({
         type="button"
         onClick={onToggle}
         className={cn(
-          "relative flex items-start justify-between text-start gap-3 w-full cursor-pointer rounded-lg transition-all duration-700",
-          isOpen ? "p-1 pb-2 h-auto" : "p-2 h-auto",
+          "relative flex items-start justify-between text-start gap-2 sm:gap-3 w-full cursor-pointer rounded-lg transition-all duration-700",
+          isOpen ? "p-0.5 sm:p-1 pb-1.5 sm:pb-2 h-auto" : "p-1 sm:p-2 h-auto",
           "bg-transparent! text-foreground!",
         )}
       >
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="flex p-3 shrink-0 items-center justify-center rounded-md bg-white text-black shadow-lg/10">
-            <Icon className="size-5" />
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex p-2 sm:p-3 shrink-0 items-center justify-center rounded-sm sm:rounded-md bg-white text-black shadow-lg/10">
+            <Icon className="size-3.5 sm:size-5" />
           </div>
 
-          <div className="min-w-0 space-y-0.5">
-            <p className="truncate text-base">{title}</p>
-            <p className="text-xs text-foreground/50">{articles}</p>
+          <div className="min-w-0 sm:space-y-0.5">
+            <p className="truncate text-sm sm:text-base">{title}</p>
+            <p className="text-[10px] sm:text-xs text-foreground/50">
+              {articles}
+            </p>
           </div>
         </div>
 
-        <div className="absolute top-3 right-8 shrink-0 opacity-20 group-hover/cat:opacity-100 transition-all duration-700">
+        <div className="absolute top-1.5 sm:top-3 right-6 sm:right-8 shrink-0 opacity-20 group-hover/cat:opacity-100 transition-all duration-700">
           <Minus
-            className={`absolute inset-0 size-5 ${isOpen && "-rotate-180"} transition-all duration-700`}
+            className={`absolute inset-0 size-4 sm:size-5 ${isOpen && "-rotate-180"} transition-all duration-700`}
           />
           <Minus
-            className={`absolute inset-0 size-5 rotate-90 ${isOpen && "rotate-180"} transition-all duration-700`}
+            className={`absolute inset-0 size-4 sm:size-5 rotate-90 ${isOpen && "rotate-180"} transition-all duration-700`}
           />
         </div>
       </Button>
@@ -85,7 +87,7 @@ function CategoryCard({
                 ease: [0.22, 1, 0.36, 1],
                 delay: 0.2,
               }}
-              className="text-sm md:text-[0.85rem] tracking-wide! text-foreground/50 font-semibold py-4 px-5 bg-background rounded-md"
+              className="text-xs sm:text-sm md:text-[0.85rem] tracking-wide! text-foreground/50 font-semibold py-2 sm:py-4 px-3 sm:px-5 bg-background rounded-md"
             >
               {description}
             </motion.p>
@@ -123,7 +125,7 @@ export default function FAQ() {
         {JSON.stringify(faqSchema)}
       </Script>
 
-      <main id="faq" className="p-5 md:p-10 m-auto max-w-400 w-full">
+      <main id="faq" className="p-3 sm:p-5 md:p-10 m-auto max-w-400 w-full">
         <div className="relative z-10 flex flex-col gap-5 md:gap-10 m-auto w-full">
           <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-20 xl:p-30 text-white rounded-2xl overflow-hidden w-full">
             <motion.div
@@ -144,12 +146,12 @@ export default function FAQ() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="satisfy p-5 text-2xl md:text-4xl lg:text-6xl font-medium text-white text-shadow-lg"
+                className="satisfy p-3 md:p-5 text-4xl md:text-6xl font-medium text-white text-shadow-lg"
               >
                 Frequently Asked Questions
               </motion.h2>
 
-              <p className="mt-5 max-w-3xl text-sm sm:text-base lg:text-lg font-semibold">
+              <p className="sm:mb-3 md:mt-5 text-xs sm:text-sm md:text-base lg:text-lg font-semibold w-full md:max-w-3xl">
                 Explore everything about Venumity UI from beautifully crafted
                 components and modern layouts to customization, development
                 workflow, integrations, and building stunning digital
@@ -158,8 +160,8 @@ export default function FAQ() {
             </div>
           </section>
 
-          <section className="flex items-start gap-3 w-full">
-            <div className="flex flex-col gap-3 w-1/3">
+          <section className="flex flex-col lg:flex-row items-start gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full lg:w-1/3">
               {CATEGORIES.map((category, index) => (
                 <CategoryCard
                   key={category.title}
@@ -174,7 +176,7 @@ export default function FAQ() {
               ))}
             </div>
 
-            <section className="flex flex-col gap-3 items-center justify-center w-2/3">
+            <section className="flex flex-col gap-3 items-center justify-center w-full lg:w-2/3">
               {FAQ_DATA.map((item, index) => {
                 const IconComponent = item.icon;
                 const isOpen = openIndex === index;
@@ -185,20 +187,20 @@ export default function FAQ() {
                   >
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-1 pb-2" : "p-2"} transition-all duration-700 w-full`}
+                      className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-0.5 sm:p-1 pb-1.5 sm:pb-2" : "p-1.5 sm:p-2"} transition-all duration-700 w-full`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="bg-white text-black shadow-lg/10 p-3 rounded-md shrink-0">
-                          <IconComponent className="size-5" />
+                      <div className="flex items-center gap-2 sm:gap-3 pr-6 truncate min-w-0 w-fit">
+                        <div className="bg-white text-black shadow-lg/10 p-2 sm:p-3 rounded-sm sm:rounded-md shrink-0">
+                          <IconComponent className="size-4 sm:size-5" />
                         </div>
-                        <h3 className="text-base md:text-lg font-medium">
+                        <h3 className="text-base md:text-lg font-medium truncate min-w-0 w-fit">
                           {item.question}
                         </h3>
                       </div>
 
-                      <div className="absolute top-4 right-10 shrink-0 opacity-20 group-hover/faq:opacity-100 transition-all duration-700">
+                      <div className="absolute top-2 sm:top-4 right-8 sm:right-10 shrink-0 opacity-20 group-hover/faq:opacity-100 transition-all duration-700">
                         <ChevronUp
-                          className={`absolute inset-0 size-6 ${isOpen ? "rotate-y-180 rotate-x-180" : ""} transition-all duration-700`}
+                          className={`absolute inset-0 size-5 sm:size-6 ${isOpen ? "rotate-y-180 rotate-x-180" : ""} transition-all duration-700`}
                         />
                       </div>
                     </button>
@@ -232,7 +234,7 @@ export default function FAQ() {
                               ease: [0.22, 1, 0.36, 1],
                               delay: 0.2,
                             }}
-                            className="text-sm md:text-base tracking-wider! text-foreground/50 py-4 px-5 bg-background rounded-md"
+                            className="text-xs sm:text-sm md:text-base tracking-wider! text-foreground/50 py-2 sm:py-4 px-3 sm:px-5 bg-background rounded-md"
                           >
                             {item.answer}
                           </motion.p>

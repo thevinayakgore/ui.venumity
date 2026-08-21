@@ -737,7 +737,7 @@ export function SearchTrigger() {
         className="h-4 my-auto bg-foreground/40 mx-1 rotate-8"
       />
       <Mic className="size-3.5! shrink-0 mr-1" />
-      <kbd className="pointer-events-none hidden sm:flex h-6 select-none items-center gap-0.5 rounded bg-foreground/7! border border-foreground/15 px-1.5 font-mono text-[10px] font-medium">
+      <kbd className="pointer-events-none hidden lg:flex h-6 select-none items-center gap-0.5 rounded bg-foreground/7! border border-foreground/15 px-1.5 font-mono text-[10px] font-medium">
         <span className="text-xs">⌘</span>K
       </kbd>
     </Button>

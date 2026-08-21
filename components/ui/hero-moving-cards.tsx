@@ -74,18 +74,18 @@ export const HeroMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-5 pt-10 w-max flex-nowrap",
+          "flex min-w-full shrink-0 gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10 w-max flex-nowrap",
           start && "animate-scroll",
           pauseOnHover && "hover:paused",
         )}
       >
         {items.map((item, idx) => (
           <li
-            className="p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm max-w-110 rounded-3xl shrink-0"
+            className="p-2.5 sm:p-3 md:p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm w-70 sm:w-85 md:w-100 lg:w-110 max-w-[85vw] sm:max-w-100 md:max-w-110 rounded-2xl sm:rounded-3xl shrink-0"
             key={idx}
           >
             <div
-              className={`relative flex flex-col items-start justify-between rounded-xl overflow-hidden ${item.gradient} w-full`}
+              className={`relative flex flex-col items-start justify-between rounded-lg sm:rounded-xl overflow-hidden ${item.gradient} w-full`}
             >
               <div className="flex flex-col items-start w-full h-full">
                 {item.image && (
@@ -94,20 +94,22 @@ export const HeroMovingCards = ({
                     alt={item.title || "Card"}
                     width={2000}
                     height={2000}
+                    priority
+                    unoptimized
                     className="w-full h-auto"
                   />
                 )}
-                <div className="relative flex flex-col items-start p-4 w-full">
-                  <div className="absolute top-3 left-10 transform-gpu flex items-center opacity-5 text-9xl scale-130 font-mono! font-semibold">
+                <div className="relative flex flex-col items-start p-3 sm:p-4 w-full">
+                  <div className="absolute top-1 sm:top-2 md:top-3 left-6 sm:left-8 md:left-10 transform-gpu flex items-center opacity-5 text-6xl sm:text-7xl md:text-8xl lg:text-9xl scale-110 sm:scale-120 md:scale-130 font-mono! font-semibold">
                     <span className="tracking-tighter">{item.title}</span>
                     <span
                       className={cn(
-                        "-mt-6",
+                        "-mt-4 sm:-mt-5 md:-mt-6",
                         (() => {
                           const numericValue = parseInt(item.title ?? "", 10);
                           return !Number.isNaN(numericValue) &&
                             numericValue !== 100
-                            ? "scale-140 ml-4 transform-gpu"
+                            ? "scale-120 sm:scale-130 md:scale-140 ml-2 sm:ml-3 md:ml-4 transform-gpu"
                             : "";
                         })(),
                       )}
@@ -122,13 +124,13 @@ export const HeroMovingCards = ({
                     </span>
                   </div>
 
-                  <h3 className="absolute top-20 right-10 transform-gpu text-white text-4xl scale-120 font-semibold uppercase tracking-wider!">
+                  <h3 className="absolute top-12 sm:top-16 md:top-20 right-6 sm:right-8 md:right-10 transform-gpu text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl scale-110 sm:scale-115 md:scale-120 font-semibold uppercase tracking-wide! sm:tracking-wider!">
                     {item.subtitle}
                   </h3>
 
                   {item.description && (
                     <p
-                      className={`mt-28 text-sm tracking-wide text-white font-semibold py-2.5 px-3.5 ${item.miniBg} backdrop-blur-3xl border-2 ${item.border} rounded-lg`}
+                      className={`mt-16 sm:mt-20 md:mt-28 text-xs sm:text-sm tracking-wide text-white font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3.5 ${item.miniBg} backdrop-blur-3xl border sm:border-2 ${item.border} rounded-md sm:rounded-lg`}
                     >
                       {item.description}
                     </p>
@@ -136,7 +138,7 @@ export const HeroMovingCards = ({
                 </div>
               </div>
               {item.price && (
-                <p className="p-4 pt-0 text-base font-medium text-primary">
+                <p className="p-3 sm:p-4 pt-0 text-sm sm:text-base font-medium text-primary">
                   ${item.price}
                 </p>
               )}

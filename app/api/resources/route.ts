@@ -1,6 +1,9 @@
+// app/api/resources/route.ts
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+
+const CONTENT_DIR = path.join(process.cwd(), "registry");
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -11,7 +14,14 @@ export async function GET(request: Request) {
   }
 
   try {
-    const fullPath = path.join(process.cwd(), filePath);
+    // Ensure the path is scoped to the registry directory
+    const fullPath = path.join(/* turbopackIgnore: true */ CONTENT_DIR, filePath);
+    
+    // Prevent path traversal
+    if (!fullPath.startsWith(CONTENT_DIR)) {
+      return NextResponse.json({ error: "Invalid path" }, { status: 400 });
+    }
+    
     if (!fs.existsSync(fullPath)) {
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }

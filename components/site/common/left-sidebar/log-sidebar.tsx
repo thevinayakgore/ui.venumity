@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import { useChangelog } from "@/app/changelog/layout.client";
-import { ChevronDown, Terminal } from "lucide-react";
+import { CalendarCheck2, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { toKebabCase } from "@/utils/slug-kebab";
 
@@ -58,14 +58,14 @@ export function LogSidebar() {
                     [year]: !prev[year],
                   }))
                 }
-                className="sticky top-0 group/btn flex w-full items-center gap-3 px-3 py-2 bg-foreground/5 backdrop-blur-md rounded-md cursor-pointer"
+                className="sticky top-0 group/btn flex w-full items-center gap-2.5 px-3 py-2 bg-foreground/10 backdrop-blur-md rounded-md"
               >
-                <Terminal className="size-4 opacity-40" />
-                <h3 className="text-base font-semibold opacity-40 flex-1 text-left">
-                  {year} yr
+                <CalendarCheck2 className="size-5" />
+                <h3 className="text-base md:text-lg font-semibold flex-1 text-left">
+                  {year}
                 </h3>
                 <ChevronDown
-                  className={`size-4 opacity-30 group-hover/btn:opacity-100 transition-all duration-500 ${isOpen ? "rotate-x-180 rotate-y-180" : "rotate-0"}`}
+                  className={`size-5 transition-all duration-500 ${isOpen ? "rotate-x-180 rotate-y-180" : "rotate-0"}`}
                 />
               </button>
               {isOpen && (
@@ -77,7 +77,7 @@ export function LogSidebar() {
                         <Link
                           href={`#${slug}`}
                           onClick={(e) => handleClick(e, slug)}
-                          className="flex w-full min-w-0 items-center rounded-md px-3 py-2 text-sm tracking-wide text-foreground/40 hover:bg-foreground/7 hover:text-foreground cursor-pointer"
+                          className="flex w-full min-w-0 items-center rounded-md px-3 py-2 text-sm tracking-wide text-foreground/60 hover:bg-foreground/10 hover:text-foreground cursor-pointer"
                         >
                           <span className="block w-full min-w-0 truncate tracking-wide">
                             {item.title}

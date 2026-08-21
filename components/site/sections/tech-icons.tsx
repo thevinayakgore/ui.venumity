@@ -36,13 +36,13 @@ function TechIcon({
 export default function TechIcons() {
   return (
     <TooltipProvider>
-      <div className="not-prose flex flex-row gap-6 text-foreground">
+      <div className="not-prose flex flex-row gap-3 md:gap-6 text-foreground">
         <TechIcon label="Next.js" href="https://nextjs.org">
           <svg
             role="img"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            className="size-5 md:size-9"
+            className="size-6 md:size-9"
             fill="currentColor"
           >
             <title>Next.js</title>
@@ -54,7 +54,7 @@ export default function TechIcons() {
             role="img"
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
-            className="size-5 md:size-9"
+            className="size-6 md:size-9"
             fill="currentColor"
           >
             <title>React</title>
@@ -65,7 +65,7 @@ export default function TechIcons() {
           <svg
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
-            className="size-5 md:size-9 rounded"
+            className="size-6 md:size-9 rounded"
             fill="currentColor"
           >
             <title>Typescript</title>
@@ -77,7 +77,7 @@ export default function TechIcons() {
             role="img"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            className="size-5 md:size-9"
+            className="size-6 md:size-9"
             fill="currentColor"
           >
             <title>Tailwind CSS</title>
@@ -89,7 +89,7 @@ export default function TechIcons() {
             role="img"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            className="size-5 md:size-9"
+            className="size-6 md:size-9"
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
@@ -106,7 +106,7 @@ export default function TechIcons() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 256 256"
-            className="size-5 md:size-9"
+            className="size-6 md:size-9"
             fill="none"
             stroke="currentColor"
           >

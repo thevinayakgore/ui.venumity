@@ -21,7 +21,10 @@ function readDocsMarkdownContent(contentPath: string): {
   lastModified: Date | null;
 } {
   try {
-    const fullPath = join(process.cwd(), contentPath);
+    const fullPath = join(
+      /* turbopackIgnore: true */ process.cwd(),
+      contentPath,
+    );
     if (!existsSync(fullPath)) {
       console.error("Docs markdown file not found:", fullPath);
       return { content: null, lastModified: null };
@@ -198,12 +201,14 @@ export default async function Page({ params }: PageProps) {
         showHeader={true}
       />
 
-      <div className="flex items-center justify-between font-semibold tracking-wide mt-5 md:mt-10 py-10 border-t border-foreground/10 w-full">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 font-semibold tracking-wide mt-5 md:mt-10 py-10 border-t border-foreground/10 w-full">
         <form
           action={prevPage ? `/docs/${prevPage.slug}` : ""}
           method="get"
           className={
-            prevPage ? "p-1 bg-foreground/5 rounded-[0.8rem] border w-full" : "w-full"
+            prevPage
+              ? "p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
+              : "w-full"
           }
         >
           <Button
@@ -211,19 +216,21 @@ export default async function Page({ params }: PageProps) {
             variant="outline"
             size="lg"
             disabled={!prevPage}
-            className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-5 w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
+            className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
               ${
                 prevPage
                   ? "border-border hover:bg-muted"
                   : "border-border text-muted-foreground"
               }`}
           >
-            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
+            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
               Previous
             </span>
-            <span className="flex items-center text-lg group-hover:text-primary leading-none transition-all duration-500">
-              <ChevronLeft className="absolute bottom-5 left-4 size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
-              <span>{prevPage ? prevPage.page : "None"}</span>
+            <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
+              <ChevronLeft className="absolute bottom-4 sm:bottom-5 left-3 sm:left-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
+              <span className="truncate max-w-30 sm:max-w-none">
+                {prevPage ? prevPage.page : "None"}
+              </span>
             </span>
           </Button>
         </form>
@@ -231,14 +238,14 @@ export default async function Page({ params }: PageProps) {
         <form
           action={nextButtonSlug}
           method="get"
-          className="text-end ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
+          className="text-end ml-0 sm:ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
         >
           <Button
             type="submit"
             variant="outline"
             size="lg"
             disabled={nextButtonSlug === "#"}
-            className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-5 w-full md:w-2/3 hover:w-full h-24! transition-all duration-500
+            className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
               ${
                 nextPage || (isLastPage && firstComponent)
                   ? isLastPage && firstComponent
@@ -247,12 +254,14 @@ export default async function Page({ params }: PageProps) {
                   : "border-border text-muted-foreground"
               }`}
           >
-            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500">
+            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
               {isLastPage && firstComponent ? "Get Started" : "Next"}
             </span>
-            <span className="flex items-center text-lg group-hover:text-primary leading-none transition-all duration-500">
-              <span>{nextButtonText}</span>
-              <ChevronRight className="absolute bottom-5 right-4 size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
+            <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
+              <span className="truncate max-w-30 sm:max-w-none">
+                {nextButtonText}
+              </span>
+              <ChevronRight className="absolute bottom-4 sm:bottom-5 right-3 sm:right-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
             </span>
           </Button>
         </form>

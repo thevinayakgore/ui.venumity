@@ -29,7 +29,7 @@ function formatDate(iso: string): string {
   return Number.isNaN(d.getTime()) ? iso : dateFmt.format(d);
 }
 
-// ─── Video card (unchanged) ───────────────────────────────────────────────────
+// ─── Video card ───────────────────────────────────────────────────
 const VideoCard = memo(function VideoCard({
   video,
   active,
@@ -43,7 +43,7 @@ const VideoCard = memo(function VideoCard({
     <div
       className={cn(
         "h-full transform-gpu transition-all duration-1000 ease-out",
-        active ? "scale-110 opacity-100" : "scale-90 opacity-50",
+        active ? "scale-100 sm:scale-110 opacity-100" : "scale-90 opacity-50",
       )}
     >
       <div className="group border-border from-secondary/20 to-card flex h-full flex-col overflow-hidden">
@@ -53,35 +53,35 @@ const VideoCard = memo(function VideoCard({
             title={video.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
-            className="absolute inset-0 rounded-2xl h-full w-full"
+            className="absolute inset-0 rounded-xl sm:rounded-2xl h-full w-full"
           />
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center text-center pt-5 md:pt-10">
-          <h3 className="text-foreground line-clamp-1 text-2xl mb-2 font-semibold">
+        <div className="flex flex-1 flex-col items-center justify-center text-center pt-3 sm:pt-5 md:pt-10">
+          <h3 className="text-foreground line-clamp-1 text-base sm:text-lg md:text-xl lg:text-2xl mb-1 sm:mb-2 font-semibold">
             {video.title}
           </h3>
-          <p className="text-foreground/40 line-clamp-3 text-lg leading-relaxed">
+          <p className="text-foreground/40 line-clamp-2 sm:line-clamp-3 text-sm sm:text-base md:text-lg leading-relaxed">
             {video.description}
           </p>
           <Link
             href="https://youtube.com/@thevinayakgore?si=tPxmkjdEqZx37xtP"
             target="_blank"
-            className="mt-auto flex items-center text-start gap-3 p-5 md:pt-10"
+            className="mt-auto flex items-center text-start gap-2 sm:gap-3 p-3 sm:p-5 md:pt-10"
           >
             <Image
-              src="/vinu.jpg"
+              src="/vinu.jpeg"
               alt="The Vinayak Gore"
               width={500}
               height={500}
               draggable={false}
               unoptimized
-              className="size-13 border-2 border-white shadow-lg shadow-zinc-300/50 rounded-full object-cover select-none"
+              className="size-8 sm:size-10 md:size-13 border-2 border-white shadow-lg shadow-zinc-300/50 rounded-full object-cover select-none"
             />
             <div className="flex min-w-0 flex-col font-semibold">
-              <span className="text-foreground truncate text-base font-semibold tracking-wide">
+              <span className="text-foreground truncate text-xs sm:text-sm md:text-base font-semibold tracking-wide">
                 The Vinayak Gore
               </span>
-              <span className="text-foreground/40 text-sm tracking-wide">
+              <span className="text-foreground/40 text-xs sm:text-sm tracking-wide">
                 {formatDate(video.date)}
               </span>
             </div>
@@ -92,7 +92,7 @@ const VideoCard = memo(function VideoCard({
   );
 });
 
-// ─── Dot button (same) ────────────────────────────────────────────────────────
+// ─── Dot button ────────────────────────────────────────────────────────
 const DotButton = memo(function DotButton({
   index,
   selected,
@@ -108,10 +108,10 @@ const DotButton = memo(function DotButton({
       onClick={() => onSelect(index)}
       aria-label={`Go to video ${index + 1}`}
       className={cn(
-        "h-3 rounded-full transition-all duration-300 ease-out",
+        "h-2 sm:h-3 rounded-full transition-all duration-300 ease-out",
         selected
-          ? "bg-foreground shadow-lg shadow-foreground/30 w-25"
-          : "bg-foreground/20 w-8",
+          ? "bg-foreground shadow-lg shadow-foreground/30 w-12 sm:w-16 md:w-25"
+          : "bg-foreground/20 w-4 sm:w-6 md:w-8",
       )}
     />
   );
@@ -131,15 +131,15 @@ const YouTubeHeader = memo(function YouTubeHeader() {
     >
       <h2
         className={cn(
-          "text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent font-semibold text-center text-4xl md:text-6xl",
+          "text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent font-semibold text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
         )}
       >
         <span className="tracking-tighter">Components in</span>{" "}
-        <span className="dancing text-7xl md:text-9xl text-foreground opacity-15">
+        <span className="dancing text-5xl sm:text-6xl md:text-7xl lg:text-9xl text-foreground opacity-15">
           Action
         </span>
       </h2>
-      <p className="text-center text-base md:text-lg text-foreground/40">
+      <p className="text-center text-xs sm:text-sm md:text-base lg:text-lg text-foreground/40 px-3 sm:px-0">
         Enjoy watching of how beautiful interfaces are built, animated, and
         refined from the start to finish.
       </p>
@@ -149,14 +149,20 @@ const YouTubeHeader = memo(function YouTubeHeader() {
 
 // ─── Carousel with fixed dot count ───────────────────────────────────────────
 const VideoCarousel = memo(function VideoCarousel() {
-  const autoplay = useRef(
-    Autoplay({ delay: 6000, stopOnInteraction: true, stopOnMouseEnter: true }),
-  );
-  const [emblaRef, emblaApi] = useEmblaCarousel(EMBLA_OPTIONS, [
-    autoplay.current,
-  ]);
+  const autoplayRef = useRef<ReturnType<typeof Autoplay> | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel(EMBLA_OPTIONS);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const totalSlides = VIDEOS.length;
+
+  useEffect(() => {
+    if (!autoplayRef.current) {
+      autoplayRef.current = Autoplay({
+        delay: 6000,
+        stopOnInteraction: true,
+        stopOnMouseEnter: true,
+      });
+    }
+  }, [emblaApi]);
 
   // Update selected index on scroll
   useEffect(() => {
@@ -169,7 +175,9 @@ const VideoCarousel = memo(function VideoCarousel() {
     };
   }, [emblaApi]);
 
-  const resetAutoplay = useCallback(() => autoplay.current.reset(), []);
+  const resetAutoplay = useCallback(() => {
+    autoplayRef.current?.reset();
+  }, []);
 
   const handleDotClick = useCallback(
     (index: number) => {
@@ -180,9 +188,9 @@ const VideoCarousel = memo(function VideoCarousel() {
   );
 
   return (
-    <div className="mt-12">
+    <div className="mt-8 sm:mt-10 md:mt-12">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-5 md:gap-10 touch-pan-y p-5 md:p-10 lg:p-15">
+        <div className="flex gap-3 sm:gap-5 md:gap-10 touch-pan-y p-3 sm:p-5 md:p-10 lg:p-15">
           {VIDEOS.map((item, index) => (
             <div
               key={item.id}
@@ -195,7 +203,7 @@ const VideoCarousel = memo(function VideoCarousel() {
       </div>
 
       {/* Controls – now using totalSlides to generate dots */}
-      <div className="flex items-center justify-center m-auto gap-3">
+      <div className="flex items-center justify-center m-auto gap-2 sm:gap-3">
         {Array.from({ length: totalSlides }).map((_, idx) => (
           <DotButton
             key={idx}
