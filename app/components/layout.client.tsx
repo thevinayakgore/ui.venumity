@@ -14,21 +14,16 @@ export default function ContentLayoutClient({
   const hideRightSidebar = pathname === "/components";
 
   return (
-    <main className="m-auto w-full">
+    <main className="max-w-400 mx-auto w-full">
       <section
-        className={`grid ${
+        className={`grid grid-cols-1 ${
           !hideRightSidebar
-            ? "grid-cols-1 md:grid-cols-[280px_1fr] xl:grid-cols-[280px_1fr_260px]"
-            : "md:grid-cols-[280px_1fr]"
-        } m-auto max-w-400 w-full`}
+            ? "lg:grid-cols-[1fr_3fr] xl:grid-cols-[1fr_3fr_1fr]"
+            : "lg:grid-cols-[1fr_4fr]"
+        } m-auto w-full`}
       >
         <LeftSidebar />
-        <div
-          id="content"
-          className={`flex flex-col items-center m-auto p-10 ${
-            !hideRightSidebar ? "min-w-215 max-w-215" : ""
-          } w-full h-full`}
-        >
+        <div id="content" className="p-3 md:p-5 lg:p-10">
           {children}
         </div>
         {!hideRightSidebar && <RightSidebar />}

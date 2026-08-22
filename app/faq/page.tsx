@@ -161,7 +161,7 @@ export default function FAQ() {
           </section>
 
           <section className="flex flex-col lg:flex-row items-start gap-3 w-full">
-            <div className="flex flex-col gap-3 w-full lg:w-1/3">
+            <div className="hidden md:flex flex-col gap-3 w-full lg:w-1/3">
               {CATEGORIES.map((category, index) => (
                 <CategoryCard
                   key={category.title}

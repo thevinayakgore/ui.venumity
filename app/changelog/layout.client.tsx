@@ -17,11 +17,11 @@ export default function ContentLayoutClient({
   return (
     <ChangelogContext.Provider value={changelogEntries}>
       <main className="m-auto w-full h-full">
-        <section className="grid grid-cols-1 md:grid-cols-[300px_1fr] m-auto max-w-400 w-full">
+        <section className="grid grid-cols-1 lg:grid-cols-[300px_1fr] m-auto max-w-400 w-full">
           <LogSidebar />
           <div
             id="content"
-            className={`flex flex-col items-center p-10 max-w-4xl m-auto w-full h-full`}
+            className={`flex flex-col items-center p-3 md:p-5 lg:p-10 max-w-4xl m-auto w-full h-full`}
           >
             {children}
           </div>

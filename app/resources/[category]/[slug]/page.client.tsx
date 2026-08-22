@@ -58,7 +58,7 @@ export default function PageClient({
             authors={page.authorNames}
           />
           {/* Navigation buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 font-medium py-10 border-t border-foreground/10 w-full">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 md:gap-4 font-medium py-5 sm:py-10 border-t border-foreground/10 w-full">
             <form
               action={
                 prevPage
@@ -77,7 +77,7 @@ export default function PageClient({
                 variant="outline"
                 size="lg"
                 disabled={!prevPage}
-                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
+                className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
               ${
                 prevPage
                   ? "border-border hover:bg-muted"
@@ -100,14 +100,14 @@ export default function PageClient({
                 nextPage ? `/resources/${nextCategorySlug}/${nextPageSlug}` : ""
               }
               method="get"
-              className="text-end ml-0 sm:ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
+              className="text-end md:ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
             >
               <Button
                 type="submit"
                 variant="outline"
                 size="lg"
                 disabled={!nextPage}
-                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
+                className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
               ${
                 nextPage
                   ? "border-border hover:bg-muted"

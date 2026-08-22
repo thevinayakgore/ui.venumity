@@ -21,13 +21,13 @@ export default function ContentLayoutClient({
 
   return (
     <ResourcesProvider>
-      <main className="mx-auto w-full">
+      <main className="max-w-400 mx-auto w-full">
         <section
-          className={`grid ${
+          className={`grid grid-cols-1 ${
             !hideRightSidebar
-              ? "grid-cols-1 md:grid-cols-[280px_1fr] xl:grid-cols-[280px_1fr_260px]"
-              : "md:grid-cols-[280px_1fr]"
-          } m-auto max-w-400 w-full`}
+              ? "lg:grid-cols-[1fr_3fr] xl:grid-cols-[1fr_3fr_1fr]"
+              : "lg:grid-cols-[1fr_4fr]"
+          } m-auto w-full`}
         >
           <LeftResources
             initialCategories={initialCategories}
@@ -35,12 +35,11 @@ export default function ContentLayoutClient({
           />
           <div
             id="content"
-            className={`flex flex-col items-center p-5 md:p-10 m-auto ${
-              !hideRightSidebar ? "max-w-215" : ""
-            } w-full`}
+            className="p-3 sm:p-6 lg:p-10 overflow-hidden w-full"
           >
             {children}
           </div>
+
           {!hideRightSidebar && <RightSidebar />}
         </section>
         <BottomFooter />

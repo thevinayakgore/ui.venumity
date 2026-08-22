@@ -87,7 +87,7 @@ export default function LeftSidebar() {
   const navItems = [...docsSections, ...componentSections].filter(Boolean);
 
   return (
-    <SidebarProvider className="hidden md:block sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
+    <SidebarProvider className="hidden lg:block lg:sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
       <SidebarGroup>
         <SidebarMenu>
           {navItems.map((item) => {

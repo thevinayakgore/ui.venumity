@@ -144,7 +144,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
   const githubUsername = componentData.githubUsername;
 
   return (
-    <main className="h-full w-full bg-background">
+    <main className="h-full w-full">
       <section className="h-full w-full">
         {componentPath && (
           <ComponentPreview
@@ -154,7 +154,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           />
         )}
       </section>
-      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex items-center gap-2 py-1 px-1.5 bg-background border rounded-full">
+      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10000! transform-gpu! flex flex-wrap items-center gap-1 md:gap-2 p-2 md:py-1 md:px-1.5 bg-background border rounded-xl md:rounded-full">
         <Link href="/components">
           <Tooltip>
             <TooltipTrigger asChild>

@@ -1,11 +1,13 @@
 // app/resources/[category]/[slug]/page.tsx
 import { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { getCategoryBySlug, getAllResources } from "@/registry/resources";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { brandName, website } from "@/lib/brand";
 import { formatDate } from "@/utils/format-date";
 import ResourcePageClient from "./page.client";
+import { getCategoryBySlug, getAllResources } from "@/registry/resources";
+import fs from "fs";
+import path from "path";
 
 // Helper function to find resource by slug
 function findResourceBySlug(categorySlug: string, pageSlug: string) {
@@ -19,29 +21,27 @@ function findResourceBySlug(categorySlug: string, pageSlug: string) {
   return page || null;
 }
 
-// Fetch markdown content from API
-async function fetchMarkdownContent(contentPath: string): Promise<{
+// Read markdown content directly from the file system
+async function readMarkdownContent(contentPath: string): Promise<{
   content: string | null;
   lastModified: string | null;
 }> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(
-      `${baseUrl}/api/resources?path=${encodeURIComponent(contentPath)}`,
-      { cache: 'force-cache' } // Static cache for build time
+    // Scoped to the "registry" folder – all markdown files live there
+    const fullPath = path.join(
+      /* turbopackIgnore: true */ process.cwd(),
+      contentPath,
     );
-    
-    if (!res.ok) {
+
+    if (!fs.existsSync(fullPath)) {
+      console.error("Resource markdown file not found:", fullPath);
       return { content: null, lastModified: null };
     }
-    
-    const data = await res.json();
-    return {
-      content: data.content || null,
-      lastModified: data.lastModified || null,
-    };
+    const content = fs.readFileSync(fullPath, "utf-8");
+    const stats = fs.statSync(fullPath);
+    return { content, lastModified: stats.mtime.toISOString() };
   } catch (error) {
-    console.error("Error fetching markdown:", error);
+    console.error("Error reading resource markdown:", error);
     return { content: null, lastModified: null };
   }
 }
@@ -165,8 +165,8 @@ export default async function ResourcePage({
     }
   }
 
-  // Fetch markdown content from API
-  const { content: markdownContent, lastModified } = await fetchMarkdownContent(
+  // Read markdown content directly from the file system
+  const { content: markdownContent, lastModified } = await readMarkdownContent(
     page.contentPath,
   );
   const formattedLastUpdated = lastModified
@@ -200,7 +200,6 @@ export default async function ResourcePage({
     },
   };
 
-  // Pass all props to client component
   return (
     <>
       <ResourcePageClient

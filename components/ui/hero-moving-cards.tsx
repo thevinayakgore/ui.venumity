@@ -81,7 +81,7 @@ export const HeroMovingCards = ({
       >
         {items.map((item, idx) => (
           <li
-            className="p-2.5 sm:p-3 md:p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm w-70 sm:w-85 md:w-100 lg:w-110 max-w-[85vw] sm:max-w-100 md:max-w-110 rounded-2xl sm:rounded-3xl shrink-0"
+            className="p-0 sm:p-3 md:p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm w-80 md:w-100 lg:w-110 max-w-110 rounded-2xl sm:rounded-3xl shrink-0"
             key={idx}
           >
             <div
@@ -100,7 +100,7 @@ export const HeroMovingCards = ({
                   />
                 )}
                 <div className="relative flex flex-col items-start p-3 sm:p-4 w-full">
-                  <div className="absolute top-1 sm:top-2 md:top-3 left-6 sm:left-8 md:left-10 transform-gpu flex items-center opacity-5 text-6xl sm:text-7xl md:text-8xl lg:text-9xl scale-110 sm:scale-120 md:scale-130 font-mono! font-semibold">
+                  <div className="absolute top-1 sm:top-2 md:top-3 left-6 sm:left-8 md:left-10 transform-gpu flex items-center opacity-5 text-7xl md:text-8xl lg:text-9xl scale-110 sm:scale-120 md:scale-130 font-mono! font-semibold">
                     <span className="tracking-tighter">{item.title}</span>
                     <span
                       className={cn(
@@ -124,7 +124,7 @@ export const HeroMovingCards = ({
                     </span>
                   </div>
 
-                  <h3 className="absolute top-12 sm:top-16 md:top-20 right-6 sm:right-8 md:right-10 transform-gpu text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl scale-110 sm:scale-115 md:scale-120 font-semibold uppercase tracking-wide! sm:tracking-wider!">
+                  <h3 className="absolute top-12 sm:top-16 md:top-20 right-6 sm:right-8 md:right-10 transform-gpu text-white text-2xl md:text-3xl lg:text-4xl scale-110 sm:scale-115 md:scale-120 font-semibold uppercase tracking-wide! sm:tracking-wider!">
                     {item.subtitle}
                   </h3>
 

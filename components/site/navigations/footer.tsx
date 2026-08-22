@@ -37,7 +37,7 @@ export const BottomFooter = () => {
   return (
     <div
       className={cn(
-        "relative p-3 sm:p-5 text-[10px] sm:text-xs font-semibold tracking-wide! border-t overflow-hidden w-full",
+        "relative p-3 md:p-5 text-[10px] sm:text-xs font-semibold border-t overflow-hidden w-full",
         pathname?.startsWith("/components") ||
           pathname?.startsWith("/docs") ||
           pathname?.startsWith("/resources") ||
@@ -145,25 +145,25 @@ export default function Footer() {
   const secondHalfResources = resourcePages.slice(resourceChunkSize);
 
   return (
-    <footer className="sm:p-5 md:p-10 m-auto max-w-400 w-full">
-      <div className="md:bg-foreground/5 p-2 pb-0! md:border-b-30 sm:rounded-[1.3rem] sm:rounded-b-xl overflow-hidden">
+    <footer className="p-3 md:p-5 lg:p-10 m-auto max-w-400 w-full">
+      <div className="lg:bg-foreground/5 lg:p-2 pb-0! lg:border-b-30 sm:rounded-[1.3rem] sm:rounded-b-xl overflow-hidden">
         {/* 3D Morquee Banner */}
-        <section className="relative p-3 md:shadow-2xl/10 md:bg-foreground/5 backdrop-blur-md rounded-xl lg:rounded-2xl overflow-hidden w-full min-h-60 lg:min-h-150">
+        <section className="relative lg:p-3 lg:shadow-2xl/10 lg:bg-foreground/5 backdrop-blur-md rounded-xl lg:rounded-2xl overflow-hidden w-full min-h-60 lg:min-h-150">
           <ThreeDMarquee
-            className="hidden md:block pointer-events-none absolute inset-0 bg-background! h-full w-full"
+            className="hidden lg:block pointer-events-none absolute inset-0 bg-background! h-full w-full"
             images={images}
           />
-          <div className="absolute inset-0 z-20 flex flex-col items-center m-auto gap-3 sm:gap-5 p-3 md:p-5 lg:p-10 bg-foreground/5 md:bg-white/5 backdrop-blur-3xl md:text-white md:shadow-2xl rounded-2xl md:rounded-none lg:rounded-4xl max-w-270 w-full h-fit">
+          <div className="sm:absolute inset-0 z-20 flex flex-col items-center m-auto gap-3 sm:gap-5 p-3 md:p-5 lg:p-10 bg-foreground/5 lg:bg-white/5 backdrop-blur-3xl lg:text-white lg:shadow-2xl rounded-2xl lg:rounded-4xl max-w-270 w-full h-full sm:h-fit">
             <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-5 md:gap-10 m-auto w-full">
-              <div className="flex items-center gap-3 sm:gap-5 md:gap-7 w-full">
-                <div className="relative shrink-0 p-1.5 sm:p-2 shadow-xl rounded-[0.8rem] sm:rounded-[1.2rem] md:rounded-[1.6rem] overflow-hidden min-w-16 sm:min-w-20 md:min-w-27 h-20 sm:h-24 md:h-33">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-5 lg:gap-7 w-full">
+                <div className="relative shrink-0 p-1 sm:p-1.5 lg:p-2 shadow-xl rounded-[0.8rem] sm:rounded-[1.2rem] lg:rounded-[1.6rem] overflow-hidden min-w-15 md:min-w-20 lg:min-w-27 h-15 md:h-24 lg:h-33">
                   <Image
                     src="/logo.png"
                     alt="logo"
                     width={2000}
                     height={2000}
                     unoptimized
-                    className="z-20 transform-gpu border-2 sm:border-5 border-white rounded-[0.6rem] sm:rounded-[0.8rem] md:rounded-[1.3rem] w-full h-full"
+                    className="z-20 transform-gpu border-2 lg:border-5 border-white rounded-[0.6rem] md:rounded-[0.8rem] lg:rounded-[1.3rem] w-full h-full"
                   />
                   <motion.span
                     animate={{
@@ -199,7 +199,7 @@ export default function Footer() {
                   />
                 </div>
                 <h2 className="text-xl md:text-2xl lg:text-[2.4rem] font-semibold tracking-tight leading-tight sm:leading-none">
-                  <span className="md:bg-clip-text md:text-transparent md:bg-linear-to-br from-white via-white to-white/30">
+                  <span className="lg:bg-clip-text lg:text-transparent lg:bg-linear-to-br from-white via-white to-white/30">
                     Let&apos;s build, share & improve{" "}
                     <br className="hidden sm:block" /> this open-source{" "}
                     <br className="hidden md:block" /> together
@@ -265,7 +265,7 @@ export default function Footer() {
 
         <section className="relative mt-2 sm:mt-3 w-full">
           {/* Brand & Links Columns */}
-          <div className="p-3 sm:p-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
+          <div className="p-3 sm:p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
             <div className="col-span-2 space-y-3">
               <div className="hidden md:flex items-center gap-2 sm:gap-3">
                 <Image
@@ -314,7 +314,7 @@ export default function Footer() {
 
             <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
               <p className="text-sm sm:text-base font-semibold">Components</p>
-              <div className="flex flex-col sm:flex-row items-start gap-2 md:gap-5 lg:gap-10">
+              <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
                 <ul className="space-y-1 sm:space-y-1.5">
                   {firstHalfComponents.map((category) => (
                     <FooterLink
@@ -345,7 +345,7 @@ export default function Footer() {
             <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
               <p className="text-sm sm:text-base font-semibold">Resources</p>
 
-              <div className="flex flex-col sm:flex-row items-start gap-2 md:gap-5 lg:gap-10">
+              <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
                 <ul className="space-y-1 sm:space-y-1.5">
                   {firstHalfResources.map((page) => (
                     <FooterLink

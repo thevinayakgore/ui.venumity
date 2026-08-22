@@ -312,7 +312,7 @@ export function Components() {
   return (
     <main className="w-full">
       <header className="mb-5 md:mb-10 w-full">
-        <div className="flex items-center justify-between mb-5 w-full">
+        <div className="hidden lg:flex items-center justify-between mb-5 w-full">
           <Badge
             variant="secondary"
             className="gap-1.5 h-8 pl-2 pr-3 font-semibold! tracking-wider! bg-foreground/5 border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4!"
@@ -362,7 +362,7 @@ export function Components() {
 
       {/* Initial loading skeleton */}
       {initialLoading && (
-        <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 w-full">
+        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 w-full">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -392,7 +392,7 @@ export function Components() {
       {/* Cards grid */}
       {!initialLoading && displayedCards.length > 0 && (
         <>
-          <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full">
+          <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 w-full">
             {displayedCards.map((card) => (
               <CategoryCard
                 key={card.id}

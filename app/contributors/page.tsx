@@ -218,24 +218,24 @@ export default async function ContributorsPage() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center m-auto p-5 md:p-10 gap-5 md:gap-10 w-full">
+    <main className="flex flex-col items-center justify-center m-auto p-3 md:p-5 lg:p-10 gap-5 md:gap-10 w-full">
       <div className="text-center border-b w-full">
-        <h1 className="dancing text-7xl md:text-9xl font-extrabold opacity-10">
+        <h1 className="dancing text-6xl sm:text-7xl md:text-9xl font-extrabold">
           Contributors
         </h1>
-        <p className="text-base md:text-lg text-foreground/30">
+        <p className="text-sm sm:text-base md:text-lg text-foreground/50 my-2">
           Meet the amazing people who built things and contributed to{" "}
           <span className="mx-1 text-foreground/80">ui.venumity.com</span>{" "}
           project.
         </p>
-        <div className="flex items-center justify-center m-auto gap-2 my-5 w-full">
+        <div className="flex flex-wrap items-center justify-center m-auto gap-1.5 sm:gap-2 my-5 w-full">
           <Link
             href="https://github.com/thevinayakgore/ui.venumity/blob/main/README.md"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="p-5! gap-2! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
-              <Newspaper />
+            <Button className="pl-3! py-4! pr-4! md:p-5! gap-1.5! md:gap-2! text-xs! md:text-sm! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
+              <Newspaper className="size-3.5! md:size-5!" />
               README.md
             </Button>
           </Link>
@@ -244,8 +244,8 @@ export default async function ContributorsPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="p-5! gap-2! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
-              <Scale />
+            <Button className="pl-3! py-4! pr-4! md:p-5! gap-1.5! md:gap-2! text-xs! md:text-sm! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
+              <Scale className="size-3.5! md:size-5!" />
               LICENSE
             </Button>
           </Link>
@@ -254,8 +254,8 @@ export default async function ContributorsPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="p-5! gap-2! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
-              <HeartHandshake />
+            <Button className="pl-3! py-4! pr-4! md:p-5! gap-1.5! md:gap-2! text-xs! md:text-sm! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
+              <HeartHandshake className="size-3.5! md:size-5!" />
               CODE_OF_CONDUCT.md
             </Button>
           </Link>
@@ -264,8 +264,8 @@ export default async function ContributorsPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="p-5! gap-2! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
-              <ShieldCheck />
+            <Button className="pl-3! py-4! pr-4! md:p-5! gap-1.5! md:gap-2! text-xs! md:text-sm! font-bold bg-foreground/5! hover:bg-foreground! text-foreground/40 hover:text-secondary! hover:shadow-lg shadow-foreground/30 border-0! transition-all duration-500">
+              <ShieldCheck className="size-3.5! md:size-5!" />
               SECURITY.md
             </Button>
           </Link>
@@ -277,30 +277,32 @@ export default async function ContributorsPage() {
           No contributors found.
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-6 w-full">
           {users.map((user) => (
             <div
               key={user.login}
               id={user.login}
-              className="group flex flex-col gap-2 p-4 bg-foreground/5 hover:bg-linear-to-br from-sky-500/80 via-sky-500/10 to-transparent rounded-4xl w-full"
+              className="group flex flex-col gap-2 p-2 lg:p-4 bg-foreground/5 hover:bg-linear-to-br from-sky-500/80 via-sky-500/10 to-transparent rounded-2xl sm:rounded-4xl w-full"
             >
-              <header className="grid grid-cols-3 items-start gap-2 w-full">
+              <header className="flex flex-col sm:flex-row items-start gap-2 w-full h-fit">
                 <Link
                   href={user.html_url ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-2xl overflow-hidden w-full h-full"
+                  className="rounded-xl md:rounded-2xl overflow-hidden w-full sm:w-[35%] h-auto"
                 >
                   <Image
                     src={user.avatar_url ?? "/logo.png"}
                     alt={user.name || user.login || "Contributor"}
-                    width={500}
-                    height={500}
+                    width={2000}
+                    height={2000}
                     priority
-                    className="object-cover group-hover:scale-115 transition-all duration-500 w-full"
+                    unoptimized
+                    loading="eager"
+                    className="object-cover group-hover:scale-115 transition-all duration-500 w-full h-auto"
                   />
                 </Link>
-                <div className="col-span-2 relative flex flex-col items-start justify-between gap-1 p-3.5 bg-background border border-sky-500/20 rounded-2xl overflow-hidden w-full h-full">
+                <div className="relative flex flex-col items-start justify-between gap-1 p-3.5 bg-background border border-sky-500/20 rounded-xl sm:rounded-2xl overflow-hidden w-full sm:w-[65%] h-fit md:h-full">
                   <div className="w-full min-w-0">
                     <span className="block text-sm font-semibold w-full min-w-0 truncate tracking-wide">
                       {user.name}
@@ -352,16 +354,16 @@ export default async function ContributorsPage() {
                 </div>
               </header>
 
-              <div className="flex flex-col gap-5 p-5 bg-background border shadow-lg/10 rounded-2xl w-full">
+              <div className="flex flex-col gap-5 p-3 sm:p-5 bg-background border shadow-lg/10 rounded-xl sm:rounded-2xl w-full">
                 {user.bio && (
-                  <p className="text-sm tracking-wide text-foreground/70">
+                  <p className="text-xs sm:text-sm tracking-wide text-foreground/70">
                     {user.bio}
                   </p>
                 )}
 
                 {/* Social Links Section */}
                 {user.socialAccounts && user.socialAccounts.length > 0 && (
-                  <div className="relative flex items-center justify-between gap-3 pb-5 w-full">
+                  <div className="relative hidden md:flex items-center justify-between gap-3 pb-5 w-full">
                     {user.socialAccounts.map((social) => (
                       <Link
                         key={social.provider}
@@ -379,7 +381,7 @@ export default async function ContributorsPage() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-3 gap-2 text-start text-sm tracking-wide w-full">
+                <div className="hidden md:grid grid-cols-3 gap-2 text-start text-sm tracking-wide w-full">
                   <div>
                     <div className="text-2xl opacity-30 font-bold">
                       {String(user.followers ?? 0).padStart(2, "0")}
@@ -401,7 +403,7 @@ export default async function ContributorsPage() {
                 </div>
 
                 {/* New Achievements Section - based on actual GitHub data */}
-                <div className="relative flex items-start gap-5 md:gap-10 text-sm capitalize tracking-wide pt-5 w-full">
+                <div className="relative hidden md:flex items-start gap-5 md:gap-10 text-sm capitalize tracking-wide pt-5 w-full">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 opacity-60 bg-linear-to-l from-transparent via-sky-500 to-transparent rounded-full h-px w-full" />
                   <div className="absolute -top-5 left-0 bg-linear-to-l from-transparent via-sky-500 to-transparent opacity-20 blur-xl rounded-full h-10 w-full" />
                   <div className="flex flex-col items-center gap-1">
@@ -432,7 +434,7 @@ export default async function ContributorsPage() {
                   rel="noopener noreferrer"
                   className="w-full"
                 >
-                  <Button className="p-6! gap-3! font-bold bg-foreground! text-secondary! hover:bg-sky-500! hover:text-white! border-0! hover:shadow-lg shadow-sky-500/40 transition-all duration-500 rounded-lg w-full">
+                  <Button className="px-3! py-5! sm:p-6! gap-1.5! sm:gap-3! font-bold bg-foreground! text-secondary! hover:bg-sky-500! hover:text-white! border-0! hover:shadow-lg shadow-sky-500/40 transition-all duration-500 rounded-lg w-fit sm:w-full">
                     <svg viewBox="0 0 438.549 438.549" className="size-5!">
                       <path
                         fill="currentColor"

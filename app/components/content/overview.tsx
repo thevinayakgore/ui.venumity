@@ -152,7 +152,7 @@ export default function Overview({
       </header>
 
       <div className="relative flex flex-col items-start p-2 bg-foreground/5 rounded-t-xl rounded-b-2xl overflow-hidden w-full">
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 md:pt-0.5 pb-3 w-full">
+        <div className="flex flex-wrap items-center justify-between space-y-4 md:gap-3 pt-3 md:pt-0.5 pb-3 w-full">
           <div className="relative flex items-center gap-2 w-auto">
             {tabs.map((tab) => {
               const icons = {
@@ -191,7 +191,7 @@ export default function Overview({
             <motion.span
               layout
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute -bottom-5.5 z-50! w-28 h-1 bg-primary leading-none rounded-full"
+              className="hidden md:block absolute -bottom-5.5 z-50! w-28 h-1 bg-primary leading-none rounded-full"
               style={{ left: sliderLeft }}
             />
           </div>
@@ -226,7 +226,7 @@ export default function Overview({
 
         <div
           className={`flex flex-col items-center justify-center m-auto border border-foreground/7 rounded-xl ${
-            activeTab === "preview" && "bg-background rounded-tl-none"
+            activeTab === "preview" && "bg-background md:rounded-tl-none"
           } aspect-square md:aspect-video max-h-screen overflow-hidden! transition-all duration-700 w-full`}
         >
           <div className="relative flex flex-col overflow-hidden bg-background w-full h-full">

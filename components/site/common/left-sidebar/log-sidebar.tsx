@@ -43,8 +43,8 @@ export function LogSidebar() {
   };
 
   return (
-    <aside className="sticky top-0 p-5 max-h-screen overflow-auto w-full">
-      <div className="flex flex-col items-start overflow-auto w-full h-full">
+    <aside className="sticky top-0 lg:p-5 max-h-screen overflow-auto w-full">
+      <div className="hidden lg:flex flex-col items-start overflow-auto w-full h-full">
         {grouped.map(([year, items]) => {
           const isOpen = !!openYears[year];
 
@@ -92,7 +92,7 @@ export function LogSidebar() {
           );
         })}
       </div>
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-50 bg-linear-to-t from-transparent via-primary to-transparent rounded-full h-[90%] w-px" />
+      <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 opacity-50 bg-linear-to-t from-transparent via-primary to-transparent rounded-full h-[90%] w-px" />
     </aside>
   );
 }

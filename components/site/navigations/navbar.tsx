@@ -98,14 +98,14 @@ export default function Navbar() {
                   className="absolute inset-0 -z-10 scale-[1.3] w-full h-full"
                 />
               </div>
-              <h2 className="hidden md:block font-bold text-xl pb-0.5">
+              <h2 className="hidden lg:block font-bold text-xl pb-0.5">
                 Venu<span className="text-primary">mity</span> UI
               </h2>
             </Link>
 
             <Separator
               orientation="vertical"
-              className="hidden md:block h-6 my-auto bg-foreground/15 ml-6 mr-3"
+              className="hidden lg:block h-6 my-auto bg-foreground/15 ml-6 mr-3"
             />
 
             <motion.div
@@ -226,7 +226,7 @@ export default function Navbar() {
                   <Menu />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="p-0! gap-0! min-w-full">
+              <SheetContent side="bottom" className="p-0! gap-0! min-w-full">
                 <SheetHeader className="border-0!">
                   <SheetClose asChild className="p-0!">
                     <Link href="/" className="w-fit">
