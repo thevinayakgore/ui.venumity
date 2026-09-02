@@ -63,7 +63,7 @@ export default function RightSidebar() {
   };
 
   return (
-    <aside className="sticky top-0 lg:p-10 pl-0! transition-all duration-500 max-h-screen">
+    <aside className="sticky top-0 lg:p-5 pl-0! transition-all duration-500 max-h-screen">
       <section className={`hidden lg:block w-full h-full`}>
         <div className="relative z-10 flex flex-col items-start w-full h-full">
           {renderContent()}

@@ -613,7 +613,7 @@ export default function FixedColumnTable() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence>
                     {sortedData.map((data, index) => {
                       const previousMonth =
                         index > 0 ? sortedData[index - 1].total : data.total;

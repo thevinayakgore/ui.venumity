@@ -209,7 +209,7 @@ export default function LeftResources({
       </div>
 
       {/* ─── Desktop Sidebar (unchanged) ─────────────────────────── */}
-      <SidebarProvider className="hidden lg:block sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
+      <SidebarProvider className="hidden lg:block sticky top-0 p-3 pr-0! overflow-auto w-full max-h-screen">
         <SidebarGroup>
           <SidebarMenu>
             {/* Categories Section */}
@@ -222,13 +222,13 @@ export default function LeftResources({
                 <CollapsibleTrigger asChild className="mb-1 w-full">
                   <SidebarMenuButton
                     tooltip="Categories"
-                    className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                    className="flex items-center justify-between hover:bg-foreground/10! text-foreground! opacity-50 hover:opacity-100! rounded-sm w-full"
                   >
                     <div className="flex items-center gap-2">
                       <Boxes className="size-4" />
                       <span className="font-semibold">Categories</span>
                     </div>
-                    <ChevronDown className="size-4 opacity-80 group-data-[state=open]/categories:rotate-180 transition-all duration-500" />
+                    <ChevronDown className="size-4 opacity-80 group-data-[state=open]/categories:rotate-180" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pr-2">
@@ -257,12 +257,12 @@ export default function LeftResources({
                         >
                           <SidebarMenuSubButton
                             isActive={isActive}
-                            className="border-0! pl-2.5! pr-1.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full cursor-pointer"
+                            className="border-0! pl-2.5! pr-1.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/10! data-active:bg-foreground/10! data-active:text-foreground! text-foreground/50! hover:text-foreground! rounded-sm w-full cursor-pointer"
                             onClick={() =>
                               handleCategoryClick(categoryConfig.slug)
                             }
                           >
-                            <div className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full">
+                            <div className="flex items-center justify-between w-full">
                               <span>{categoryConfig.label}</span>
                               <span
                                 className={`text-[10px] px-1 py-0.5 rounded ${
@@ -300,7 +300,7 @@ export default function LeftResources({
                           (cat) => cat.slug === selectedCategory,
                         )?.label || currentCategory.name
                       }
-                      className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-sm w-full"
+                      className="flex items-center justify-between hover:bg-foreground/10! text-foreground! opacity-50 hover:opacity-100! rounded-sm w-full"
                     >
                       <div className="flex items-center gap-2">
                         <Star className="size-4" />
@@ -310,7 +310,7 @@ export default function LeftResources({
                           )?.label || currentCategory.name}
                         </span>
                       </div>
-                      <ChevronDown className="size-4 opacity-80 group-data-[state=open]/pages:rotate-180 transition-all duration-500" />
+                      <ChevronDown className="size-4 opacity-80 group-data-[state=open]/pages:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="pr-2">
@@ -329,11 +329,11 @@ export default function LeftResources({
                               <SidebarMenuSubButton
                                 asChild
                                 isActive={isActive}
-                                className="border-0! px-2.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-sm w-full"
+                                className="border-0! px-2.5! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/10! data-active:bg-foreground/10! data-active:text-foreground! rounded-sm w-full"
                               >
                                 <Link
                                   href={`/resources/${currentCategory.slug}/${slug}`}
-                                  className="text-foreground/50! hover:text-foreground! transition-all duration-500 w-full truncate"
+                                  className="text-foreground/50! hover:text-foreground! w-full truncate"
                                 >
                                   {resource.title}
                                 </Link>

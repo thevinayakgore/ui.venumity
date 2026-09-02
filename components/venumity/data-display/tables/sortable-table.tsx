@@ -667,7 +667,7 @@ export default function SortableTable() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   {paginatedEmployees.map((employee, index) => (
                     <motion.tr
                       key={employee.id}

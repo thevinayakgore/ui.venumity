@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Fullscreen, Proportions, Terminal, Play } from "lucide-react";
+import { Fullscreen, Terminal, Play, PictureInPicture2 } from "lucide-react";
 import CodeBlock from "@/components/site/common/code-block";
 import ComponentPreview from "./preview";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -133,10 +133,12 @@ export default function Overview({
     youtubeEmbedUrl,
   ]);
 
-  // Tab slider position
-  const tabWidth = 120;
-  const tabIndex = tabs.indexOf(activeTab);
-  const sliderLeft = tabIndex * tabWidth;
+  // Calculate tab position for the sliding indicator
+  const getTabLeftPosition = () => {
+    if (activeTab === PREVIEW_TAB) return 0;
+    if (activeTab === CODE_TAB) return 120;
+    return 0;
+  };
 
   return (
     <section className="w-full">
@@ -152,28 +154,28 @@ export default function Overview({
       </header>
 
       <div className="relative flex flex-col items-start p-2 bg-foreground/5 rounded-t-xl rounded-b-2xl overflow-hidden w-full">
-        <div className="flex flex-wrap items-center justify-between space-y-4 md:gap-3 pt-3 md:pt-0.5 pb-3 w-full">
+        <div className="flex flex-wrap items-center justify-between space-y-4 md:gap-3 pt-3 md:pt-0 pb-2 w-full">
           <div className="relative flex items-center gap-2 w-auto">
             {tabs.map((tab) => {
               const icons = {
-                preview: Proportions,
+                preview: PictureInPicture2,
                 code: Terminal,
                 video: Play,
               };
-              const Icon = icons[tab] || Proportions;
+              const Icon = icons[tab] || PictureInPicture2;
               return (
                 <button
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`flex items-center justify-center m-auto gap-2 text-sm uppercase z-10 w-28 font-semibold tracking-wider cursor-pointer transition-all duration-300 ${
+                  className={`flex items-center justify-center m-auto text-center gap-2 text-sm capitalize z-10 w-28 -mb-3.5 font-semibold tracking-wider transition-all duration-300 ${
                     activeTab === tab
                       ? "text-foreground/80"
                       : "text-foreground/40 hover:text-foreground/80"
                   }`}
                 >
                   <Icon className="size-4" />
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab}
                 </button>
               );
             })}
@@ -185,14 +187,14 @@ export default function Overview({
                 damping: 30,
                 delay: 0.2,
               }}
-              className="absolute -bottom-5 w-28 h-9 mb-3 bg-card! dark:bg-muted! border transform-gpu leading-none rounded-md"
-              style={{ left: sliderLeft }}
+              className="absolute -bottom-5.5 w-28 h-9 bg-background dark:bg-foreground/10 border border-foreground/15 transform-gpu leading-none rounded-md"
+              style={{ left: getTabLeftPosition() }}
             />
             <motion.span
               layout
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="hidden md:block absolute -bottom-5.5 z-50! w-28 h-1 bg-primary leading-none rounded-full"
-              style={{ left: sliderLeft }}
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
+              className="absolute -bottom-8.5 z-50! w-28 h-1 bg-primary leading-none rounded-full"
+              style={{ left: getTabLeftPosition() }}
             />
           </div>
 
@@ -242,6 +244,9 @@ export default function Overview({
                   alt={`${githubUsername} GitHub profile`}
                   width={500}
                   height={500}
+                  priority
+                  unoptimized
+                  loading="eager"
                   className="size-4.5 rounded-full"
                 />
                 <span>{githubUsername}</span>

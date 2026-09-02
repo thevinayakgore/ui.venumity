@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/tooltip";
 import { COMPONENTS } from "@/registry/components";
 import { Button } from "@/components/ui/button";
-import { BASE_IMAGES, SOCIAL_LINKS } from "@/registry/site/footer";
+import { BASE_IMAGES } from "@/registry/site/footer";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { cn } from "@/lib/utils";
 import { RESOURCE_CATEGORIES } from "@/registry/resources";
+import SocialIcons from "../common/social-icons";
 
 function shuffleImages(images: string[]) {
   const shuffled = [...images];
@@ -33,30 +34,28 @@ function shuffleImages(images: string[]) {
 }
 
 export const BottomFooter = () => {
-  const pathname = usePathname();
   return (
-    <div
-      className={cn(
-        "relative p-3 md:p-5 text-[10px] sm:text-xs font-semibold border-t overflow-hidden w-full",
-        pathname?.startsWith("/components") ||
-          pathname?.startsWith("/docs") ||
-          pathname?.startsWith("/resources") ||
-          pathname?.startsWith("/changelog")
-          ? "bg-foreground/3"
-          : "border-dashed mt-3 sm:mt-5 md:py-8",
-      )}
-    >
+    <div className="relative z-50 flex items-start justify-start py-4 lg:py-0 px-2.5 text-xs font-medium tracking-wide! overflow-hidden w-full lg:h-10">
       {/* Bottom line */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 leading-none text-foreground/40 w-full">
-        <span className="flex items-center whitespace-nowrap">
+      <div className="flex flex-col lg:flex-row items-center md:justify-between gap-4 leading-none text-foreground/50 w-full h-full">
+        <div className="flex items-center whitespace-nowrap">
           © {new Date().getFullYear()} Venumity
           <Separator
             orientation="vertical"
-            className="mx-2 sm:mx-3 bg-foreground/30 min-h-4! sm:min-h-5!"
+            className="mx-3 bg-foreground/30 min-h-5!"
           />
           All rights reserved
-        </span>
-        <span className="text-center sm:text-right">
+        </div>
+        <div className="hidden lg:block p-5 w-fit h-full">
+          <div className="absolute inset-0 left-1/2 -translate-x-1/2 z-0 rotate-10 bg-background border-x-[0.8px] border-foreground/12 scale-250 w-33 h-full" />
+          <div className="relative z-10 mr-4 flex items-center justify-center m-auto w-fit h-full">
+            <SocialIcons />
+          </div>
+        </div>
+        <div className="block lg:hidden w-fit">
+          <SocialIcons />
+        </div>
+        <div>
           Building in public at{" "}
           <Link
             href={handle}
@@ -65,40 +64,7 @@ export const BottomFooter = () => {
           >
             @{username}
           </Link>
-        </span>
-      </div>
-
-      <div className="hidden lg:flex absolute inset-x-0 -bottom-3 sm:-bottom-5 left-1/2 -translate-x-1/2 items-center -space-x-2 sm:-space-x-4 z-30 w-fit">
-        {SOCIAL_LINKS.map((item, index) => (
-          <Tooltip key={index}>
-            <TooltipTrigger
-              asChild
-              className={cn(
-                "w-auto hover:-translate-y-3 sm:hover:-translate-y-6 hover:rotate-0 z-0 hover:z-20 transition-all duration-400 overflow-hidden",
-                item.rotate,
-                pathname?.startsWith("/components") ||
-                  pathname?.startsWith("/resources") ||
-                  pathname?.startsWith("/changelog")
-                  ? "h-7 sm:h-10 mb-1 rounded-sm"
-                  : "h-8 sm:h-12 rounded-md",
-              )}
-            >
-              <Link href={item.href} target="_blank" className="cursor-pointer">
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={1000}
-                  height={1000}
-                  priority
-                  className="w-full h-full"
-                />
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>{item.alt}</p>
-            </TooltipContent>
-          </Tooltip>
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -263,127 +229,123 @@ export default function Footer() {
           </div>
         </section>
 
-        <section className="relative mt-2 sm:mt-3 w-full">
-          {/* Brand & Links Columns */}
-          <div className="p-3 sm:p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
-            <div className="col-span-2 space-y-3">
-              <div className="hidden md:flex items-center gap-2 sm:gap-3">
-                <Image
-                  src="/logo.png"
-                  alt="Brand Logo"
-                  width={500}
-                  height={500}
-                  className="border-2 border-white shadow-lg shadow-primary/40 rounded-md w-max h-8 sm:h-10"
-                />
-                <span className="text-xl sm:text-2xl lg:text-3xl tracking-tight font-semibold">
-                  Venu<span className="text-primary">mity</span> UI
-                </span>
-              </div>
-              <p className="text-xs md:text-sm text-foreground/50 tracking-wide">
-                The best way to learn is to build and the best way to build is
-                with tools that{" "}
-                <span className="px-1.5 pb-0.5 text-primary bg-primary/15 rounded">
-                  empower
-                </span>{" "}
-                rather than overwhelm.
-              </p>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-3 sm:mt-5 list-none">
-                <FooterLink
-                  href="https://pro.venumity.com/legal/license"
-                  className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
-                >
-                  <Scale className="size-3 sm:size-3.5" />
-                  License
-                </FooterLink>
-                <FooterLink
-                  href="https://pro.venumity.com/legal/privacy"
-                  className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
-                >
-                  <HatGlasses className="size-3 sm:size-3.5" />
-                  Privacy
-                </FooterLink>
-                <FooterLink
-                  href="https://pro.venumity.com/legal/terms"
-                  className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
-                >
-                  <HeartHandshake className="size-3 sm:size-3.5" />
-                  Terms
-                </FooterLink>
-              </div>
+        {/* Brand & Links Columns */}
+        <div className="mt-2 sm:mt-3 p-3 sm:p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
+          <div className="col-span-2 space-y-3">
+            <div className="hidden md:flex items-center gap-2 sm:gap-3">
+              <Image
+                src="/logo.png"
+                alt="Brand Logo"
+                width={500}
+                height={500}
+                className="border-2 border-white shadow-lg shadow-primary/40 rounded-md w-max h-8 sm:h-10"
+              />
+              <span className="text-xl sm:text-2xl lg:text-3xl tracking-tight font-semibold">
+                Venu<span className="text-primary">mity</span> UI
+              </span>
             </div>
-
-            <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
-              <p className="text-sm sm:text-base font-semibold">Components</p>
-              <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
-                <ul className="space-y-1 sm:space-y-1.5">
-                  {firstHalfComponents.map((category) => (
-                    <FooterLink
-                      key={category.name}
-                      href={`/components/${toKebabCase(category.name)}/${toKebabCase(
-                        category.subcategories[0]?.name ?? "",
-                      )}`}
-                    >
-                      {category.name}
-                    </FooterLink>
-                  ))}
-                </ul>
-                <ul className="space-y-1 sm:space-y-1.5">
-                  {secondHalfComponents.map((category) => (
-                    <FooterLink
-                      key={category.name}
-                      href={`/components/${toKebabCase(category.name)}/${toKebabCase(
-                        category.subcategories[0]?.name ?? "",
-                      )}`}
-                    >
-                      {category.name}
-                    </FooterLink>
-                  ))}
-                </ul>
-              </div>
+            <p className="text-xs md:text-sm text-foreground/50 tracking-wide">
+              The best way to learn is to build and the best way to build is
+              with tools that{" "}
+              <span className="px-1.5 pb-0.5 text-primary bg-primary/15 rounded">
+                empower
+              </span>{" "}
+              rather than overwhelm.
+            </p>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-3 sm:mt-5 list-none">
+              <FooterLink
+                href="https://pro.venumity.com/legal/license"
+                className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
+              >
+                <Scale className="size-3 sm:size-3.5" />
+                License
+              </FooterLink>
+              <FooterLink
+                href="https://pro.venumity.com/legal/privacy"
+                className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
+              >
+                <HatGlasses className="size-3 sm:size-3.5" />
+                Privacy
+              </FooterLink>
+              <FooterLink
+                href="https://pro.venumity.com/legal/terms"
+                className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 pr-2 sm:pr-3! h-6 sm:h-7 text-[10px] sm:text-xs! leading-none bg-foreground/5! text-foreground/60! border border-foreground/15 hover:bg-primary/15! hover:text-primary! hover:border-primary/40 rounded-full"
+              >
+                <HeartHandshake className="size-3 sm:size-3.5" />
+                Terms
+              </FooterLink>
             </div>
+          </div>
 
-            <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
-              <p className="text-sm sm:text-base font-semibold">Resources</p>
-
-              <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
-                <ul className="space-y-1 sm:space-y-1.5">
-                  {firstHalfResources.map((page) => (
-                    <FooterLink
-                      key={`${page.categorySlug}-${page.title}`}
-                      href={`/resources/${page.categorySlug}/${toKebabCase(page.title)}`}
-                    >
-                      {page.title}
-                    </FooterLink>
-                  ))}
-                </ul>
-
-                <ul className="space-y-1 sm:space-y-1.5">
-                  {secondHalfResources.map((page) => (
-                    <FooterLink
-                      key={`${page.categorySlug}-${page.title}`}
-                      href={`/resources/${page.categorySlug}/${toKebabCase(page.title)}`}
-                    >
-                      {page.title}
-                    </FooterLink>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
-              <p className="text-sm sm:text-base font-semibold">Pages</p>
+          <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
+            <p className="text-sm sm:text-base font-semibold">Components</p>
+            <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
               <ul className="space-y-1 sm:space-y-1.5">
-                {COMPANY_SECTION.links.map((link) => (
-                  <FooterLink key={link.name} href="/pricing">
-                    {link.name}
+                {firstHalfComponents.map((category) => (
+                  <FooterLink
+                    key={category.name}
+                    href={`/components/${toKebabCase(category.name)}/${toKebabCase(
+                      category.subcategories[0]?.name ?? "",
+                    )}`}
+                  >
+                    {category.name}
+                  </FooterLink>
+                ))}
+              </ul>
+              <ul className="space-y-1 sm:space-y-1.5">
+                {secondHalfComponents.map((category) => (
+                  <FooterLink
+                    key={category.name}
+                    href={`/components/${toKebabCase(category.name)}/${toKebabCase(
+                      category.subcategories[0]?.name ?? "",
+                    )}`}
+                  >
+                    {category.name}
                   </FooterLink>
                 ))}
               </ul>
             </div>
           </div>
 
-          <BottomFooter />
-        </section>
+          <div className="col-span-1 sm:col-span-2 flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
+            <p className="text-sm sm:text-base font-semibold">Resources</p>
+
+            <div className="flex flex-col sm:flex-row items-start gap-5 lg:gap-10">
+              <ul className="space-y-1 sm:space-y-1.5">
+                {firstHalfResources.map((page) => (
+                  <FooterLink
+                    key={`${page.categorySlug}-${page.title}`}
+                    href={`/resources/${page.categorySlug}/${toKebabCase(page.title)}`}
+                  >
+                    {page.title}
+                  </FooterLink>
+                ))}
+              </ul>
+
+              <ul className="space-y-1 sm:space-y-1.5">
+                {secondHalfResources.map((page) => (
+                  <FooterLink
+                    key={`${page.categorySlug}-${page.title}`}
+                    href={`/resources/${page.categorySlug}/${toKebabCase(page.title)}`}
+                  >
+                    {page.title}
+                  </FooterLink>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 md:justify-center md:mx-auto w-full md:w-fit">
+            <p className="text-sm sm:text-base font-semibold">Pages</p>
+            <ul className="space-y-1 sm:space-y-1.5">
+              {COMPANY_SECTION.links.map((link) => (
+                <FooterLink key={link.name} href="/pricing">
+                  {link.name}
+                </FooterLink>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </footer>
   );

@@ -87,7 +87,7 @@ export default function LeftSidebar() {
   const navItems = [...docsSections, ...componentSections].filter(Boolean);
 
   return (
-    <SidebarProvider className="hidden lg:block lg:sticky top-0 p-5 pr-0! overflow-auto w-full max-h-screen">
+    <SidebarProvider className="hidden lg:block lg:sticky top-0 p-3 pr-0! overflow-auto w-full max-h-screen">
       <SidebarGroup>
         <SidebarMenu>
           {navItems.map((item) => {
@@ -128,7 +128,7 @@ export default function LeftSidebar() {
                   <CollapsibleTrigger asChild className="w-full">
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="flex items-center justify-between hover:bg-foreground/10! opacity-50 rounded-md w-full"
+                      className="flex items-center justify-between hover:bg-foreground/10! text-foreground/50 hover:text-foreground rounded-md w-full"
                     >
                       <div className="flex items-center gap-2">
                         {item.icon && <item.icon />}
@@ -150,11 +150,11 @@ export default function LeftSidebar() {
                             <SidebarMenuSubButton
                               asChild
                               isActive={isActive}
-                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-md w-full"
+                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/10! data-active:bg-foreground/10! data-active:text-foreground! rounded-md w-full"
                             >
                               <Link
                                 href={subItem.url}
-                                className="flex items-center justify-between text-foreground/50! hover:text-foreground! transition-all duration-500 w-full"
+                                className="flex items-center justify-between text-foreground/50! hover:text-foreground! w-full"
                               >
                                 <span>{subItem.title}</span>
                                 {(subItem.title === "CLI Guide" ||

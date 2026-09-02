@@ -1,7 +1,6 @@
 "use client";
 import LeftSidebar from "@/components/site/common/left-sidebar/sidebar";
 import RightSidebar from "@/components/site/common/right-sidebar/right-sidebar";
-import { BottomFooter } from "@/components/site/navigations/footer";
 
 export default function ContentLayout({
   children,
@@ -9,18 +8,14 @@ export default function ContentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="2xl:border-x-2 border-dashed 2xl:border-foreground/10 m-auto max-w-400 w-full h-full">
-      <section className="grid grid-cols-[280px_1fr_260px] m-auto w-full transition-all duration-500">
+    <section className="mx-auto w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] xl:grid-cols-[1fr_4fr_1fr] m-auto max-w-400 w-full">
         <LeftSidebar />
-        <div
-          id="content"
-          className="flex flex-col items-center gap-12 m-auto p-5 md:p-10 md:max-w-215 w-full h-full"
-        >
+        <div id="content" className="p-3 md:p-5 lg:p-10 overflow-hidden w-full">
           {children}
         </div>
         <RightSidebar />
-      </section>
-      <BottomFooter />
-    </main>
+      </div>
+    </section>
   );
 }

@@ -1089,7 +1089,7 @@ export default function FilterableTableWithSavedViews() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence>
                     {filteredTasks.map((task, index) => {
                       const PriorityIcon = priorityColors[task.priority].icon;
                       const StatusIcon = statusColors[task.status].icon;
@@ -1300,7 +1300,7 @@ export default function FilterableTableWithSavedViews() {
 
                   <ScrollArea className="h-125 pr-4">
                     <div className="space-y-3">
-                      <AnimatePresence mode="wait">
+                      <AnimatePresence>
                         {filteredTasks
                           .filter((task) => task.status === status)
                           .map((task, index) => (

@@ -121,7 +121,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
   return (
     <button
       onClick={() => onClick(card.path)}
-      className="relative cursor-pointer text-start p-2 group bg-foreground/3 rounded-4xl overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
+      className="relative cursor-pointer text-start p-2 group bg-foreground/5 rounded-4xl overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
     >
       <div className="relative flex flex-col transition-all duration-500 w-full h-full">
         <div className="aspect-square relative shadow-xl/15 w-full max-h-70 overflow-hidden rounded-2xl transition-all duration-500">
@@ -131,6 +131,7 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
               alt={card.title}
               width={5000}
               height={5000}
+              priority
               unoptimized
               loading="eager"
               onError={handleImageError}

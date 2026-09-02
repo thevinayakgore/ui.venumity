@@ -628,7 +628,7 @@ export default function ExpandableRowTable() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   {filteredProjects.map((project) => {
                     const progress = getProgress(project.spent, project.budget);
                     const isExpanded = expandedRows.has(project.id);

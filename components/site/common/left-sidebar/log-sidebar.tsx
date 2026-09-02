@@ -43,7 +43,7 @@ export function LogSidebar() {
   };
 
   return (
-    <aside className="sticky top-0 lg:p-5 max-h-screen overflow-auto w-full">
+    <aside className="sticky top-0 lg:p-3 max-h-screen overflow-auto w-full">
       <div className="hidden lg:flex flex-col items-start overflow-auto w-full h-full">
         {grouped.map(([year, items]) => {
           const isOpen = !!openYears[year];
@@ -58,10 +58,10 @@ export function LogSidebar() {
                     [year]: !prev[year],
                   }))
                 }
-                className="sticky top-0 group/btn flex w-full items-center gap-2.5 px-3 py-2 bg-foreground/10 backdrop-blur-md rounded-md"
+                className="sticky top-0 group/btn flex w-full items-center gap-2 px-3 py-2 bg-foreground/10 backdrop-blur-md rounded-md"
               >
-                <CalendarCheck2 className="size-5" />
-                <h3 className="text-base md:text-lg font-semibold flex-1 text-left">
+                <CalendarCheck2 className="size-4.5" />
+                <h3 className="text-sm md:text-base font-semibold flex-1 text-left">
                   {year}
                 </h3>
                 <ChevronDown

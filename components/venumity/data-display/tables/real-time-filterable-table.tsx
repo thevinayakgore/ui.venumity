@@ -834,7 +834,7 @@ export default function RealTimeFilterableTable() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence>
                     {filteredLogs.map((log, index) => {
                       const LevelIcon = levelColors[log.level].icon;
                       const SourceIcon = sourceIcons[log.source] || Terminal;
@@ -935,7 +935,7 @@ export default function RealTimeFilterableTable() {
           {/* Compact View */}
           {view === "compact" && (
             <div className="space-y-2">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {filteredLogs.map((log, index) => {
                   const LevelIcon = levelColors[log.level].icon;
 

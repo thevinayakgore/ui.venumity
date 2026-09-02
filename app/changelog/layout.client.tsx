@@ -1,7 +1,6 @@
 // app/changelog/layout.client.tsx
 "use client";
 import { createContext, useContext } from "react";
-import { BottomFooter } from "@/components/site/navigations/footer";
 import { changelogEntries, ChangelogEntry } from "@/registry/site/changelog";
 import { LogSidebar } from "@/components/site/common/left-sidebar/log-sidebar";
 
@@ -16,18 +15,17 @@ export default function ContentLayoutClient({
 }) {
   return (
     <ChangelogContext.Provider value={changelogEntries}>
-      <main className="m-auto w-full h-full">
-        <section className="grid grid-cols-1 lg:grid-cols-[300px_1fr] m-auto max-w-400 w-full">
+      <section className="mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] m-auto max-w-400 w-full">
           <LogSidebar />
           <div
             id="content"
-            className={`flex flex-col items-center p-3 md:p-5 lg:p-10 max-w-4xl m-auto w-full h-full`}
+            className="p-3 md:p-5 max-w-4xl m-auto overflow-hidden w-full"
           >
             {children}
           </div>
-        </section>
-        <BottomFooter />
-      </main>
+        </div>
+      </section>
     </ChangelogContext.Provider>
   );
 }

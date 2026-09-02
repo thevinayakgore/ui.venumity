@@ -1264,7 +1264,7 @@ export default function FiltersTable() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence>
                     {paginatedCustomers.map((customer, index) => (
                       <motion.tr
                         key={customer.id}
@@ -1382,7 +1382,7 @@ export default function FiltersTable() {
           {/* Grid View */}
           {view === "grid" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {paginatedCustomers.map((customer, index) => (
                   <motion.div
                     key={customer.id}

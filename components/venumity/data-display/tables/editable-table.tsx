@@ -269,7 +269,7 @@ export default function EditableDataGrid() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   {paginatedProducts.map((product, index) => (
                     <motion.tr
                       key={product.id}

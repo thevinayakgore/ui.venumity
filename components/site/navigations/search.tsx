@@ -494,7 +494,7 @@ function SearchModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-1000" onClick={onClose}>
+        <div className="fixed inset-0 z-100!" onClick={onClose}>
           {/* GLASS CONTAINER - EXACT ORIGINAL DESIGN */}
           <motion.div
             className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-3 bg-foreground/5 backdrop-blur-xl rounded-4xl! shadow-2xl w-full max-w-130"

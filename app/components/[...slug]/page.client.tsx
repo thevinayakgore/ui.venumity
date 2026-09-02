@@ -1,16 +1,16 @@
 // app/components/[...slug]/page.client.tsx
 "use client";
-import { useState, useEffect, useMemo } from "react";
-import { fetchComponentCode } from "@/utils/api-client";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { COMPONENTS } from "@/registry/components";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
+import { useState, useEffect, useMemo } from "react";
+import { fetchComponentCode } from "@/utils/api-client";
+import ComponentItemWithTabs from "../content/component-item-with-tabs";
 import {
   ComponentSubcategory,
   ComponentItem,
 } from "@/registry/component-utils";
-import ComponentItemWithTabs from "../content/component-item-with-tabs";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -150,14 +150,17 @@ export default function PageClient({
                 {subcategoryData.techs.map((tech, index) => (
                   <div
                     key={`${tech}-${index}`}
-                    className="flex items-center justify-center size-7 p-0.5 rounded border bg-foreground/3 overflow-hidden"
+                    className="flex items-center justify-center size-7 p-0.5 rounded bg-foreground/3 overflow-hidden"
                     title={tech}
                   >
                     <Image
-                      src={`/icons/${tech.toLowerCase().replace(/[.\-\s]/g, "")}.png`}
+                      src={`/icons/${tech.toLowerCase().replace(/[.\-\s]/g, "")}.webp`}
                       alt={tech}
                       width={500}
                       height={500}
+                      priority
+                      unoptimized
+                      loading="eager"
                       className="object-cover rounded-[3px] w-full h-full"
                     />
                   </div>
@@ -229,10 +232,8 @@ export default function PageClient({
           ))}
         </div>
 
-        <div className="text-[0.6rem] text-foreground/40 font-semibold font-mono italic text-center w-full">
-          &quot;Always use
-          <span className="text-primary/80 font-bold mx-1.5">Live</span>button
-          to see the full page preview !&quot;
+        <div className="text-sm tracking-wide text-center opacity-40 mb-5 w-full">
+          Always use Live button to see the full page preview !
         </div>
       </main>
     );

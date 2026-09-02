@@ -1,9 +1,8 @@
 // app/components/layout.client.tsx
 "use client";
+import { usePathname } from "next/navigation";
 import LeftSidebar from "@/components/site/common/left-sidebar/sidebar";
 import RightSidebar from "@/components/site/common/right-sidebar/right-sidebar";
-import { BottomFooter } from "@/components/site/navigations/footer";
-import { usePathname } from "next/navigation";
 
 export default function ContentLayoutClient({
   children,
@@ -14,21 +13,20 @@ export default function ContentLayoutClient({
   const hideRightSidebar = pathname === "/components";
 
   return (
-    <main className="max-w-400 mx-auto w-full">
-      <section
+    <section className="mx-auto w-full">
+      <div
         className={`grid grid-cols-1 ${
           !hideRightSidebar
-            ? "lg:grid-cols-[1fr_3fr] xl:grid-cols-[1fr_3fr_1fr]"
-            : "lg:grid-cols-[1fr_4fr]"
-        } m-auto w-full`}
+            ? "lg:grid-cols-[1fr_4fr] xl:grid-cols-[1fr_4fr_1fr]"
+            : "lg:grid-cols-[1fr_5fr]"
+        } m-auto max-w-400 w-full`}
       >
         <LeftSidebar />
-        <div id="content" className="p-3 md:p-5 lg:p-10">
+        <div id="content" className="p-3 md:p-5 overflow-hidden w-full">
           {children}
         </div>
         {!hideRightSidebar && <RightSidebar />}
-      </section>
-      <BottomFooter />
-    </main>
+      </div>
+    </section>
   );
 }

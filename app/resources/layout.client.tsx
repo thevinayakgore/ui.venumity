@@ -1,11 +1,10 @@
 // app/resources/layout.client.tsx
 "use client";
 import { usePathname } from "next/navigation";
-import LeftResources from "@/components/site/common/left-sidebar/resources";
 import { ResourceCategory } from "@/registry/resources";
 import { ResourcesProvider } from "@/contexts/resources";
 import RightSidebar from "@/components/site/common/right-sidebar";
-import { BottomFooter } from "@/components/site/navigations/footer";
+import LeftResources from "@/components/site/common/left-sidebar/resources";
 
 export default function ContentLayoutClient({
   children,
@@ -21,13 +20,13 @@ export default function ContentLayoutClient({
 
   return (
     <ResourcesProvider>
-      <main className="max-w-400 mx-auto w-full">
-        <section
+      <section className="mx-auto w-full">
+        <div
           className={`grid grid-cols-1 ${
             !hideRightSidebar
-              ? "lg:grid-cols-[1fr_3fr] xl:grid-cols-[1fr_3fr_1fr]"
-              : "lg:grid-cols-[1fr_4fr]"
-          } m-auto w-full`}
+              ? "lg:grid-cols-[1fr_4fr] xl:grid-cols-[1fr_4fr_1fr]"
+              : "lg:grid-cols-[1fr_5fr]"
+          } m-auto max-w-400 w-full`}
         >
           <LeftResources
             initialCategories={initialCategories}
@@ -35,15 +34,13 @@ export default function ContentLayoutClient({
           />
           <div
             id="content"
-            className="p-3 sm:p-6 lg:p-10 overflow-hidden w-full"
+            className="p-3 md:p-5 overflow-hidden w-full"
           >
             {children}
           </div>
-
           {!hideRightSidebar && <RightSidebar />}
-        </section>
-        <BottomFooter />
-      </main>
+        </div>
+      </section>
     </ResourcesProvider>
   );
 }

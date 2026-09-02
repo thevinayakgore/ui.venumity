@@ -134,7 +134,7 @@ export function ResourceCard({
   return (
     <Link
       href={`/resources/${categorySlug}/${slug}`}
-      className="flex flex-col items-start cursor-pointer group relative rounded-3xl p-2 bg-foreground/3 hover:shadow-xl/10 overflow-hidden transition-all duration-500 w-full h-fit"
+      className="flex flex-col items-start cursor-pointer group relative rounded-3xl p-2 bg-foreground/5 hover:shadow-xl/10 overflow-hidden transition-all duration-500 w-full h-fit"
     >
       <div className="relative flex items-center justify-center m-auto shadow-xl/15 rounded-2xl overflow-hidden duration-[1.5s] w-full h-full">
         <Image

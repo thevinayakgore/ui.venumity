@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/site/navigations/navbar";
 import { ScrollContainerContext } from "@/contexts/scroll-container";
 import NextTopLoader from "nextjs-toploader";
+import { BottomFooter } from "@/components/site/navigations/footer";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -22,11 +23,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
         showSpinner={false}
       />
       <main
-        className={`absolute top-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "p-1.5 bg-zinc-200 dark:bg-zinc-900"}`}
+        className={`fixed inset-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "px-2.5 bg-foreground/5"}`}
       >
         <Navbar />
         <section
-          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video overflow-auto bg-background border rounded-lg h-[calc(100%-3.2rem)]"}`}
+          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border rounded-2xl h-[calc(100%-6rem)]"}`}
         >
           <div
             ref={scrollContainerRef}
@@ -35,6 +36,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             {children}
           </div>
         </section>
+        <BottomFooter />
       </main>
     </ScrollContainerContext.Provider>
   );
