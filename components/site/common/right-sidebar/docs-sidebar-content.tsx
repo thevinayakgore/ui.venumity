@@ -158,18 +158,13 @@ export default function DocsSidebarContent({}: DocsSidebarContentProps) {
               key={`${heading.id}-${index}`}
               ref={(el) => void (buttonRefs.current[heading.id] = el)}
               onClick={() => handleHeadingClick(heading.id)}
-              className={`inline-flex text-left items-center group cursor-pointer py-1.5 text-xs transition-all duration-500 min-w-0 w-full ${
+              className={`text-left items-center group cursor-pointer py-0.75 text-[0.8rem] transition-all duration-500 line-clamp-1 leading-relaxed ${
                 activeId === heading.id
                   ? "text-foreground"
                   : "text-foreground/40 hover:text-foreground"
               }`}
             >
-              <span
-                title={heading.text}
-                className="truncate whitespace-nowrap overflow-hidden min-w-0 w-full"
-              >
-                {heading.text}
-              </span>
+              <span title={heading.text}>{heading.text}</span>
             </button>
           ))
         )}

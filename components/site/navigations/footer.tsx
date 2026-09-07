@@ -35,14 +35,14 @@ function shuffleImages(images: string[]) {
 
 export const BottomFooter = () => {
   return (
-    <div className="relative z-50 flex items-start justify-start py-4 lg:py-0 px-2.5 text-xs font-medium tracking-wide! overflow-hidden w-full lg:h-10">
+    <div className="relative z-50 flex items-start justify-start py-1.5 sm:py-4 lg:py-0 px-2.5 text-xs font-semibold overflow-hidden w-full lg:h-10">
       {/* Bottom line */}
-      <div className="flex flex-col lg:flex-row items-center md:justify-between gap-4 leading-none text-foreground/50 w-full h-full">
+      <div className="flex flex-col lg:flex-row items-center md:justify-between gap-1.25 sm:gap-4 leading-none text-foreground/50 w-full h-full">
         <div className="flex items-center whitespace-nowrap">
           © {new Date().getFullYear()} Venumity
           <Separator
             orientation="vertical"
-            className="mx-3 bg-foreground/30 min-h-5!"
+            className="mx-2 sm:mx-3 bg-foreground/30 min-h-4! sm:min-h-5!"
           />
           All rights reserved
         </div>
@@ -51,9 +51,6 @@ export const BottomFooter = () => {
           <div className="relative z-10 mr-4 flex items-center justify-center m-auto w-fit h-full">
             <SocialIcons />
           </div>
-        </div>
-        <div className="block lg:hidden w-fit">
-          <SocialIcons />
         </div>
         <div>
           Building in public at{" "}

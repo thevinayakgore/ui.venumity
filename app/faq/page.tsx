@@ -112,8 +112,8 @@ const faqSchema = {
 };
 
 export default function FAQ() {
-  const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(0);
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -127,7 +127,7 @@ export default function FAQ() {
 
       <main id="faq" className="p-3 sm:p-5 md:p-10 m-auto max-w-400 w-full">
         <div className="relative z-10 flex flex-col gap-5 md:gap-10 m-auto w-full">
-          <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-20 xl:p-30 text-white rounded-2xl overflow-hidden w-full">
+          <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-20 xl:p-30 text-white selection:bg-primary! selection:text-white! rounded-2xl overflow-hidden w-full">
             <motion.div
               className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom_right,#f97316,#fb923c,#fdba74,#f59e0b,#facc15,#fde047,#84cc16,#22c55e,#14b8a6,#06b6d4,#3b82f6,#a855f7)] bg-size-[300%_300%]"
               animate={{

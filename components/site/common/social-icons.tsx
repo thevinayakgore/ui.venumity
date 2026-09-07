@@ -166,7 +166,7 @@ export default function SocialIcons() {
             <TooltipTrigger className="size-5 opacity-40 hover:opacity-100 transition-all duration-300">
               {link.icon}
             </TooltipTrigger>
-            <TooltipContent className="text-xs font-medium">
+            <TooltipContent className="text-xs font-semibold">
               <p>{link.description}</p>
             </TooltipContent>
           </Tooltip>

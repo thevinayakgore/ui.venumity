@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ArrowBigUpDash, ArrowRight, Globe } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { GRADIENT_ANIMATION } from "@/components/utility/gradient";
 
 const rotatingWords = [
   "ready-to-use",
@@ -48,20 +49,20 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="flex flex-col items-center justify-center m-auto md:p-5 lg:p-10 max-w-400 w-full">
-      <div className="relative z-100 flex flex-col items-center justify-center m-auto md:border-6 border-zinc-200 dark:border-zinc-900 bg-background shadow-xl md:rounded-3xl lg:rounded-[2rem] overflow-hidden w-full">
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 z-70 transform-gpu bg-zinc-200 dark:bg-zinc-900 rounded-b-2xl h-7 w-1/4">
-          <Camera className="dark:bg-zinc-950! size-5! shadow-none! dark:shadow-lg/30!" />
+    <section className="relative flex flex-col items-center justify-center m-auto p-2 md:p-4 overflow-hidden w-full">
+      <div className="relative z-100 flex flex-col items-center justify-center m-auto bg-background shadow-xl/15 rounded-md md:rounded-xl overflow-hidden max-w-400 w-full">
+        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 z-70 transform-gpu bg-zinc-200 dark:bg-zinc-800 h-8 w-full">
+          <Camera className="mt-1.25 dark:bg-zinc-950! size-5! shadow-none! dark:shadow-lg/30!" />
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 md:pt-20 lg:pt-30 text-center font-semibold overflow-hidden w-full">
+        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 md:pt-15 text-center font-semibold overflow-hidden w-full">
           <Link
             href="/components/data-display/tables#expandable-row-table"
             className={cn(
               buttonVariants({
                 variant: "outline",
               }),
-              "pl-0! h-9! md:h-12! hover:pr-4 md:hover:pr-6 z-20 group/intro bg-foreground/5! backdrop-blur-md border-foreground/15 text-xs md:text-sm tracking-wide truncate min-w-0 w-fit shadow-lg rounded-full transition-all duration-500",
+              "pl-0! h-9! md:h-12! hover:pr-4 md:hover:pr-6 z-20 group/intro bg-foreground/5! backdrop-blur-md border-foreground/15 text-xs md:text-sm font-semibold tracking-wide truncate min-w-0 w-fit shadow-lg rounded-full transition-all duration-500",
             )}
           >
             <div className="hidden md:block relative size-11.5 z-40 mr-1 p-1 rounded-full overflow-hidden">
@@ -72,6 +73,7 @@ export default function Hero() {
                 height={500}
                 priority
                 unoptimized
+                loading="eager"
                 className="transform-gpu rounded-full w-full h-full"
               />
               <span className="absolute inset-0 -z-10 animate-spin bg-linear-to-tl from-blue-500 via-blue-500/60" />
@@ -82,7 +84,7 @@ export default function Hero() {
               className="hidden md:block mx-3 bg-foreground/20 h-7 my-auto"
             />
             <span className="pl-3 md:pl-0">Expandable Row Table</span>
-            <span className="hidden md:block ml-2 px-2 py-0.5 text-xs uppercase rounded-full bg-primary/10 text-primary border border-primary/20">
+            <span className="hidden md:block ml-2 px-2 py-0.5 text-xs uppercase rounded-full bg-primary/20 text-primary border border-primary/50">
               NEW
             </span>
             <ArrowRight className="ml-1 opacity-40 group-hover/intro:opacity-100 size-4 group-hover/intro:size-5 group-hover/intro:translate-x-3 transition-all duration-500" />
@@ -216,7 +218,7 @@ export default function Hero() {
         </div>
 
         {/* Hero Moving Cards Section - Responsive height */}
-        <div className="mb-5 md:mb-10 lg:mb-15 z-50 w-full">
+        <div className="mb-5 z-50 w-full">
           <HeroMovingCards />
         </div>
 
@@ -230,30 +232,12 @@ export default function Hero() {
           loading="eager"
           className="absolute inset-x-0 top-1/5 -translate-y-1/4 left-1/4 -translate-x-1/3 z-0 scale-250 sm:scale-120 transform-gpu opacity-5 dark:opacity-8 w-full h-auto rotate-20"
         />
-
-        <motion.div
-          className="absolute inset-x-0 -bottom-1/7 z-0 left-0 opacity-40 rounded-3xl blur-[10rem] h-70 sm:h-100 max-w-400 m-auto w-full"
-          animate={{
-            background: [
-              "radial-gradient(circle at top left, #3b82f6, #a855f7, #ec4899)",
-              "radial-gradient(circle at top right, #6366f1, #8b5cf6, #d946ef)",
-              "radial-gradient(circle at bottom right, #14b8a6, #0ea5e9, #3b82f6)",
-              "radial-gradient(circle at bottom left, #f59e0b, #f97316, #ef4444)",
-              "radial-gradient(circle at top left, #22c55e, #84cc16, #f59e0b)",
-              "radial-gradient(circle at top right, #06b6d4, #3b82f6, #8b5cf6)",
-              "radial-gradient(circle at bottom right, #ec4899, #f43f5e, #f97316)",
-              "radial-gradient(circle at bottom left, #8b5cf6, #6366f1, #3b82f6)",
-              "radial-gradient(circle at top right, #f43f5e, #ef4444, #f59e0b)",
-              "radial-gradient(circle at bottom left, #0ea5e9, #06b6d4, #22c55e)",
-            ],
-          }}
-          transition={{
-            duration: 50,
-            ease: "linear",
-            repeat: Infinity,
-          }}
-        />
       </div>
+      {/* Background Gradient Animation */}
+      <motion.div
+        className="absolute inset-0 z-0 w-full h-full"
+        {...GRADIENT_ANIMATION}
+      />
     </section>
   );
 }

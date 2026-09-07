@@ -198,6 +198,7 @@ function MobileFirstDesign() {
             alt="Banner Image"
             width={500}
             height={500}
+            priority
             className="aspect-video object-cover shadow-lg/20 rounded-lg sm:rounded-xl w-full"
           />
           <div className="space-y-1 sm:space-y-2 p-1 sm:p-2 w-full">
@@ -263,12 +264,12 @@ function CustomizationInfo() {
 
 function SmoothAnimationDemo() {
   const ICONS = [
-    { image: "/icons/nextjs.png", alt: "Next.js" },
-    { image: "/icons/react.png", alt: "React" },
-    { image: "/icons/tailwindcss.png", alt: "Tailwind CSS" },
-    { image: "/icons/typescript.png", alt: "TypeScript" },
-    { image: "/icons/motion.png", alt: "Framer Motion" },
-    { image: "/icons/shadcnui.png", alt: "shadcn/ui" },
+    { image: "/icons/nextjs.webp", alt: "Next.js" },
+    { image: "/icons/react.webp", alt: "React" },
+    { image: "/icons/tailwindcss.webp", alt: "Tailwind CSS" },
+    { image: "/icons/typescript.webp", alt: "TypeScript" },
+    { image: "/icons/motion.webp", alt: "Framer Motion" },
+    { image: "/icons/shadcnui.webp", alt: "shadcn/ui" },
   ];
 
   return (

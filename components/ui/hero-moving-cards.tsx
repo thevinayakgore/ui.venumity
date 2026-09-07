@@ -74,14 +74,14 @@ export const HeroMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10 w-max flex-nowrap",
+          "flex min-w-full shrink-0 gap-3 pt-5 w-max flex-nowrap",
           start && "animate-scroll",
           pauseOnHover && "hover:paused",
         )}
       >
         {items.map((item, idx) => (
           <li
-            className="p-0 sm:p-3 md:p-4 bg-linear-to-tr from-foreground/5 backdrop-blur-sm w-80 md:w-100 lg:w-110 max-w-110 rounded-2xl sm:rounded-3xl shrink-0"
+            className="p-0 sm:p-2 bg-foreground/5 backdrop-blur-sm w-80 md:w-100 lg:w-110 max-w-110 rounded-2xl sm:rounded-3xl shrink-0"
             key={idx}
           >
             <div
@@ -100,7 +100,7 @@ export const HeroMovingCards = ({
                   />
                 )}
                 <div className="relative flex flex-col items-start p-3 sm:p-4 w-full">
-                  <div className="absolute top-1 sm:top-2 md:top-3 left-6 sm:left-8 md:left-10 transform-gpu flex items-center opacity-5 text-7xl md:text-8xl lg:text-9xl scale-110 sm:scale-120 md:scale-130 font-mono! font-semibold">
+                  <div className="absolute top-1 sm:top-2 md:top-3 left-6 sm:left-8 md:left-10 z-0 transform-gpu flex items-center opacity-10 text-7xl md:text-8xl lg:text-9xl scale-110 sm:scale-120 md:scale-130 font-mono! font-semibold">
                     <span className="tracking-tighter">{item.title}</span>
                     <span
                       className={cn(
@@ -130,7 +130,7 @@ export const HeroMovingCards = ({
 
                   {item.description && (
                     <p
-                      className={`mt-16 sm:mt-20 md:mt-28 text-xs sm:text-sm tracking-wide text-white font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3.5 ${item.miniBg} backdrop-blur-3xl border sm:border-2 ${item.border} rounded-md sm:rounded-lg`}
+                      className={`relative z-50 mt-16 sm:mt-20 md:mt-28 text-xs sm:text-sm tracking-wide text-white font-semibold py-1.5 sm:py-2 px-2.5 sm:px-3.5 ${item.miniBg} backdrop-blur-3xl border sm:border-2 ${item.border} rounded-md sm:rounded-lg`}
                     >
                       {item.description}
                     </p>

@@ -14,7 +14,7 @@ export default function CTA() {
           </div>
         </div>
 
-        <div className="relative z-10 space-y-5 md:space-y-10 text-white max-w-3xl">
+        <div className="relative z-10 space-y-5 md:space-y-10 text-white selection:bg-white! selection:text-primary! max-w-3xl">
           <div className="space-y-5">
             <div className="text-balance text-2xl md:text-4xl lg:text-6xl font-bold tracking-tight leading-none">
               <span className="pt-3 text-transparent bg-clip-text bg-linear-to-br from-white/70 via-white to-white/30">

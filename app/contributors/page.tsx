@@ -296,9 +296,6 @@ export default async function ContributorsPage() {
                     alt={user.name || user.login || "Contributor"}
                     width={2000}
                     height={2000}
-                    priority
-                    unoptimized
-                    loading="eager"
                     className="object-cover group-hover:scale-115 transition-all duration-500 w-full h-auto"
                   />
                 </Link>

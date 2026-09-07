@@ -23,11 +23,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
         showSpinner={false}
       />
       <main
-        className={`fixed inset-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "px-2.5 bg-foreground/5"}`}
+        className={`fixed inset-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "px-2 sm:px-2.5 bg-foreground/5"}`}
       >
         <Navbar />
         <section
-          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border rounded-2xl h-[calc(100%-6rem)]"}`}
+          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-lg md:rounded-2xl h-[calc(100%-6rem)]"}`}
         >
           <div
             ref={scrollContainerRef}

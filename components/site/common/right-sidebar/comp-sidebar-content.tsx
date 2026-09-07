@@ -167,15 +167,15 @@ export default function ComponentsSidebarContent() {
             <button
               key={itemName}
               onClick={() => handleScroll(sectionId, index)}
-              className={`inline-flex text-left text-[0.8rem] items-center group cursor-pointer py-1.5 leading-none transition-all duration-500 min-w-0 w-full ${
+              className={`text-left items-center group cursor-pointer py-0.75 text-[0.8rem] transition-all duration-500 line-clamp-1 leading-relaxed ${
                 isActive
                   ? "text-foreground"
                   : "text-foreground/40 hover:text-foreground"
               }`}
-            >
+            > 
               <span
                 title={itemName}
-                className="truncate whitespace-nowrap overflow-hidden text-ellipsis min-w-0 w-full"
+                className="line-clamp-1 min-w-0 w-full"
               >
                 {itemName}
               </span>

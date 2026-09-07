@@ -43,7 +43,7 @@ export function LogSidebar() {
   };
 
   return (
-    <aside className="sticky top-0 lg:p-3 max-h-screen overflow-auto w-full">
+    <aside className="sticky top-0 lg:p-3 bg-foreground/5 max-h-screen overflow-auto w-full">
       <div className="hidden lg:flex flex-col items-start overflow-auto w-full h-full">
         {grouped.map(([year, items]) => {
           const isOpen = !!openYears[year];
