@@ -64,7 +64,7 @@ export default function GeminiStyleChatShell() {
   const canSend = value.trim().length > 0;
 
   return (
-    <main className="flex h-dvh w-full overflow-hidden bg-background text-foreground">
+    <main className="flex items-start justify-center m-auto overflow-hidden bg-background text-foreground w-full h-screen">
       <AnimatePresence initial={false}>
         {mobileOpen && (
           <motion.button
@@ -87,7 +87,7 @@ export default function GeminiStyleChatShell() {
         }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "z-40 flex h-full shrink-0 flex-col border-r border-border bg-muted/30",
+          "z-40 flex shrink-0 flex-col border-r border-border bg-sidebar min-h-screen",
           "fixed left-0 top-0 md:static",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         )}

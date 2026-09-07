@@ -34,10 +34,10 @@ export default function CursorStyleAIPromptPanel() {
   const [mode, setMode] = useState("agent");
 
   return (
-    <section className="grid grid-cols-10 w-full h-full">
-      <main className="col-span-7 p-3 w-full">
+    <section className="grid grid-cols-10 items-start justify-center m-auto w-full min-h-screen">
+      <div className="col-span-7 p-3 w-full h-full">
         <div className="bg-foreground/5 border rounded-xl w-full h-full" />
-      </main>
+      </div>
       <aside className="col-span-3 flex flex-col bg-card border-l w-full h-full">
         <div className="flex items-center justify-between gap-4 border-b py-1.5 px-4">
           <div className="flex items-center gap-2">

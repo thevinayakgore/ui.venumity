@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { Camera } from "@/components/utility/camera";
 import { HeroMovingCards } from "@/components/ui/hero-moving-cards";
 import TechIcons from "./tech-icons";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -50,12 +49,8 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col items-center justify-center m-auto p-2 md:p-4 overflow-hidden w-full">
-      <div className="relative z-100 flex flex-col items-center justify-center m-auto bg-background shadow-xl/15 rounded-md md:rounded-xl overflow-hidden max-w-400 w-full">
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 z-70 transform-gpu bg-zinc-200 dark:bg-zinc-800 h-8 w-full">
-          <Camera className="mt-1.25 dark:bg-zinc-950! size-5! shadow-none! dark:shadow-lg/30!" />
-        </div>
-
-        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 md:pt-15 text-center font-semibold overflow-hidden w-full">
+      <div className="relative z-100 flex flex-col items-center justify-center m-auto bg-background shadow-xl/15 rounded-lg md:rounded-xl overflow-hidden max-w-400 w-full">
+        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 md:pt-10 text-center font-semibold overflow-hidden w-full">
           <Link
             href="/components/data-display/tables#expandable-row-table"
             className={cn(

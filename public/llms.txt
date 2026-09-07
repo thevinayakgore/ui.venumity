@@ -105,7 +105,6 @@ npx venumityui@latest add <component-name>
 - **Data Display**
   - [Accordions](/components/data-display/accordions) — Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.
     - [Basic Accordion](/components/data-display/accordions/basic-accordion)
-    - [Steps Accordion](/components/data-display/accordions/steps-accordion)
     - [Multiple Open Accordion](/components/data-display/accordions/multiple-open-accordion)
     - [Nested Accordion](/components/data-display/accordions/nested-accordion)
   - [Tables](/components/data-display/tables) — Powerful table components for displaying, sorting, and managing structured data efficiently.

@@ -152,7 +152,7 @@ export const MagneticHoverButton = ({
 
 export default function MagneticButtonDemo() {
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center m-auto w-full h-full">
       <MagneticHoverButton>
         <button className="cursor-grab active:cursor-grabbing bg-linear-to-br from-primary to-yellow-400 px-6 py-4 font-semibold text-white ring-2 ring-background ring-offset-2 ring-offset-primary transition-transform duration-150 ring-inset active:scale-98 rounded-full select-none whitespace-nowrap">
           Follow @thevinayakgore

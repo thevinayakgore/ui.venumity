@@ -44,7 +44,7 @@ export default function DeleteConfirmButton() {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center m-auto w-full h-full">
       <motion.div
         animate={
           shake

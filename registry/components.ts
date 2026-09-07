@@ -659,10 +659,6 @@ export const COMPONENTS = createComponents([
             githubUsername: "thevinayakgore",
           },
           {
-            itemName: "Steps Accordion",
-            githubUsername: "thevinayakgore",
-          },
-          {
             itemName: "Multiple Open Accordion",
             githubUsername: "thevinayakgore",
           },

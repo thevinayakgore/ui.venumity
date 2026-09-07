@@ -1,4 +1,3 @@
-// app/components/content/preview.tsx
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
@@ -17,11 +16,11 @@ export default function ComponentPreview({
   subcategory,
   componentName,
 }: ComponentPreviewProps) {
-  const [Component, setComponent] = useState<React.ComponentType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [Component, setComponent] = useState<React.ComponentType | null>(null);
 
   const loadComponent = useCallback(async () => {
     try {
@@ -37,27 +36,21 @@ export default function ComponentPreview({
 
       try {
         if (subcategory && kebabSubcategory) {
-          // Try different import patterns for components with subcategory
           try {
-            // Try file-based import (direct .tsx file)
             importedModule = await import(
               `@/components/venumity/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}.tsx`
             );
           } catch {
-            // Try folder-based import with index.tsx
             importedModule = await import(
               `@/components/venumity/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}/index.tsx`
             );
           }
         } else {
-          // Try different import patterns for components without subcategory
           try {
-            // Try file-based import (direct .tsx file)
             importedModule = await import(
               `@/components/venumity/${kebabCategory}/${kebabComponentName}.tsx`
             );
           } catch {
-            // Try folder-based import with index.tsx
             importedModule = await import(
               `@/components/venumity/${kebabCategory}/${kebabComponentName}/index.tsx`
             );
@@ -72,7 +65,6 @@ export default function ComponentPreview({
         throw lastError || new Error(`Component not found`);
       }
 
-      // Try different ways to find the component
       const ComponentToRender =
         importedModule.default ||
         importedModule[componentName as keyof typeof importedModule] ||
@@ -106,7 +98,7 @@ export default function ComponentPreview({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
         <div className="flex flex-col items-center gap-3">
           <div className="size-10 animate-spin rounded-full border-3 border-primary border-t-transparent" />
           <span className="text-sm text-muted-foreground">
@@ -119,7 +111,7 @@ export default function ComponentPreview({
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full p-4">
+      <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
         <div className="p-6 bg-red-50 border border-red-200 rounded-lg max-w-md text-center">
           <div className="font-medium text-red-700 mb-2">
             Component Load Error
@@ -144,7 +136,7 @@ export default function ComponentPreview({
 
   if (!Component) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
         <div className="text-muted-foreground">Component not available</div>
         <Button
           variant="outline"
@@ -159,17 +151,20 @@ export default function ComponentPreview({
   }
 
   return (
-    <div className="overflow-auto h-full">
+    <div
+      className={`relative flex items-center justify-center m-auto overflow-auto w-full ${pathname?.startsWith("/preview") ? "min-h-screen" : "h-full"}`}
+    >
+      {/* Floating Refresh Button */}
       <Button
         size="icon"
         variant="secondary"
         title="Refresh preview"
         onClick={handleRefresh}
-        className={`absolute top-4 right-4 z-100 transform-gpu bg-foreground/5 backdrop-blur-sm ${
+        className={`fixed top-4 right-4 z-50 transform-gpu bg-foreground/5 backdrop-blur-sm ${
           !pathname.startsWith("/components") && "hidden"
         } transition-all duration-500`}
       >
-        <RotateCcw />
+        <RotateCcw className="size-4" />
       </Button>
       <Component key={refreshKey} />
     </div>

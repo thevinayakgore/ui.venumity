@@ -1,10 +1,10 @@
 // app/mainlayout.tsx
 "use client";
 import { useRef } from "react";
+import NextTopLoader from "nextjs-toploader";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/site/navigations/navbar";
 import { ScrollContainerContext } from "@/contexts/scroll-container";
-import NextTopLoader from "nextjs-toploader";
 import { BottomFooter } from "@/components/site/navigations/footer";
 
 type MainLayoutProps = {
@@ -27,7 +27,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       >
         <Navbar />
         <section
-          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-lg md:rounded-2xl h-[calc(100%-6rem)]"}`}
+          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-xl md:rounded-2xl h-[calc(100%-6rem)]"}`}
         >
           <div
             ref={scrollContainerRef}
@@ -36,7 +36,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             {children}
           </div>
         </section>
-        <BottomFooter />
+        {!pathname?.startsWith("/preview") && <BottomFooter />}
       </main>
     </ScrollContainerContext.Provider>
   );
