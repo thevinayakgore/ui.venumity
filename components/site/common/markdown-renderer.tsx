@@ -19,6 +19,7 @@ interface MarkdownRendererProps {
   content: string;
   className?: string;
   title?: string;
+  coverImage?: string;
   tags?: string[];
   lastUpdated?: string | Date;
   officialUrl?: string;
@@ -30,6 +31,7 @@ export function MarkdownRenderer({
   content,
   className,
   title,
+  coverImage,
   tags: rawTags,
   lastUpdated,
   officialUrl,
@@ -332,6 +334,22 @@ export function MarkdownRenderer({
         <header
           className={`flex flex-col gap-3 ${isResourcesPage ? "mb-5 sm:mb-10 pb-5 sm:pb-10" : "mb-5 sm:mb-10 pb-5"} border-b w-full`}
         >
+          {isResourcesPage && coverImage && 
+          <div className="aspect-video mb-3 border rounded-xl overflow-hidden w-full h-full">
+            <Image
+              src={coverImage || "/brand-logo.png"}
+              alt={title}
+              width={2000}
+              height={2000}
+              loading="eager"
+              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                target.src = "/brand-logo.png";
+              }}
+              />
+          </div>
+            }
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground opacity-90 leading-none">
             {title}
           </h1>

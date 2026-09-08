@@ -1,12 +1,6 @@
 "use client";
-import {
-  createContext,
-  useContext,
-  useState,
-  useRef,
-  useEffect,
-  type ReactNode,
-} from "react";
+
+import { useState, type ReactNode } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
@@ -16,141 +10,6 @@ interface AccordionItem {
   title: string;
   content: ReactNode;
   badge?: string;
-}
-
-interface AccordionRootContextValue {
-  openItem: string | null;
-  toggleItem: (id: string) => void;
-}
-const AccordionRootContext = createContext<AccordionRootContextValue | null>(
-  null,
-);
-
-interface AccordionItemContextValue {
-  id: string;
-}
-const AccordionItemContext = createContext<AccordionItemContextValue | null>(
-  null,
-);
-
-function useAccordionRoot() {
-  const ctx = useContext(AccordionRootContext);
-  if (!ctx)
-    throw new Error("Accordion components must be used within <Accordion />");
-  return ctx;
-}
-
-function useAccordionItem() {
-  const ctx = useContext(AccordionItemContext);
-  if (!ctx)
-    throw new Error(
-      "AccordionItem components must be used within <AccordionItem />",
-    );
-  return ctx;
-}
-
-interface AccordionProps {
-  defaultValue?: string;
-  children: ReactNode;
-  className?: string;
-}
-
-function Accordion({ defaultValue, children, className }: AccordionProps) {
-  const [openItem, setOpenItem] = useState<string | null>(defaultValue ?? null);
-
-  function toggleItem(id: string) {
-    setOpenItem((prev) => (prev === id ? null : id));
-  }
-
-  return (
-    <AccordionRootContext.Provider value={{ openItem, toggleItem }}>
-      <div className={cn("space-y-2", className)}>{children}</div>
-    </AccordionRootContext.Provider>
-  );
-}
-
-interface AccordionItemComponentProps {
-  id: string;
-  children: ReactNode;
-  className?: string;
-}
-
-function AccordionItem({
-  id,
-  children,
-  className,
-}: AccordionItemComponentProps) {
-  return (
-    <AccordionItemContext.Provider value={{ id }}>
-      <div
-        className={cn(
-          "border rounded-lg overflow-hidden hover:shadow-lg/10 transition-all duration-500",
-          className,
-        )}
-      >
-        {children}
-      </div>
-    </AccordionItemContext.Provider>
-  );
-}
-
-interface AccordionTriggerProps {
-  children: ReactNode;
-  className?: string;
-}
-
-function AccordionTrigger({ children, className }: AccordionTriggerProps) {
-  const { id } = useAccordionItem();
-  const { openItem, toggleItem } = useAccordionRoot();
-  const isOpen = openItem === id;
-
-  return (
-    <button
-      onClick={() => toggleItem(id)}
-      className={cn(
-        "w-full px-6 py-4 text-left flex justify-between items-center cursor-pointer",
-        className,
-      )}
-    >
-      <span className="flex-1">{children}</span>
-      <ChevronDown
-        className={cn(
-          "size-5 shrink-0 transition-transform duration-300",
-          isOpen && "rotate-180",
-        )}
-      />
-    </button>
-  );
-}
-
-interface AccordionContentProps {
-  children: ReactNode;
-  className?: string;
-}
-
-function AccordionContent({ children, className }: AccordionContentProps) {
-  const { id } = useAccordionItem();
-  const { openItem } = useAccordionRoot();
-  const isOpen = openItem === id;
-  const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (ref.current) {
-      setHeight(ref.current.scrollHeight);
-    }
-  }, [children]);
-
-  return (
-    <div
-      className="overflow-hidden transition-all duration-300 ease-in-out"
-      style={{ maxHeight: isOpen ? height : 0 }}
-    >
-      <div ref={ref} className={cn("px-6 pb-4 pt-2 border-t", className)}>
-        {children}
-      </div>
-    </div>
-  );
 }
 
 const demoItems: AccordionItem[] = [
@@ -279,25 +138,58 @@ const demoItems: AccordionItem[] = [
 ];
 
 export default function BasicAccordionDemo() {
+  const [openItem, setOpenItem] = useState<string | null>("item1");
+
+  const toggleItem = (id: string) => {
+    setOpenItem((prev) => (prev === id ? null : id));
+  };
+
   return (
-    <Accordion defaultValue="item1" className="max-w-2xl mx-auto p-6 md:p-10">
-      {demoItems.map((item) => (
-        <AccordionItem key={item.id} id={item.id}>
-          <AccordionTrigger>
-            <div className="flex items-center gap-3">
-              <span className="font-semibold">{item.title}</span>
-              {item.badge && (
-                <span className="text-xs px-2 py-0.5 bg-blue-500 text-white rounded-full">
-                  {item.badge}
-                </span>
+    <div className="space-y-2 p-5 md:p-10 overflow-auto m-auto max-w-2xl w-full h-full">
+      {demoItems.map((item) => {
+        const isOpen = openItem === item.id;
+
+        return (
+          <div
+            key={item.id}
+            className="w-full border rounded-lg overflow-hidden hover:shadow-lg/10 transition-all duration-500"
+          >
+            {/* Accordion Header / Trigger */}
+            <button
+              type="button"
+              onClick={() => toggleItem(item.id)}
+              className="w-full px-6 py-4 text-left flex justify-between items-center cursor-pointer"
+            >
+              <div className="flex-1 flex items-center gap-3">
+                <span className="font-semibold">{item.title}</span>
+                {item.badge && (
+                  <span className="text-xs px-2 py-0.5 bg-blue-500 text-white rounded-full">
+                    {item.badge}
+                  </span>
+                )}
+              </div>
+              <ChevronDown
+                className={cn(
+                  "size-5 shrink-0 transition-transform duration-300",
+                  isOpen && "rotate-180",
+                )}
+              />
+            </button>
+
+            {/* Accordion Content Wrapper - CSS Grid Auto-Height */}
+            <div
+              className={cn(
+                "grid transition-[grid-template-rows] duration-300 ease-in-out",
+                isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
               )}
+            >
+              <div className="overflow-hidden">
+                <div className="px-6 pb-4 pt-2 border-t">{item.content}</div>
+              </div>
             </div>
-          </AccordionTrigger>
-          <AccordionContent>{item.content}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+          </div>
+        );
+      })}
+    </div>
   );
 }
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

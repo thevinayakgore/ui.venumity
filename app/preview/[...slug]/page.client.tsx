@@ -130,7 +130,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
   if (!mounted) return null;
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center m-auto w-full min-h-screen">
       {componentPath && (
         <ComponentPreview
           category={componentData.category}
@@ -138,7 +138,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           componentName={toKebabCase(componentData.itemName)}
         />
       )}
-    </>
+    </div>
   );
 }
 

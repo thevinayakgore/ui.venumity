@@ -50,7 +50,7 @@ export default function Hero() {
   return (
     <section className="relative flex flex-col items-center justify-center m-auto p-2 md:p-4 overflow-hidden w-full">
       <div className="relative z-100 flex flex-col items-center justify-center m-auto bg-background shadow-xl/15 rounded-lg md:rounded-xl overflow-hidden max-w-400 w-full">
-        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 md:pt-10 text-center font-semibold overflow-hidden w-full">
+        <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 text-center font-semibold overflow-hidden w-full">
           <Link
             href="/components/data-display/tables#expandable-row-table"
             className={cn(

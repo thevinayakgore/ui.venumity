@@ -1,4 +1,8 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "motion/react";
+import { MoveRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,10 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { motion, easeIn } from "motion/react";
-import { MoveRight, Zap } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
 interface OpenToolsProps {
   componentName: string;
@@ -100,25 +100,6 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 500,
-    x: -500,
-    scale: 0,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    scale: 1,
-    transition: {
-      duration: 0.2,
-      ease: easeIn,
-    },
-  },
-};
-
 export function OpenTools({
   componentName,
   description,
@@ -133,91 +114,76 @@ export function OpenTools({
   });
 
   return (
-    <>
-      <Dialog>
-        <DialogTrigger asChild className="w-auto!">
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={!currentCode}
-            className="relative group px-4! h-9! border-foreground/10! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/50 hover:text-foreground overflow-hidden"
-          >
-            <span
+    <Dialog>
+      <DialogTrigger asChild className="w-auto!">
+        <Button
+          variant="outline"
+          disabled={!currentCode}
+          className="relative group px-4! h-9! font-semibold tracking-wide flex items-center gap-2 uppercase shadow-none bg-card! dark:bg-muted! border-foreground/15! text-foreground/70! overflow-hidden"
+        >
+          <Zap className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
+          <span>OPEN</span>
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="p-0! gap-0! [&>button]:hidden! overflow-hidden bg-white/20! backdrop-blur-xl rounded-xl! max-w-lg!">
+        <DialogHeader className="p-3! pb-0!">
+          <DialogTitle className="flex items-center gap-2 text-sm md:text-base font-semibold!">
+            <Zap className="size-6" />
+            <span>Open This Component In</span>
+            <motion.span
               aria-hidden
-              className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-green-500/50 dark:via-blue-500/50 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
-            />
-            <Zap className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
-            <span>OPEN</span>
-          </Button>
-        </DialogTrigger>
+              className="inline-flex"
+              animate={{ x: [0, 15, 0] }}
+              transition={{
+                duration: 1.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            >
+              <MoveRight className="size-5" />
+            </motion.span>
+          </DialogTitle>
+        </DialogHeader>
 
-        <DialogContent className="p-0 gap-0 overflow-hidden text-white bg-white/10! backdrop-blur-xl border-white/20 rounded-xl! max-w-lg!">
-          <DialogHeader className="pt-5 pb-3 px-6!">
-            <DialogTitle className="flex items-center gap-3 font-normal">
-              <Zap className="size-5" />
-              <span>Open This Component In</span>
-              <motion.span
-                aria-hidden
-                className="inline-flex"
-                animate={{ x: [0, 15, 0] }}
-                transition={{
-                  duration: 1.5,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                }}
-              >
-                <MoveRight className="size-5" />
-              </motion.span>
-            </DialogTitle>
-          </DialogHeader>
-
-          <motion.div
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="p-4 pt-2  font-medium text-foreground w-full">
-              <motion.div
-                className="grid grid-cols-3 gap-3 p-6 rounded-lg bg-background overflow-hidden hover:shadow-xl transition-all duration-500"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {OPEN_TOOLS.map(({ name, icon }) => (
-                  <motion.div
-                    key={name}
-                    variants={itemVariants}
-                    className="hover:scale-110 transition-all duration-500"
-                  >
-                    <Link
-                      href={buildOpenToolUrl(name, prompt)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full"
-                    >
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="flex items-center gap-3 p-6! border-foreground/10! hover:border-green-500/70! bg-muted/30 hover:bg-linear-to-tl from-green-500/30 shadow-none hover:shadow-lg shadow-green-500/20 via-background duration-100 rounded-sm cursor-pointer w-full"
-                      >
-                        <Image
-                          src={icon}
-                          alt={name}
-                          width={500}
-                          height={500}
-                          priority
-                          className={`size-6 rounded ${name === "Copilot" && "p-0.5 bg-black"}`}
-                        />
-                        <span className="text-sm font-medium">{name}</span>
-                      </Button>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-        </DialogContent>
-      </Dialog>
-    </>
+        <motion.div
+          initial={{ opacity: 0, y: 500 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="p-3 text-foreground w-full">
+            <motion.div
+              className="grid grid-cols-3 gap-2 p-4 rounded-lg bg-background overflow-hidden hover:shadow-xl transition-all duration-500"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {OPEN_TOOLS.map(({ name, icon }) => (
+                <Link
+                  key={name}
+                  href={buildOpenToolUrl(name, prompt)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                >
+                  <Button className="flex items-center gap-2 p-5! bg-foreground! text-secondary! font-semibold! w-full">
+                    <Image
+                      src={icon}
+                      alt={name}
+                      width={500}
+                      height={500}
+                      priority
+                      unoptimized
+                      className={`size-6 rounded ${name === "Copilot" && "p-0.5 bg-black"}`}
+                    />
+                    <span>{name}</span>
+                  </Button>
+                </Link>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+      </DialogContent>
+    </Dialog>
   );
 }

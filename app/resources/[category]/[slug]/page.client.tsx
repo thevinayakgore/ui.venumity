@@ -52,6 +52,7 @@ export default function PageClient({
           <MarkdownRenderer
             content={markdownContent}
             title={page.title}
+            coverImage={page.coverImage}
             tags={page.tags}
             officialUrl={page.officialUrl}
             lastUpdated={formattedLastUpdated}

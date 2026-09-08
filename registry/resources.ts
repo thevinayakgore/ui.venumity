@@ -41,7 +41,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "fullstack",
           "performance",
         ],
-        coverImage: "/covers/nextjs.png",
+        coverImage: "/covers/nextjs.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -59,7 +59,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "javascript",
           "ui",
         ],
-        coverImage: "/covers/react.png",
+        coverImage: "/covers/react.webp",
         authorNames: ["thevinayakgore"],
       },
     ],
@@ -84,7 +84,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "motiondesign",
           "microinteractions",
         ],
-        coverImage: "/covers/motion.png",
+        coverImage: "/covers/motion.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -101,7 +101,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "scrollanimations",
           "performance",
         ],
-        coverImage: "/covers/gsap.png",
+        coverImage: "/covers/gsap.webp",
         authorNames: ["thevinayakgore"],
       },
     ],
@@ -120,7 +120,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "A step-by-step Sanity CMS tutorial explaining schema design, content modeling, GROQ queries, and integration with modern frontend frameworks.",
         officialUrl: "https://www.sanity.io/",
         tags: ["sanity", "headlesscms", "content", "groq", "backend"],
-        coverImage: "/covers/sanity.png",
+        coverImage: "/covers/sanity.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -131,7 +131,27 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
           "A complete Strapi CMS guide covering API creation, authentication, content types, and integration with frontend applications.",
         officialUrl: "https://strapi.io/",
         tags: ["strapi", "headlesscms", "api", "cms", "backend"],
-        coverImage: "/covers/strapi.png",
+        coverImage: "/covers/strapi.webp",
+        authorNames: ["thevinayakgore"],
+      },
+      {
+        title: "Hosting And Deployment",
+        published: true,
+        contentPath: "/registry/reso/tutorials/hosting-and-deployment.md",
+        description:
+          "A practical guide to hosting and deploying modern web applications. Learn the differences between static, serverless, and VPS hosting, and how to deploy Next.js apps on platforms like Vercel, Netlify, and AWS.",
+        officialUrl: "https://vercel.com/docs", // or a general reference
+        tags: [
+          "hosting",
+          "deployment",
+          "nextjs",
+          "vercel",
+          "netlify",
+          "aws",
+          "ci/cd",
+          "devops",
+        ],
+        coverImage: "/covers/hosting-deployment.webp", // use any existing or create new
         authorNames: ["thevinayakgore"],
       },
     ],
@@ -149,7 +169,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "A concise JavaScript ES6+ cheat sheet covering modern syntax, language features, and commonly used patterns for efficient development.",
         tags: ["javascript", "es6", "syntax", "reference", "cheatsheet"],
-        coverImage: "/covers/javascript.png",
+        coverImage: "/covers/javascript.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -159,7 +179,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "A practical TypeScript cheat sheet covering types, interfaces, generics, and common patterns for building scalable and type-safe applications.",
         tags: ["typescript", "javascript", "types", "reference", "cheatsheet"],
-        coverImage: "/covers/typescript.png",
+        coverImage: "/covers/typescript.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -169,7 +189,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "100s of handy Git commands in this cheat sheet covering essential commands, workflows, and tips for effective version control and collaboration.",
         tags: ["git", "versioncontrol", "commands", "reference", "cheatsheet"],
-        coverImage: "/covers/gitcommands.png",
+        coverImage: "/covers/gitcommands.webp",
         authorNames: ["thevinayakgore"],
       },
       {
@@ -179,7 +199,7 @@ export const RESOURCE_CATEGORIES: ResourceCategory[] = [
         description:
           "A comprehensive C++ cheat sheet covering syntax, standard libraries, common idioms, and best practices for efficient C++ programming.",
         tags: ["c++", "cpp", "syntax", "reference", "cheatsheet"],
-        coverImage: "/covers/c++.png",
+        coverImage: "/covers/c++.webp",
         authorNames: ["thevinayakgore"],
       },
     ],

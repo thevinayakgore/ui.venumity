@@ -1,9 +1,7 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { usePathname } from "next/navigation";
-import { toKebabCase } from "@/utils/slug-kebab";
 import { Button } from "@/components/ui/button";
-import { RotateCcw } from "lucide-react";
+import { toKebabCase } from "@/utils/slug-kebab";
+import { useState, useEffect, useCallback } from "react";
 
 interface ComponentPreviewProps {
   category: string;
@@ -16,7 +14,6 @@ export default function ComponentPreview({
   subcategory,
   componentName,
 }: ComponentPreviewProps) {
-  const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -150,23 +147,5 @@ export default function ComponentPreview({
     );
   }
 
-  return (
-    <div
-      className={`relative flex items-center justify-center m-auto overflow-auto w-full ${pathname?.startsWith("/preview") ? "min-h-screen" : "h-full"}`}
-    >
-      {/* Floating Refresh Button */}
-      <Button
-        size="icon"
-        variant="secondary"
-        title="Refresh preview"
-        onClick={handleRefresh}
-        className={`fixed top-4 right-4 z-50 transform-gpu bg-foreground/5 backdrop-blur-sm ${
-          !pathname.startsWith("/components") && "hidden"
-        } transition-all duration-500`}
-      >
-        <RotateCcw className="size-4" />
-      </Button>
-      <Component key={refreshKey} />
-    </div>
-  );
+  return <Component />;
 }

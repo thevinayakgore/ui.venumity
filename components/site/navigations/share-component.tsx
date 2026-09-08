@@ -71,7 +71,7 @@ export default function ShareComponent({ itemName }: ShareComponentProps) {
       variant="outline"
       onClick={handleCopy}
       title="Copy component URL"
-      className={`relative group px-4! size-8.5! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase shadow-none ${copied ? "bg-green-500! text-white!" : "bg-card! dark:bg-muted! text-foreground/70!"} overflow-hidden`}
+      className={`relative group px-4! size-8.5! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase shadow-none ${copied ? "bg-green-500! text-white!" : "bg-card! dark:bg-muted! text-foreground/70 border-foreground/15!!"} overflow-hidden`}
     >
       {copied ? (
         <CheckCheck className="size-4" />

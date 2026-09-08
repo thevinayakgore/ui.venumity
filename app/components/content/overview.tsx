@@ -3,7 +3,13 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Fullscreen, Terminal, Play, PictureInPicture2 } from "lucide-react";
+import {
+  Fullscreen,
+  Terminal,
+  Play,
+  PictureInPicture2,
+  RotateCcw,
+} from "lucide-react";
 import CodeBlock from "@/components/site/common/code-block";
 import ComponentPreview from "./preview";
 import { toKebabCase } from "@/utils/slug-kebab";
@@ -11,6 +17,7 @@ import { OpenTools } from "./open-tools";
 import Image from "next/image";
 import Link from "next/link";
 import ShareComponent from "@/components/site/navigations/share-component";
+import Shimmer from "@/components/utility/shimmer";
 
 interface ExtendedOverviewProps {
   itemName?: string;
@@ -44,6 +51,7 @@ export default function Overview({
   githubUsername,
 }: ExtendedOverviewProps) {
   const [activeTab, setActiveTab] = useState<TabType>(PREVIEW_TAB);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const tabs = useMemo<TabType[]>(() => {
     const base: TabType[] = [PREVIEW_TAB, CODE_TAB];
@@ -57,6 +65,10 @@ export default function Overview({
       return () => window.clearTimeout(id);
     }
   }, [tabs, activeTab]);
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   const kebabItemName = useMemo(
     () => toKebabCase(itemName || componentName),
@@ -207,19 +219,14 @@ export default function Overview({
             />
 
             <Button
-              size="sm"
-              variant="outline"
               onClick={() =>
                 window.open(liveDemoUrl, "_blank", "noopener,noreferrer")
               }
               disabled={!code}
-              className="relative group px-4! h-9! border-foreground/10! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase bg-background! text-foreground/50 hover:text-foreground overflow-hidden"
+              className="relative group px-4! h-9! font-semibold tracking-wide cursor-pointer flex items-center gap-2 uppercase bg-foreground! text-secondary! overflow-hidden"
             >
-              <span
-                aria-hidden
-                className="vnm-shimmer-btn group bg-linear-to-l from-transparent via-green-500/50 dark:via-blue-500/50 to-transparent absolute left-0 top-0 bottom-0 w-20 pointer-events-none opacity-0! group-hover:opacity-50!"
-              />
-              <Fullscreen className="size-4 group-hover:animate-[wiggle_0.6s_ease-in-out]" />
+              <Shimmer />
+              <Fullscreen className="size-4 group-hover:animate-[wiggle_0.3s_ease-in-out]" />
               <span>Live</span>
             </Button>
             <ShareComponent itemName={itemName} />
@@ -231,13 +238,27 @@ export default function Overview({
             activeTab === "preview" && "bg-background md:rounded-tl-none"
           } aspect-video overflow-auto! transition-all duration-700 w-full`}
         >
-          <div className="relative flex flex-col overflow-hidden bg-background w-full h-full">
+          <div
+            key={refreshKey}
+            className="relative overflow-hidden bg-background w-full h-full"
+          >
             {mainContent}
+            {activeTab === PREVIEW_TAB && (
+              <Button
+                size="icon"
+                variant="secondary"
+                title="Refresh preview"
+                onClick={handleRefresh}
+                className="absolute top-4 right-4 z-50 transform-gpu bg-foreground/5 backdrop-blur-sm"
+              >
+                <RotateCcw className="size-4" />
+              </Button>
+            )}
             {githubUsername && (
               <Link
                 href={`https://github.com/${githubUsername}`}
                 target="_blank"
-                className="absolute bottom-4 right-4 z-50 flex items-center gap-1 p-1 pr-3 leading-none bg-sky-500/10 backdrop-blur-md border border-sky-500/30 inset-shadow-sm inset-shadow-sky-500/40 text-xs font-medium rounded-full w-fit"
+                className="absolute bottom-3 right-3 z-50 flex items-center gap-1.5 p-0.75 pr-2 leading-none bg-linear-to-br from-blue-600/30 to-background backdrop-blur-lg border border-blue-600/60 text-xs font-semibold rounded-sm w-fit"
               >
                 <Image
                   src={`https://github.com/${githubUsername}.png`}
@@ -247,7 +268,7 @@ export default function Overview({
                   priority
                   unoptimized
                   loading="eager"
-                  className="size-4.5 rounded-full"
+                  className="size-5 rounded"
                 />
                 <span>{githubUsername}</span>
               </Link>

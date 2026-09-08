@@ -202,6 +202,7 @@ npx venumityui@latest add <component-name>
 - **Tutorials**
   - [Sanity CMS](/resources/tutorials/sanity-cms) — A step-by-step Sanity CMS tutorial explaining schema design, content modeling, GROQ queries, and integration with modern frontend frameworks.
   - [Strapi](/resources/tutorials/strapi) — A complete Strapi CMS guide covering API creation, authentication, content types, and integration with frontend applications.
+  - [Hosting And Deployment](/resources/tutorials/hosting-and-deployment) — A practical guide to hosting and deploying modern web applications. Learn the differences between static, serverless, and VPS hosting, and how to deploy Next.js apps on platforms like Vercel, Netlify, and AWS.
 - **Cheat Sheets**
   - [JavaScript ES6+](/resources/cheat-sheets/javascript-es6) — A concise JavaScript ES6+ cheat sheet covering modern syntax, language features, and commonly used patterns for efficient development.
   - [TypeScript](/resources/cheat-sheets/typescript) — A practical TypeScript cheat sheet covering types, interfaces, generics, and common patterns for building scalable and type-safe applications.

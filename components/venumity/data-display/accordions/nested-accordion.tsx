@@ -331,7 +331,7 @@ export default function NestedAccordion({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center m-auto p-4 sm:p-6 md:p-10 mx-auto max-w-3xl w-full h-full",
+        "flex flex-col items-start justify-start m-auto p-4 sm:p-6 md:p-10 mx-auto overflow-auto max-w-3xl w-full h-full",
         className,
       )}
     >

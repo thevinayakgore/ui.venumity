@@ -136,21 +136,19 @@ export function ResourceCard({
       href={`/resources/${categorySlug}/${slug}`}
       className="flex flex-col items-start cursor-pointer group relative rounded-3xl p-2 bg-foreground/5 hover:shadow-xl/10 overflow-hidden transition-all duration-500 w-full h-fit"
     >
-      <div className="relative flex items-center justify-center m-auto shadow-xl/15 rounded-2xl overflow-hidden duration-[1.5s] w-full h-full">
+      <div className="aspect-auto rounded-2xl overflow-hidden w-full h-full">
         <Image
-          src={page.coverImage || "/card.png"}
+          src={page.coverImage || "/brand-logo.png"}
           alt={page.title}
           width={2000}
           height={2000}
           loading="eager"
-          className="object-cover rounded-sm group-hover:scale-110 transition-all duration-500 w-full"
+          className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
-            target.src = "/card.png";
+            target.src = "/brand-logo.png";
           }}
         />
-        <span className="absolute bottom-0 left-0 opacity-10 group-hover:opacity-30 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-[1.5s] w-full h-px" />
-        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-10 opacity-10 group-hover:opacity-100 bg-linear-to-l from-transparent via-primary to-transparent blur-lg rounded-full transition-all duration-[1.5s] w-full h-3" />
       </div>
       <div className="flex flex-col items-start text-start gap-0.5 pt-4! p-3 group-hover:border-transparent w-full">
         <h3 className="text-base tracking-wide font-semibold">{page.title}</h3>

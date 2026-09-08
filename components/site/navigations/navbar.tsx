@@ -56,7 +56,7 @@ export default function Navbar() {
   if (!mounted || pathname?.startsWith("/preview")) return null;
 
   return (
-    <nav className="relative z-1001! transform-gpu flex items-center justify-between md:px-1.5 py-1.5 sm:pt-2.5 sm:pb-2 overflow-hidden max-w-400 m-auto w-full">
+    <nav className="relative z-1001! transform-gpu flex items-center justify-between md:px-1.5 py-1.5 sm:pt-2.5 sm:pb-2 m-auto w-full">
       {/* Logo & navigation links – unchanged */}
       <div className="flex items-center max-w-fit">
         <Link href="/" className="flex items-center gap-2 z-10 max-w-fit">
