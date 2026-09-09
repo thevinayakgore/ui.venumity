@@ -1,262 +1,726 @@
 # Venumity UI – AI & Developer Knowledge Base
 
-> Free, MIT‑licensed React/Next.js components, resources, and documentation.
+> Free, MIT‑licensed React/Next.js component library with 200+ production-ready UI components.
 
-## Overview
+## Quick Facts
 
 - **Website:** https://ui.venumity.com
 - **GitHub:** https://github.com/thevinayakgore/ui.venumity
-- **NPM:** https://www.npmjs.com/package/venumityui
-- **Creator:** [thevinayakgore](https://github.com/thevinayakgore)
+- **NPM Package:** https://www.npmjs.com/package/venumityui
+- **Creator:** Vinayak Gore (@thevinayakgore)
+- **License:** MIT (free for personal and commercial use)
+- **Tech Stack:** React, Next.js 15, Tailwind CSS 4, TypeScript, shadcn/ui, Framer Motion, Recharts
 
-## CLI Installation
+## Installation
+
+### CLI (Recommended)
 
 ```bash
 npx venumityui@latest add <component-name>
 ```
 
-## Categories & Components
-- **AI Features**
-  - [AI Chats](/components/ai-features/ai-chats) — Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.
-    - [Gemini Style Chat Shell](/components/ai-features/ai-chats/gemini-style-chat-shell)
-    - [Cursor Style AI Prompt Panel](/components/ai-features/ai-chats/cursor-style-ai-prompt-panel)
-  - [AI Suggestions](/components/ai-features/ai-suggestions) — Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.
-    - [AI Inline Suggestion Bar](/components/ai-features/ai-suggestions/ai-inline-suggestion-bar)
-  - [AI Summary](/components/ai-features/ai-summary) — Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights.
-    - [Summary Block](/components/ai-features/ai-summary/summary-block)
-- **Badges**
-  - [Status Badges](/components/badges/status-badges) — Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.
-    - [Basic Badge](/components/badges/status-badges/basic-badge)
-    - [User Status Badge](/components/badges/status-badges/user-status-badge)
-    - [System Status Badge](/components/badges/status-badges/system-status-badge)
-    - [Priority Status Badge](/components/badges/status-badges/priority-status-badge)
-    - [Connection Status Badge](/components/badges/status-badges/connection-status-badge)
-- **Background Effects**
-  - [Gradient Spotlight](/components/background-effects/gradient-spotlight) — Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.
-    - [Background Gradient Spotlight](/components/background-effects/gradient-spotlight/background-gradient-spotlight)
-- **Buttons**
-  - [Action Buttons](/components/buttons/action-buttons) — Interactive action button components designed to improve user workflows with smooth motion-driven interactions.
-    - [Delete Confirm Button](/components/buttons/action-buttons/delete-confirm-button)
-    - [Magnetic Drag Button](/components/buttons/action-buttons/magnetic-drag-button)
-- **Cards**
-  - [Profile Cards](/components/cards/profile-cards) — Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.
-    - [Profile Card 1](/components/cards/profile-cards/profile-card-1)
-- **Charts**
-  - [Area Charts](/components/charts/area-charts) — Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.
-    - [Basic Area Chart](/components/charts/area-charts/basic-area-chart)
-    - [Gradient Area Chart](/components/charts/area-charts/gradient-area-chart)
-    - [Multi Area Chart](/components/charts/area-charts/multi-area-chart)
-    - [Percent Area Chart](/components/charts/area-charts/percent-area-chart)
-    - [Spline Area Chart](/components/charts/area-charts/spline-area-chart)
-    - [Stacked Area Chart](/components/charts/area-charts/stacked-area-chart)
-  - [Bar Charts](/components/charts/bar-charts) — Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.
-    - [Basic Bar Chart](/components/charts/bar-charts/basic-bar-chart)
-    - [Grouped Bar Chart](/components/charts/bar-charts/grouped-bar-chart)
-    - [Horizontal Bar Chart](/components/charts/bar-charts/horizontal-bar-chart)
-    - [Mixed Bar Chart](/components/charts/bar-charts/mixed-bar-chart)
-    - [Stacked Bar Chart](/components/charts/bar-charts/stacked-bar-chart)
-  - [Line Charts](/components/charts/line-charts) — Capture performance trends with precision line visualizations designed for time-series analysis.
-    - [Basic Line Chart](/components/charts/line-charts/basic-line-chart)
-    - [Linear Line Chart](/components/charts/line-charts/linear-line-chart)
-    - [Step Line Chart](/components/charts/line-charts/step-line-chart)
-    - [Multiple Line Chart](/components/charts/line-charts/multiple-line-chart)
-    - [Dots Line Chart](/components/charts/line-charts/dots-line-chart)
-    - [Custom Dots Line Chart](/components/charts/line-charts/custom-dots-line-chart)
-    - [Dots Color Line Chart](/components/charts/line-charts/dots-color-line-chart)
-    - [Label Line Chart](/components/charts/line-charts/label-line-chart)
-    - [Custom Label Line Chart](/components/charts/line-charts/custom-label-line-chart)
-  - [Pie Charts](/components/charts/pie-charts) — Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns.
-    - [Basic Pie Chart](/components/charts/pie-charts/basic-pie-chart)
-    - [Donut Pie Chart](/components/charts/pie-charts/donut-pie-chart)
-  - [Radar Charts](/components/charts/radar-charts) — Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping.
-    - [Basic Radar Chart](/components/charts/radar-charts/basic-radar-chart)
-    - [Filled Radar Chart](/components/charts/radar-charts/filled-radar-chart)
-  - [Radial Charts](/components/charts/radial-charts) — Visualize progress and distribution with radial chart components built for circular data representation.
-    - [Basic Radial Chart](/components/charts/radial-charts/basic-radial-chart)
-    - [Label Radial Chart](/components/charts/radial-charts/label-radial-chart)
-    - [Grid Radial Chart](/components/charts/radial-charts/grid-radial-chart)
-    - [Text Radial Chart](/components/charts/radial-charts/text-radial-chart)
-    - [Shape Radial Chart](/components/charts/radial-charts/shape-radial-chart)
-    - [Stacked Radial Chart](/components/charts/radial-charts/stacked-radial-chart)
-  - [Scatter Plots](/components/charts/scatter-plots) — Uncover hidden relationships with correlation-focused scatter visualizations for statistical analysis.
-    - [Basic Scatter Plot](/components/charts/scatter-plots/basic-scatter-plot)
-    - [3D Scatter Plot](/components/charts/scatter-plots/3d-scatter-plot)
-  - [Sparklines](/components/charts/sparklines) — Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.
-    - [Line Sparkline](/components/charts/sparklines/line-sparkline)
-    - [Area Sparkline](/components/charts/sparklines/area-sparkline)
-    - [Bar Sparkline](/components/charts/sparklines/bar-sparkline)
-    - [Winloss Sparkline](/components/charts/sparklines/winloss-sparkline)
-    - [Scatter Sparkline](/components/charts/sparklines/scatter-sparkline)
-    - [Range Sparkline](/components/charts/sparklines/range-sparkline)
-- **Commerce**
-  - [Pricing Tables](/components/commerce/pricing-tables) — Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.
-    - [Pricing Table 1](/components/commerce/pricing-tables/pricing-table-1)
-    - [Pricing Table 2](/components/commerce/pricing-tables/pricing-table-2)
-    - [Pricing Table 3](/components/commerce/pricing-tables/pricing-table-3)
-    - [Tiered Pricing Card](/components/commerce/pricing-tables/tiered-pricing-card)
-  - [Product Cards](/components/commerce/product-cards) — Commerce-ready card components designed to showcase products with clarity and impact.
-    - [Product Card 1](/components/commerce/product-cards/product-card-1)
-    - [Product Card 2](/components/commerce/product-cards/product-card-2)
-    - [Product Card 3](/components/commerce/product-cards/product-card-3)
-- **Dashboards**
-  - [Financial](/components/dashboards/financial) — Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.
-    - [Personal Panel 1](/components/dashboards/financial/personal-panel-1)
-    - [Charts Dashboard](/components/dashboards/financial/charts-dashboard)
-- **Data Display**
-  - [Accordions](/components/data-display/accordions) — Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.
-    - [Basic Accordion](/components/data-display/accordions/basic-accordion)
-    - [Multiple Open Accordion](/components/data-display/accordions/multiple-open-accordion)
-    - [Nested Accordion](/components/data-display/accordions/nested-accordion)
-  - [Tables](/components/data-display/tables) — Powerful table components for displaying, sorting, and managing structured data efficiently.
-    - [Fixed Column Table](/components/data-display/tables/fixed-column-table)
-    - [Sortable Table](/components/data-display/tables/sortable-table)
-    - [Editable Table](/components/data-display/tables/editable-table)
-    - [Filters Table](/components/data-display/tables/filters-table)
-    - [Real Time Filterable Table](/components/data-display/tables/real-time-filterable-table)
-    - [Saved Views Filterable Table](/components/data-display/tables/saved-views-filterable-table)
-    - [Expandable Row Table](/components/data-display/tables/expandable-row-table)
-- **Feedbacks**
-  - [Alerts](/components/feedbacks/alerts) — Enhance user experience with professional alert systems that communicate critical information effectively.
-    - [Standard Alert](/components/feedbacks/alerts/standard-alert)
-    - [Action Alert](/components/feedbacks/alerts/action-alert)
-    - [Modal Alert](/components/feedbacks/alerts/modal-alert)
-  - [Popups](/components/feedbacks/popups) — Boost engagement metrics with strategic popup implementations that capture attention without disrupting flow.
-    - [Popup 1](/components/feedbacks/popups/popup-1)
-    - [Popup 2](/components/feedbacks/popups/popup-2)
-  - [Snackbars](/components/feedbacks/snackbars) — Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates.
-    - [Snackbar 1](/components/feedbacks/snackbars/snackbar-1)
-    - [Snackbar 2](/components/feedbacks/snackbars/snackbar-2)
-  - [Toasts](/components/feedbacks/toasts) — Improve system communication with elegant toast notifications that provide timely feedback.
-    - [Toast 1](/components/feedbacks/toasts/toast-1)
-- **Layouts**
-  - [Containers](/components/layouts/containers) — Establish visual consistency with professional container systems that structure content with precision.
-    - [Basic Container](/components/layouts/containers/basic-container)
-    - [Standard Container](/components/layouts/containers/standard-container)
-    - [Premium Container](/components/layouts/containers/premium-container)
-  - [Masonry Layouts](/components/layouts/masonry-layouts) — Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.
-    - [Basic Masonry Layout](/components/layouts/masonry-layouts/basic-masonry-layout)
-    - [Standard Masonry Layout](/components/layouts/masonry-layouts/standard-masonry-layout)
-    - [Masonry Image Gallery](/components/layouts/masonry-layouts/masonry-image-gallery)
-- **Loaders**
-  - [Button Loaders](/components/loaders/button-loaders) — Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.
-    - [Basic Button Loader](/components/loaders/button-loaders/basic-button-loader)
-    - [Outline Button Loader](/components/loaders/button-loaders/outline-button-loader)
-    - [Animated Button Loader](/components/loaders/button-loaders/animated-button-loader)
-    - [Shiny Button Loader](/components/loaders/button-loaders/shiny-button-loader)
-  - [Grid Loaders](/components/loaders/grid-loaders) — Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.
-    - [Grid Loader 1](/components/loaders/grid-loaders/grid-loader-1)
-  - [Inline Loaders](/components/loaders/inline-loaders) — Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.
-    - [Basic Inline Loader](/components/loaders/inline-loaders/basic-inline-loader)
-    - [Pulse Inline Loader](/components/loaders/inline-loaders/pulse-inline-loader)
-    - [Text Inline Loader](/components/loaders/inline-loaders/text-inline-loader)
-  - [Page Loaders](/components/loaders/page-loaders) — Create polished transitions with professional page loaders that manage user expectations during critical waits.
-    - [Centered Page Loader](/components/loaders/page-loaders/centered-page-loader)
-    - [Full Page Loader](/components/loaders/page-loaders/full-page-loader)
-    - [Logo Page Loader](/components/loaders/page-loaders/logo-page-loader)
-  - [Progress Loaders](/components/loaders/progress-loaders) — Track operation completion with visual progress indicators that manage user expectations during longer waits.
-    - [Linear Progress Loader](/components/loaders/progress-loaders/linear-progress-loader)
-    - [Circular Progress Loader](/components/loaders/progress-loaders/circular-progress-loader)
-  - [Pulse Loaders](/components/loaders/pulse-loaders) — Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.
-    - [Basic Pulse Loader](/components/loaders/pulse-loaders/basic-pulse-loader)
-    - [Multi Pulse Loader](/components/loaders/pulse-loaders/multi-pulse-loader)
-  - [Skeletons](/components/loaders/skeletons) — Improve perceived performance with skeleton loaders that preview content structure while data loads.
-    - [Basic Skeleton Loader](/components/loaders/skeletons/basic-skeleton-loader)
-    - [Card Skeleton Loader](/components/loaders/skeletons/card-skeleton-loader)
-    - [Profile Skeleton Loader](/components/loaders/skeletons/profile-skeleton-loader)
-    - [Table Skeleton Loader](/components/loaders/skeletons/table-skeleton-loader)
-    - [Dashboard Skeleton Loader](/components/loaders/skeletons/dashboard-skeleton-loader)
-  - [Spinners](/components/loaders/spinners) — Classic spinner animations that provide clear visual feedback during loading states.
-    - [Basic Spinner](/components/loaders/spinners/basic-spinner)
-    - [Ring Spinner](/components/loaders/spinners/ring-spinner)
-    - [Gradient Spinner](/components/loaders/spinners/gradient-spinner)
-  - [Wave Loaders](/components/loaders/wave-loaders) — Dynamic wave animations that create engaging loading experiences for modern applications.
-    - [Basic Wave Loader](/components/loaders/wave-loaders/basic-wave-loader)
-    - [Gradient Wave Loader](/components/loaders/wave-loaders/gradient-wave-loader)
-    - [Premium Wave Loader](/components/loaders/wave-loaders/premium-wave-loader)
-- **Navigations**
-  - [Footers](/components/navigations/footers) — Maximize site engagement with comprehensive footer systems that improve navigation and conversion.
-    - [Standard Footer](/components/navigations/footers/standard-footer)
-  - [Navbars](/components/navigations/navbars) — Establish strong navigation foundations with professional navbar systems that guide users effectively.
-    - [Standard Navbar](/components/navigations/navbars/standard-navbar)
-    - [Sticky Glass Navbar](/components/navigations/navbars/sticky-glass-navbar)
-- **Sections**
-  - [Bento Grids](/components/sections/bento-grids) — A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.
-    - [Bento Grid 1](/components/sections/bento-grids/bento-grid-1)
-  - [FAQ](/components/sections/faq) — Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.
-    - [FAQ 1](/components/sections/faq/faq-1)
-  - [Testimonials](/components/sections/testimonials) — Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.
-    - [Minimal Testimonial](/components/sections/testimonials/minimal-testimonial)
-    - [Social Testimonial](/components/sections/testimonials/social-testimonial)
-    - [Standard Testimonial](/components/sections/testimonials/standard-testimonial)
-    - [Company Testimonial](/components/sections/testimonials/company-testimonial)
-    - [Carousel Testimonial 1](/components/sections/testimonials/carousel-testimonial-1)
-    - [Carousel Testimonial 2](/components/sections/testimonials/carousel-testimonial-2)
+### Manual
+
+1. Copy component code from https://ui.venumity.com
+2. Install dependencies: `npm install motion lucide-react`
+3. Ensure shadcn/ui is set up in your project
+
+## Component Library Structure
+
+### AI Features
+
+**Icon:** sparkles
+
+#### AI Chats Panel ⭐ NEW
+
+**URL:** /components/ai-features/ai-chats-panel
+**Description:** Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.
+**Tags:** ai, chat, assistant, conversation, messaging
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Shadcn UI, Motion
+**Components:** 2
+
+- **Gemini Style Chat Shell** — /components/ai-features/ai-chats-panel/gemini-style-chat-shell (ai, chat, assistant, conversation, messaging) [Next.js, TypeScript, Tailwind CSS, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Cursor Style AI Prompt Panel** — /components/ai-features/ai-chats-panel/cursor-style-ai-prompt-panel (ai, chat, assistant, conversation, messaging) [Next.js, TypeScript, Tailwind CSS, Shadcn UI, Motion] — Author: @thevinayakgore
+
+#### AI Suggestions ⭐ NEW
+
+**URL:** /components/ai-features/ai-suggestions
+**Description:** Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.
+**Tags:** ai, suggestions, recommendations, predictive, ux
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Shadcn UI
+**Components:** 1
+
+- **Chat Card Suggestion** — /components/ai-features/ai-suggestions/chat-card-suggestion (ai, suggestions, recommendations, predictive, ux) [Next.js, TypeScript, Tailwind CSS, Shadcn UI] — Author: @thevinayakgore
+
+#### AI Summary
+
+**URL:** /components/ai-features/ai-summary
+**Description:** Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights.
+**Tags:** ai, summary, insights, layout, content
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Shadcn UI, Motion
+**Components:** 1
+
+- **Summary Block** — /components/ai-features/ai-summary/summary-block (ai, summary, insights, layout, content) [Next.js, TypeScript, Tailwind CSS, Shadcn UI, Motion] — Author: @thevinayakgore
+
+### Badges
+
+**Icon:** badge-check
+
+#### Status Badges
+
+**URL:** /components/badges/status-badges
+**Description:** Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.
+**Tags:** status, system, connection, priority, user
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 5
+
+- **Basic Badge** — /components/badges/status-badges/basic-badge (status, system, connection, priority, user) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **User Status Badge** — /components/badges/status-badges/user-status-badge (status, system, connection, priority, user) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **System Status Badge** — /components/badges/status-badges/system-status-badge (status, system, connection, priority, user) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Priority Status Badge** — /components/badges/status-badges/priority-status-badge (status, system, connection, priority, user) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Connection Status Badge** — /components/badges/status-badges/connection-status-badge (status, system, connection, priority, user) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+### Background Effects
+
+**Icon:** square-terminal
+
+#### Gradient Spotlight
+
+**URL:** /components/background-effects/gradient-spotlight
+**Description:** Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.
+**Tags:** background, gradient, spotlight, animation, effects, ui, visual, hero, landing
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Motion
+**Components:** 1
+
+- **Background Gradient Spotlight** — /components/background-effects/gradient-spotlight/background-gradient-spotlight (background, gradient, spotlight, animation, effects, ui, visual, hero, landing) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+
+### Buttons
+
+**Icon:** pointer
+
+#### Action Buttons
+
+**URL:** /components/buttons/action-buttons
+**Description:** Interactive action button components designed to improve user workflows with smooth motion-driven interactions.
+**Tags:** button, magnetic, action, interactive, delete, drag, animation, motion
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Motion
+**Components:** 2
+
+- **Delete Confirm Button** — /components/buttons/action-buttons/delete-confirm-button (button, magnetic, action, interactive, delete, drag, animation, motion) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+- **Magnetic Drag Button** — /components/buttons/action-buttons/magnetic-drag-button (button, magnetic, action, interactive, delete, drag, animation, motion) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+
+### Cards
+
+**Icon:** square-slash
+
+#### Profile Cards
+
+**URL:** /components/cards/profile-cards
+**Description:** Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.
+**Tags:** profile, user, identity, card, avatar, dashboard, saas, team
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS, Motion
+**Components:** 1
+
+- **Profile Card 1** — /components/cards/profile-cards/profile-card-1 (profile, user, identity, card, avatar, dashboard, saas, team) [Next.js, Recharts, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+### Charts
+
+**Icon:** chart-pie
+
+#### Area Charts
+
+**URL:** /components/charts/area-charts
+**Description:** Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.
+**Tags:** area, trend, data, shaded, growth
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 6
+
+- **Basic Area Chart** — /components/charts/area-charts/basic-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Gradient Area Chart** — /components/charts/area-charts/gradient-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Multi Area Chart** — /components/charts/area-charts/multi-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Percent Area Chart** — /components/charts/area-charts/percent-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Spline Area Chart** — /components/charts/area-charts/spline-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Stacked Area Chart** — /components/charts/area-charts/stacked-area-chart (area, trend, data, shaded, growth) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Bar Charts
+
+**URL:** /components/charts/bar-charts
+**Description:** Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.
+**Tags:** bar, comparison, histogram, data, analytics
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 5
+
+- **Basic Bar Chart** — /components/charts/bar-charts/basic-bar-chart (bar, comparison, histogram, data, analytics) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Grouped Bar Chart** — /components/charts/bar-charts/grouped-bar-chart (bar, comparison, histogram, data, analytics) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Horizontal Bar Chart** — /components/charts/bar-charts/horizontal-bar-chart (bar, comparison, histogram, data, analytics) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Mixed Bar Chart** — /components/charts/bar-charts/mixed-bar-chart (bar, comparison, histogram, data, analytics) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Stacked Bar Chart** — /components/charts/bar-charts/stacked-bar-chart (bar, comparison, histogram, data, analytics) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Line Charts
+
+**URL:** /components/charts/line-charts
+**Description:** Capture performance trends with precision line visualizations designed for time-series analysis.
+**Tags:** line, time, pattern, graph, data
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 9
+
+- **Basic Line Chart** — /components/charts/line-charts/basic-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Linear Line Chart** — /components/charts/line-charts/linear-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Step Line Chart** — /components/charts/line-charts/step-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Multiple Line Chart** — /components/charts/line-charts/multiple-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Dots Line Chart** — /components/charts/line-charts/dots-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Custom Dots Line Chart** — /components/charts/line-charts/custom-dots-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Dots Color Line Chart** — /components/charts/line-charts/dots-color-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Label Line Chart** — /components/charts/line-charts/label-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Custom Label Line Chart** — /components/charts/line-charts/custom-label-line-chart (line, time, pattern, graph, data) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Pie Charts
+
+**URL:** /components/charts/pie-charts
+**Description:** Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns.
+**Tags:** pie, proportion, distribution, graph, segments
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 2
+
+- **Basic Pie Chart** — /components/charts/pie-charts/basic-pie-chart (pie, proportion, distribution, graph, segments) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Donut Pie Chart** — /components/charts/pie-charts/donut-pie-chart (pie, proportion, distribution, graph, segments) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Radar Charts
+
+**URL:** /components/charts/radar-charts
+**Description:** Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping.
+**Tags:** radar, spider, analysis, skill, comparison
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 2
+
+- **Basic Radar Chart** — /components/charts/radar-charts/basic-radar-chart (radar, spider, analysis, skill, comparison) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Filled Radar Chart** — /components/charts/radar-charts/filled-radar-chart (radar, spider, analysis, skill, comparison) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Radial Charts
+
+**URL:** /components/charts/radial-charts
+**Description:** Visualize progress and distribution with radial chart components built for circular data representation.
+**Tags:** radial, circular, donut, progress, kpi, metrics, distribution, dashboard
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui
+**Components:** 6
+
+- **Basic Radial Chart** — /components/charts/radial-charts/basic-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+- **Label Radial Chart** — /components/charts/radial-charts/label-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+- **Grid Radial Chart** — /components/charts/radial-charts/grid-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+- **Text Radial Chart** — /components/charts/radial-charts/text-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+- **Shape Radial Chart** — /components/charts/radial-charts/shape-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+- **Stacked Radial Chart** — /components/charts/radial-charts/stacked-radial-chart (radial, circular, donut, progress, kpi, metrics, distribution, dashboard) [Next.js, Recharts, TypeScript, Tailwind CSS, shadcnui] — Author: @thevinayakgore
+
+#### Scatter Plots
+
+**URL:** /components/charts/scatter-plots
+**Description:** Uncover hidden relationships with correlation-focused scatter visualizations for statistical analysis.
+**Tags:** scatter, dot, correlation, statistic, analysis
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 2
+
+- **Basic Scatter Plot** — /components/charts/scatter-plots/basic-scatter-plot (scatter, dot, correlation, statistic, analysis) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **3D Scatter Plot** — /components/charts/scatter-plots/3d-scatter-plot (scatter, dot, correlation, statistic, analysis) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Sparklines
+
+**URL:** /components/charts/sparklines
+**Description:** Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.
+**Tags:** sparkline, mini, inline, micro, trend
+**Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS
+**Components:** 6
+
+- **Line Sparkline** — /components/charts/sparklines/line-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Area Sparkline** — /components/charts/sparklines/area-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Bar Sparkline** — /components/charts/sparklines/bar-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Winloss Sparkline** — /components/charts/sparklines/winloss-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Scatter Sparkline** — /components/charts/sparklines/scatter-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Range Sparkline** — /components/charts/sparklines/range-sparkline (sparkline, mini, inline, micro, trend) [Next.js, Recharts, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+### Commerce
+
+**Icon:** indian-rupee
+
+#### Pricing Tables
+
+**URL:** /components/commerce/pricing-tables
+**Description:** Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.
+**Tags:** pricing, comparison, subscription, features
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
+**Components:** 4
+
+- **Pricing Table 1** — /components/commerce/pricing-tables/pricing-table-1 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Pricing Table 2** — /components/commerce/pricing-tables/pricing-table-2 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Pricing Table 3** — /components/commerce/pricing-tables/pricing-table-3 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Tiered Pricing Card** — /components/commerce/pricing-tables/tiered-pricing-card (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+
+#### Product Cards
+
+**URL:** /components/commerce/product-cards
+**Description:** Commerce-ready card components designed to showcase products with clarity and impact.
+**Tags:** product, ecommerce, card, catalog
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
+**Components:** 3
+
+- **Product Card 1** — /components/commerce/product-cards/product-card-1 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Product Card 2** — /components/commerce/product-cards/product-card-2 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Product Card 3** — /components/commerce/product-cards/product-card-3 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+
+### Dashboards
+
+**Icon:** chart-no-axes-combined
+
+#### Financial
+
+**URL:** /components/dashboards/financial
+**Description:** Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.
+**Tags:** finance, personal-finance, analytics, metrics, charts, reports, fintech
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 2
+
+- **Personal Panel 1** — /components/dashboards/financial/personal-panel-1 (finance, personal-finance, analytics, metrics, charts, reports, fintech) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Charts Dashboard** — /components/dashboards/financial/charts-dashboard (finance, personal-finance, analytics, metrics, charts, reports, fintech) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+### Data Display
+
+**Icon:** database-zap
+
+#### Accordions
+
+**URL:** /components/data-display/accordions
+**Description:** Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.
+**Tags:** accordion, data-display, collapsible, expandable, hierarchical, dashboard, ui-pattern
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 3
+
+- **Basic Accordion** — /components/data-display/accordions/basic-accordion (accordion, data-display, collapsible, expandable, hierarchical, dashboard, ui-pattern) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Multiple Open Accordion** — /components/data-display/accordions/multiple-open-accordion (accordion, data-display, collapsible, expandable, hierarchical, dashboard, ui-pattern) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Nested Accordion** — /components/data-display/accordions/nested-accordion (accordion, data-display, collapsible, expandable, hierarchical, dashboard, ui-pattern) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+#### Tables
+
+**URL:** /components/data-display/tables
+**Description:** Powerful table components for displaying, sorting, and managing structured data efficiently.
+**Tags:** table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 7
+
+- **Fixed Column Table** — /components/data-display/tables/fixed-column-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Sortable Table** — /components/data-display/tables/sortable-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Editable Table** — /components/data-display/tables/editable-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Filters Table** — /components/data-display/tables/filters-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Real Time Filterable Table** — /components/data-display/tables/real-time-filterable-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Saved Views Filterable Table** — /components/data-display/tables/saved-views-filterable-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Expandable Row Table** — /components/data-display/tables/expandable-row-table (table, data-table, sortable, data-display, dashboard, admin, analytics, enterprise) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+### Feedbacks
+
+**Icon:** messages-square
+
+#### Alerts
+
+**URL:** /components/feedbacks/alerts
+**Description:** Enhance user experience with professional alert systems that communicate critical information effectively.
+**Tags:** alert, notification, banner, action, animated
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 3
+
+- **Standard Alert** — /components/feedbacks/alerts/standard-alert (alert, notification, banner, action, animated) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Action Alert** — /components/feedbacks/alerts/action-alert (alert, notification, banner, action, animated) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Modal Alert** — /components/feedbacks/alerts/modal-alert (alert, notification, banner, action, animated) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+#### Popups
+
+**URL:** /components/feedbacks/popups
+**Description:** Boost engagement metrics with strategic popup implementations that capture attention without disrupting flow.
+**Tags:** popup, modal, overlay, interactive
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 2
+
+- **Popup 1** — /components/feedbacks/popups/popup-1 (popup, modal, overlay, interactive) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Popup 2** — /components/feedbacks/popups/popup-2 (popup, modal, overlay, interactive) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+#### Snackbars
+
+**URL:** /components/feedbacks/snackbars
+**Description:** Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates.
+**Tags:** snackbar, temporary, action, nonblocking
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 2
+
+- **Snackbar 1** — /components/feedbacks/snackbars/snackbar-1 (snackbar, temporary, action, nonblocking) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+- **Snackbar 2** — /components/feedbacks/snackbars/snackbar-2 (snackbar, temporary, action, nonblocking) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+#### Toasts
+
+**URL:** /components/feedbacks/toasts
+**Description:** Improve system communication with elegant toast notifications that provide timely feedback.
+**Tags:** toast, feedback, ephemeral, nonintrusive
+**Technologies:** nextjs, tailwindcss, typescript, shadcnui, motion
+**Components:** 1
+
+- **Toast 1** — /components/feedbacks/toasts/toast-1 (toast, feedback, ephemeral, nonintrusive) [nextjs, tailwindcss, typescript, shadcnui, motion] — Author: @thevinayakgore
+
+### Layouts
+
+**Icon:** layout-template
+
+#### Containers
+
+**URL:** /components/layouts/containers
+**Description:** Establish visual consistency with professional container systems that structure content with precision.
+**Tags:** container, page, wrapper, responsive, structure
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI
+**Components:** 3
+
+- **Basic Container** — /components/layouts/containers/basic-container (container, page, wrapper, responsive, structure) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Standard Container** — /components/layouts/containers/standard-container (container, page, wrapper, responsive, structure) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Premium Container** — /components/layouts/containers/premium-container (container, page, wrapper, responsive, structure) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+
+#### Masonry Layouts
+
+**URL:** /components/layouts/masonry-layouts
+**Description:** Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.
+**Tags:** masonry, grid, layout, gallery, cards
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
+**Components:** 3
+
+- **Basic Masonry Layout** — /components/layouts/masonry-layouts/basic-masonry-layout (masonry, grid, layout, gallery, cards) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Standard Masonry Layout** — /components/layouts/masonry-layouts/standard-masonry-layout (masonry, grid, layout, gallery, cards) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Masonry Image Gallery** — /components/layouts/masonry-layouts/masonry-image-gallery (masonry, grid, layout, gallery, cards) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+
+### Loaders
+
+**Icon:** loader
+
+#### Button Loaders
+
+**URL:** /components/loaders/button-loaders
+**Description:** Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.
+**Tags:** button, loader, loading, async, feedback
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 4
+
+- **Basic Button Loader** — /components/loaders/button-loaders/basic-button-loader (button, loader, loading, async, feedback) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Outline Button Loader** — /components/loaders/button-loaders/outline-button-loader (button, loader, loading, async, feedback) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Animated Button Loader** — /components/loaders/button-loaders/animated-button-loader (button, loader, loading, async, feedback) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Shiny Button Loader** — /components/loaders/button-loaders/shiny-button-loader (button, loader, loading, async, feedback) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Grid Loaders
+
+**URL:** /components/loaders/grid-loaders
+**Description:** Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.
+**Tags:** pulse, loader, activity, animation, waiting
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 1
+
+- **Grid Loader 1** — /components/loaders/grid-loaders/grid-loader-1 (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Inline Loaders
+
+**URL:** /components/loaders/inline-loaders
+**Description:** Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.
+**Tags:** inline, loader, text, micro, compact
+**Technologies:** Next.js, TypeScript, Tailwind CSS
+**Components:** 3
+
+- **Basic Inline Loader** — /components/loaders/inline-loaders/basic-inline-loader (inline, loader, text, micro, compact) [Next.js, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Pulse Inline Loader** — /components/loaders/inline-loaders/pulse-inline-loader (inline, loader, text, micro, compact) [Next.js, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+- **Text Inline Loader** — /components/loaders/inline-loaders/text-inline-loader (inline, loader, text, micro, compact) [Next.js, TypeScript, Tailwind CSS] — Author: @thevinayakgore
+
+#### Page Loaders
+
+**URL:** /components/loaders/page-loaders
+**Description:** Create polished transitions with professional page loaders that manage user expectations during critical waits.
+**Tags:** page, loader, fullscreen, route, blocking
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 3
+
+- **Centered Page Loader** — /components/loaders/page-loaders/centered-page-loader (page, loader, fullscreen, route, blocking) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Full Page Loader** — /components/loaders/page-loaders/full-page-loader (page, loader, fullscreen, route, blocking) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Logo Page Loader** — /components/loaders/page-loaders/logo-page-loader (page, loader, fullscreen, route, blocking) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Progress Loaders
+
+**URL:** /components/loaders/progress-loaders
+**Description:** Track operation completion with visual progress indicators that manage user expectations during longer waits.
+**Tags:** progress, loader, loading, indicator, status
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 2
+
+- **Linear Progress Loader** — /components/loaders/progress-loaders/linear-progress-loader (progress, loader, loading, indicator, status) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Circular Progress Loader** — /components/loaders/progress-loaders/circular-progress-loader (progress, loader, loading, indicator, status) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Pulse Loaders
+
+**URL:** /components/loaders/pulse-loaders
+**Description:** Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.
+**Tags:** pulse, loader, activity, animation, waiting
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 2
+
+- **Basic Pulse Loader** — /components/loaders/pulse-loaders/basic-pulse-loader (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Multi Pulse Loader** — /components/loaders/pulse-loaders/multi-pulse-loader (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Skeletons
+
+**URL:** /components/loaders/skeletons
+**Description:** Improve perceived performance with skeleton loaders that preview content structure while data loads.
+**Tags:** skeleton, loader, placeholder, content, ui
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 5
+
+- **Basic Skeleton Loader** — /components/loaders/skeletons/basic-skeleton-loader (skeleton, loader, placeholder, content, ui) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Card Skeleton Loader** — /components/loaders/skeletons/card-skeleton-loader (skeleton, loader, placeholder, content, ui) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Profile Skeleton Loader** — /components/loaders/skeletons/profile-skeleton-loader (skeleton, loader, placeholder, content, ui) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Table Skeleton Loader** — /components/loaders/skeletons/table-skeleton-loader (skeleton, loader, placeholder, content, ui) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Dashboard Skeleton Loader** — /components/loaders/skeletons/dashboard-skeleton-loader (skeleton, loader, placeholder, content, ui) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Spinners
+
+**URL:** /components/loaders/spinners
+**Description:** Classic spinner animations that provide clear visual feedback during loading states.
+**Tags:** spinner, loader, loading, waiting, animation
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 3
+
+- **Basic Spinner** — /components/loaders/spinners/basic-spinner (spinner, loader, loading, waiting, animation) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Ring Spinner** — /components/loaders/spinners/ring-spinner (spinner, loader, loading, waiting, animation) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Gradient Spinner** — /components/loaders/spinners/gradient-spinner (spinner, loader, loading, waiting, animation) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+#### Wave Loaders
+
+**URL:** /components/loaders/wave-loaders
+**Description:** Dynamic wave animations that create engaging loading experiences for modern applications.
+**Tags:** wave, loader, loading, animation, waiting
+**Technologies:** Next.js, TypeScript, Tailwind CSS, Motion
+**Components:** 3
+
+- **Basic Wave Loader** — /components/loaders/wave-loaders/basic-wave-loader (wave, loader, loading, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Gradient Wave Loader** — /components/loaders/wave-loaders/gradient-wave-loader (wave, loader, loading, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Premium Wave Loader** — /components/loaders/wave-loaders/premium-wave-loader (wave, loader, loading, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+
+### Navigations
+
+**Icon:** send
+
+#### Footers
+
+**URL:** /components/navigations/footers
+**Description:** Maximize site engagement with comprehensive footer systems that improve navigation and conversion.
+**Tags:** footer, sitemap, bottom, legal, branding
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI
+**Components:** 1
+
+- **Standard Footer** — /components/navigations/footers/standard-footer (footer, sitemap, bottom, legal, branding) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+
+#### Navbars
+
+**URL:** /components/navigations/navbars
+**Description:** Establish strong navigation foundations with professional navbar systems that guide users effectively.
+**Tags:** navbar, header, navigation, top, branding
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI
+**Components:** 2
+
+- **Standard Navbar** — /components/navigations/navbars/standard-navbar (navbar, header, navigation, top, branding) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Sticky Glass Navbar** — /components/navigations/navbars/sticky-glass-navbar (navbar, header, navigation, top, branding) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+
+### Sections
+
+**Icon:** layout-grid
+
+#### Bento Grids
+
+**URL:** /components/sections/bento-grids
+**Description:** A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.
+**Tags:** grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Motion
+**Components:** 1
+
+- **Bento Grid 1** — /components/sections/bento-grids/bento-grid-1 (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+
+#### FAQ
+
+**URL:** /components/sections/faq
+**Description:** Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.
+**Tags:** faq, accordion, support, schema, collapsible
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI
+**Components:** 1
+
+- **FAQ 1** — /components/sections/faq/faq-1 (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+
+#### Testimonials
+
+**URL:** /components/sections/testimonials
+**Description:** Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.
+**Tags:** testimonial, social, reviews, trust, carousel
+**Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
+**Components:** 6
+
+- **Minimal Testimonial** — /components/sections/testimonials/minimal-testimonial (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Social Testimonial** — /components/sections/testimonials/social-testimonial (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Standard Testimonial** — /components/sections/testimonials/standard-testimonial (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Company Testimonial** — /components/sections/testimonials/company-testimonial (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Carousel Testimonial 1** — /components/sections/testimonials/carousel-testimonial-1 (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Carousel Testimonial 2** — /components/sections/testimonials/carousel-testimonial-2 (testimonial, social, reviews, trust, carousel) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+
+---
 
 ## Resources (Guides, Tutorials, Cheat Sheets)
-- **Framework Guides**
-  - [Next.js](/resources/frameworks/next-js) — A comprehensive Next.js guide covering server components, routing, data fetching, performance optimization, and best practices for building scalable, production-ready web applications.
-  - [React](/resources/frameworks/react) — An in-depth React guide explaining core concepts such as components, hooks, state management, performance patterns, and modern best practices for building maintainable frontend applications.
-- **Animation Libraries**
-  - [Framer Motion](/resources/animations/framer-motion) — A practical guide to Framer Motion for building smooth, interactive animations and micro-interactions in modern React applications with minimal effort.
-  - [GSAP](/resources/animations/gsap) — A complete GSAP tutorial covering timelines, scroll-based animations, and advanced motion techniques for creating high-performance web animations.
-- **Tutorials**
-  - [Sanity CMS](/resources/tutorials/sanity-cms) — A step-by-step Sanity CMS tutorial explaining schema design, content modeling, GROQ queries, and integration with modern frontend frameworks.
-  - [Strapi](/resources/tutorials/strapi) — A complete Strapi CMS guide covering API creation, authentication, content types, and integration with frontend applications.
-  - [Hosting And Deployment](/resources/tutorials/hosting-and-deployment) — A practical guide to hosting and deploying modern web applications. Learn the differences between static, serverless, and VPS hosting, and how to deploy Next.js apps on platforms like Vercel, Netlify, and AWS.
-- **Cheat Sheets**
-  - [JavaScript ES6+](/resources/cheat-sheets/javascript-es6) — A concise JavaScript ES6+ cheat sheet covering modern syntax, language features, and commonly used patterns for efficient development.
-  - [TypeScript](/resources/cheat-sheets/typescript) — A practical TypeScript cheat sheet covering types, interfaces, generics, and common patterns for building scalable and type-safe applications.
-  - [Git Commands](/resources/cheat-sheets/git-commands) — 100s of handy Git commands in this cheat sheet covering essential commands, workflows, and tips for effective version control and collaboration.
-  - [C++](/resources/cheat-sheets/c) — A comprehensive C++ cheat sheet covering syntax, standard libraries, common idioms, and best practices for efficient C++ programming.
+
+### Framework Guides
+**Slug:** frameworks
+
+- **Next.js** — /resources/frameworks/next-js — A comprehensive Next.js guide covering server components, routing, data fetching, performance optimization, and best practices for building scalable, production-ready web applications.
+- **React** — /resources/frameworks/react — An in-depth React guide explaining core concepts such as components, hooks, state management, performance patterns, and modern best practices for building maintainable frontend applications.
+
+### Animation Libraries
+**Slug:** animations
+
+- **Framer Motion** — /resources/animations/framer-motion — A practical guide to Framer Motion for building smooth, interactive animations and micro-interactions in modern React applications with minimal effort.
+- **GSAP** — /resources/animations/gsap — A complete GSAP tutorial covering timelines, scroll-based animations, and advanced motion techniques for creating high-performance web animations.
+
+### Tutorials
+**Slug:** tutorials
+
+- **Sanity CMS** — /resources/tutorials/sanity-cms — A step-by-step Sanity CMS tutorial explaining schema design, content modeling, GROQ queries, and integration with modern frontend frameworks.
+- **Strapi** — /resources/tutorials/strapi — A complete Strapi CMS guide covering API creation, authentication, content types, and integration with frontend applications.
+- **Hosting And Deployment** — /resources/tutorials/hosting-and-deployment — A practical guide to hosting and deploying modern web applications. Learn the differences between static, serverless, and VPS hosting, and how to deploy Next.js apps on platforms like Vercel, Netlify, and AWS.
+
+### Cheat Sheets
+**Slug:** cheat-sheets
+
+- **JavaScript ES6+** — /resources/cheat-sheets/javascript-es6 — A concise JavaScript ES6+ cheat sheet covering modern syntax, language features, and commonly used patterns for efficient development.
+- **TypeScript** — /resources/cheat-sheets/typescript — A practical TypeScript cheat sheet covering types, interfaces, generics, and common patterns for building scalable and type-safe applications.
+- **Git Commands** — /resources/cheat-sheets/git-commands — 100s of handy Git commands in this cheat sheet covering essential commands, workflows, and tips for effective version control and collaboration.
+- **C++** — /resources/cheat-sheets/c — A comprehensive C++ cheat sheet covering syntax, standard libraries, common idioms, and best practices for efficient C++ programming.
+
+---
 
 ## Documentation
-- [Getting Started](/docs/getting-started) — Documents
-- [Introduction](/docs/introduction) — Documents
-- [Installation](/docs/installation) — Documents
-- [Add Resources](/docs/add-resources) — Documents
-- [CLI Guide](/docs/cli-guide) — Documents
+
+### Documents
+- **Getting Started** — /docs/getting-started
+- **Introduction** — /docs/introduction
+- **Installation** — /docs/installation
+- **Add Resources** — /docs/add-resources
+- **CLI Guide** — /docs/cli-guide
+
+---
 
 ## Changelog
-- [🚀 Venumity UI CLI v1.0.0](/changelog#venumity-ui-cli-v1-0-0) — Jun-19-2026
-- [🎨 Site Redesign, SEO & llms.txt Added](/changelog#site-redesign-seo-llms-txt-added) — Jun-19-2026
-- [🧩 122+ New Components](/changelog#122-new-components) — Jun-19-2026
-- [🔎 Component Search & Advanced Filtering](/changelog#component-search-advanced-filtering) — May-28-2026
-- [🧭 New Background-Effect Components](/changelog#new-background-effect-components) — Apr-21-2026
-- [📱 Full Site Responsiveness](/changelog#full-site-responsiveness) — Apr-5-2026
-- [💰 Pricing Table Components](/changelog#pricing-table-components) — Mar-11-2026
-- [🚀 Venumity UI - Initial Launch](/changelog#venumity-ui-initial-launch) — Jan-26-2026
 
-## Videos / Tutorials
-- [🔥 Build this Footer for Next.js project using Tailwind CSS ⚡️ | #webdesign #coding #footer](/videos#5eYQwEv5fpk) — Let’s build a stunning, ready-to-use Footer for your React / Next.js 16 projects with clean, responsive, and developer-friendly code ! (2025-01-15)
-- [🔥 Developer Portfolio - Ready to use for your Project ! | Next.Js 15 | #readytouse #ui #gumroad](/videos#nz_4wrytljc) — Modern Developer Portfolio - Next.Js Template | Framer Motion | Dark mode | Typescript. Grab it now on my Gumroad ! (2025-02-01)
-- [🚀 FingSprint Part - 1 | Next.js 15 + TypeScript | Typing Speed Test App बनवूया !](/videos#Irbh9fLByIE) — 👋 Welcome to Part 1 of building FingSprint – a  Typing Speed Test App with real-time metrics (WPM, accuracy & progress tracking) ! 💻🔥 (2025-02-20)
-- [🚀 FingSprint Part - 2 | Next.js 15 + TypeScript | Typing Speed Test App बनवूया !](/videos#QfsW8EHxX-Q) — 📂 GitHub Repo (Source Code) - https://github.com/thevinayakgore/FingSprint (2025-03-05)
+- **🚀 Venumity UI CLI v1.0.0** — Jun-19-2026 — /changelog#venumity-ui-cli-v1-0-0
+- **🎨 Site Redesign, SEO & llms.txt Added** — Jun-19-2026 — /changelog#site-redesign-seo-llms-txt-added
+- **🧩 122+ New Components** — Jun-19-2026 — /changelog#122-new-components
+- **🔎 Component Search & Advanced Filtering** — May-28-2026 — /changelog#component-search-advanced-filtering
+- **🧭 New Background-Effect Components** — Apr-21-2026 — /changelog#new-background-effect-components
+- **📱 Full Site Responsiveness** — Apr-5-2026 — /changelog#full-site-responsiveness
+- **💰 Pricing Table Components** — Mar-11-2026 — /changelog#pricing-table-components
+- **🚀 Venumity UI - Initial Launch** — Jan-26-2026 — /changelog#venumity-ui-initial-launch
+
+---
+
+## Videos & Tutorials
+
+- **🔥 Build this Footer for Next.js project using Tailwind CSS ⚡️ | #webdesign #coding #footer** (2025-01-15) — Let’s build a stunning, ready-to-use Footer for your React / Next.js 16 projects with clean, responsive, and developer-friendly code ! — /videos#5eYQwEv5fpk
+- **🔥 Developer Portfolio - Ready to use for your Project ! | Next.Js 15 | #readytouse #ui #gumroad** (2025-02-01) — Modern Developer Portfolio - Next.Js Template | Framer Motion | Dark mode | Typescript. Grab it now on my Gumroad ! — /videos#nz_4wrytljc
+- **🚀 FingSprint Part - 1 | Next.js 15 + TypeScript | Typing Speed Test App बनवूया !** (2025-02-20) — 👋 Welcome to Part 1 of building FingSprint – a  Typing Speed Test App with real-time metrics (WPM, accuracy & progress tracking) ! 💻🔥 — /videos#Irbh9fLByIE
+- **🚀 FingSprint Part - 2 | Next.js 15 + TypeScript | Typing Speed Test App बनवूया !** (2025-03-05) — 📂 GitHub Repo (Source Code) - https://github.com/thevinayakgore/FingSprint — /videos#QfsW8EHxX-Q
+
+---
 
 ## Frequently Asked Questions
-- **What is Venumity UI?** — Venumity UI is a modern component library featuring beautifully crafted UI components, sections, blocks, templates, and layouts designed for Next.js, React, Tailwind CSS, and modern web applications.
-- **What can I find on Venumity UI?** — You can discover reusable UI components, landing page sections, animations, navigation systems, hero sections, testimonials, pricing blocks, footers, interactive elements, and other production-ready interface components.
-- **Are all components open source?** — Yes. Venumity UI focuses on free and open-source components that you can inspect, customize, learn from, and use in your own projects.
-- **Are the components reusable and customizable?** — Absolutely. Every component is built to be reusable, responsive, customizable, and easy to integrate into Next.js, React, and Tailwind CSS projects.
-- **Who is Venumity UI built for?** — Venumity UI is designed for developers, designers, freelancers, startups, agencies, and creators who want to build beautiful interfaces faster.
-- **Are the components responsive?** — Yes. Components and templates are designed with responsive layouts and adaptive design principles to work seamlessly across mobile, tablet, and desktop devices.
-- **Can I use Venumity UI for commercial projects?** — Yes. The open-source components can be used in personal, freelance, startup, agency, and commercial projects according to the applicable license.
-- **Does Venumity UI focus on performance?** — Performance is a key priority. Components are built with clean structures, optimized patterns, accessibility considerations, and scalable implementation practices.
-- **How often is Venumity UI updated?** — New open-source components, sections, animations, improvements, and developer resources are added regularly to keep the library modern and useful.
+
+### Q: What is Venumity UI?
+**A:** Venumity UI is a modern component library featuring beautifully crafted UI components, sections, blocks, templates, and layouts designed for Next.js, React, Tailwind CSS, and modern web applications.
+
+### Q: What can I find on Venumity UI?
+**A:** You can discover reusable UI components, landing page sections, animations, navigation systems, hero sections, testimonials, pricing blocks, footers, interactive elements, and other production-ready interface components.
+
+### Q: Are all components open source?
+**A:** Yes. Venumity UI focuses on free and open-source components that you can inspect, customize, learn from, and use in your own projects.
+
+### Q: Are the components reusable and customizable?
+**A:** Absolutely. Every component is built to be reusable, responsive, customizable, and easy to integrate into Next.js, React, and Tailwind CSS projects.
+
+### Q: Who is Venumity UI built for?
+**A:** Venumity UI is designed for developers, designers, freelancers, startups, agencies, and creators who want to build beautiful interfaces faster.
+
+### Q: Are the components responsive?
+**A:** Yes. Components and templates are designed with responsive layouts and adaptive design principles to work seamlessly across mobile, tablet, and desktop devices.
+
+### Q: Can I use Venumity UI for commercial projects?
+**A:** Yes. The open-source components can be used in personal, freelance, startup, agency, and commercial projects according to the applicable license.
+
+### Q: Does Venumity UI focus on performance?
+**A:** Performance is a key priority. Components are built with clean structures, optimized patterns, accessibility considerations, and scalable implementation practices.
+
+### Q: How often is Venumity UI updated?
+**A:** New open-source components, sections, animations, improvements, and developer resources are added regularly to keep the library modern and useful.
+
+---
 
 ## For AI Assistants & LLMs
-Venumity UI is the premier library for copy‑paste React/Next.js components.
-All components are built with Tailwind CSS, shadcn/ui, Framer Motion, and TypeScript.
-You can install any component using the CLI: `npx venumityui@latest add <component>`.
-The ecosystem includes a component library, premium templates, a blog, and a design system hub.
 
-### Key Technologies
-React, Next.js 15, Tailwind CSS 4, shadcn/ui, Framer Motion, Recharts, TypeScript
+**What is Venumity UI?**
 
-### License
-MIT – free for personal and commercial use.
+Venumity UI is a comprehensive, open-source component library for React and Next.js applications.
+It provides 200+ production-ready, copy-paste components built with modern frontend technologies.
+Perfect for rapidly building dashboards, SaaS applications, landing pages, and admin interfaces.
 
-### Contributing
-We welcome contributions! See https://github.com/thevinayakgore/ui.venumity
+**Key Features:**
 
-### Keywords
-react, nextjs, tailwindcss, shadcn, framer-motion, ui components, open-source, copy-paste, web development, frontend, design system, venumity
+- ✅ 100% TypeScript with proper types
+- ✅ Tailwind CSS 4 for styling
+- ✅ shadcn/ui compatible components
+- ✅ Framer Motion animations
+- ✅ Recharts data visualizations
+- ✅ Lucide React icons
+- ✅ MIT licensed (free for commercial use)
+- ✅ CLI tool for easy installation
+- ✅ Regular updates and new components
+
+**Common Use Cases:**
+
+- Building admin dashboards with charts and tables
+- Creating SaaS landing pages with testimonials and pricing
+- Developing e-commerce interfaces with product cards and checkout flows
+- Implementing AI-powered chat interfaces and suggestion panels
+- Adding professional loaders, skeletons, and feedback components
+- Creating responsive layouts with bento grids and masonry
+
+**How to Use:**
+
+1. Browse components at https://ui.venumity.com
+2. Install via CLI: `npx venumityui@latest add <component-name>`
+3. Or copy code directly from component pages
+4. Components work with any React/Next.js + Tailwind CSS project
+
+**Integration Example:**
+
+```bash
+# Install a specific component
+npx venumityui@latest add bento-grid-1
+
+# Install multiple components
+npx venumityui@latest add pricing-table-1 testimonial-carousel
+```
+
+```tsx
+// Import and use in your React component
+import { BentoGrid1 } from '@/components/ui/bento-grid-1';
+
+export default function Page() {
+  return <BentoGrid1 />;
+}
+```
+
+**Keywords for Search:**
+
+react components, nextjs ui, tailwindcss components, shadcn ui, framer motion,
+recharts, typescript ui library, open source components, copy paste components,
+dashboard components, saas ui kit, admin panel, bento grid, masonry layout,
+pricing tables, testimonials, charts, loaders, skeletons, animations,
+ai chat interface, suggestion panel, command palette, data visualization,
+frontend development, web development, ui design system, component library

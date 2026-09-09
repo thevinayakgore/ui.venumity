@@ -22,6 +22,7 @@ export interface ComponentSubcategory {
   name: string;
   description?: string;
   icon?: string;
+  newItem?: boolean;
   thumbnail?: string; // Only here - for category cards
   tags?: string[];
   techs?: string[];

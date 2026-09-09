@@ -234,13 +234,13 @@ export default function Overview({
         </div>
 
         <div
-          className={`flex flex-col items-center justify-center m-auto border border-foreground/7 rounded-xl ${
+          className={`flex flex-col items-center justify-center m-auto border border-foreground/15 rounded-xl ${
             activeTab === "preview" && "bg-background md:rounded-tl-none"
           } aspect-video overflow-auto! transition-all duration-700 w-full`}
         >
           <div
             key={refreshKey}
-            className="relative overflow-hidden bg-background w-full h-full"
+            className="relative bg-background w-full h-full"
           >
             {mainContent}
             {activeTab === PREVIEW_TAB && (

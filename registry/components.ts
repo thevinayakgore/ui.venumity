@@ -11,6 +11,7 @@ function createComponents(
       name: string;
       description?: string;
       icon?: string;
+      newItem?: boolean;
       thumbnail?: string;
       tags: string[];
       techs: string[];
@@ -33,6 +34,7 @@ function createComponents(
       name: subcategoryData.name,
       description: subcategoryData.description,
       icon: subcategoryData.icon,
+      newItem: subcategoryData.newItem,
       thumbnail: subcategoryData.thumbnail,
       tags: subcategoryData.tags,
       techs: subcategoryData.techs,
@@ -79,7 +81,8 @@ export const COMPONENTS = createComponents([
       //   items: [{ itemName: "Analytics", githubUsername: "thevinayakgore" }],
       // },
       {
-        name: "AI Chats",
+        name: "AI Chats Panel",
+        newItem: true,
         description:
           "Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
         tags: ["ai", "chat", "assistant", "conversation", "messaging"],
@@ -125,13 +128,14 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "AI Suggestions",
+        newItem: true,
         description:
           "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.",
         tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
         techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
         items: [
           {
-            itemName: "AI Inline Suggestion Bar",
+            itemName: "Chat Card Suggestion",
             githubUsername: "thevinayakgore",
           },
         ],

@@ -161,7 +161,7 @@ export default function LearningAccordion({
   return (
     <div
       className={cn(
-        "flex flex-col gap-5 p-5 md:p-10 overflow-auto m-auto max-w-3xl w-full",
+        "flex flex-col gap-5 p-5 md:p-10 overflow-auto m-auto max-w-3xl w-full h-full",
         className,
       )}
     >

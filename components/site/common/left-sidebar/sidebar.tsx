@@ -23,6 +23,20 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 
+type SidebarNavItem = {
+  title: string;
+  url: string;
+  newItem?: boolean;
+};
+
+type SidebarSection = {
+  title: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  url?: string;
+  isActive?: boolean;
+  items?: SidebarNavItem[];
+};
+
 export default function LeftSidebar() {
   const pathname = usePathname();
 
@@ -32,7 +46,7 @@ export default function LeftSidebar() {
   >;
 
   // ─── Build docs sections ──────────────────────────────────
-  const docsSections = DOCS_DATA.map((section) => {
+  const docsSections: SidebarSection[] = DOCS_DATA.map((section) => {
     const IconComponent =
       icons[section.icon.charAt(0).toUpperCase() + section.icon.slice(1)] ||
       File;
@@ -51,18 +65,18 @@ export default function LeftSidebar() {
   });
 
   // ─── Build components sections ────────────────────────────
-  const componentSections = [...COMPONENTS]
+  const componentSections: SidebarSection[] = [...COMPONENTS]
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((category) => {
       const CategoryIcon = getLucideIcon(category.icon);
 
       if (category.subcategories.length === 0) {
-        // No subcategories → single link
         const url = `/components/${toKebabCase(category.name)}`;
+
         return {
           title: category.name,
           icon: CategoryIcon,
-          url, // direct link, no children
+          url,
           isActive: pathname.startsWith(url),
         };
       }
@@ -78,7 +92,10 @@ export default function LeftSidebar() {
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((subcategory) => ({
             title: subcategory.name,
-            url: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
+            url: `/components/${toKebabCase(category.name)}/${toKebabCase(
+              subcategory.name,
+            )}`,
+            newItem: subcategory.newItem,
           })),
       };
     });
@@ -91,6 +108,8 @@ export default function LeftSidebar() {
       <SidebarGroup>
         <SidebarMenu>
           {navItems.map((item) => {
+            if (!item) return null;
+
             // If no sub-items, render a simple link
             if (!item.items || item.items.length === 0) {
               const href =
@@ -150,16 +169,17 @@ export default function LeftSidebar() {
                             <SidebarMenuSubButton
                               asChild
                               isActive={isActive}
-                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/10! data-active:bg-foreground/10! data-active:text-foreground! rounded-md w-full"
+                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-md w-full"
                             >
                               <Link
                                 href={subItem.url}
                                 className="flex items-center justify-between text-foreground/50! hover:text-foreground! w-full"
                               >
                                 <span>{subItem.title}</span>
-                                {(subItem.title === "CLI Guide" ||
+                                {(subItem.newItem ||
+                                  subItem.title === "CLI Guide" ||
                                   subItem.title === "Add Resources") && (
-                                  <span className="flex items-center justify-center px-1.5 py-0.5 h-5 text-[0.6rem] leading-0 font-bold tracking-wider uppercase bg-green-500/20 backdrop-blur-sm border border-green-500/50 text-green-500 rounded-full">
+                                  <span className="flex items-center justify-center px-1.5 py-0.5 h-5 text-[0.6rem] leading-0 font-bold tracking-wider uppercase bg-primary/20 backdrop-blur-sm border border-primary/40 text-primary/85 rounded-full">
                                     New
                                   </span>
                                 )}
