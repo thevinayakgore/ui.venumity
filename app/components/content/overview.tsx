@@ -126,9 +126,9 @@ export default function Overview({
           <div className="w-full h-full rounded-md overflow-hidden">
             <iframe
               src={youtubeEmbedUrl}
+              allowFullScreen
               title="YouTube video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
               className="w-full h-full border-0"
             />
           </div>
@@ -234,46 +234,46 @@ export default function Overview({
         </div>
 
         <div
-          className={`flex flex-col items-center justify-center m-auto border border-foreground/15 rounded-xl ${
+          className={`relative flex flex-col items-center justify-center m-auto border border-foreground/15 rounded-xl ${
             activeTab === "preview" && "bg-background md:rounded-tl-none"
-          } aspect-video overflow-auto! transition-all duration-700 w-full`}
+          } aspect-video overflow-hidden! transition-all duration-700 w-full`}
         >
           <div
             key={refreshKey}
-            className="relative bg-background w-full h-full"
+            className="bg-background overflow-auto w-full h-full"
           >
             {mainContent}
-            {activeTab === PREVIEW_TAB && (
-              <Button
-                size="icon"
-                variant="secondary"
-                title="Refresh preview"
-                onClick={handleRefresh}
-                className="absolute top-4 right-4 z-50 transform-gpu bg-foreground/5 backdrop-blur-sm"
-              >
-                <RotateCcw className="size-4" />
-              </Button>
-            )}
-            {githubUsername && (
-              <Link
-                href={`https://github.com/${githubUsername}`}
-                target="_blank"
-                className="absolute bottom-3 right-3 z-50 flex items-center gap-1.5 p-0.75 pr-2 leading-none bg-linear-to-br from-blue-600/30 to-background backdrop-blur-lg border border-blue-600/60 text-xs font-semibold rounded-sm w-fit"
-              >
-                <Image
-                  src={`https://github.com/${githubUsername}.png`}
-                  alt={`${githubUsername} GitHub profile`}
-                  width={500}
-                  height={500}
-                  priority
-                  unoptimized
-                  loading="eager"
-                  className="size-5 rounded"
-                />
-                <span>{githubUsername}</span>
-              </Link>
-            )}
           </div>
+          {activeTab === PREVIEW_TAB && (
+            <Button
+              size="icon"
+              variant="secondary"
+              title="Refresh preview"
+              onClick={handleRefresh}
+              className="absolute top-4 right-4 z-50 transform-gpu bg-foreground/5 backdrop-blur-sm"
+            >
+              <RotateCcw className="size-4" />
+            </Button>
+          )}
+          {githubUsername && (
+            <Link
+              href={`https://github.com/${githubUsername}`}
+              target="_blank"
+              className="absolute bottom-3 right-3 z-50 flex items-center gap-1.5 p-0.75 pr-2 leading-none bg-linear-to-br from-blue-600/30 to-background backdrop-blur-lg border border-blue-600/60 text-xs font-semibold rounded-sm w-fit"
+            >
+              <Image
+                src={`https://github.com/${githubUsername}.png`}
+                alt={`${githubUsername} GitHub profile`}
+                width={500}
+                height={500}
+                priority
+                unoptimized
+                loading="eager"
+                className="size-5 rounded"
+              />
+              <span>{githubUsername}</span>
+            </Link>
+          )}
         </div>
       </div>
     </section>

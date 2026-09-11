@@ -539,15 +539,18 @@ npx venumityui@latest add <component-name>
 
 - **Bento Grid 1** — /components/sections/bento-grids/bento-grid-1 (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
 
-#### FAQ
+#### FAQ ⭐ NEW
 
 **URL:** /components/sections/faq
 **Description:** Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.
 **Tags:** faq, accordion, support, schema, collapsible
 **Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI
-**Components:** 1
+**Components:** 4
 
-- **FAQ 1** — /components/sections/faq/faq-1 (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Single Open FAQ** — /components/sections/faq/single-open-faq (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Multiple Open FAQ** — /components/sections/faq/multiple-open-faq (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Masonry Grid FAQ** — /components/sections/faq/masonry-grid-faq (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
+- **Icon Style FAQ** — /components/sections/faq/icon-style-faq (faq, accordion, support, schema, collapsible) [Next.js, Tailwind CSS, TypeScript, Shadcn UI] — Author: @thevinayakgore
 
 #### Testimonials
 

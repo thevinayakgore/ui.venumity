@@ -1140,11 +1140,18 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "FAQ",
+        newItem: true,
+        thumbnail: "icon-style-faq",
         description:
           "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
         tags: ["faq", "accordion", "support", "schema", "collapsible"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [{ itemName: "FAQ 1", githubUsername: "thevinayakgore" }],
+        items: [
+          { itemName: "Single Open FAQ", githubUsername: "thevinayakgore" },
+          { itemName: "Multiple Open FAQ", githubUsername: "thevinayakgore" },
+          { itemName: "Masonry Grid FAQ", githubUsername: "thevinayakgore" },
+          { itemName: "Icon Style FAQ", githubUsername: "thevinayakgore" },
+        ],
       },
       {
         name: "Testimonials",

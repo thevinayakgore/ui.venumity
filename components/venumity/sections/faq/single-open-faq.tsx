@@ -1,0 +1,126 @@
+"use client";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const DATA = [
+  {
+    id: "1",
+    question: "How can I start using your amazing service?",
+    answer:
+      "Getting started is easy! Simply sign up for an account, complete your profile, and you can begin using our services immediately. No credit card required for the first 14 days.",
+  },
+  {
+    id: "2",
+    question: "Which payment methods are supported on your platform?",
+    answer:
+      "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for annual plans. All payments are securely processed through encrypted channels.",
+  },
+  {
+    id: "3",
+    question: "Can I cancel my subscription anytime I want?",
+    answer:
+      "Yes, you can cancel your subscription at any time from your account settings. There are no cancellation fees, and you will continue to have access until the end of your billing period.",
+  },
+  {
+    id: "4",
+    question: "Do you provide enterprise custom solutions for businesses?",
+    answer:
+      "Absolutely! We provide custom enterprise solutions with dedicated support, advanced features, and personalized onboarding. Contact our sales team to discuss your specific requirements.",
+  },
+  {
+    id: "5",
+    question: "How secure is user DATA on your platform?",
+    answer:
+      "We take security seriously. Our platform uses bank-level encryption, regular security audits, and complies with industry standards. Your DATA is stored in secure SOC 2 certified DATA centers.",
+  },
+  {
+    id: "6",
+    question: "Is a completely free trial currently available now?",
+    answer:
+      "Yes! We offer a 14-day free trial with full access to all features. No credit card is required to sign up for the trial.",
+  },
+  {
+    id: "7",
+    question: "Do you provide customer support for all users?",
+    answer:
+      "Absolutely! Our dedicated support team is available 24/7 via chat and email to help you resolve any issues.",
+  },
+  {
+    id: "8",
+    question: "Can I upgrade or downgrade my plan anytime?",
+    answer:
+      "Yes, you can change your subscription plan at any time from your account settings. Your billing will be adjusted automatically.",
+  },
+  {
+    id: "9",
+    question: "Do you integrate with any popular third-party tools?",
+    answer:
+      "We integrate with popular platforms like Slack, Google Workspace, and Zapier to streamline your workflow.",
+  },
+  {
+    id: "10",
+    question: "What happens after the free trial period ends?",
+    answer:
+      "When your trial ends, you can choose a subscription plan to continue using the service. Your DATA will remain saved for 30 days.",
+  },
+];
+
+export default function SingleOpenFAQ() {
+  const [openItem, setOpenItem] = useState<string | undefined>(undefined);
+
+  return (
+    <main className="flex flex-col m-auto gap-5 md:gap-10 p-5 md:p-10 overflow-auto max-w-4xl w-full h-full">
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-2xl md:text-4xl mb-2">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-base md:text-lg text-foreground/50">
+          Find quick answers to common questions about our services and
+          features.
+        </p>
+      </div>
+
+      {/* FAQ Accordion */}
+      <Accordion
+        type="single"
+        collapsible
+        value={openItem}
+        onValueChange={setOpenItem}
+        className="space-y-4"
+      >
+        {DATA.map((faq) => (
+          <AccordionItem
+            key={faq.id}
+            value={faq.id}
+            className={`border border-b-4! border-foreground/15 bg-sidebar rounded-sm p-0! group ${
+              openItem === faq.id
+                ? "bg-background border-primary/70 shadow-[0_0_20px_3px_rgba(244,63,94,0.25)]"
+                : "hover:border-primary/70"
+            } rounded-xl`}
+          >
+            <AccordionTrigger className="group py-4! px-5! text-lg text-left hover:no-underline group cursor-pointer **:data-[slot=accordion-trigger-icon]:size-6! **:data-[slot=accordion-trigger-icon]:group-hover:text-foreground! **:data-[slot=accordion-trigger-icon]:group-aria-expanded/accordion-trigger:text-foreground!">
+              {faq.question}
+            </AccordionTrigger>
+            <AccordionContent className="p-5! border-t border-dashed border-primary/70">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="text-sm md:text-base tracking-wide leading-relaxed w-full h-full"
+              >
+                {faq.answer}
+              </motion.div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </main>
+  );
+}

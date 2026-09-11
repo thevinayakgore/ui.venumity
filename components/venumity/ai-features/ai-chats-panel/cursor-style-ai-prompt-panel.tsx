@@ -34,7 +34,7 @@ export default function CursorStyleAIPromptPanel() {
   const [mode, setMode] = useState("agent");
 
   return (
-    <section className="grid grid-cols-10 items-start justify-center m-auto w-full min-h-screen">
+    <div className="grid grid-cols-10 w-full h-screen">
       <div className="col-span-7 p-3 w-full h-full">
         <div className="bg-foreground/5 border rounded-xl w-full h-full" />
       </div>
@@ -139,6 +139,6 @@ export default function CursorStyleAIPromptPanel() {
           </div>
         </div>
       </aside>
-    </section>
+    </div>
   );
 }

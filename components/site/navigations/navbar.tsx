@@ -1,18 +1,19 @@
 // components/navigations/navbar.tsx
 "use client";
-import { useTheme } from "next-themes";
-import { useEffect, useState, useCallback } from "react";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
-import { ArrowUpRight, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { gitRepo, handle } from "@/lib/brand";
-import { Separator } from "@/components/ui/separator";
-import { COMPANY_SECTION } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
+import ThemeToggle from "./theme-toggle";
 import { SearchTrigger } from "./search";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { gitRepo, handle } from "@/lib/brand";
+import { Button } from "@/components/ui/button";
+import SocialIcons from "../common/social-icons";
+import { COMPANY_SECTION } from "@/lib/constants";
+import { ArrowUpRight, Menu } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -21,11 +22,9 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import SocialIcons from "../common/social-icons";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -37,11 +36,6 @@ export default function Navbar() {
     }, 0);
     return () => clearTimeout(timer);
   }, []);
-
-  const toggleTheme = useCallback(() => {
-    if (!resolvedTheme) return; // safety: only toggle when theme is known
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  }, [resolvedTheme, setTheme]);
 
   // Close sheet when route changes
   useEffect(() => {
@@ -181,38 +175,10 @@ export default function Navbar() {
           orientation="vertical"
           className="h-7 my-auto bg-foreground/15"
         />
+
         {/* Theme toggle – stronger implementation */}
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={toggleTheme}
-          disabled={!mounted} // only cosmetic: button is already hidden when !mounted
-          title={
-            resolvedTheme === "dark"
-              ? "Switch to light mode"
-              : "Switch to dark mode"
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-4.5"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 3l0 18" />
-            <path d="M12 9l4.65 -4.65" />
-            <path d="M12 14.3l7.37 -7.37" />
-            <path d="M12 19.6l8.85 -8.85" />
-          </svg>
-        </Button>
+        <ThemeToggle />
+
         <Separator
           orientation="vertical"
           className="block md:hidden h-6 my-auto bg-foreground/15"

@@ -147,13 +147,13 @@ export default function LeftSidebar() {
                   <CollapsibleTrigger asChild className="w-full">
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="flex items-center justify-between hover:bg-foreground/10! text-foreground/50 hover:text-foreground rounded-md w-full"
+                      className="group flex items-center justify-between hover:bg-primary! text-foreground/50 hover:text-white! rounded-md w-full"
                     >
                       <div className="flex items-center gap-2">
                         {item.icon && <item.icon />}
                         <span className="font-semibold">{item.title}</span>
                       </div>
-                      <ChevronDown className="size-4 opacity-80 group-data-[state=open]/collapsible:rotate-y-180 group-data-[state=open]/collapsible:rotate-x-180 transition-all duration-500" />
+                      <ChevronDown className="size-4 opacity-80 group-hover:opacity-100 group-data-[state=open]/collapsible:rotate-y-180 group-data-[state=open]/collapsible:rotate-x-180 transition-all duration-500" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="pr-2">
@@ -169,7 +169,7 @@ export default function LeftSidebar() {
                             <SidebarMenuSubButton
                               asChild
                               isActive={isActive}
-                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-foreground/7! data-active:bg-foreground/7! data-active:text-foreground! rounded-md w-full"
+                              className="border-0! pl-2.5! pr-1! h-7.5! text-[0.8rem]! font-semibold! tracking-wide hover:bg-orange-500/10! data-active:bg-orange-500/10! dark:hover:bg-orange-600/20! dark:data-active:bg-orange-600/20! data-active:text-foreground! rounded-md w-full"
                             >
                               <Link
                                 href={subItem.url}
@@ -179,7 +179,7 @@ export default function LeftSidebar() {
                                 {(subItem.newItem ||
                                   subItem.title === "CLI Guide" ||
                                   subItem.title === "Add Resources") && (
-                                  <span className="flex items-center justify-center px-1.5 py-0.5 h-5 text-[0.6rem] leading-0 font-bold tracking-wider uppercase bg-primary/20 backdrop-blur-sm border border-primary/40 text-primary/85 rounded-full">
+                                  <span className="flex items-center justify-center px-2 py-0.5 h-5 text-[0.6rem] leading-0 font-bold tracking-wider uppercase bg-orange-500 dark:bg-orange-600 text-white rounded-full">
                                     New
                                   </span>
                                 )}

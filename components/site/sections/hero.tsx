@@ -48,7 +48,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex flex-col items-center justify-center m-auto p-2 md:p-4 overflow-hidden w-full">
+    <section className="relative flex flex-col items-center justify-center m-auto p-2.5 overflow-hidden w-full">
       <div className="relative z-100 flex flex-col items-center justify-center m-auto bg-background shadow-xl/15 rounded-lg md:rounded-xl overflow-hidden max-w-400 w-full">
         <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 text-center font-semibold overflow-hidden w-full">
           <Link
@@ -85,8 +85,8 @@ export default function Hero() {
             <ArrowRight className="ml-1 opacity-40 group-hover/intro:opacity-100 size-4 group-hover/intro:size-5 group-hover/intro:translate-x-3 transition-all duration-500" />
           </Link>
 
-          <div className="text-xl sm:text-3xl md:text-4xl lg:text-6xl">
-            <span className="text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent sm:leading-8 md:leading-10 lg:leading-16 tracking-tight">
+          <div className="text-xl sm:text-3xl md:text-4xl lg:text-6xl mt-10">
+            <span className="sm:leading-8 md:leading-10 lg:leading-16 tracking-tight">
               Build your next website with <br /> these set of{" "}
               <AnimatePresence mode="wait">
                 <span
@@ -132,12 +132,12 @@ export default function Hero() {
 
           <TechIcons />
 
-          <p className="text-xs sm:text-base md:text-lg font-medium tracking-wide text-foreground/70 w-full sm:max-w-3xl">
+          <p className="text-xs sm:text-base md:text-lg font-medium tracking-wide text-foreground/80 w-full sm:max-w-3xl">
             Copy, paste, customize & launch beautiful websites faster. Over 100+
             open-source components built with Next.js, Tailwind, and Framer
             Motion.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 w-full">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 my-5 w-full">
             <Link href="/components">
               <Button className="group/btn pl-2! pr-4! sm:pr-5! py-4! sm:py-5! gap-1.5! sm:gap-2 text-sm sm:text-base font-semibold tracking-tight bg-linear-to-tl! from-indigo-300 via-white to-white text-black! border-3 sm:border-4 border-indigo-500 inset-shadow-sm shadow-lg/10 transition-all duration-500 rounded-full">
                 <Globe className="size-4 sm:size-5 group-hover/btn:animate-[wiggle_0.6s_ease-in-out]" />

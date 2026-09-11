@@ -9,6 +9,7 @@ import {
   findComponentBySlugPath,
   getComponentByPath,
 } from "@/registry/component-utils";
+import ThemeToggle from "@/components/site/navigations/theme-toggle";
 
 interface PreviewClientProps {
   slugPath: string;
@@ -138,6 +139,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
           componentName={toKebabCase(componentData.itemName)}
         />
       )}
+      <ThemeToggle />
     </div>
   );
 }

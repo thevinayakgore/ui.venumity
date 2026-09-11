@@ -64,7 +64,7 @@ export default function GeminiStyleChatShell() {
   const canSend = value.trim().length > 0;
 
   return (
-    <main className="flex items-start justify-center m-auto overflow-hidden bg-background text-foreground w-full h-screen">
+    <div className="flex bg-background text-foreground w-full h-screen">
       <AnimatePresence initial={false}>
         {mobileOpen && (
           <motion.button
@@ -242,6 +242,6 @@ export default function GeminiStyleChatShell() {
           <div className="absolute top-1/2 -translate-y-1/2 mt-5 md:mt-10 left-1/2 -translate-x-1/2 z-0 bg-blue-600/30 blur-[5rem] rounded-full h-60 w-200" />
         </section>
       </div>
-    </main>
+    </div>
   );
 }
