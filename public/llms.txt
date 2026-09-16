@@ -121,7 +121,7 @@ npx venumityui@latest add <component-name>
 **Technologies:** Next.js, Recharts, TypeScript, Tailwind CSS, Motion
 **Components:** 1
 
-- **Profile Card 1** — /components/cards/profile-cards/profile-card-1 (profile, user, identity, card, avatar, dashboard, saas, team) [Next.js, Recharts, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Simple Profile Card** — /components/cards/profile-cards/simple-profile-card (profile, user, identity, card, avatar, dashboard, saas, team) [Next.js, Recharts, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
 
 ### Charts
 
@@ -260,11 +260,10 @@ npx venumityui@latest add <component-name>
 **Description:** Commerce-ready card components designed to showcase products with clarity and impact.
 **Tags:** product, ecommerce, card, catalog
 **Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
-**Components:** 3
+**Components:** 2
 
-- **Product Card 1** — /components/commerce/product-cards/product-card-1 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
-- **Product Card 2** — /components/commerce/product-cards/product-card-2 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
-- **Product Card 3** — /components/commerce/product-cards/product-card-3 (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Interactive Product Card** — /components/commerce/product-cards/interactive-product-card (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Detailed Product Card** — /components/commerce/product-cards/detailed-product-card (product, ecommerce, card, catalog) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
 
 ### Dashboards
 

@@ -261,7 +261,7 @@ export const COMPONENTS = createComponents([
         ],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS", "Motion"],
         items: [
-          { itemName: "Profile Card 1", githubUsername: "thevinayakgore" },
+          { itemName: "Simple Profile Card", githubUsername: "thevinayakgore" },
         ],
       },
     ],
@@ -516,7 +516,7 @@ export const COMPONENTS = createComponents([
         name: "Pricing Tables",
         thumbnail: "tiered-pricing-card",
         description:
-          "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+        "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
         tags: ["pricing", "comparison", "subscription", "features"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
@@ -528,15 +528,14 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Product Cards",
-        thumbnail: "product-card-3",
+        thumbnail: "detailed-product-card",
         description:
           "Commerce-ready card components designed to showcase products with clarity and impact.",
         tags: ["product", "ecommerce", "card", "catalog"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
-          { itemName: "Product Card 1", githubUsername: "thevinayakgore" },
-          { itemName: "Product Card 2", githubUsername: "thevinayakgore" },
-          { itemName: "Product Card 3", githubUsername: "thevinayakgore" },
+          { itemName: "Interactive Product Card", githubUsername: "thevinayakgore" },
+          { itemName: "Detailed Product Card", githubUsername: "thevinayakgore" },
         ],
       },
       // {
