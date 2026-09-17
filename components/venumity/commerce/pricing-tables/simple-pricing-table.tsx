@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Check } from "lucide-react";
 
-const plans = [
+const PLANS_DATA = [
   {
     id: "mvp",
     name: "MVP Stage",
@@ -75,7 +75,7 @@ function AnimatedNumber({ value }: { value: number }) {
   return <>{display}</>;
 }
 
-export default function PricingTable2() {
+export default function SimplePricingTable() {
   const [isYearly, setIsYearly] = useState(false);
 
   const getDisplayPrice = (price: string) => {
@@ -85,65 +85,62 @@ export default function PricingTable2() {
   };
 
   return (
-    <div className="py-20 px-4 w-full">
+    <div className="p-5 md:p-10 space-y-5 md:space-y-10 w-full">
       {/* Header Section */}
-      <div className="text-center mb-6 flex flex-col items-center">
-        <h1 className="text-5xl font-medium tracking-tight mb-8">
+      <header className="text-center flex flex-col items-center gap-5">
+        <h1 className="text-4xl font-semibold tracking-tight">
           Pick your plan
         </h1>
 
         {/* Toggle Switch */}
-        <div className="inline-flex items-center p-1.5 bg-foreground/10 backdrop-blur-sm border-2 rounded-full shadow-sm mb-4">
+        <div className="inline-flex items-center p-1 bg-foreground/5 backdrop-blur-sm border rounded-full">
           <button
             onClick={() => setIsYearly(false)}
-            className={`px-6 py-2.5 cursor-pointer rounded-full text-sm font-semibold transition-all ${!isYearly ? "bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] text-white" : "text-foreground/70"}`}
+            className={`px-6 py-2.5 cursor-pointer rounded-full text-sm font-semibold transition-all ${!isYearly ? "bg-linear-to-br from-indigo-300 via-indigo-400 to-indigo-500 text-white" : "text-foreground/70"}`}
           >
-            Pay monthly
+            Monthly
           </button>
 
           <button
             onClick={() => setIsYearly(true)}
-            className={`px-6 py-2.5 cursor-pointer rounded-full text-sm font-semibold transition-all ${isYearly ? "bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] text-white" : "text-foreground/70"}`}
+            className={`px-6 py-2.5 cursor-pointer rounded-full text-sm font-semibold transition-all ${isYearly ? "bg-linear-to-br from-indigo-300 via-indigo-400 to-indigo-500 text-white" : "text-foreground/70"}`}
           >
-            Pay yearly
+            Annualy
           </button>
         </div>
-      </div>
+      </header>
 
       {/* Pricing Cards Grid */}
-      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl m-auto w-full">
-        {plans.map((plan) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full h-fit">
+        {PLANS_DATA.map((plan) => (
           <div key={plan.id} className="flex">
             {plan.isHighlighted ? (
               // Highlighted Card (Growth Stage)
-              <div className="relative w-full rounded-3xl p-0.75 pt-14 bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] shadow-2xl shadow-indigo-500/30 flex flex-col transition-transform hover:-translate-y-1 duration-300">
-                {/* Simulated inner texture for gradient */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--tw-gradient-stops))] from-white/30 via-transparent to-transparent rounded-4xl pointer-events-none" />
-
-                <h3 className="absolute top-5 left-6 text-white font-semibold text-[17px] tracking-tight">
+              <div className="relative flex flex-col p-0.75 pt-14 bg-indigo-400 shadow-xl shadow-indigo-500/30 rounded-4xl w-full h-fit">
+                <h3 className="absolute top-4 left-6 text-white font-semibold text-sm md:text-lg tracking-tight">
                   {plan.name}
                 </h3>
 
-                <div className="bg-card rounded-3xl p-6 flex-1 flex flex-col relative z-10">
-                  <p className="text-[13px] text-muted-foreground leading-relaxed h-10 pr-4">
+                <div className="bg-card rounded-[1.5rem] p-6 flex-1 flex flex-col gap-3 relative z-10">
+                  <p className="text-sm md:text-base text-foreground/50 leading-relaxed">
                     {plan.description}
                   </p>
 
                   {/* Price Box */}
-                  <div className="bg-accent border-2 rounded-2xl p-4 mb-6">
-                    <div className="flex items-start mb-5 pl-2">
-                      <span className="text-sm font-medium text-muted-foreground mt-2.5 mr-1">
+                  <div className="bg-indigo-400/10 backdrop-blur-sm border border-indigo-500/60 rounded-2xl p-1.5">
+                    <div className="flex items-start px-3 pb-3">
+                      <span className="text-sm md:text-base lg:text-lg font-semibold mt-1.5 mr-1">
                         $
                       </span>
-                      <span className="text-[54px] font-bold leading-none tracking-tighter">
+                      <span className="text-6xl text-indigo-400 font-bold leading-none tracking-tighter">
                         <AnimatedNumber value={getDisplayPrice(plan.price)} />
                       </span>
-                      <div className="flex flex-col text-[9px] font-bold text-muted-foreground uppercase leading-[1.2] ml-2 mt-3">
+                      <div className="flex flex-col m-2 text-xs font-bold uppercase">
                         <span>USD /</span>
                         <span>{isYearly ? "year" : "month"}</span>
                       </div>
                     </div>
-                    <button className="w-full py-3.5 cursor-pointer rounded-lg bg-linear-to-br from-[#8A95FF] via-[#7B8BFF] to-[#B3B8FF] text-white text-sm font-semibold">
+                    <button className="py-3 bg-linear-to-br from-indigo-300 via-indigo-400 to-indigo-500 text-white text-sm md:text-base font-semibold rounded-xl w-full">
                       {plan.buttonText}
                     </button>
                   </div>
@@ -151,17 +148,8 @@ export default function PricingTable2() {
                   {/* Features List */}
                   <ul className="space-y-3.5 mt-2">
                     {plan.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 text-[13px] font-medium"
-                      >
-                        <div className="mt-0.75 rounded-full bg-indigo-500 p-0.75 shrink-0">
-                          <Check
-                            size={10}
-                            className="text-white"
-                            strokeWidth={3.5}
-                          />
-                        </div>
+                      <li key={idx} className="flex items-start gap-2 text-sm">
+                        <Check className="stroke-5 p-1 size-5 bg-indigo-400 text-background rounded-full" />
                         <span className="leading-tight">{feature}</span>
                       </li>
                     ))}
@@ -170,47 +158,39 @@ export default function PricingTable2() {
               </div>
             ) : (
               // Standard Cards (MVP Stage, Scale Stage)
-              <div className="w-full bg-card rounded-3xl p-6 border-4 shadow-xl/10 flex flex-col transition-transform hover:-translate-y-1 duration-300">
-                <h3 className="font-semibold text-[17px] tracking-tight mb-4">
+              <div className="flex flex-col p-6 border border-foreground/15 hover:shadow-xl/10 rounded-4xl transition-all duration-500 w-full h-fit">
+                <h3 className="font-semibold text-sm md:text-lg tracking-tight">
                   {plan.name}
                 </h3>
-                <p className="text-[13px] text-muted-foreground leading-relaxed h-10 pr-4">
+
+                <p className="text-sm md:text-base text-foreground/50 leading-relaxed">
                   {plan.description}
                 </p>
 
                 {/* Price Box */}
-                <div className="bg-accent border rounded-2xl p-4 mb-6">
-                  <div className="flex items-start mb-5 pl-2">
-                    <span className="text-sm font-medium text-muted-foreground mt-2.5 mr-1">
+                <div className="p-1.5 my-5 bg-foreground/5 backdrop-blur-sm border border-foreground/15 rounded-2xl">
+                  <div className="flex items-start px-3 pb-3">
+                    <span className="text-sm md:text-base lg:text-lg font-semibold mt-1.5 mr-1 opacity-50">
                       $
                     </span>
-                    <span className="text-[54px] font-bold leading-none tracking-tighter">
+                    <span className="text-6xl font-bold leading-none tracking-tighter">
                       <AnimatedNumber value={getDisplayPrice(plan.price)} />
                     </span>
-                    <div className="flex flex-col text-[9px] font-bold text-muted-foreground uppercase leading-[1.2] ml-2 mt-3">
+                    <div className="flex flex-col m-2 text-xs font-bold uppercase opacity-50">
                       <span>USD /</span>
                       <span>{isYearly ? "year" : "month"}</span>
                     </div>
                   </div>
-                  <button className="w-full py-3.5 cursor-pointer rounded-lg text-sm font-semibold bg-foreground text-secondary">
+                  <button className="py-3 bg-foreground text-secondary text-sm md:text-base font-semibold rounded-xl w-full">
                     {plan.buttonText}
                   </button>
                 </div>
 
                 {/* Features List */}
-                <ul className="space-y-3.5 mt-2">
+                <ul className="space-y-3.5">
                   {plan.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-3 text-[13px] font-medium"
-                    >
-                      <div className="mt-0.75 rounded-full bg-indigo-500 p-0.75 shrink-0">
-                        <Check
-                          size={10}
-                          className="text-white"
-                          strokeWidth={3.5}
-                        />
-                      </div>
+                    <li key={idx} className="flex items-start gap-2 text-sm">
+                      <Check className="stroke-5 p-1 size-5 bg-foreground/20 text-background rounded-full" />
                       <span className="leading-tight">{feature}</span>
                     </li>
                   ))}
