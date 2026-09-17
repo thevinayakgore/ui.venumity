@@ -514,15 +514,20 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "Pricing Tables",
-        thumbnail: "tiered-pricing-card",
+        newItem: true,
         description:
-        "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+          "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
         tags: ["pricing", "comparison", "subscription", "features"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
-          { itemName: "Pricing Table 1", githubUsername: "thevinayakgore" },
-          { itemName: "Pricing Table 2", githubUsername: "thevinayakgore" },
-          { itemName: "Pricing Table 3", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Simple Pricing Table",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Standard Pricing Table",
+            githubUsername: "thevinayakgore",
+          },
           { itemName: "Tiered Pricing Card", githubUsername: "thevinayakgore" },
         ],
       },
@@ -534,8 +539,14 @@ export const COMPONENTS = createComponents([
         tags: ["product", "ecommerce", "card", "catalog"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
-          { itemName: "Interactive Product Card", githubUsername: "thevinayakgore" },
-          { itemName: "Detailed Product Card", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Interactive Product Card",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Detailed Product Card",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       // {

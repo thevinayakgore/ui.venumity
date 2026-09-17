@@ -241,17 +241,16 @@ npx venumityui@latest add <component-name>
 
 **Icon:** indian-rupee
 
-#### Pricing Tables
+#### Pricing Tables ⭐ NEW
 
 **URL:** /components/commerce/pricing-tables
 **Description:** Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.
 **Tags:** pricing, comparison, subscription, features
 **Technologies:** Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion
-**Components:** 4
+**Components:** 3
 
-- **Pricing Table 1** — /components/commerce/pricing-tables/pricing-table-1 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
-- **Pricing Table 2** — /components/commerce/pricing-tables/pricing-table-2 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
-- **Pricing Table 3** — /components/commerce/pricing-tables/pricing-table-3 (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Simple Pricing Table** — /components/commerce/pricing-tables/simple-pricing-table (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
+- **Standard Pricing Table** — /components/commerce/pricing-tables/standard-pricing-table (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
 - **Tiered Pricing Card** — /components/commerce/pricing-tables/tiered-pricing-card (pricing, comparison, subscription, features) [Next.js, Tailwind CSS, TypeScript, Shadcn UI, Motion] — Author: @thevinayakgore
 
 #### Product Cards

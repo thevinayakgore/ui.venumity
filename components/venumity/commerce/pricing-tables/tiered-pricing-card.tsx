@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Check, Users, Zap, Shield, Globe } from "lucide-react";
 
-const tiers = {
+const TIERS_DATA = {
   starter: {
     name: "Starter",
     price: "$99",
@@ -59,112 +58,96 @@ export default function TieredPricingCard() {
     "starter" | "growth" | "scale"
   >("growth");
 
-  const currentTier = tiers[selectedTier];
+  const currentTier = TIERS_DATA[selectedTier];
 
   return (
-    <main className="flex items-center justify-center m-auto w-full h-screen">
-      <div className="bg-card border-2 rounded-2xl shadow-xl/10 overflow-hidden max-w-3xl m-auto w-full">
-        {/* Tier Selector */}
-        <div className="p-6 border-b">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-bold">Choose Your Plan</h2>
-              <p className="text-foreground/50">
-                Select the tier that fits your needs
-              </p>
-            </div>
+    <div className="p-5 md:p-10 w-full">
+      {/* Tier Selector */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
+        <div>
+          <h2 className="text-3xl font-semibold">Choose Your Plan</h2>
+          <p className="text-sm md:text-base text-foreground/50">
+            Select the tier that fits your needs
+          </p>
+        </div>
 
-            <div className="flex bg-accent rounded-lg p-1">
-              {(["starter", "growth", "scale"] as const).map((tier) => (
-                <button
-                  key={tier}
-                  onClick={() => setSelectedTier(tier)}
-                  className={`px-4 py-2 cursor-pointer rounded-md text-sm font-medium transition ${
-                    selectedTier === tier
-                      ? "bg-card shadow"
-                      : "text-foreground/50 hover:text-foreground"
-                  }`}
-                >
-                  {tiers[tier].name}
-                </button>
-              ))}
+        <div className="flex p-1 bg-foreground/10 rounded-lg">
+          {(["starter", "growth", "scale"] as const).map((tier) => (
+            <button
+              key={tier}
+              onClick={() => setSelectedTier(tier)}
+              className={`px-4 py-2 text-sm font-semibold rounded-md ${
+                selectedTier === tier ? "bg-background" : "text-foreground/50"
+              }`}
+            >
+              {TIERS_DATA[tier].name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Selected Tier Display */}
+      <div className="flex flex-col gap-5 py-5 mt-5 border-t border-dashed border-foreground/15 w-full">
+        {/* Tier Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 w-full">
+          <div>
+            <div className="flex items-center gap-4 mb-1">
+              <h3 className="text-3xl font-semibold">{currentTier.name}</h3>
+              {currentTier.popular && (
+                <span className="px-2 py-0.5 bg-blue-500 text-white text-[0.65rem] font-medium rounded-full">
+                  POPULAR
+                </span>
+              )}
             </div>
+            <p className="text-foreground/50">{currentTier.description}</p>
+          </div>
+
+          <div className="text-right">
+            <div className="text-5xl font-bold">{currentTier.price}</div>
+            <div className="text-foreground/50">{currentTier.period}</div>
           </div>
         </div>
 
-        {/* Selected Tier Display */}
-        <div className="w-full">
-          <motion.div
-            key={selectedTier}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            {/* Tier Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 pb-0">
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-3xl font-bold">{currentTier.name}</h3>
-                  {currentTier.popular && (
-                    <span className="px-2 py-0.5 bg-blue-500 text-white text-[0.65rem] font-medium rounded-full">
-                      POPULAR
-                    </span>
-                  )}
-                </div>
-                <p className="text-foreground/50">{currentTier.description}</p>
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-hidden w-full h-full">
+          {currentTier.features.map((feature, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-2 p-1.5 bg-foreground/5 backdrop-blur-sm border border-foreground/10 rounded-lg"
+            >
+              <div className="shrink-0 p-2 bg-blue-600 rounded-md">
+                <feature.icon className="size-6 text-white" />
               </div>
-
-              <div className="text-right">
-                <div className="text-5xl font-bold">{currentTier.price}</div>
-                <div className="text-foreground/50">{currentTier.period}</div>
-              </div>
+              <span className="text-sm font-medium leading-4">
+                {feature.text}
+              </span>
             </div>
+          ))}
+        </div>
 
-            {/* Features Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-6 overflow-hidden w-full h-full">
-              {currentTier.features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0, y: 50 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: index * 0.15 }}
-                  className="p-2 bg-accent border hover:scale-105 hover:shadow-lg/10 rounded-md transition-all duration-500"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-blue-500 rounded-sm">
-                      <feature.icon className="size-4 text-white" />
-                    </div>
-                    <span className="text-sm font-medium leading-4">
-                      {feature.text}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+        {/* CTA Section */}
+        <div className="flex items-start justify-between m-auto mt-6 pt-6 border-t border-dashed border-foreground/15 w-full">
+          <div className="flex items-center justify-center gap-6 text-sm text-foreground/50">
+            <div className="flex items-center gap-2">
+              <Check className="size-5 text-green-500" />
+              <span>14-day free trial</span>
             </div>
-
-            {/* CTA Section */}
-            <div className="p-6 border-t flex flex-col items-center justify-center m-auto w-full">
-              <button className="w-fit cursor-pointer py-4 px-10 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">
-                {currentTier.cta} at {currentTier.price}
-              </button>
-
-              <div className="flex items-center justify-center gap-6 mt-6 text-sm text-foreground/50">
-                <div className="flex items-center gap-2">
-                  <Check className="size-5 text-green-500" />
-                  <span>14-day free trial</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="size-5 text-green-500" />
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="size-5 text-green-500" />
-                  <span>Cancel anytime</span>
-                </div>
-              </div>
+            <div className="flex items-center gap-2">
+              <Check className="size-5 text-green-500" />
+              <span>No credit card required</span>
             </div>
-          </motion.div>
+            <div className="flex items-center gap-2">
+              <Check className="size-5 text-green-500" />
+              <span>Cancel anytime</span>
+            </div>
+          </div>
+
+          <button className="py-3 px-5 bg-blue-600 text-white font-semibold rounded-lg">
+            {currentTier.cta} at{" "}
+            <span className="text-xl ml-1">{currentTier.price}</span>
+          </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
