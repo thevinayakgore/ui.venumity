@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -10,6 +10,8 @@ import {
   Github,
   Twitter,
   Linkedin,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,12 +25,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTheme } from "next-themes";
 
 export default function StandardNavbar() {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [language, setLanguage] = useState<
     "en" | "hi" | "mr" | "gu" | "bn" | "ta" | "te" | "kn" | "ml" | "fr" | "de"
   >("en");
+
+  // Mount effect
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    if (!resolvedTheme) return;
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
+
+  // Early return after all hooks
+  if (!mounted) return null;
 
   const navLabels = {
     en: ["Services", "Pricing", "Contact", "Blogs"],
@@ -173,9 +192,9 @@ export default function StandardNavbar() {
   > = ["mr", "en", "hi", "gu", "bn", "ta", "te", "kn", "ml", "fr", "de"];
 
   return (
-    <nav className="sticky top-0 w-full">
-      <div className="flex items-center justify-between bg-foreground/5 backdrop-blur-md p-3">
-        <section className="flex items-center gap-10">
+    <nav className="absolute top-0 w-full h-fit">
+      <div className="flex items-center justify-between bg-foreground/5 backdrop-blur-md p-3 w-full">
+        <div className="flex items-center gap-10">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Image
@@ -203,9 +222,9 @@ export default function StandardNavbar() {
               </Link>
             ))}
           </div>
-        </section>
+        </div>
 
-        <section className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1">
           <Select
             value={language}
             onValueChange={(v) =>
@@ -255,12 +274,25 @@ export default function StandardNavbar() {
 
           <Button
             size="sm"
-            className="cursor-pointer bg-linear-to-tl from-rose-500 to-pink-400 text-white! hover:shadow-lg shadow-pink-500/30 hover:scale-105 text-sm rounded-sm transition-all duration-500"
+            className="cursor-pointer bg-linear-to-tl from-rose-500 to-pink-400 text-white! hover:shadow-lg shadow-pink-500/30 text-sm rounded-sm transition-all duration-500"
           >
             <Zap className="size-4!" />
             {uiText[language].getStarted}
           </Button>
-        </section>
+          <Button
+            size="icon"
+            onClick={toggleTheme}
+            disabled={!mounted}
+            title={
+              resolvedTheme === "dark"
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
+            className="bg-foreground! text-secondary!"
+          >
+            {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+          </Button>
+        </div>
 
         {/* Mobile menu button */}
         <Button
@@ -269,11 +301,7 @@ export default function StandardNavbar() {
           className="lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          {isMenuOpen ? <X /> : <Menu />}
         </Button>
       </div>
 
@@ -313,19 +341,19 @@ export default function StandardNavbar() {
                     href="#"
                     className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
-                    <Github className="w-5 h-5" />
+                    <Github />
                   </Link>
                   <Link
                     href="#"
                     className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
-                    <Twitter className="w-5 h-5" />
+                    <Twitter />
                   </Link>
                   <Link
                     href="#"
                     className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
-                    <Linkedin className="w-5 h-5" />
+                    <Linkedin />
                   </Link>
                 </div>
               </div>

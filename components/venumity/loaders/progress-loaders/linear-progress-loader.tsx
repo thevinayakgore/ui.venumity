@@ -48,7 +48,7 @@ export function LinearProgressLoader({
       case "striped":
         return "bg-gradient-to-r from-primary/80 via-primary to-primary/80 bg-[length:200%_100%]";
       case "animated":
-        return "bg-gradient-to-r from-primary via-primary/80 to-primary bg-[length:200%_100%] vnm-shimmer-btn";
+        return "bg-gradient-to-r from-transparent via-primary to-transparent bg-[length:200%_100%] vnm-shimmer-btn";
       case "gradient":
         return "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500";
       default:
@@ -62,7 +62,7 @@ export function LinearProgressLoader({
       {(label || sublabel) && (
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
-            {icon && <span className="text-muted-foreground">{icon}</span>}
+            {icon && <span className="text-foreground/50">{icon}</span>}
             {label && (
               <span className={`font-medium ${sizes[size].text}`}>{label}</span>
             )}
@@ -114,7 +114,7 @@ export function LinearProgressLoader({
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`text-muted-foreground ${sizes[size].text === "text-xs" ? "text-[10px]" : "text-xs"}`}
+          className={`text-foreground/50 ${sizes[size].text === "text-xs" ? "text-[10px]" : "text-xs"}`}
         >
           {sublabel}
         </motion.p>
@@ -144,7 +144,7 @@ export function LinearProgressLoader({
 
 export default function CircularProgressLoaderDemo() {
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-6 p-6 md:p-10 max-w-3xl w-full h-full">
+    <div className="flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 max-w-3xl w-full h-full">
       <LinearProgressLoader
         progress={45}
         size="sm"
@@ -188,6 +188,6 @@ export default function CircularProgressLoaderDemo() {
         label="Processing..."
         sublabel="Please wait while we process your request"
       />
-    </main>
+    </div>
   );
 }

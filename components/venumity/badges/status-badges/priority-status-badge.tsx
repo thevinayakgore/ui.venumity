@@ -1,98 +1,48 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import {
-  SeparatorHorizontal,
   TrendingDown,
   Flag,
   TrendingUp,
   Ban,
-  type LucideIcon,
+  TrendingUpDown,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-
-export type PriorityStatusBadgeProps = {
-  priority?: "low" | "medium" | "high" | "critical" | "blocked";
-  text?: string;
-  color?: string;
-  icon?: LucideIcon;
-  outline?: boolean;
-  className?: string;
-};
-
-export function PriorityBadge({
-  priority = "medium",
-  text,
-  color,
-  icon,
-  outline,
-  className,
-}: PriorityStatusBadgeProps) {
-  const priorityConfig: Record<
-    "low" | "medium" | "high" | "critical" | "blocked",
-    { color: string; text: string; icon: LucideIcon; outline?: boolean }
-  > = {
-    low: {
-      color: "bg-orange-500",
-      text: "Low",
-      icon: TrendingDown,
-      outline: true,
-    },
-    medium: {
-      color: "bg-yellow-400",
-      text: "Medium",
-      icon: SeparatorHorizontal,
-    },
-    high: { color: "bg-green-500", text: "High", icon: TrendingUp },
-    critical: {
-      color: "bg-red-500",
-      text: "Critical",
-      icon: Flag,
-      outline: true,
-    },
-    blocked: { color: "bg-zinc-500", text: "Blocked", icon: Ban },
-  };
-
-  const config = priorityConfig[priority];
-
-  const Icon = icon ?? config.icon;
-
+export default function PriorityStatusBadge() {
   return (
-    <div className={cn("p-0", className)}>
-      <Badge
-        variant={(outline ?? config.outline) ? "outline" : "secondary"}
-        className={cn(
-          "flex items-center gap-2 px-3 py-2 shadow-lg/5 rounded-sm",
-          outline && "bg-accent dark:bg-popover",
-        )}
-      >
-        <Icon className="size-4" />
-        <span className="font-medium text-sm leading-none">
-          {text ?? config.text}
-        </span>
+    <div className="flex flex-wrap items-center justify-center m-auto gap-3 p-5 md:p-10 max-w-3xl w-full h-full">
+      {/* High */}
+      <Badge className="gap-2 [&>svg]:size-4! px-2 py-3.5 text-xs bg-foreground/5 border-foreground/10 text-foreground shadow-md/10 rounded-sm transition-all duration-500">
+        <TrendingUp />
+        <span className="font-medium text-sm leading-none">High</span>
+        <span className="size-4 bg-green-500 rounded" />
+      </Badge>
 
-        {color && <span className={cn(`ml-1 size-3 rounded-full`, color)} />}
+      {/* Medium */}
+      <Badge className="gap-2 [&>svg]:size-4! px-2 py-3.5 text-xs bg-foreground/5 border-foreground/10 text-foreground shadow-md/10 rounded-sm transition-all duration-500">
+        <TrendingUpDown />
+        <span className="font-medium text-sm leading-none">Medium</span>
+        <span className="size-4 bg-yellow-400 rounded" />
+      </Badge>
+
+      {/* Low */}
+      <Badge className="gap-2 [&>svg]:size-4! px-2 py-3.5 text-xs bg-background! border-foreground/10 text-foreground rounded-sm transition-all duration-500">
+        <TrendingDown />
+        <span className="font-medium text-sm leading-none">Low</span>
+        <span className="size-4 bg-red-500 rounded" />
+      </Badge>
+
+      {/* Critical */}
+      <Badge className="gap-2 [&>svg]:size-4! px-2 py-3.5 text-xs bg-orange-600! text-white rounded-sm transition-all duration-500">
+        <Flag />
+        <span className="font-medium text-sm leading-none">Critical</span>
+      </Badge>
+
+      {/* Blocked */}
+      <Badge className="gap-2 [&>svg]:size-4! px-2 py-3.5 text-xs bg-red-500! text-white rounded-sm transition-all duration-500">
+        <Ban />
+        <span className="font-medium text-sm leading-none">Blocked</span>
       </Badge>
     </div>
-  );
-}
-
-export default function PriorityStatusBadgeDemo() {
-  return (
-    <main className="flex items-center mx-auto w-full h-full">
-      <section className="flex flex-wrap items-center justify-center m-auto gap-3 p-6 md:p-10 max-w-3xl">
-        <PriorityBadge priority="high" text="High" color="bg-emerald-500" />
-        <PriorityBadge
-          priority="medium"
-          text="Medium"
-          color="bg-purple-500"
-          icon={Flag}
-          outline
-        />
-        <PriorityBadge priority="low" text="Low" />
-        <PriorityBadge priority="critical" text="Critical" />
-        <PriorityBadge priority="blocked" />
-      </section>
-    </main>
   );
 }

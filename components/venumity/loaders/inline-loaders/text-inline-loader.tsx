@@ -1,36 +1,34 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function TextInlineLoader() {
-  const [dots, setDots] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
-    }, 400);
-
-    return () => clearInterval(interval);
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <main className="flex items-center justify-center m-auto p-6 md:p-10 text-foreground/60 max-w-3xl w-full h-full">
-      <p>
-        <span className="text-lg text-foreground font-medium">
-          Venu<span className="text-primary">mity</span>
-        </span>{" "}
-        is a modern UI system built to deliver fast, elegant, and
-        production-ready, fully responsive components. This reduces development
-        time and inspires to build faster with the reading materials to upskill
-        and grow in web dev field and also
-        <motion.span
-          className="text-lg leading-none text-primary font-bold ml-0.5"
-          animate={{ opacity: [0.5, 0.8, 1] }}
-          transition={{ duration: 1, repeat: Infinity }}
-        >
-          {dots}
-        </motion.span>
-      </p>
-    </main>
+    <div className="flex items-center justify-center m-auto gap-1.5 p-5 md:p-10 w-full h-full">
+      <span>Venumity UI is a modern library built to deliver fast and</span>
+      <span className="flex items-center gap-1 mt-2" aria-hidden="true">
+        {[0, 1, 2].map((dot) => (
+          <motion.span
+            key={dot}
+            className="size-1.5 bg-primary rounded-full"
+            animate={
+              prefersReducedMotion
+                ? { opacity: 0.7 }
+                : {
+                    opacity: [0.3, 1, 0.3],
+                    scale: [0.85, 1.15, 0.85],
+                  }
+            }
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: dot * 0.16,
+            }}
+          />
+        ))}
+      </span>
+    </div>
   );
 }

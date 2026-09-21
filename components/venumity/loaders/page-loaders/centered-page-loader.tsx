@@ -4,7 +4,7 @@ import { Globe } from "lucide-react";
 
 export default function CenteredPageLoader() {
   return (
-    <main className="flex flex-col items-center justify-center m-auto gap-6 w-full h-full">
+    <div className="flex flex-col items-center justify-center m-auto gap-6 w-full h-full">
       <div className="relative">
         <motion.div
           className="size-30 border-4 border-t-primary rounded-full"
@@ -40,6 +40,6 @@ export default function CenteredPageLoader() {
           />
         ))}
       </div>
-    </main>
+    </div>
   );
 }

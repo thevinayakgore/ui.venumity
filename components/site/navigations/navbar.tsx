@@ -47,7 +47,7 @@ export default function Navbar() {
 
   // If we're still mounting, we can show nothing (as originally) to avoid flashing,
   // or show a skeleton – we'll keep the original behaviour.
-  if (!mounted || pathname?.startsWith("/preview")) return null;
+  if (!mounted) return null;
 
   return (
     <nav className="relative z-1001! transform-gpu flex items-center justify-between md:px-1.5 py-1.5 sm:pt-2.5 sm:pb-2 m-auto w-full">

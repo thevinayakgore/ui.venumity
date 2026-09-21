@@ -14,6 +14,7 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const FULL_PREVIEW = pathname?.startsWith("/preview");
 
   return (
     <ScrollContainerContext.Provider value={scrollContainerRef}>
@@ -22,22 +23,22 @@ export default function MainLayout({ children }: MainLayoutProps) {
         height={1.5}
         showSpinner={false}
       />
-      <main
-        className={`fixed inset-0 overflow-auto w-full h-full ${pathname?.startsWith("/preview") ? "" : "px-2 sm:px-2.5 bg-foreground/5"}`}
-      >
-        <Navbar />
-        <section
-          className={`w-full ${!pathname?.startsWith("/preview") && "aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-xl md:rounded-2xl h-[calc(100%-6rem)]"}`}
-        >
-          <div
-            ref={scrollContainerRef}
-            className={`overflow-auto w-full ${!pathname?.startsWith("/preview") && "h-full"}`}
-          >
-            {children}
-          </div>
-        </section>
-        {!pathname?.startsWith("/preview") && <BottomFooter />}
-      </main>
+      {FULL_PREVIEW ? (
+        children
+      ) : (
+        <main className="fixed inset-0 px-2 sm:px-2.5 bg-foreground/5 overflow-auto w-full h-full">
+          <Navbar />
+          <section className="aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-xl md:rounded-2xl max-h-[calc(100%-6rem)] w-full">
+            <div
+              ref={scrollContainerRef}
+              className="overflow-auto w-full h-full"
+            >
+              {children}
+            </div>
+          </section>
+          <BottomFooter />
+        </main>
+      )}
     </ScrollContainerContext.Provider>
   );
 }

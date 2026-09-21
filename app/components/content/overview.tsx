@@ -266,9 +266,7 @@ export default function Overview({
                 alt={`${githubUsername} GitHub profile`}
                 width={500}
                 height={500}
-                priority
                 unoptimized
-                loading="eager"
                 className="size-5 rounded"
               />
               <span>{githubUsername}</span>

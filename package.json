@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "generate-llms": "tsx scripts/generate-llms.ts",
+    "convert-thumbnails-to-webp": "tsx scripts/convert-thumbnails-to-webp.ts",
     "generate-types": "tsx scripts/generate-cli-types.ts && tsx scripts/generate-registry-types.ts",
     "prebuild": "npm run generate-llms"
   },

@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
-export default function SpinnerBasic() {
+export default function BasicSpinner() {
   return (
     <motion.main 
       initial={{ opacity: 0, scale: 0.6 }} 

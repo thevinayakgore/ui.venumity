@@ -11,14 +11,6 @@ import {
   ComponentSubcategory,
   ComponentItem,
 } from "@/registry/component-utils";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 export interface ComponentItemData extends ComponentItem {
   code?: string;
@@ -168,37 +160,6 @@ export default function PageClient({
               </div>
             )}
           </div>
-
-          <Breadcrumb className="mt-3 font-semibold! tracking-wide">
-            <BreadcrumbList>
-              <BreadcrumbItem className="text-foreground/40">
-                <BreadcrumbLink
-                  href="/components"
-                  className="hover:text-foreground"
-                >
-                  components
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <div className="flex items-center -space-x-2 text-foreground/40">
-                <BreadcrumbSeparator />
-                <BreadcrumbSeparator />
-              </div>
-              <BreadcrumbItem>
-                <BreadcrumbLink className="text-foreground/40!">
-                  {pathInfo.category}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <div className="flex items-center -space-x-2 text-foreground/40">
-                <BreadcrumbSeparator />
-                <BreadcrumbSeparator />
-              </div>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="font-semibold!">
-                  {pathInfo.subcategory}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
 
           {subcategoryData?.description && (
             <p className="text-sm md:text-base text-foreground/50 mt-3 max-w-lg">

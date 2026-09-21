@@ -458,7 +458,7 @@ npx venumityui@latest add <component-name>
 **Components:** 2
 
 - **Basic Pulse Loader** — /components/loaders/pulse-loaders/basic-pulse-loader (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
-- **Multi Pulse Loader** — /components/loaders/pulse-loaders/multi-pulse-loader (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
+- **Multi Layer Pulse Loader** — /components/loaders/pulse-loaders/multi-layer-pulse-loader (pulse, loader, activity, animation, waiting) [Next.js, TypeScript, Tailwind CSS, Motion] — Author: @thevinayakgore
 
 #### Skeletons
 

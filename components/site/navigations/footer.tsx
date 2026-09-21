@@ -1,36 +1,37 @@
 "use client";
-import { motion } from "motion/react";
-import { handle, username } from "@/lib/brand";
-import { ArrowRight, HatGlasses, HeartHandshake, Scale } from "lucide-react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { COMPANY_SECTION } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { ThreeDMarquee } from "@/components/ui/3d-marquee";
+import { usePathname } from "next/navigation";
+import { handle, username } from "@/lib/brand";
+import { Button } from "@/components/ui/button";
+import { toKebabCase } from "@/utils/slug-kebab";
+import SocialIcons from "../common/social-icons";
+import { COMPANY_SECTION } from "@/lib/constants";
+import { COMPONENTS } from "@/registry/components";
 import { Separator } from "@/components/ui/separator";
+import { ThreeDMarquee } from "@/components/ui/3d-marquee";
+import { RESOURCE_CATEGORIES } from "@/registry/resources";
+import { ArrowRight, HatGlasses, HeartHandshake, Scale } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { COMPONENTS } from "@/registry/components";
-import { Button } from "@/components/ui/button";
-import { BASE_IMAGES } from "@/registry/site/footer";
-import { toKebabCase } from "@/utils/slug-kebab";
-import { cn } from "@/lib/utils";
-import { RESOURCE_CATEGORIES } from "@/registry/resources";
-import SocialIcons from "../common/social-icons";
 
 function shuffleImages(images: string[]) {
   const shuffled = [...images];
-
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-
   return shuffled;
+}
+
+interface FooterProps {
+  baseImages: string[];
 }
 
 export const BottomFooter = () => {
@@ -67,17 +68,17 @@ export const BottomFooter = () => {
   );
 };
 
-export default function Footer() {
+export default function Footer({ baseImages }: FooterProps) {
   const pathname = usePathname();
-  const [images, setImages] = useState(BASE_IMAGES);
+  const [images, setImages] = useState(baseImages);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setImages(shuffleImages(BASE_IMAGES));
+      setImages(shuffleImages(baseImages));
+      setImages(shuffleImages(baseImages));
     }, 10000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [baseImages]);
 
   if (
     pathname?.startsWith("/components") ||

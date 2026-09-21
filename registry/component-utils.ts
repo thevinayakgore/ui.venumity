@@ -293,19 +293,19 @@ export function getGitHubIssueUrl(
  * Priority:
  * 1. Subcategory.thumbnail (custom thumbnail)
  * 2. First item's name (fallback)
- * Returns: /thumbnails/[thumbnail-name].png
+ * Returns: /thumbnails/[thumbnail-name].webp
  */
 export function getCategoryCardThumbnailPath(
   subcategory: ComponentSubcategory,
 ): string {
   if (subcategory.thumbnail) {
     // Use custom thumbnail from subcategory
-    return `/thumbnails/${toKebabCase(subcategory.thumbnail)}.png`;
+    return `/thumbnails/${toKebabCase(subcategory.thumbnail)}.webp`;
   }
 
   if (subcategory.items && subcategory.items.length > 0) {
     // Use first item's name as fallback
-    return `/thumbnails/${toKebabCase(subcategory.items[0].itemName)}.png`;
+    return `/thumbnails/${toKebabCase(subcategory.items[0].itemName)}.webp`;
   }
 
   // No items, return empty string (will show default box)
@@ -315,10 +315,10 @@ export function getCategoryCardThumbnailPath(
 /**
  * Get thumbnail path for OG images (SEO)
  * Always uses the component item name
- * Returns: /thumbnails/[component-item-name].png
+ * Returns: /thumbnails/[component-item-name].webp
  */
 export function getOGThumbnailPath(itemName: string): string {
-  return `/thumbnails/${toKebabCase(itemName)}.png`;
+  return `/thumbnails/${toKebabCase(itemName)}.webp`;
 }
 
 export function getAllPaths(): string[] {

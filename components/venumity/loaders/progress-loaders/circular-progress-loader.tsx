@@ -57,10 +57,10 @@ export function CircularProgressLoader({
               strokeDasharray: circumference,
               stroke:
                 status === "success"
-                  ? "#10b981"
+                  ? "var(--color-green-500)"
                   : status === "error"
-                    ? "#ef4444"
-                    : "#3b82f6",
+                    ? "var(--color-red-500)"
+                    : "var(--color-blue-500)",
             }}
           />
         </svg>
@@ -96,10 +96,7 @@ export function CircularProgressLoader({
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
-              <X
-                className={`text-red-500`}
-                size={sizes[size].icon}
-              />
+              <X className={`text-red-500`} size={sizes[size].icon} />
             </motion.div>
           )}
         </div>
@@ -109,7 +106,7 @@ export function CircularProgressLoader({
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`text-muted-foreground ${sizes[size].text === "text-sm" ? "text-xs" : "text-sm"}`}
+          className={`${sizes[size].text === "text-sm" ? "text-xs" : "text-base"} ${status === "error" ? "text-red-500" : status === "success" ? "text-green-500" : "text-foreground"}`}
         >
           {label}
         </motion.p>
@@ -120,12 +117,12 @@ export function CircularProgressLoader({
 
 export default function CircularProgressLoaderDemo() {
   return (
-    <main className="flex items-center justify-center m-auto gap-6 w-full h-full">
+    <div className="flex items-center justify-center m-auto gap-6 w-full h-full">
       <CircularProgressLoader progress={65} size="sm" label="Small" />
       <CircularProgressLoader progress={75} size="md" label="Medium" />
       <CircularProgressLoader progress={90} size="lg" label="Large" />
       <CircularProgressLoader progress={100} status="success" label="Success" />
       <CircularProgressLoader progress={45} status="error" label="Error" />
-    </main>
+    </div>
   );
 }

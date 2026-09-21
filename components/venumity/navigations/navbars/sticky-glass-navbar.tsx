@@ -1,17 +1,17 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 import { Menu, Moon, Sun, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import {
   motion,
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
 } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
 interface GlassNavbarProps {
   className?: string;
@@ -42,9 +42,9 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({ className }) => {
   if (!mounted) return null;
 
   return (
-    <div className={cn("sticky top-0 md:top-5 z-50 md:px-3 w-full", className)}>
+    <div className={cn("sticky top-0 z-50 md:p-5 w-full", className)}>
       <nav
-        className={`flex items-center justify-between p-3 bg-background/70 backdrop-blur-sm ${isScrolled ? "max-w-4xl" : "max-w-7xl"} m-auto border-2 border-b-5 border-r-5 rounded-xl transition-all duration-700 w-full`}
+        className={`flex items-center justify-between p-3 bg-background/70 backdrop-blur-sm ${isScrolled ? "max-w-4xl" : "w-full"} m-auto border border-foreground/15 rounded-lg transition-all duration-700 w-full`}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 md:gap-3">
@@ -161,7 +161,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({ className }) => {
 // Example usage component with dummy content
 export default function GlassNavbarDemo() {
   return (
-    <main className="w-full">
+    <div className="relative w-full">
       <GlassNavbar />
 
       {/* Hero Section */}
@@ -200,6 +200,6 @@ export default function GlassNavbarDemo() {
           </div>
         </section>
       ))}
-    </main>
+    </div>
   );
 }

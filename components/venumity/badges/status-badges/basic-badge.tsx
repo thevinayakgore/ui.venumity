@@ -1,115 +1,48 @@
-"use client";
 import { CheckCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
 
-export type BasicBadgeProps = {
-  label?: string;
-  text?: string;
-  count?: number;
-  leftCount?: number;
-  rightCount?: number;
-  leftTip?: string;
-  rightTip?: string;
-  color?: string;
-  icon?: ReactNode;
-  showIcon?: boolean;
-  showDot?: boolean;
-  outline?: boolean;
-  className?: string;
-};
-
-export function BasicBadge({
-  label,
-  text,
-  count,
-  leftCount,
-  rightCount,
-  leftTip,
-  rightTip,
-  color = "bg-muted",
-  icon,
-  showIcon = false,
-  showDot = false,
-  outline = false,
-  className,
-}: BasicBadgeProps) {
+export default function BasicBadge() {
   return (
-    <div className="flex items-center">
-      {count && (
-        <Badge
-          className={cn(
-            `min-w-5 h-5 px-1 justify-center text-xs text-white ${color}`,
-            className,
-          )}
-        >
-          {count}
-        </Badge>
-      )}
+    <div className="flex flex-wrap items-center justify-center gap-3 p-5 md:p-10 max-w-3xl m-auto w-full h-full">
+      {/* Online */}
+      <Badge className="gap-1.5 pl-1 pr-2 py-2.5 text-xs bg-green-500/20 backdrop-blur-sm border-green-500/30 text-foreground shadow-md/10 transition-all duration-500">
+        <span className="size-2.5 rounded-full bg-green-500" />
+        <span>Online</span>
+      </Badge>
 
-      {!label &&
-        !text &&
-        !showDot &&
-        !showIcon &&
-        (leftCount !== undefined || rightCount !== undefined) && (
-          <Badge
-            className={cn(
-              `min-w-5 h-5 px-1 justify-center text-xs text-white ${color}`,
-              className,
-            )}
-          >
-            {leftCount !== undefined && (
-              <span className="mr-1">{leftCount}</span>
-            )}
-            {rightCount !== undefined && <span>{rightCount}</span>}
-          </Badge>
-        )}
+      {/* Busy */}
+      <Badge className="gap-1.5 pl-1 pr-2 py-2.5 text-xs bg-red-500/20 backdrop-blur-sm border-red-500/30 text-foreground shadow-md/10 transition-all duration-500">
+        <span className="size-2.5 rounded-full bg-red-500" />
+        <span>Busy</span>
+      </Badge>
 
-      {(label || text || showDot || showIcon) && (
-        <Badge
-          variant="secondary"
-          className={cn(
-            "gap-2 pl-2 pr-3 text-sm hover:shadow-lg transition-all duration-500",
-            outline &&
-              "bg-accent dark:bg-popover border border-foreground/15 text-foreground/60",
-            className,
-          )}
-        >
-          {showIcon && <span>{icon}</span>}
-          {showDot && <span className={`size-3 rounded-full ${color}`} />}
-          {leftTip && <span className="text-xs">{leftTip}</span>}
-          {leftCount !== undefined && <span>{leftCount}</span>}
-          {label && <span>{label}</span>}
-          {text && <span>{text}</span>}
-          {count !== undefined && <span>{count}</span>}
-          {rightCount !== undefined && <span>{rightCount}</span>}
-          {rightTip && <span className="text-xs">{rightTip}</span>}
-        </Badge>
-      )}
+      {/* Idle (outline) */}
+      <Badge className="gap-1.5 pl-1 pr-2 py-2.5 text-xs bg-blue-500/20 backdrop-blur-sm border-blue-500/40 text-foreground shadow-md/10 transition-all duration-500">
+        <span className="size-2.5 rounded-full bg-blue-500" />
+        <span>Idle</span>
+      </Badge>
+
+      {/* Beta (outline) */}
+      <Badge className="px-2 py-2.5 text-xs bg-foreground/15 backdrop-blur-sm border-foreground/20 text-foreground shadow-md/10 transition-all duration-500">
+        Beta
+      </Badge>
+
+      {/* Verified (icon + outline) */}
+      <Badge className="gap-1.5 pl-1 pr-2 py-2.5 text-xs bg-foreground/15 backdrop-blur-sm border-foreground/20 text-foreground shadow-md/10 transition-all duration-500">
+        <CheckCircle className="size-2.5" />
+        <span>Verified</span>
+      </Badge>
+
+      {/* Offer (gradient) */}
+      <Badge className="gap-1.5 px-2.5 py-3 text-sm hover:shadow-lg transition-all duration-500 bg-linear-to-tl from-blue-500 to-sky-400 border-0! text-white shadow-lg/10">
+        <span className="text-xs">50%</span>
+        <span>Offer</span>
+      </Badge>
+
+      {/* Count (5) */}
+      <Badge className="min-w-5 h-5 px-1 justify-center text-xs text-white bg-blue-500">
+        5
+      </Badge>
     </div>
-  );
-}
-
-export default function BasicBadgeDemo() {
-  return (
-    <main className="flex flex-wrap items-center justify-center gap-3 p-6 md:p-10 max-w-3xl m-auto w-full h-full">
-      <BasicBadge label="Online" showDot color="bg-green-500" />
-      <BasicBadge label="Busy" showDot color="bg-red-500" />
-      <BasicBadge label="Idle" showDot color="bg-blue-400" outline />
-      <BasicBadge label="Beta" outline />
-      <BasicBadge
-        label="Verified"
-        showIcon
-        icon={<CheckCircle className="size-3" />}
-        outline
-      />
-      <BasicBadge
-        leftTip="50%"
-        text="Offer"
-        className="bg-linear-to-tl from-blue-500 to-sky-400 border-0! text-white"
-      />
-      <BasicBadge count={5} color="bg-blue-500" />
-    </main>
   );
 }

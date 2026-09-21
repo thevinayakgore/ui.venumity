@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   // Absolute OG images for the first 20 component items
   const images = allComponentNames.slice(0, 20).map((itemName) => ({
-    url: `${baseUrl}/thumbnails/${toKebabCase(itemName)}.png`,
+    url: `${baseUrl}/thumbnails/${toKebabCase(itemName)}.webp`,
     width: 1200,
     height: 630,
     alt: `${itemName} component preview`,

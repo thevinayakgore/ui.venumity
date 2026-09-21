@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 
-export default function SpinnerRing() {
+export default function RingSpinner() {
   return (
     <motion.main 
       initial={{ opacity: 0, scale: 0.6 }} 

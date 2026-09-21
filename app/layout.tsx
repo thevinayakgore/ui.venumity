@@ -1,20 +1,21 @@
 // app/layout.tsx
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
-import { ThemeProvider } from "@/components/utility/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "@/components/ui/sonner";
-import { website } from "@/lib/brand";
-import Footer from "@/components/site/navigations/footer";
-import MainLayout from "./mainlayout";
 import { cn } from "@/lib/utils";
-import { SearchProvider } from "@/components/site/navigations/search";
-import { COMPONENTS } from "@/registry/components";
-import { toKebabCase } from "@/utils/slug-kebab";
 import Script from "next/script";
+import MainLayout from "./mainlayout";
+import { website } from "@/lib/brand";
+import type { Metadata, Viewport } from "next";
+import { toKebabCase } from "@/utils/slug-kebab";
+import { Toaster } from "@/components/ui/sonner";
+import { COMPONENTS } from "@/registry/components";
+import { getAllThumbnails } from "@/lib/thumbnails";
+import { Analytics } from "@vercel/analytics/react";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Footer from "@/components/site/navigations/footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Geist, Geist_Mono, Manrope } from "next/font/google";
+import { ThemeProvider } from "@/components/utility/theme-provider";
+import { SearchProvider } from "@/components/site/navigations/search";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -120,6 +121,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const thumbnails = getAllThumbnails();
+
   return (
     <html
       lang="en"
@@ -206,7 +209,7 @@ export default function RootLayout({
                 <Analytics />
                 <SpeedInsights />
                 {children}
-                <Footer />
+                <Footer baseImages={thumbnails} />
               </MainLayout>
             </SearchProvider>
           </TooltipProvider>

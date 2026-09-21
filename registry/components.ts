@@ -926,7 +926,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Page Loaders",
-        thumbnail: "full-page-loader",
+        thumbnail: "logo-page-loader",
         description:
           "Create polished transitions with professional page loaders that manage user expectations during critical waits.",
         tags: ["page", "loader", "fullscreen", "route", "blocking"],
@@ -942,7 +942,6 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Progress Loaders",
-        thumbnail: "progress-loader-2",
         description:
           "Track operation completion with visual progress indicators that manage user expectations during longer waits.",
         tags: ["progress", "loader", "loading", "indicator", "status"],
@@ -960,7 +959,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Pulse Loaders",
-        thumbnail: "multi-pulse-loader",
+        thumbnail: "multi-layer-pulse-loader",
         description:
           "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
         tags: ["pulse", "loader", "activity", "animation", "waiting"],
@@ -971,7 +970,7 @@ export const COMPONENTS = createComponents([
             githubUsername: "thevinayakgore",
           },
           {
-            itemName: "Multi Pulse Loader",
+            itemName: "Multi Layer Pulse Loader",
             githubUsername: "thevinayakgore",
           },
         ],
@@ -1008,7 +1007,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Spinners",
-        thumbnail: "ring-spinner",
+        thumbnail: "gradient-spinner",
         description:
           "Classic spinner animations that provide clear visual feedback during loading states.",
         tags: ["spinner", "loader", "loading", "waiting", "animation"],
@@ -1076,6 +1075,7 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "Navbars",
+        thumbnail: "sticky-glass-navbar",
         description:
           "Establish strong navigation foundations with professional navbar systems that guide users effectively.",
         tags: ["navbar", "header", "navigation", "top", "branding"],
