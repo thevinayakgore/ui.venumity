@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +35,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { Separator } from "@/components/ui/separator";
 import {
   Activity,
   AlertCircle,
@@ -47,7 +47,6 @@ import {
   Filter,
   Info,
   MoreHorizontal,
-  RefreshCw,
   Search,
   Trash2,
   XCircle,
@@ -59,65 +58,15 @@ import {
   Shield,
   Cpu,
   Wifi,
-  CreditCardIcon,
+  CalendarIcon,
 } from "lucide-react";
-import type { LucideProps } from "lucide-react";
+import type { LucideProps, LucideIcon } from "lucide-react";
 import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
-
-interface LogEntry {
-  id: string;
-  timestamp: string;
-  level: "info" | "warning" | "error" | "debug";
-  source: string;
-  message: string;
-  user: string;
-  ip?: string;
-  duration?: number;
-}
-
-const sourceIcons: Record<string, LucideIcon> = {
-  "API Server": Globe,
-  Database: Database,
-  "Auth Service": Lock,
-  "Web Server": Globe,
-  "Cache Service": Cpu,
-  "Payment Gateway": CreditCardIcon,
-  "Email Service": Mail,
-  Security: Shield,
-  Network: Wifi,
-};
-
-const levelColors = {
-  info: {
-    bg: "bg-blue-500/10",
-    text: "text-blue-600",
-    border: "border-blue-500/20",
-    icon: Info,
-  },
-  warning: {
-    bg: "bg-amber-500/10",
-    text: "text-amber-600",
-    border: "border-amber-500/20",
-    icon: AlertTriangle,
-  },
-  error: {
-    bg: "bg-rose-500/10",
-    text: "text-rose-600",
-    border: "border-rose-500/20",
-    icon: XCircle,
-  },
-  debug: {
-    bg: "bg-slate-500/10",
-    text: "text-slate-600",
-    border: "border-slate-500/20",
-    icon: Bug,
-  },
-};
-
 import { forwardRef } from "react";
 
+// ── Custom CreditCard icon (kept as-is) ────────────────────
 const CreditCard = forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
   <svg
     ref={ref}
@@ -138,6 +87,18 @@ const CreditCard = forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
 ));
 CreditCard.displayName = "CreditCard";
 
+// ── Types ──────────────────────────────────────────────────
+interface LogEntry {
+  id: string;
+  timestamp: string;
+  level: "info" | "warning" | "error" | "debug";
+  source: string;
+  message: string;
+  user: string;
+  ip?: string;
+  duration?: number;
+}
+
 type DateRangeFilter = {
   from?: Date;
   to?: Date;
@@ -154,6 +115,49 @@ type FiltersState = {
   showOnlyErrors: boolean;
 };
 
+// ── Config ────────────────────────────────────────────────
+const MAX_LOGS = 40;
+
+const sourceIcons: Record<string, LucideIcon> = {
+  "API Server": Globe,
+  Database: Database,
+  "Auth Service": Lock,
+  "Web Server": Globe,
+  "Cache Service": Cpu,
+  "Payment Gateway": CreditCard,
+  "Email Service": Mail,
+  Security: Shield,
+  Network: Wifi,
+};
+
+const levelColors = {
+  info: {
+    bg: "bg-blue-500/15",
+    text: "text-blue-500",
+    border: "border-blue-500/50",
+    icon: Info,
+  },
+  warning: {
+    bg: "bg-amber-500/15",
+    text: "text-amber-500",
+    border: "border-amber-500/50",
+    icon: AlertTriangle,
+  },
+  error: {
+    bg: "bg-rose-500/15",
+    text: "text-rose-500",
+    border: "border-rose-500/50",
+    icon: XCircle,
+  },
+  debug: {
+    bg: "bg-slate-500/15",
+    text: "text-slate-500",
+    border: "border-slate-500/50",
+    icon: Bug,
+  },
+};
+
+// ── Component ─────────────────────────────────────────────
 export default function RealTimeFilterableTable() {
   const [logs, setLogs] = useState<LogEntry[]>([
     {
@@ -243,10 +247,7 @@ export default function RealTimeFilterableTable() {
     source: "all",
     search: "",
     timeRange: "all",
-    dateRange: {
-      from: undefined,
-      to: undefined,
-    },
+    dateRange: { from: undefined, to: undefined },
     minDuration: 0,
     maxDuration: 30000,
     showOnlyErrors: false,
@@ -255,13 +256,14 @@ export default function RealTimeFilterableTable() {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [view, setView] = useState<"table" | "compact">("table");
   const [selectedLogs, setSelectedLogs] = useState<string[]>([]);
-  const [stats, setStats] = useState({
+  const [, setStats] = useState({
     info: 0,
     warning: 0,
     error: 0,
     debug: 0,
   });
 
+  // ── Filtering ────────────────────────────────────────────
   const filteredLogs = logs.filter((log) => {
     if (
       filters.search &&
@@ -273,17 +275,9 @@ export default function RealTimeFilterableTable() {
       return false;
     }
 
-    if (filters.level !== "all" && log.level !== filters.level) {
-      return false;
-    }
-
-    if (filters.source !== "all" && log.source !== filters.source) {
-      return false;
-    }
-
-    if (filters.showOnlyErrors && log.level !== "error") {
-      return false;
-    }
+    if (filters.level !== "all" && log.level !== filters.level) return false;
+    if (filters.source !== "all" && log.source !== filters.source) return false;
+    if (filters.showOnlyErrors && log.level !== "error") return false;
 
     if (filters.minDuration > 0 || filters.maxDuration < 30000) {
       const duration = log.duration || 0;
@@ -296,7 +290,6 @@ export default function RealTimeFilterableTable() {
       const logTime = new Date(log.timestamp).getTime();
       const now = new Date().getTime();
       const minutes = (now - logTime) / (1000 * 60);
-
       switch (filters.timeRange) {
         case "last5":
           if (minutes > 5) return false;
@@ -323,8 +316,9 @@ export default function RealTimeFilterableTable() {
     return true;
   });
 
+  // ── Stats ────────────────────────────────────────────────
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timeout = setTimeout(() => {
       const newStats = logs.reduce(
         (acc, log) => {
           acc[log.level]++;
@@ -332,12 +326,14 @@ export default function RealTimeFilterableTable() {
         },
         { info: 0, warning: 0, error: 0, debug: 0 },
       );
-      setStats(newStats);
-    }, 0);
 
-    return () => clearTimeout(timer);
+      setStats(newStats);
+    }, 300);
+
+    return () => clearTimeout(timeout);
   }, [logs]);
 
+  // ── Auto-generate logs (max 40) ──────────────────────────
   useEffect(() => {
     if (!autoRefresh) return;
 
@@ -397,13 +393,15 @@ export default function RealTimeFilterableTable() {
 
       setLogs((prev) => {
         const updated = [newLog, ...prev];
-        return updated.slice(0, 100); // Keep last 100 logs
+        // Cap at 40 — reset when exceeded
+        return updated.slice(0, MAX_LOGS);
       });
     }, 3000);
 
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
+  // ── Actions ──────────────────────────────────────────────
   const clearLogs = () => {
     setLogs([]);
     setSelectedLogs([]);
@@ -413,11 +411,32 @@ export default function RealTimeFilterableTable() {
     const dataStr = JSON.stringify(filteredLogs, null, 2);
     const dataUri =
       "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
-    const exportFileDefaultName = `logs_${new Date().toISOString()}.json`;
     const linkElement = document.createElement("a");
     linkElement.setAttribute("href", dataUri);
-    linkElement.setAttribute("download", exportFileDefaultName);
+    linkElement.setAttribute(
+      "download",
+      `logs_${new Date().toISOString()}.json`,
+    );
     linkElement.click();
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      level: "all",
+      source: "all",
+      search: "",
+      timeRange: "all",
+      dateRange: { from: undefined, to: undefined },
+      minDuration: 0,
+      maxDuration: 30000,
+      showOnlyErrors: false,
+    });
+  };
+
+  const toggleLog = (id: string) => {
+    setSelectedLogs((prev) =>
+      prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id],
+    );
   };
 
   const sources = Array.from(new Set(logs.map((log) => log.source)));
@@ -426,623 +445,480 @@ export default function RealTimeFilterableTable() {
     if (key === "dateRange" && typeof value === "object" && value !== null) {
       return value.from || value.to;
     }
-
-    if (key === "showOnlyErrors") {
-      return value === true;
-    }
-
-    if (key === "minDuration" && typeof value === "number") {
-      return value > 0;
-    }
-
-    if (key === "maxDuration" && typeof value === "number") {
+    if (key === "showOnlyErrors") return value === true;
+    if (key === "minDuration" && typeof value === "number") return value > 0;
+    if (key === "maxDuration" && typeof value === "number")
       return value < 30000;
-    }
-
-    if (typeof value === "string") {
-      return value !== "all" && value !== "";
-    }
-
+    if (typeof value === "string") return value !== "all" && value !== "";
     return false;
   }).length;
 
+  // ── Render ───────────────────────────────────────────────
   return (
-    <main className="p-6 md:p-10">
-      <Card className="w-full pt-0 shadow-none hover:shadow-xl/10 overflow-hidden transition-all duration-500">
-        <CardHeader className="pt-6 border-b">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3">
-                <CardTitle className="text-4xl font-semibold">
-                  System Logs
-                </CardTitle>
-                <Badge
-                  variant="outline"
-                  className="bg-green-500/10 text-green-600 border-green-500/20"
-                >
-                  <Activity className="size-3 mr-1 animate-pulse" />
-                  LIVE
-                </Badge>
-              </div>
-              <p className="text-sm md:text-base text-foreground/60 mt-1">
-                Real-time monitoring and filtering • {filteredLogs.length} logs
-                shown
-              </p>
+    <div className="p-5 space-y-5 w-full h-full">
+      {/* ── Filter bar (parent design) ──────────────────── */}
+      <div className="p-5 bg-foreground/5 border rounded-2xl">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="flex items-center gap-2 text-base md:text-lg font-semibold tracking-wide">
+            <Filter className="size-5" />
+            Filters
+            {activeFilterCount > 0 && (
+              <Badge variant="secondary" className="ml-2">
+                {activeFilterCount} active
+              </Badge>
+            )}
+          </h3>
+          <Button
+            onClick={resetFilters}
+            className="h-8 text-xs bg-foreground! text-secondary! font-bold"
+          >
+            Clear all
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 items-end gap-3">
+          {/* Search */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Search</Label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Input
+                placeholder="Search logs..."
+                value={filters.search}
+                onChange={(e) =>
+                  setFilters({ ...filters, search: e.target.value })
+                }
+                className="pl-9"
+              />
             </div>
-            <div className="flex gap-3">
-              <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-lg">
+          </div>
+
+          {/* Log Level */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Log Level</Label>
+            <Select
+              value={filters.level}
+              onValueChange={(value) =>
+                setFilters({
+                  ...filters,
+                  level: value as FiltersState["level"],
+                })
+              }
+            >
+              <SelectTrigger className="cursor-pointer w-full">
+                <SelectValue placeholder="All Levels" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Levels</SelectItem>
+                <SelectItem value="info">Info</SelectItem>
+                <SelectItem value="warning">Warning</SelectItem>
+                <SelectItem value="error">Error</SelectItem>
+                <SelectItem value="debug">Debug</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Source */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Source</Label>
+            <Select
+              value={filters.source}
+              onValueChange={(value) =>
+                setFilters({ ...filters, source: value })
+              }
+            >
+              <SelectTrigger className="cursor-pointer w-full">
+                <SelectValue placeholder="All Sources" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Sources</SelectItem>
+                {sources.map((source) => (
+                  <SelectItem key={source} value={source}>
+                    {source}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Time Range */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Time Range</Label>
+            <Select
+              value={filters.timeRange}
+              onValueChange={(value) =>
+                setFilters({
+                  ...filters,
+                  timeRange: value as FiltersState["timeRange"],
+                })
+              }
+            >
+              <SelectTrigger className="cursor-pointer w-full">
+                <SelectValue placeholder="All Time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Time</SelectItem>
+                <SelectItem value="last5">Last 5 minutes</SelectItem>
+                <SelectItem value="last15">Last 15 minutes</SelectItem>
+                <SelectItem value="last30">Last 30 minutes</SelectItem>
+                <SelectItem value="last60">Last 1 hour</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Date Range */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Custom Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !filters.dateRange.from &&
+                      !filters.dateRange.to &&
+                      "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 size-4" />
+                  {filters.dateRange.from ? (
+                    filters.dateRange.to ? (
+                      <>
+                        {format(filters.dateRange.from, "LLL dd, y")} -{" "}
+                        {format(filters.dateRange.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(filters.dateRange.from, "LLL dd, y")
+                    )
+                  ) : (
+                    "Pick a date range"
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="range"
+                  selected={filters.dateRange as DateRange}
+                  onSelect={(range) =>
+                    setFilters({
+                      ...filters,
+                      dateRange: { from: range?.from, to: range?.to },
+                    })
+                  }
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+      </div>
+
+      {/* ── View toggle + actions ───────────────────────── */}
+      <div className="flex items-center gap-5 mb-5 w-full">
+        <Tabs
+          value={view}
+          onValueChange={(v) => setView(v as "table" | "compact")}
+        >
+          <TabsList className="p-1! h-11! w-fit">
+            <TabsTrigger
+              value="table"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              <Terminal className="size-4 mr-2" />
+              Detailed
+            </TabsTrigger>
+            <TabsTrigger
+              value="compact"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              <Activity className="size-4 mr-2" />
+              Compact
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <div className="flex items-center justify-end gap-2 w-full">
+          {/* Duration Range */}
+          <div className="w-1/3">
+            <Label className="text-xs md:text-sm mb-3 block">
+              Duration : {filters.minDuration}ms - {filters.maxDuration}ms
+            </Label>
+            <Slider
+              min={0}
+              max={30000}
+              step={100}
+              value={[filters.minDuration, filters.maxDuration]}
+              onValueChange={([min, max]) =>
+                setFilters({
+                  ...filters,
+                  minDuration: min,
+                  maxDuration: max,
+                })
+              }
+              className="mt-2"
+            />
+          </div>
+
+          <Separator orientation="vertical" className="mx-4 bg-foreground/20" />
+
+          <div className="space-y-1">
+            <div className="flex items-end">
+              <div className="flex items-center space-x-2 pb-1">
                 <Switch
-                  id="auto-refresh"
-                  checked={autoRefresh}
-                  onCheckedChange={setAutoRefresh}
+                  id="showOnlyErrors"
+                  checked={filters.showOnlyErrors}
+                  onCheckedChange={(checked) =>
+                    setFilters({ ...filters, showOnlyErrors: checked })
+                  }
                 />
                 <Label
-                  htmlFor="auto-refresh"
-                  className="text-sm cursor-pointer"
+                  htmlFor="showOnlyErrors"
+                  className="text-xs cursor-pointer"
                 >
-                  Auto-refresh
+                  Show only errors
                 </Label>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={exportLogs}
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                <Download className="size-4" />
-                Export
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={clearLogs}
-                className="gap-2 cursor-pointer rounded-sm text-rose-600 hover:text-rose-700 hover:bg-rose-500/10"
-              >
-                <Trash2 className="size-4" />
-                Clear
-              </Button>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="auto-refresh"
+                checked={autoRefresh}
+                onCheckedChange={setAutoRefresh}
+              />
+              <Label htmlFor="auto-refresh" className="text-xs cursor-pointer">
+                Auto-refresh
+              </Label>
             </div>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            {[
-              {
-                level: "info",
-                label: "Info",
-                count: stats.info,
-                icon: Info,
-                color: "blue",
-              },
-              {
-                level: "warning",
-                label: "Warnings",
-                count: stats.warning,
-                icon: AlertTriangle,
-                color: "amber",
-              },
-              {
-                level: "error",
-                label: "Errors",
-                count: stats.error,
-                icon: XCircle,
-                color: "rose",
-              },
-              {
-                level: "debug",
-                label: "Debug",
-                count: stats.debug,
-                icon: Bug,
-                color: "slate",
-              },
-            ].map((stat) => (
-              <motion.div
-                key={stat.level}
-                whileHover={{ scale: 1.02 }}
-                className={cn(
-                  "rounded-lg p-3 border",
-                  `bg-${stat.color}-500/5 border-${stat.color}-500/20`,
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <div
-                    className={cn(
-                      "text-2xl font-bold",
-                      `text-${stat.color}-600`,
-                    )}
-                  >
-                    {stat.count}
+          <Separator orientation="vertical" className="mx-4 bg-foreground/20" />
+
+          <Button
+            variant="outline"
+            onClick={exportLogs}
+            className="gap-2 p-4.5!"
+          >
+            <Download />
+            Export
+          </Button>
+          <Button
+            onClick={clearLogs}
+            className="gap-2 p-4.5! bg-red-500! text-white!"
+          >
+            <Trash2 />
+            Clear
+          </Button>
+        </div>
+      </div>
+
+      {/* ── Table View ──────────────────────────────────── */}
+      {view === "table" && (
+        <div className="rounded-lg border overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50 hover:bg-muted/50">
+                <TableHead className="p-3! w-48">
+                  <div className="flex items-center gap-2">
+                    <Clock className="size-4" />
+                    Timestamp
                   </div>
-                  <stat.icon
-                    className={cn("size-5", `text-${stat.color}-500`)}
-                  />
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </CardHeader>
-
-        <CardContent className="p-6">
-          {/* Filters */}
-          <div className="bg-muted/30 rounded-lg p-4 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Filter className="size-4" />
-                <h3 className="font-semibold">Filters</h3>
-                {activeFilterCount > 0 && (
-                  <Badge variant="secondary" className="ml-2">
-                    {activeFilterCount} active
-                  </Badge>
-                )}
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() =>
-                  setFilters({
-                    level: "all",
-                    source: "all",
-                    search: "",
-                    timeRange: "all",
-                    dateRange: { from: undefined, to: undefined },
-                    minDuration: 0,
-                    maxDuration: 30000,
-                    showOnlyErrors: false,
-                  })
-                }
-                className="h-8 text-xs"
-              >
-                Clear all
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {/* Search */}
-              <div>
-                <Label className="text-xs mb-2 block">Search</Label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search logs..."
-                    value={filters.search}
-                    onChange={(e) =>
-                      setFilters({ ...filters, search: e.target.value })
-                    }
-                    className="pl-9"
-                  />
-                </div>
-              </div>
-
-              {/* Log Level */}
-              <div>
-                <Label className="text-xs mb-2 block">Log Level</Label>
-                <Select
-                  value={filters.level}
-                  onValueChange={(value) =>
-                    setFilters({
-                      ...filters,
-                      level: value as FiltersState["level"],
-                    })
-                  }
-                >
-                  <SelectTrigger className="cursor-pointer">
-                    <SelectValue placeholder="All Levels" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Levels</SelectItem>
-                    <SelectItem value="info">Info</SelectItem>
-                    <SelectItem value="warning">Warning</SelectItem>
-                    <SelectItem value="error">Error</SelectItem>
-                    <SelectItem value="debug">Debug</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Source */}
-              <div>
-                <Label className="text-xs mb-2 block">Source</Label>
-                <Select
-                  value={filters.source}
-                  onValueChange={(value) =>
-                    setFilters({ ...filters, source: value })
-                  }
-                >
-                  <SelectTrigger className="cursor-pointer">
-                    <SelectValue placeholder="All Sources" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Sources</SelectItem>
-                    {sources.map((source) => (
-                      <SelectItem key={source} value={source}>
-                        {source}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Time Range */}
-              <div>
-                <Label className="text-xs mb-2 block">Time Range</Label>
-                <Select
-                  value={filters.timeRange}
-                  onValueChange={(value) =>
-                    setFilters({
-                      ...filters,
-                      timeRange: value as FiltersState["timeRange"],
-                    })
-                  }
-                >
-                  <SelectTrigger className="cursor-pointer">
-                    <SelectValue placeholder="All Time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="last5">Last 5 minutes</SelectItem>
-                    <SelectItem value="last15">Last 15 minutes</SelectItem>
-                    <SelectItem value="last30">Last 30 minutes</SelectItem>
-                    <SelectItem value="last60">Last 1 hour</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Duration Range */}
-              <div className="lg:col-span-2">
-                <Label className="text-xs mb-2 block">
-                  Duration: {filters.minDuration}ms - {filters.maxDuration}ms
-                </Label>
-                <div className="px-2">
-                  <Slider
-                    min={0}
-                    max={30000}
-                    step={100}
-                    value={[filters.minDuration, filters.maxDuration]}
-                    onValueChange={([min, max]) =>
-                      setFilters({
-                        ...filters,
-                        minDuration: min,
-                        maxDuration: max,
-                      })
-                    }
-                    className="mt-2"
-                  />
-                </div>
-              </div>
-
-              {/* Date Range */}
-              <div>
-                <Label className="text-xs mb-2 block">Custom Date Range</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !filters.dateRange.from &&
-                          !filters.dateRange.to &&
-                          "text-muted-foreground",
-                      )}
-                    >
-                      <Clock className="mr-2 size-4" />
-                      {filters.dateRange.from ? (
-                        filters.dateRange.to ? (
-                          <>
-                            {filters.dateRange.from.toLocaleDateString()} -{" "}
-                            {filters.dateRange.to.toLocaleDateString()}
-                          </>
-                        ) : (
-                          filters.dateRange.from.toLocaleDateString()
-                        )
-                      ) : (
-                        "Select date range"
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="range"
-                      selected={filters.dateRange as DateRange}
-                      onSelect={(range) =>
-                        setFilters({
-                          ...filters,
-                          dateRange: { from: range?.from, to: range?.to },
-                        })
-                      }
-                      numberOfMonths={2}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              {/* Show Only Errors */}
-              <div className="flex items-end">
-                <div className="flex items-center space-x-2 pb-1">
-                  <Switch
-                    id="showOnlyErrors"
-                    checked={filters.showOnlyErrors}
-                    onCheckedChange={(checked) =>
-                      setFilters({ ...filters, showOnlyErrors: checked })
-                    }
-                  />
-                  <Label
-                    htmlFor="showOnlyErrors"
-                    className="text-sm cursor-pointer"
-                  >
-                    Show only errors
-                  </Label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* View Toggle and Actions */}
-          <div className="flex justify-between items-center mb-4">
-            <Tabs
-              value={view}
-              onValueChange={(v) => setView(v as "table" | "compact")}
-            >
-              <TabsList>
-                <TabsTrigger value="table" className="cursor-pointer">
-                  <Terminal className="size-4 mr-2" />
-                  Detailed
-                </TabsTrigger>
-                <TabsTrigger value="compact" className="cursor-pointer">
-                  <Activity className="size-4 mr-2" />
-                  Compact
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            <div className="flex items-center gap-2">
-              {autoRefresh && (
-                <Badge
-                  variant="outline"
-                  className="bg-green-500/10 text-green-600 animate-pulse"
-                >
-                  <RefreshCw className="size-3 mr-1" />
-                  Live
-                </Badge>
-              )}
-              <span className="text-sm text-muted-foreground">
-                {selectedLogs.length} selected
-              </span>
-            </div>
-          </div>
-
-          {/* Table View */}
-          {view === "table" && (
-            <div className="rounded-lg border overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-muted/50 hover:bg-muted/50">
-                    <TableHead className="w-48">
-                      <div className="flex items-center gap-2">
-                        <Clock className="size-4" />
-                        Timestamp
-                      </div>
-                    </TableHead>
-                    <TableHead className="w-24">Level</TableHead>
-                    <TableHead className="w-32">Source</TableHead>
-                    <TableHead>Message</TableHead>
-                    <TableHead className="w-32">User</TableHead>
-                    <TableHead className="w-32">IP Address</TableHead>
-                    <TableHead className="w-24 text-right">Duration</TableHead>
-                    <TableHead className="w-20 text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <AnimatePresence>
-                    {filteredLogs.map((log, index) => {
-                      const LevelIcon = levelColors[log.level].icon;
-                      const SourceIcon = sourceIcons[log.source] || Terminal;
-
-                      return (
-                        <motion.tr
-                          key={log.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.2, delay: index * 0.02 }}
-                          className={cn(
-                            "group hover:bg-muted/50 transition-colors border-b last:border-0",
-                            log.level === "error" && "bg-rose-500/5",
-                          )}
-                        >
-                          <TableCell className="py-3 font-mono text-sm">
-                            {log.timestamp}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={cn(
-                                levelColors[log.level].bg,
-                                levelColors[log.level].text,
-                                levelColors[log.level].border,
-                                "font-medium gap-1",
-                              )}
-                            >
-                              <LevelIcon className="size-3" />
-                              {log.level.toUpperCase()}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <SourceIcon className="size-4 text-muted-foreground" />
-                              <span className="text-sm">{log.source}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="font-mono text-sm">
-                              {log.message}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className="font-mono">
-                              {log.user}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-sm text-muted-foreground font-mono">
-                              {log.ip || "N/A"}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {log.duration ? (
-                              <span className="text-sm font-mono">
-                                {log.duration}ms
-                              </span>
-                            ) : (
-                              <span className="text-sm text-muted-foreground">
-                                -
-                              </span>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                >
-                                  <MoreHorizontal className="size-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="gap-2">
-                                  <AlertCircle className="size-4" />
-                                  View Details
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="gap-2">
-                                  <CheckCircle2 className="size-4" />
-                                  Mark as Reviewed
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </motion.tr>
-                      );
-                    })}
-                  </AnimatePresence>
-                </TableBody>
-              </Table>
-            </div>
-          )}
-
-          {/* Compact View */}
-          {view === "compact" && (
-            <div className="space-y-2">
+                </TableHead>
+                <TableHead className="p-3! w-24">Level</TableHead>
+                <TableHead className="p-3! w-40">Source</TableHead>
+                <TableHead className="p-3!">Message</TableHead>
+                <TableHead className="p-3! w-32">User</TableHead>
+                <TableHead className="p-3! w-32">IP</TableHead>
+                <TableHead className="p-3! w-24 text-right">Duration</TableHead>
+                <TableHead className="p-3! text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               <AnimatePresence>
                 {filteredLogs.map((log, index) => {
                   const LevelIcon = levelColors[log.level].icon;
+                  const SourceIcon = sourceIcons[log.source] || Terminal;
 
                   return (
-                    <motion.div
+                    <motion.tr
                       key={log.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.2, delay: index * 0.02 }}
                       className={cn(
-                        "flex items-center gap-4 p-3 rounded-lg border",
-                        levelColors[log.level].bg,
-                        levelColors[log.level].border,
-                        "hover:shadow-md transition-all",
+                        "group border-b last:border-0",
+                        log.level === "error" && "bg-rose-500/5",
+                        selectedLogs.includes(log.id) && "bg-muted/30",
                       )}
                     >
-                      <LevelIcon
-                        className={cn("size-5", levelColors[log.level].text)}
-                      />
-                      <div className="font-mono text-xs text-muted-foreground w-32">
+                      <TableCell className="p-3 font-mono text-sm">
                         {log.timestamp}
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className={cn(levelColors[log.level].text)}
-                      >
-                        {log.source}
-                      </Badge>
-                      <div className="flex-1 font-mono text-sm truncate">
-                        {log.message}
-                      </div>
-                      <Badge variant="outline" className="font-mono text-xs">
-                        {log.user}
-                      </Badge>
-                      {log.duration && (
-                        <span className="text-xs text-muted-foreground">
-                          {log.duration}ms
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            levelColors[log.level].bg,
+                            levelColors[log.level].text,
+                            levelColors[log.level].border,
+                            "pl-2! pr-3! py-3! tracking-wide font-semibold gap-1.25",
+                          )}
+                        >
+                          <LevelIcon className="size-3" />
+                          {log.level.toUpperCase()}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div className="flex items-center gap-2">
+                          <SourceIcon className="size-4 text-muted-foreground" />
+                          <span className="text-sm">{log.source}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div className="font-mono text-sm">{log.message}</div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <Badge
+                          variant="outline"
+                          className="p-3! bg-foreground/5 border-foreground/15"
+                        >
+                          {log.user}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <span className="text-sm text-muted-foreground font-mono">
+                          {log.ip || "N/A"}
                         </span>
-                      )}
-                    </motion.div>
+                      </TableCell>
+                      <TableCell className="p-3 text-right">
+                        {log.duration ? (
+                          <span className="text-sm font-mono">
+                            {log.duration}ms
+                          </span>
+                        ) : (
+                          <span className="text-sm text-muted-foreground">
+                            -
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell className="p-3 text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                            >
+                              <MoreHorizontal className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="space-y-1 min-w-fit"
+                          >
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <AlertCircle className="size-4" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <CheckCircle2 className="size-4" />
+                              Mark as Reviewed
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="gap-2 cursor-pointer bg-red-500! text-white"
+                              onClick={() => toggleLog(log.id)}
+                            >
+                              <Trash2 className="size-4" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </motion.tr>
                   );
                 })}
               </AnimatePresence>
-            </div>
-          )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
-          {/* Empty State */}
-          {filteredLogs.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-12"
-            >
-              <Terminal className="size-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No logs found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your filters or wait for new logs
-              </p>
-              <Button
-                onClick={() =>
-                  setFilters({
-                    level: "all",
-                    source: "all",
-                    search: "",
-                    timeRange: "all",
-                    dateRange: { from: undefined, to: undefined },
-                    minDuration: 0,
-                    maxDuration: 30000,
-                    showOnlyErrors: false,
-                  })
-                }
-                variant="outline"
-              >
-                Clear Filters
-              </Button>
-            </motion.div>
-          )}
+      {/* ── Compact View ────────────────────────────────── */}
+      {view === "compact" && (
+        <div className="space-y-2">
+          <AnimatePresence>
+            {filteredLogs.map((log, index) => {
+              const LevelIcon = levelColors[log.level].icon;
 
-          {/* Footer */}
-          {filteredLogs.length > 0 && (
-            <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
-              <div>
-                Showing {filteredLogs.length} of {logs.length} logs
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                  <span>Info</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                  <span>Warning</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                  <span>Error</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-slate-500 animate-pulse" />
-                  <span>Debug</span>
-                </div>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </main>
+              return (
+                <motion.div
+                  key={log.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2, delay: index * 0.02 }}
+                  className={cn(
+                    "flex items-center gap-4 p-3 rounded-lg border",
+                    levelColors[log.level].bg,
+                    levelColors[log.level].border,
+                    "hover:shadow-md transition-all",
+                  )}
+                >
+                  <LevelIcon
+                    className={cn("size-5", levelColors[log.level].text)}
+                  />
+                  <div className="font-mono text-sm min-w-40">
+                    {log.timestamp}
+                  </div>
+                  <Badge
+                    className={cn(
+                      levelColors[log.level].bg,
+                      levelColors[log.level].text,
+                      levelColors[log.level].border,
+                      "p-3! tracking-wide font-semibold gap-1.25",
+                    )}
+                  >
+                    {log.source}
+                  </Badge>
+                  <div className="flex-1 font-mono text-sm truncate">
+                    {log.message}
+                  </div>
+                  <Badge
+                    
+                    className="p-3! bg-foreground! text-secondary! font-semibold"
+                  >
+                    {log.user}
+                  </Badge>
+                  {log.duration && (
+                    <span className="text-sm">
+                      {log.duration}ms
+                    </span>
+                  )}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {/* ── Empty State ─────────────────────────────────── */}
+      {filteredLogs.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
+          <Terminal className="size-12 mx-auto text-muted-foreground mb-4" />
+          <h3 className="text-xl font-semibold mb-2">No logs found</h3>
+          <p className="text-muted-foreground mb-4">
+            Try adjusting your filters or wait for new logs
+          </p>
+          <Button onClick={resetFilters} variant="outline">
+            Clear Filters
+          </Button>
+        </motion.div>
+      )}
+    </div>
   );
 }

@@ -13,7 +13,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,7 +39,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Download,
   Search,
   Filter,
   MoreHorizontal,
@@ -50,14 +48,673 @@ import {
   X,
   Users,
   Globe,
-  ShoppingBag,
-  DollarSign,
   Clock,
-  SlidersHorizontal,
-  RefreshCw,
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+
+export default function FiltersTable() {
+  const [customers] = useState<Customer[]>(
+    [...baseCustomers].sort((a, b) => a.id.localeCompare(b.id)),
+  );
+  const [filters, setFilters] = useState<FiltersState>({
+    status: "all",
+    country: "all",
+    segment: "all",
+    minOrders: 0,
+    maxOrders: 20,
+    minSpent: 0,
+    maxSpent: 5000,
+    dateRange: {
+      from: undefined,
+      to: undefined,
+    },
+    activeOnly: false,
+  });
+  const [search, setSearch] = useState("");
+  const [view, setView] = useState<"grid" | "table">("table");
+  const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
+
+  const countries = useMemo(
+    () => Array.from(new Set(customers.map((c) => c.country))).sort(),
+    [customers],
+  );
+
+  const filteredCustomers = useMemo(() => {
+    return customers.filter((customer) => {
+      if (
+        search &&
+        !customer.name.toLowerCase().includes(search.toLowerCase()) &&
+        !customer.email.toLowerCase().includes(search.toLowerCase()) &&
+        !customer.id.toLowerCase().includes(search.toLowerCase())
+      ) {
+        return false;
+      }
+      if (filters.status !== "all" && customer.status !== filters.status) {
+        return false;
+      }
+      if (filters.country !== "all" && customer.country !== filters.country) {
+        return false;
+      }
+      if (filters.segment !== "all" && customer.segment !== filters.segment) {
+        return false;
+      }
+      if (
+        customer.orders < filters.minOrders ||
+        customer.orders > filters.maxOrders
+      ) {
+        return false;
+      }
+      if (
+        customer.totalSpent < filters.minSpent ||
+        customer.totalSpent > filters.maxSpent
+      ) {
+        return false;
+      }
+      if (filters.dateRange.from || filters.dateRange.to) {
+        const joinDate = new Date(customer.joinDate);
+        if (filters.dateRange.from && joinDate < filters.dateRange.from)
+          return false;
+        if (filters.dateRange.to && joinDate > filters.dateRange.to)
+          return false;
+      }
+      if (filters.activeOnly && customer.status !== "Active") return false;
+
+      return true;
+    });
+  }, [customers, search, filters]);
+
+  const paginatedCustomers = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredCustomers.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredCustomers, currentPage]);
+
+  const totalPages = Math.ceil(filteredCustomers.length / ITEMS_PER_PAGE);
+
+  const getStatusColor = (status: Customer["status"]) => {
+    switch (status) {
+      case "Active":
+        return "bg-green-500/10 text-green-600 border-green-500/60";
+      case "Inactive":
+        return "bg-amber-500/10 text-amber-600 border-amber-500/60";
+      case "Suspended":
+        return "bg-rose-500/10 text-rose-600 border-rose-500/60";
+    }
+  };
+
+  const getSegmentColor = (segment: Customer["segment"]) => {
+    switch (segment) {
+      case "Premium":
+        return "bg-purple-500/10 text-purple-600 border-purple-500/60";
+      case "Standard":
+        return "bg-blue-500/10 text-blue-600 border-blue-500/60";
+      case "New":
+        return "bg-emerald-500/10 text-emerald-600 border-emerald-500/60";
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      status: "all",
+      country: "all",
+      segment: "all",
+      minOrders: 0,
+      maxOrders: 20,
+      minSpent: 0,
+      maxSpent: 5000,
+      dateRange: { from: undefined, to: undefined },
+      activeOnly: false,
+    });
+    setSearch("");
+    setCurrentPage(1);
+  };
+
+  const toggleCustomer = (id: string) => {
+    setSelectedCustomers((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id],
+    );
+  };
+
+  const toggleAll = () => {
+    if (selectedCustomers.length === paginatedCustomers.length) {
+      setSelectedCustomers([]);
+    } else {
+      setSelectedCustomers(paginatedCustomers.map((c) => c.id));
+    }
+  };
+
+  return (
+    <div className="p-5 space-y-5 w-full h-full">
+      <div className="p-5 bg-foreground/5 border rounded-2xl">
+        <div className="flex items-center justify-between">
+          <h3 className="flex items-center gap-2 text-base md:text-lg font-semibold tracking-wide">
+            <Filter className="size-5" />
+            Filters
+          </h3>
+          <Button
+            onClick={resetFilters}
+            className="h-8 text-xs bg-foreground! text-secondary! font-bold"
+          >
+            Clear all
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 items-end gap-3">
+          {/* Search */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Search</Label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Input
+                placeholder="Name, email, or ID..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+          </div>
+
+          {/* Join Date Range */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">Join Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !filters.dateRange.from &&
+                      !filters.dateRange.to &&
+                      "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 size-4" />
+                  {filters.dateRange.from ? (
+                    filters.dateRange.to ? (
+                      <>
+                        {format(filters.dateRange.from, "LLL dd, y")} -{" "}
+                        {format(filters.dateRange.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(filters.dateRange.from, "LLL dd, y")
+                    )
+                  ) : (
+                    "Pick a date range"
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="range"
+                  defaultMonth={filters.dateRange.from}
+                  selected={filters.dateRange as DateRange}
+                  onSelect={(range) =>
+                    setFilters({
+                      ...filters,
+                      dateRange: {
+                        from: range?.from,
+                        to: range?.to,
+                      },
+                    })
+                  }
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <div className="col-span-2 grid grid-cols-3 gap-3">
+            {/* Status */}
+            <div className="w-full">
+              <Label className="text-xs md:text-sm mb-3 block">Status</Label>
+              <Select
+                value={filters.status}
+                onValueChange={(value) =>
+                  setFilters({
+                    ...filters,
+                    status: value as FiltersState["status"],
+                  })
+                }
+              >
+                <SelectTrigger className="cursor-pointer w-full">
+                  <SelectValue placeholder="All Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="Active">Active</SelectItem>
+                  <SelectItem value="Inactive">Inactive</SelectItem>
+                  <SelectItem value="Suspended">Suspended</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Country */}
+            <div className="w-full">
+              <Label className="text-xs md:text-sm mb-3 block">Country</Label>
+              <Select
+                value={filters.country}
+                onValueChange={(value) =>
+                  setFilters({ ...filters, country: value })
+                }
+              >
+                <SelectTrigger className="cursor-pointer w-full">
+                  <SelectValue placeholder="All Countries" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Countries</SelectItem>
+                  {countries.map((country) => (
+                    <SelectItem key={country} value={country}>
+                      {countryFlags[country]} {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Segment */}
+            <div className="w-full">
+              <Label className="text-xs md:text-sm mb-3 block">
+                Customer Segment
+              </Label>
+              <Select
+                value={filters.segment}
+                onValueChange={(value) =>
+                  setFilters({
+                    ...filters,
+                    segment: value as FiltersState["segment"],
+                  })
+                }
+              >
+                <SelectTrigger className="cursor-pointer w-full">
+                  <SelectValue placeholder="All Segments" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Segments</SelectItem>
+                  <SelectItem value="Premium">Premium</SelectItem>
+                  <SelectItem value="Standard">Standard</SelectItem>
+                  <SelectItem value="New">New</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Ranges */}
+          <div>
+            <Label className="text-xs md:text-sm mb-3 block">
+              Orders: {filters.minOrders} - {filters.maxOrders}
+            </Label>
+            <Slider
+              min={0}
+              max={20}
+              step={1}
+              value={[filters.minOrders, filters.maxOrders]}
+              onValueChange={([min, max]) =>
+                setFilters({
+                  ...filters,
+                  minOrders: min,
+                  maxOrders: max,
+                })
+              }
+              className="mt-2"
+            />
+            <Label className="text-xs md:text-sm my-3 block">
+              Spent: ${filters.minSpent} - ${filters.maxSpent}
+            </Label>
+            <Slider
+              min={0}
+              max={5000}
+              step={100}
+              value={[filters.minSpent, filters.maxSpent]}
+              onValueChange={([min, max]) =>
+                setFilters({
+                  ...filters,
+                  minSpent: min,
+                  maxSpent: max,
+                })
+              }
+              className="mt-2"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* View Toggle */}
+      <div className="flex justify-between items-center mb-4">
+        <Tabs
+          value={view}
+          onValueChange={(v) => setView(v as "grid" | "table")}
+        >
+          <TabsList className="p-1! h-11!">
+            <TabsTrigger
+              value="table"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              Table View
+            </TabsTrigger>
+            <TabsTrigger
+              value="grid"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              Grid View
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <div className="flex items-center gap-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="activeOnly"
+              checked={filters.activeOnly}
+              onCheckedChange={(checked) =>
+                setFilters({
+                  ...filters,
+                  activeOnly: checked as boolean,
+                })
+              }
+              className="size-5! data-checked:text-white!"
+            />
+            <Label
+              htmlFor="activeOnly"
+              className="text-sm md:text-base cursor-pointer"
+            >
+              Active Customers
+            </Label>
+          </div>
+          <Separator
+            orientation="vertical"
+            className="mx-2 bg-foreground/30 min-h-5"
+          />
+          <span className="text-sm text-muted-foreground">
+            {selectedCustomers.length} selected
+          </span>
+        </div>
+      </div>
+
+      {/* Table View */}
+      {view === "table" && (
+        <div className="rounded-lg border overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50 hover:bg-muted/50">
+                <TableHead className="p-3! w-12">
+                  <Checkbox
+                    checked={
+                      selectedCustomers.length === paginatedCustomers.length &&
+                      paginatedCustomers.length > 0
+                    }
+                    onCheckedChange={toggleAll}
+                  />
+                </TableHead>
+                <TableHead className="p-3! w-72">
+                  <div className="flex items-center gap-2">
+                    <Users className="size-4" />
+                    Customer
+                  </div>
+                </TableHead>
+                <TableHead className="p-3!">Contact</TableHead>
+                <TableHead className="p-3!">Country</TableHead>
+                <TableHead className="p-3!">Join Date</TableHead>
+                <TableHead className="p-3!">Orders</TableHead>
+                <TableHead className="p-3!">Total Spent</TableHead>
+                <TableHead className="p-3!">Segment</TableHead>
+                <TableHead className="p-3!">Status</TableHead>
+                <TableHead className="p-3! text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <AnimatePresence>
+                {paginatedCustomers.map((customer, index) => (
+                  <motion.tr
+                    key={customer.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className={cn(
+                      "group hover:bg-muted/50 transition-colors border-b last:border-0",
+                      selectedCustomers.includes(customer.id) && "bg-muted/30",
+                    )}
+                  >
+                    <TableCell className="p-3">
+                      <Checkbox
+                        checked={selectedCustomers.includes(customer.id)}
+                        onCheckedChange={() => toggleCustomer(customer.id)}
+                      />
+                    </TableCell>
+                    <TableCell className="p-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="size-10 after:border-0 rounded-sm">
+                          <AvatarFallback
+                            className={`${avatarColors[parseInt(customer.id.split("-")[1]) % avatarColors.length]} text-white rounded-sm`}
+                          >
+                            {customer.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-semibold">{customer.name}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {customer.id}
+                          </div>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm">{customer.email}</div>
+                    </TableCell>
+                    <TableCell className="flex items-center my-auto gap-1.5 text-sm h-full">
+                      <span className="text-2xl mt-1">
+                        {countryFlags[customer.country]}
+                      </span>
+                      <span>{customer.country}</span>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {formatDate(customer.joinDate)}
+                    </TableCell>
+                    <TableCell className="text-base">
+                      {customer.orders}
+                    </TableCell>
+                    <TableCell className="font-bold">
+                      ${customer.totalSpent.toFixed(2)}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={`${getSegmentColor(customer.segment)} font-medium`}
+                      >
+                        {customer.segment}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={`${getStatusColor(customer.status)} font-medium`}
+                      >
+                        {customer.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                          >
+                            <MoreHorizontal className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="space-y-1 min-w-fit"
+                        >
+                          <DropdownMenuItem className="gap-2 cursor-pointer">
+                            <Eye className="size-4" />
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="gap-2 cursor-pointer">
+                            <Mail className="size-4" />
+                            Send Message
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="gap-2 cursor-pointer bg-red-500! text-white">
+                            <X className="size-4" />
+                            Suspend
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </motion.tr>
+                ))}
+              </AnimatePresence>
+            </TableBody>
+          </Table>
+        </div>
+      )}
+
+      {/* Grid View */}
+      {view === "grid" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <AnimatePresence>
+            {paginatedCustomers.map((customer, index) => (
+              <motion.div
+                key={customer.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className={cn(
+                  "border p-4 hover:shadow-lg rounded-xl transition-all duration-300",
+                  selectedCustomers.includes(customer.id) &&
+                    "ring-2 ring-primary",
+                )}
+                onClick={() => toggleCustomer(customer.id)}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="size-12 after:border-0 rounded-sm">
+                      <AvatarFallback
+                        className={`${avatarColors[parseInt(customer.id.split("-")[1]) % avatarColors.length]} text-white rounded-sm`}
+                      >
+                        {customer.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h3 className="font-semibold">{customer.name}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {customer.id}
+                      </p>
+                    </div>
+                  </div>
+                  <Checkbox checked={selectedCustomers.includes(customer.id)} />
+                </div>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Mail className="size-4" />
+                    {customer.email}
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Globe className="size-4" />
+                    {countryFlags[customer.country]} {customer.country}
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="size-4" />
+                    Joined {formatDate(customer.joinDate)}
+                  </div>
+                </div>
+
+                <Separator className="my-4" />
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Orders</p>
+                    <p className="font-semibold">{customer.orders}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Total Spent</p>
+                    <p className="font-bold">
+                      ${customer.totalSpent.toFixed(2)}
+                    </p>
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className={getStatusColor(customer.status)}
+                  >
+                    {customer.status}
+                  </Badge>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {filteredCustomers.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
+          <div className="text-4xl mb-4">🔍</div>
+          <h3 className="text-xl font-semibold mb-3">No customers found</h3>
+          <p className="text-muted-foreground mb-4">
+            Try adjusting your filters or search terms
+          </p>
+          <Button onClick={resetFilters} variant="outline">
+            Clear Filters
+          </Button>
+        </motion.div>
+      )}
+
+      {/* Pagination */}
+      {filteredCustomers.length > 0 && (
+        <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+          <div>
+            Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+            {Math.min(currentPage * ITEMS_PER_PAGE, filteredCustomers.length)}{" "}
+            of {filteredCustomers.length} customers
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="cursor-pointer"
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              className="cursor-pointer"
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 interface Customer {
   id: string;
@@ -721,804 +1378,3 @@ type FiltersState = {
   };
   activeOnly: boolean;
 };
-
-export default function FiltersTable() {
-  const [customers] = useState<Customer[]>(
-    [...baseCustomers].sort((a, b) => a.id.localeCompare(b.id)),
-  );
-
-  const [filters, setFilters] = useState<FiltersState>({
-    status: "all",
-    country: "all",
-    segment: "all",
-    minOrders: 0,
-    maxOrders: 20,
-    minSpent: 0,
-    maxSpent: 5000,
-    dateRange: {
-      from: undefined,
-      to: undefined,
-    },
-    activeOnly: false,
-  });
-
-  const [search, setSearch] = useState("");
-  const [showFilters, setShowFilters] = useState(true);
-  const [view, setView] = useState<"grid" | "table">("table");
-  const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 10;
-
-  const countries = useMemo(
-    () => Array.from(new Set(customers.map((c) => c.country))).sort(),
-    [customers],
-  );
-
-  const filteredCustomers = useMemo(() => {
-    return customers.filter((customer) => {
-      if (
-        search &&
-        !customer.name.toLowerCase().includes(search.toLowerCase()) &&
-        !customer.email.toLowerCase().includes(search.toLowerCase()) &&
-        !customer.id.toLowerCase().includes(search.toLowerCase())
-      ) {
-        return false;
-      }
-      if (filters.status !== "all" && customer.status !== filters.status) {
-        return false;
-      }
-      if (filters.country !== "all" && customer.country !== filters.country) {
-        return false;
-      }
-      if (filters.segment !== "all" && customer.segment !== filters.segment) {
-        return false;
-      }
-      if (
-        customer.orders < filters.minOrders ||
-        customer.orders > filters.maxOrders
-      ) {
-        return false;
-      }
-      if (
-        customer.totalSpent < filters.minSpent ||
-        customer.totalSpent > filters.maxSpent
-      ) {
-        return false;
-      }
-      if (filters.dateRange.from || filters.dateRange.to) {
-        const joinDate = new Date(customer.joinDate);
-        if (filters.dateRange.from && joinDate < filters.dateRange.from)
-          return false;
-        if (filters.dateRange.to && joinDate > filters.dateRange.to)
-          return false;
-      }
-      if (filters.activeOnly && customer.status !== "Active") return false;
-
-      return true;
-    });
-  }, [customers, search, filters]);
-
-  const paginatedCustomers = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredCustomers.slice(start, start + ITEMS_PER_PAGE);
-  }, [filteredCustomers, currentPage]);
-
-  const totalPages = Math.ceil(filteredCustomers.length / ITEMS_PER_PAGE);
-
-  const getStatusColor = (status: Customer["status"]) => {
-    switch (status) {
-      case "Active":
-        return "bg-green-500/10 text-green-600 border-green-500/60";
-      case "Inactive":
-        return "bg-amber-500/10 text-amber-600 border-amber-500/60";
-      case "Suspended":
-        return "bg-rose-500/10 text-rose-600 border-rose-500/60";
-    }
-  };
-
-  const getSegmentColor = (segment: Customer["segment"]) => {
-    switch (segment) {
-      case "Premium":
-        return "bg-purple-500/10 text-purple-600 border-purple-500/60";
-      case "Standard":
-        return "bg-blue-500/10 text-blue-600 border-blue-500/60";
-      case "New":
-        return "bg-emerald-500/10 text-emerald-600 border-emerald-500/60";
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const resetFilters = () => {
-    setFilters({
-      status: "all",
-      country: "all",
-      segment: "all",
-      minOrders: 0,
-      maxOrders: 20,
-      minSpent: 0,
-      maxSpent: 5000,
-      dateRange: { from: undefined, to: undefined },
-      activeOnly: false,
-    });
-    setSearch("");
-    setCurrentPage(1);
-  };
-
-  const toggleCustomer = (id: string) => {
-    setSelectedCustomers((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id],
-    );
-  };
-
-  const toggleAll = () => {
-    if (selectedCustomers.length === paginatedCustomers.length) {
-      setSelectedCustomers([]);
-    } else {
-      setSelectedCustomers(paginatedCustomers.map((c) => c.id));
-    }
-  };
-
-  const activeFilterCount =
-    Object.entries(filters).filter(([key, value]) => {
-      if (key === "dateRange" && typeof value === "object") {
-        return value.from || value.to;
-      }
-      if (key === "activeOnly") {
-        return value;
-      }
-      if (typeof value === "number") {
-        return key === "minOrders" ? value > 0 : value > 0;
-      }
-      return value !== "all";
-    }).length + (search ? 1 : 0);
-
-  return (
-    <main className="p-6 md:p-10">
-      <Card className="w-full pt-0 shadow-none hover:shadow-xl/10 overflow-hidden transition-all duration-500">
-        <CardHeader className="pt-6 border-b">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <CardTitle className="text-4xl font-semibold">
-                Customer Database
-              </CardTitle>
-              <p className="text-sm md:text-base text-foreground/60 mt-1">
-                {filteredCustomers.length} customers found • {customers.length}{" "}
-                total
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowFilters(!showFilters)}
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                <SlidersHorizontal className="size-4" />
-                Filters
-                {activeFilterCount > 0 && (
-                  <Badge variant="secondary" className="ml-1 rounded-sm px-1.5">
-                    {activeFilterCount}
-                  </Badge>
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={resetFilters}
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                <RefreshCw className="size-4" />
-                Reset
-              </Button>
-              <Button
-                variant="outline"
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                <Download className="size-4" />
-                Export
-              </Button>
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            <div className="bg-muted/30 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Users className="size-4" />
-                <span className="text-xs">Active</span>
-              </div>
-              <div className="text-2xl font-semibold">
-                {customers.filter((c) => c.status === "Active").length}
-              </div>
-            </div>
-            <div className="bg-muted/30 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Globe className="size-4" />
-                <span className="text-xs">Countries</span>
-              </div>
-              <div className="text-2xl font-semibold">{countries.length}</div>
-            </div>
-            <div className="bg-muted/30 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <ShoppingBag className="size-4" />
-                <span className="text-xs">Total Orders</span>
-              </div>
-              <div className="text-2xl font-semibold">
-                {customers
-                  .reduce((acc, c) => acc + c.orders, 0)
-                  .toLocaleString()}
-              </div>
-            </div>
-            <div className="bg-muted/30 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <DollarSign className="size-4" />
-                <span className="text-xs">Total Revenue</span>
-              </div>
-              <div className="text-2xl font-semibold">
-                $
-                {customers
-                  .reduce((acc, c) => acc + c.totalSpent, 0)
-                  .toLocaleString()}
-              </div>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="p-6">
-          {/* Filters Section */}
-          <AnimatePresence>
-            {showFilters && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden mb-6"
-              >
-                <div className="bg-muted/30 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold flex items-center gap-2">
-                      <Filter className="size-4" />
-                      Advanced Filters
-                    </h3>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={resetFilters}
-                      className="h-8 text-xs"
-                    >
-                      Clear all
-                    </Button>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {/* Search */}
-                    <div>
-                      <Label className="text-xs mb-2 block">Search</Label>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                        <Input
-                          placeholder="Name, email, or ID..."
-                          value={search}
-                          onChange={(e) => setSearch(e.target.value)}
-                          className="pl-9"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Status */}
-                    <div>
-                      <Label className="text-xs mb-2 block">Status</Label>
-                      <Select
-                        value={filters.status}
-                        onValueChange={(value) =>
-                          setFilters({
-                            ...filters,
-                            status: value as FiltersState["status"],
-                          })
-                        }
-                      >
-                        <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="All Status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Status</SelectItem>
-                          <SelectItem value="Active">Active</SelectItem>
-                          <SelectItem value="Inactive">Inactive</SelectItem>
-                          <SelectItem value="Suspended">Suspended</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Country */}
-                    <div>
-                      <Label className="text-xs mb-2 block">Country</Label>
-                      <Select
-                        value={filters.country}
-                        onValueChange={(value) =>
-                          setFilters({ ...filters, country: value })
-                        }
-                      >
-                        <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="All Countries" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Countries</SelectItem>
-                          {countries.map((country) => (
-                            <SelectItem key={country} value={country}>
-                              {countryFlags[country]} {country}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Segment */}
-                    <div>
-                      <Label className="text-xs mb-2 block">
-                        Customer Segment
-                      </Label>
-                      <Select
-                        value={filters.segment}
-                        onValueChange={(value) =>
-                          setFilters({
-                            ...filters,
-                            segment: value as FiltersState["segment"],
-                          })
-                        }
-                      >
-                        <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="All Segments" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Segments</SelectItem>
-                          <SelectItem value="Premium">Premium</SelectItem>
-                          <SelectItem value="Standard">Standard</SelectItem>
-                          <SelectItem value="New">New</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Orders Range */}
-                    <div>
-                      <Label className="text-xs mb-2 block">
-                        Orders: {filters.minOrders} - {filters.maxOrders}
-                      </Label>
-                      <div className="px-2">
-                        <Slider
-                          min={0}
-                          max={20}
-                          step={1}
-                          value={[filters.minOrders, filters.maxOrders]}
-                          onValueChange={([min, max]) =>
-                            setFilters({
-                              ...filters,
-                              minOrders: min,
-                              maxOrders: max,
-                            })
-                          }
-                          className="mt-2"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Spent Range */}
-                    <div>
-                      <Label className="text-xs mb-2 block">
-                        Spent: ${filters.minSpent} - ${filters.maxSpent}
-                      </Label>
-                      <div className="px-2">
-                        <Slider
-                          min={0}
-                          max={5000}
-                          step={100}
-                          value={[filters.minSpent, filters.maxSpent]}
-                          onValueChange={([min, max]) =>
-                            setFilters({
-                              ...filters,
-                              minSpent: min,
-                              maxSpent: max,
-                            })
-                          }
-                          className="mt-2"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Join Date Range */}
-                    <div>
-                      <Label className="text-xs mb-2 block">Join Date</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-left font-normal",
-                              !filters.dateRange.from &&
-                                !filters.dateRange.to &&
-                                "text-muted-foreground",
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 size-4" />
-                            {filters.dateRange.from ? (
-                              filters.dateRange.to ? (
-                                <>
-                                  {format(filters.dateRange.from, "LLL dd, y")}{" "}
-                                  - {format(filters.dateRange.to, "LLL dd, y")}
-                                </>
-                              ) : (
-                                format(filters.dateRange.from, "LLL dd, y")
-                              )
-                            ) : (
-                              "Pick a date range"
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="range"
-                            defaultMonth={filters.dateRange.from}
-                            selected={filters.dateRange as DateRange}
-                            onSelect={(range) =>
-                              setFilters({
-                                ...filters,
-                                dateRange: {
-                                  from: range?.from,
-                                  to: range?.to,
-                                },
-                              })
-                            }
-                            numberOfMonths={2}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-
-                    {/* Active Only */}
-                    <div className="flex items-end">
-                      <div className="flex items-center space-x-2 pb-1">
-                        <Checkbox
-                          id="activeOnly"
-                          checked={filters.activeOnly}
-                          onCheckedChange={(checked) =>
-                            setFilters({
-                              ...filters,
-                              activeOnly: checked as boolean,
-                            })
-                          }
-                        />
-                        <Label
-                          htmlFor="activeOnly"
-                          className="text-sm cursor-pointer"
-                        >
-                          Show only active customers
-                        </Label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* View Toggle */}
-          <div className="flex justify-between items-center mb-4">
-            <Tabs
-              value={view}
-              onValueChange={(v) => setView(v as "grid" | "table")}
-            >
-              <TabsList>
-                <TabsTrigger value="table" className="cursor-pointer">
-                  Table View
-                </TabsTrigger>
-                <TabsTrigger value="grid" className="cursor-pointer">
-                  Grid View
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {selectedCustomers.length} selected
-              </span>
-            </div>
-          </div>
-
-          {/* Table View */}
-          {view === "table" && (
-            <div className="rounded-lg border overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-muted/50 hover:bg-muted/50">
-                    <TableHead className="w-12">
-                      <Checkbox
-                        checked={
-                          selectedCustomers.length ===
-                            paginatedCustomers.length &&
-                          paginatedCustomers.length > 0
-                        }
-                        onCheckedChange={toggleAll}
-                      />
-                    </TableHead>
-                    <TableHead className="w-72">
-                      <div className="flex items-center gap-2">
-                        <Users className="size-4" />
-                        Customer
-                      </div>
-                    </TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Country</TableHead>
-                    <TableHead>Join Date</TableHead>
-                    <TableHead>Orders</TableHead>
-                    <TableHead>Total Spent</TableHead>
-                    <TableHead>Segment</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <AnimatePresence>
-                    {paginatedCustomers.map((customer, index) => (
-                      <motion.tr
-                        key={customer.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                        className={cn(
-                          "group hover:bg-muted/50 transition-colors border-b last:border-0",
-                          selectedCustomers.includes(customer.id) &&
-                            "bg-muted/30",
-                        )}
-                      >
-                        <TableCell className="p-3">
-                          <Checkbox
-                            checked={selectedCustomers.includes(customer.id)}
-                            onCheckedChange={() => toggleCustomer(customer.id)}
-                          />
-                        </TableCell>
-                        <TableCell className="p-3">
-                          <div className="flex items-center gap-3">
-                            <Avatar className="size-10 border-0 rounded-sm">
-                              <AvatarFallback
-                                className={`${avatarColors[parseInt(customer.id.split("-")[1]) % avatarColors.length]} text-white rounded-sm`}
-                              >
-                                {customer.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <div className="font-semibold">
-                                {customer.name}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                {customer.id}
-                              </div>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="text-sm">{customer.email}</div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="font-medium">
-                            {countryFlags[customer.country]} {customer.country}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {formatDate(customer.joinDate)}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <ShoppingBag className="size-4 text-muted-foreground" />
-                            <span className="font-semibold">
-                              {customer.orders}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="font-bold">
-                          ${customer.totalSpent.toFixed(2)}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={`${getSegmentColor(customer.segment)} font-medium`}
-                          >
-                            {customer.segment}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={`${getStatusColor(customer.status)} font-medium`}
-                          >
-                            {customer.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                              >
-                                <MoreHorizontal className="size-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem className="gap-2">
-                                <Eye className="size-4" />
-                                View Details
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="gap-2">
-                                <Mail className="size-4" />
-                                Send Message
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="gap-2 text-rose-600">
-                                <X className="size-4" />
-                                Suspend
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </motion.tr>
-                    ))}
-                  </AnimatePresence>
-                </TableBody>
-              </Table>
-            </div>
-          )}
-
-          {/* Grid View */}
-          {view === "grid" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <AnimatePresence>
-                {paginatedCustomers.map((customer, index) => (
-                  <motion.div
-                    key={customer.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className={cn(
-                      "border rounded-lg p-4 hover:shadow-lg transition-all duration-300",
-                      selectedCustomers.includes(customer.id) &&
-                        "ring-2 ring-primary",
-                    )}
-                    onClick={() => toggleCustomer(customer.id)}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="size-12 border-0 rounded-sm">
-                          <AvatarFallback
-                            className={`${avatarColors[parseInt(customer.id.split("-")[1]) % avatarColors.length]} text-white rounded-sm`}
-                          >
-                            {customer.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <h3 className="font-semibold">{customer.name}</h3>
-                          <p className="text-xs text-muted-foreground">
-                            {customer.id}
-                          </p>
-                        </div>
-                      </div>
-                      <Checkbox
-                        checked={selectedCustomers.includes(customer.id)}
-                      />
-                    </div>
-
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Mail className="size-4" />
-                        {customer.email}
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Globe className="size-4" />
-                        {countryFlags[customer.country]} {customer.country}
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Clock className="size-4" />
-                        Joined {formatDate(customer.joinDate)}
-                      </div>
-                    </div>
-
-                    <Separator className="my-4" />
-
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-muted-foreground">Orders</p>
-                        <p className="font-semibold">{customer.orders}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">
-                          Total Spent
-                        </p>
-                        <p className="font-bold">
-                          ${customer.totalSpent.toFixed(2)}
-                        </p>
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className={getStatusColor(customer.status)}
-                      >
-                        {customer.status}
-                      </Badge>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {filteredCustomers.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-12"
-            >
-              <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold mb-2">No customers found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your filters or search terms
-              </p>
-              <Button onClick={resetFilters} variant="outline">
-                Clear Filters
-              </Button>
-            </motion.div>
-          )}
-
-          {/* Pagination */}
-          {filteredCustomers.length > 0 && (
-            <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
-              <div>
-                Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
-                {Math.min(
-                  currentPage * ITEMS_PER_PAGE,
-                  filteredCustomers.length,
-                )}{" "}
-                of {filteredCustomers.length} customers
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className="cursor-pointer"
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={currentPage === totalPages}
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(totalPages, p + 1))
-                  }
-                  className="cursor-pointer"
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </main>
-  );
-}

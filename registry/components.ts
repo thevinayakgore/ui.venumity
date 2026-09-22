@@ -684,7 +684,6 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Tables",
-        thumbnail: "real-time-filterable-table",
         description:
           "Powerful table components for displaying, sorting, and managing structured data efficiently.",
         tags: [

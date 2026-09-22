@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,8 +31,6 @@ import {
   ArrowUp,
   ArrowDown,
   MoreHorizontal,
-  Download,
-  Plus,
   Search,
   Filter,
   Eye,
@@ -533,279 +530,219 @@ export default function SortableTable() {
   const departments = ["all", ...new Set(employees.map((e) => e.department))];
 
   return (
-    <main className="p-6 md:p-10">
-      <Card className="w-full pt-0 shadow-none hover:shadow-xl/10 overflow-hidden transition-all duration-500">
-        <CardHeader className="pt-6 border-b">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <CardTitle className="text-4xl font-semibold">
-                Employee Directory
-              </CardTitle>
-              <p className="text-sm md:text-base text-foreground/60 mt-1">
-                Manage and track employee information
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                <Download className="size-4" />
-                Export
-              </Button>
-              <Button className="gap-2 bg-sky-500 hover:bg-sky-400 cursor-pointer rounded-sm">
-                <Plus className="size-4" />
-                Add Employee
-              </Button>
-            </div>
+    <div className="p-5 space-y-5 w-full h-full">
+      {/* Filters */}
+      <nav className="flex items-center justify-between w-full">
+        <div className="relative flex-1 max-w-lg">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 opacity-50" />
+          <Input
+            value={searchQuery}
+            placeholder="Search employees..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 rounded-lg h-11!"
+          />
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="opacity-50">
+            Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+            {Math.min(currentPage * ITEMS_PER_PAGE, sortedEmployees.length)} of{" "}
+            {employees.length} employees
           </div>
-        </CardHeader>
-
-        <CardContent>
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-              <Input
-                placeholder="Search employees..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <Select
-              value={departmentFilter}
-              onValueChange={setDepartmentFilter}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="p-4!"
             >
-              <SelectTrigger className="cursor-pointer w-full md:w-45">
-                <Filter className="size-4 mr-2" />
-                <SelectValue placeholder="Department" />
-              </SelectTrigger>
-              <SelectContent>
-                {departments.map((dept) => (
-                  <SelectItem
-                    key={dept}
-                    value={dept}
-                    className="cursor-pointer"
-                  >
-                    {dept === "all" ? "All Departments" : dept}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              className="p-4!"
+            >
+              Next
+            </Button>
           </div>
+          <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+            <SelectTrigger className="cursor-pointer w-full md:w-45">
+              <Filter className="size-4 mr-2" />
+              <SelectValue placeholder="Department" />
+            </SelectTrigger>
+            <SelectContent>
+              {departments.map((dept) => (
+                <SelectItem key={dept} value={dept} className="cursor-pointer">
+                  {dept === "all" ? "All Departments" : dept}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </nav>
 
-          {/* Table */}
-          <div className="rounded-lg border overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/50 hover:bg-muted/50">
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors w-62.5"
-                    onClick={() => handleSort("name")}
-                  >
-                    <div className="flex items-center">
-                      Employee
-                      {getSortIcon("name")}
+      {/* Table */}
+      <div className="rounded-lg border overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow className="flex items-center bg-foreground/10! w-full">
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("name")}
+              >
+                Employee
+                {getSortIcon("name")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("department")}
+              >
+                Department
+                {getSortIcon("department")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("position")}
+              >
+                Position
+                {getSortIcon("position")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("salary")}
+              >
+                Salary
+                {getSortIcon("salary")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("hireDate")}
+              >
+                Hire Date
+                {getSortIcon("hireDate")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("performance")}
+              >
+                Performance
+                {getSortIcon("performance")}
+              </TableHead>
+              <TableHead
+                className="flex items-center justify-between px-5! cursor-pointer text-base font-semibold w-50 h-12"
+                onClick={() => handleSort("status")}
+              >
+                Status
+                {getSortIcon("status")}
+              </TableHead>
+              <TableHead className="flex items-center cursor-pointer text-base font-semibold w-20 h-12">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <AnimatePresence>
+              {paginatedEmployees.map((employee, index) => (
+                <motion.tr
+                  key={employee.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="group flex items-center border-b last:border-0 w-full"
+                >
+                  <TableCell className="flex items-center gap-3 px-5 py-4 text-base font-semibold w-50">
+                    <Avatar className="size-10 after:border-0! rounded-sm">
+                      <AvatarFallback
+                        className={`${avatarColors[employee.id % avatarColors.length]} text-white rounded-sm`}
+                      >
+                        {employee.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <div className="font-semibold">{employee.name}</div>
+                      <div className="text-xs text-muted-foreground">
+                        ID : EMP-{employee.id.toString().padStart(3, "0")}
+                      </div>
                     </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors"
-                    onClick={() => handleSort("department")}
-                  >
-                    <div className="flex items-center">
-                      Department
-                      {getSortIcon("department")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors"
-                    onClick={() => handleSort("position")}
-                  >
-                    <div className="flex items-center">
-                      Position
-                      {getSortIcon("position")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors text-right"
-                    onClick={() => handleSort("salary")}
-                  >
-                    <div className="flex items-center justify-end">
-                      Salary
-                      {getSortIcon("salary")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors"
-                    onClick={() => handleSort("hireDate")}
-                  >
-                    <div className="flex items-center">
-                      Hire Date
-                      {getSortIcon("hireDate")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors"
-                    onClick={() => handleSort("performance")}
-                  >
-                    <div className="flex items-center">
-                      Performance
-                      {getSortIcon("performance")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted transition-colors"
-                    onClick={() => handleSort("status")}
-                  >
-                    <div className="flex items-center">
-                      Status
-                      {getSortIcon("status")}
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <AnimatePresence>
-                  {paginatedEmployees.map((employee, index) => (
-                    <motion.tr
-                      key={employee.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="group hover:bg-muted/50 transition-colors border-b last:border-0"
+                  </TableCell>
+                  <TableCell className="flex items-center gap-3 px-5 py-4 text-base font-semibold w-50">
+                    <Badge
+                      variant="outline"
+                      className="p-4! tracking-wide text-sm text-foreground/60 bg-foreground/8! border-foreground/15 w-fit"
                     >
-                      <TableCell className="p-3">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="size-10 border-0 rounded-sm">
-                            <AvatarFallback
-                              className={`${avatarColors[employee.id % avatarColors.length]} text-white rounded-sm`}
-                            >
-                              {employee.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-semibold">{employee.name}</div>
-                            <div className="text-xs text-muted-foreground">
-                              ID : EMP-{employee.id.toString().padStart(3, "0")}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="font-medium">
-                          {employee.department}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {employee.position}
-                      </TableCell>
-                      <TableCell className="text-right font-semibold">
-                        ${employee.salary.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {formatDate(employee.hireDate)}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <div className="w-20 h-1 bg-muted rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${employee.performance}%` }}
-                              transition={{ duration: 1, delay: index * 0.1 }}
-                              className={`h-full rounded-full ${
-                                employee.performance >= 90
-                                  ? "bg-green-500"
-                                  : employee.performance >= 80
-                                    ? "bg-blue-500"
-                                    : "bg-amber-500"
-                              }`}
-                            />
-                          </div>
-                          <span className="text-sm font-semibold min-w-10">
-                            {employee.performance}%
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColor(employee.status)} font-medium`}
-                        >
-                          {employee.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                            >
-                              <MoreHorizontal className="size-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem className="gap-2">
-                              <Eye className="size-4" />
-                              View Details
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="gap-2">
-                              <Edit className="size-4" />
-                              Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="gap-2 text-rose-600">
-                              <UserCircle className="size-4" />
-                              Terminate
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
-              </TableBody>
-            </Table>
-          </div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between mt-6 text-sm text-muted-foreground">
-            <div>
-              Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
-              {Math.min(currentPage * ITEMS_PER_PAGE, sortedEmployees.length)}{" "}
-              of {employees.length} employees
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className="cursor-pointer"
-              >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={currentPage === totalPages}
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(totalPages, p + 1))
-                }
-                className="cursor-pointer"
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </main>
+                      {employee.department}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="flex items-center gap-3 px-5 py-4 text-sm tracking-wide w-50">
+                    {employee.position}
+                  </TableCell>
+                  <TableCell className="flex items-center gap-3 px-5 py-4 text-sm tracking-wide w-50">
+                    ${employee.salary.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="flex items-center gap-3 px-5 py-4 text-sm tracking-wide w-50">
+                    {formatDate(employee.hireDate)}
+                  </TableCell>
+                  <TableCell className="flex items-center gap-3 px-3 py-4 text-base font-semibold w-50">
+                    <div className="w-40 h-1 bg-muted rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${employee.performance}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                        className={`h-full rounded-full ${
+                          employee.performance >= 90
+                            ? "bg-green-500"
+                            : employee.performance >= 80
+                              ? "bg-blue-500"
+                              : "bg-amber-500"
+                        }`}
+                      />
+                    </div>
+                    <span className="text-sm font-semibold w-10">
+                      {employee.performance}%
+                    </span>
+                  </TableCell>
+                  <TableCell className="flex items-center px-5 py-4 text-base font-semibold w-50">
+                    <Badge
+                      variant="outline"
+                      className={`p-3.5! ${getStatusColor(employee.status)} text-sm`}
+                    >
+                      {employee.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="flex items-center px-5 py-4 text-base font-semibold">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <MoreHorizontal className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="gap-2">
+                          <Eye className="size-4" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="gap-2">
+                          <Edit className="size-4" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="gap-2 text-rose-600">
+                          <UserCircle className="size-4" />
+                          Terminate
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </motion.tr>
+              ))}
+            </AnimatePresence>
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   );
 }

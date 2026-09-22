@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,7 +23,6 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ChevronRight,
-  ChevronDown,
   MoreHorizontal,
   Eye,
   Download,
@@ -37,7 +35,6 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
-  PieChart,
   FileText,
   Mail,
   Phone,
@@ -84,43 +81,43 @@ interface Project {
 
 const statusColors = {
   Planning: {
-    bg: "bg-blue-500/10",
-    text: "text-blue-600",
+    bg: "bg-blue-500/15 border-blue-500/50",
+    text: "text-blue-500",
     border: "border-blue-500/20",
     icon: Clock,
   },
   Active: {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-600",
-    border: "border-emerald-500/20",
+    bg: "bg-green-500/15 border-green-500/50",
+    text: "text-green-500",
+    border: "border-green-500/20",
     icon: TrendingUp,
   },
   "On Hold": {
-    bg: "bg-amber-500/10",
-    text: "text-amber-600",
-    border: "border-amber-500/20",
+    bg: "bg-yellow-500/15 border-yellow-500/50",
+    text: "text-yellow-500",
+    border: "border-yellow-500/20",
     icon: AlertCircle,
   },
   Completed: {
-    bg: "bg-slate-500/10",
-    text: "text-slate-600",
+    bg: "bg-slate-500/15 border-slate-500/50",
+    text: "text-slate-500",
     border: "border-slate-500/20",
     icon: CheckCircle2,
   },
 };
 
 const priorityColors = {
-  Low: "bg-slate-500/10 text-slate-600 border-slate-500/20",
-  Medium: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  High: "bg-orange-500/10 text-orange-600 border-orange-500/20",
-  Critical: "bg-rose-500/10 text-rose-600 border-rose-500/20",
+  Low: "bg-slate-500/15 border-slate-500/50 text-slate-500 border-slate-500/20",
+  Medium: "bg-blue-500/15 border-blue-500/50 text-blue-500 border-blue-500/20",
+  High: "bg-orange-500/15 border-orange-500/50 text-orange-500 border-orange-500/20",
+  Critical: "bg-red-500/15 border-red-500/50 text-red-500 border-red-500/20",
 };
 
 const avatarColors = [
-  "bg-rose-500",
+  "bg-red-500",
   "bg-blue-500",
-  "bg-emerald-500",
-  "bg-amber-500",
+  "bg-green-500",
+  "bg-yellow-500",
   "bg-purple-500",
   "bg-cyan-500",
   "bg-pink-500",
@@ -411,7 +408,7 @@ export default function ExpandableRowTable() {
       },
       status: "Planning",
       priority: "Critical",
-      budget: 60000,
+      budget: 50000,
       spent: 5000,
       timeline: "2 months",
       startDate: "2024-04-01",
@@ -457,30 +454,21 @@ export default function ExpandableRowTable() {
     setExpandedRows(newExpanded);
   };
 
-  const expandAll = () => {
-    setExpandedRows(new Set(projects.map((p) => p.id)));
-  };
-
-  const collapseAll = () => {
-    setExpandedRows(new Set());
-  };
-
-  const getProgress = (spent: number, budget: number) => {
-    return Math.min(100, (spent / budget) * 100);
-  };
+  const getProgress = (spent: number, budget: number) =>
+    Math.min(100, (spent / budget) * 100);
 
   const getProgressColor = (progress: number) => {
-    if (progress < 50) return "bg-emerald-500";
-    if (progress < 80) return "bg-amber-500";
-    return "bg-rose-500";
+    if (progress < 50) return "bg-green-500";
+    if (progress < 80) return "bg-yellow-500";
+    return "bg-red-500";
   };
 
   const getBudgetStatus = (spent: number, budget: number) => {
     const ratio = spent / budget;
-    if (ratio < 0.5) return { text: "Under Budget", color: "text-emerald-600" };
-    if (ratio < 0.8) return { text: "On Track", color: "text-blue-600" };
-    if (ratio < 1) return { text: "Near Limit", color: "text-amber-600" };
-    return { text: "Over Budget", color: "text-rose-600" };
+    if (ratio < 0.5) return { text: "Under Budget", color: "text-green-500" };
+    if (ratio < 0.8) return { text: "On Track", color: "text-blue-500" };
+    if (ratio < 1) return { text: "Near Limit", color: "text-yellow-500" };
+    return { text: "Over Budget", color: "text-red-500" };
   };
 
   const filteredProjects = projects.filter((project) => {
@@ -489,592 +477,469 @@ export default function ExpandableRowTable() {
     return true;
   });
 
-  const totalBudget = filteredProjects.reduce((sum, p) => sum + p.budget, 0);
-  const totalSpent = filteredProjects.reduce((sum, p) => sum + p.spent, 0);
-  const overallProgress = (totalSpent / totalBudget) * 100;
-
-  const allExpanded = expandedRows.size === projects.length;
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
 
   return (
-    <main className="p-6 md:p-10">
-      <Card className="w-full pt-0 shadow-none hover:shadow-xl/10 overflow-hidden transition-all duration-500">
-        <CardHeader className="pt-6 border-b">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <CardTitle className="text-4xl font-semibold">
-                Project Portfolio
-              </CardTitle>
-              <p className="text-sm md:text-base text-foreground/60 mt-1">
-                Click on rows to expand project details •{" "}
-                {filteredProjects.length} projects
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={allExpanded ? collapseAll : expandAll}
-                className="gap-2 cursor-pointer rounded-sm"
-              >
-                {allExpanded ? (
-                  <>
-                    <ChevronRight className="size-4" />
-                    Collapse All
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown className="size-4" />
-                    Expand All
-                  </>
-                )}
-              </Button>
-              <Button className="gap-2 bg-blue-600 hover:bg-blue-500 cursor-pointer rounded-sm">
-                <Briefcase className="size-4" />
-                New Project
-              </Button>
-            </div>
-          </div>
+    <div className="p-5 space-y-5 w-full h-full">
+      {/* View Tabs */}
+      <div className="flex justify-between items-center">
+        <Tabs
+          value={selectedView}
+          onValueChange={(v: string) => {
+            if (v === "all" || v === "active" || v === "completed") {
+              setSelectedView(v);
+            }
+          }}
+        >
+          <TabsList className="p-1! h-11!">
+            <TabsTrigger
+              value="all"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              All Projects
+            </TabsTrigger>
+            <TabsTrigger
+              value="active"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              Active
+            </TabsTrigger>
+            <TabsTrigger
+              value="completed"
+              className="py-2! px-3! border-0! data-active:bg-foreground! data-active:text-secondary! font-semibold h-9"
+            >
+              Completed
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-            <div className="bg-muted/30 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground">Total Budget</p>
-                  <p className="text-2xl font-bold">
-                    ${totalBudget.toLocaleString()}
-                  </p>
-                </div>
-                <DollarSign className="size-8 text-muted-foreground/30" />
-              </div>
-            </div>
-            <div className="bg-muted/30 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground">Total Spent</p>
-                  <p className="text-2xl font-bold">
-                    ${totalSpent.toLocaleString()}
-                  </p>
-                </div>
-                <TrendingUp className="size-8 text-muted-foreground/30" />
-              </div>
-            </div>
-            <div className="bg-muted/30 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground">
-                    Overall Progress
-                  </p>
-                  <p className="text-2xl font-bold">
-                    {overallProgress.toFixed(1)}%
-                  </p>
-                </div>
-                <PieChart className="size-8 text-muted-foreground/30" />
-              </div>
-              <Progress value={overallProgress} className="h-1 mt-2" />
-            </div>
-            <div className="bg-muted/30 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground">Team Members</p>
-                  <p className="text-2xl font-bold">
-                    {projects.reduce((sum, p) => sum + p.team.length, 0)}
-                  </p>
-                </div>
-                <Users className="size-8 text-muted-foreground/30" />
-              </div>
-            </div>
-          </div>
+      {/* Table──── */}
+      <div className="rounded-lg border overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted/50 hover:bg-muted/50">
+              <TableHead className="p-3! w-12"></TableHead>
+              <TableHead className="p-3! w-72">Project</TableHead>
+              <TableHead className="p-3! w-48">Client</TableHead>
+              <TableHead className="p-3! w-24">Status</TableHead>
+              <TableHead className="p-3! w-24">Priority</TableHead>
+              <TableHead className="p-3! w-32 text-right">Budget</TableHead>
+              <TableHead className="p-3! w-32 text-right">Spent</TableHead>
+              <TableHead className="p-3! w-48">Progress</TableHead>
+              <TableHead className="p-3! w-32">Timeline</TableHead>
+              <TableHead className="p-3! text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <AnimatePresence>
+              {filteredProjects.map((project) => {
+                const progress = getProgress(project.spent, project.budget);
+                const isExpanded = expandedRows.has(project.id);
+                const budgetStatus = getBudgetStatus(
+                  project.spent,
+                  project.budget,
+                );
 
-          {/* View Tabs */}
-          <Tabs
-            value={selectedView}
-            onValueChange={(v: string) => {
-              if (v === "all" || v === "active" || v === "completed") {
-                setSelectedView(v);
-              }
-            }}
-            className="mt-4"
-          >
-            <TabsList>
-              <TabsTrigger value="all" className="cursor-pointer">
-                All Projects
-              </TabsTrigger>
-              <TabsTrigger value="active" className="cursor-pointer">
-                Active
-              </TabsTrigger>
-              <TabsTrigger value="completed" className="cursor-pointer">
-                Completed
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </CardHeader>
-
-        <CardContent className="p-6">
-          <div className="rounded-lg border overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/50 hover:bg-muted/50">
-                  <TableHead className="w-12"></TableHead>
-                  <TableHead className="w-72">Project</TableHead>
-                  <TableHead className="w-48">Client</TableHead>
-                  <TableHead className="w-24">Status</TableHead>
-                  <TableHead className="w-24">Priority</TableHead>
-                  <TableHead className="w-32 text-right">Budget</TableHead>
-                  <TableHead className="w-32 text-right">Spent</TableHead>
-                  <TableHead className="w-48">Progress</TableHead>
-                  <TableHead className="w-32">Timeline</TableHead>
-                  <TableHead className="w-20 text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <AnimatePresence>
-                  {filteredProjects.map((project) => {
-                    const progress = getProgress(project.spent, project.budget);
-                    const isExpanded = expandedRows.has(project.id);
-                    const StatusIcon = statusColors[project.status].icon;
-                    const budgetStatus = getBudgetStatus(
-                      project.spent,
-                      project.budget,
-                    );
-
-                    return (
-                      <React.Fragment key={project.id}>
-                        <TableRow
-                          className={cn(
-                            "group hover:bg-muted/50 transition-colors cursor-pointer",
-                            isExpanded && "bg-muted/30 border-b-0",
-                          )}
-                          onClick={() => toggleRow(project.id)}
+                return (
+                  <React.Fragment key={project.id}>
+                    <TableRow
+                      className={cn(
+                        "group hover:bg-muted/50 transition-colors cursor-pointer",
+                        isExpanded && "bg-muted/30 border-b-0",
+                      )}
+                      onClick={() => toggleRow(project.id)}
+                    >
+                      <TableCell className="p-3">
+                        <motion.div
+                          animate={{ rotate: isExpanded ? 90 : 0 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <TableCell className="py-4">
-                            <motion.div
-                              animate={{ rotate: isExpanded ? 90 : 0 }}
-                              transition={{ duration: 0.2 }}
+                          <ChevronRight className="size-4 text-muted-foreground" />
+                        </motion.div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div>
+                          <div className="font-semibold">{project.name}</div>
+                          <div className="text-xs text-muted-foreground">
+                            ID: PRJ-{project.id.toString().padStart(3, "0")}
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div className="flex items-center gap-2">
+                          <Building2 className="size-4 text-muted-foreground" />
+                          <span>{project.client}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            statusColors[project.status].bg,
+                            statusColors[project.status].text,
+                            statusColors[project.status].border,
+                            "font-semibold p-3",
+                          )}
+                        >
+                          {project.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            priorityColors[project.priority],
+                            "p-3 font-semibold",
+                          )}
+                        >
+                          {project.priority}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="p-3 text-right font-semibold">
+                        ${project.budget.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="p-3 text-right font-semibold">
+                        ${project.spent.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs">
+                            <span className={budgetStatus.color}>
+                              {budgetStatus.text}
+                            </span>
+                            <span>{progress.toFixed(1)}%</span>
+                          </div>
+                          <Progress
+                            value={progress}
+                            className={cn("h-1", getProgressColor(progress))}
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-3">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="size-4 text-muted-foreground" />
+                          <span className="text-sm">{project.timeline}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell
+                        className="p-3 text-right"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
                             >
-                              <ChevronRight className="size-4 text-muted-foreground" />
-                            </motion.div>
-                          </TableCell>
-                          <TableCell>
-                            <div>
-                              <div className="font-semibold">
-                                {project.name}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                ID: PRJ-{project.id.toString().padStart(3, "0")}
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Building2 className="size-4 text-muted-foreground" />
-                              <span>{project.client}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={cn(
-                                statusColors[project.status].bg,
-                                statusColors[project.status].text,
-                                statusColors[project.status].border,
-                                "font-medium gap-1",
-                              )}
-                            >
-                              <StatusIcon className="size-3" />
-                              {project.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={cn(
-                                priorityColors[project.priority],
-                                "font-medium",
-                              )}
-                            >
-                              {project.priority}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-right font-semibold">
-                            ${project.budget.toLocaleString()}
-                          </TableCell>
-                          <TableCell className="text-right font-semibold">
-                            ${project.spent.toLocaleString()}
-                          </TableCell>
-                          <TableCell>
-                            <div className="space-y-1">
-                              <div className="flex justify-between text-xs">
-                                <span className={budgetStatus.color}>
-                                  {budgetStatus.text}
-                                </span>
-                                <span>{progress.toFixed(1)}%</span>
-                              </div>
-                              <Progress
-                                value={progress}
-                                className={cn(
-                                  "h-1",
-                                  getProgressColor(progress),
-                                )}
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Calendar className="size-4 text-muted-foreground" />
-                              <span className="text-sm">
-                                {project.timeline}
-                              </span>
-                            </div>
-                          </TableCell>
-                          <TableCell
-                            className="text-right"
-                            onClick={(e) => e.stopPropagation()}
+                              <MoreHorizontal className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="space-y-1 min-w-fit"
                           >
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                >
-                                  <MoreHorizontal className="size-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="gap-2">
-                                  <Eye className="size-4" />
-                                  View Details
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="gap-2">
-                                  <Edit className="size-4" />
-                                  Edit
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="gap-2">
-                                  <Download className="size-4" />
-                                  Export
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="gap-2 text-rose-600">
-                                  <Trash2 className="size-4" />
-                                  Delete
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <Eye className="size-4" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <Edit className="size-4" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <Download className="size-4" />
+                              Export
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer bg-red-500! text-white">
+                              <Trash2 className="size-4" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
 
-                        {isExpanded && (
-                          <TableRow className="bg-muted/20 hover:bg-muted/20">
-                            <TableCell colSpan={10} className="p-0 border-t-0">
-                              <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="p-6">
-                                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                    {/* Left Column - Project Details */}
-                                    <div className="lg:col-span-2 space-y-6">
-                                      {/* Description */}
-                                      <div>
-                                        <h4 className="font-semibold mb-2 flex items-center gap-2">
-                                          <FileText className="size-4" />
-                                          Description
-                                        </h4>
-                                        <p className="whitespace-pre-wrap text-muted-foreground">
-                                          {project.description}
-                                        </p>
-                                      </div>
+                    {isExpanded && (
+                      <TableRow className="bg-muted/20 hover:bg-muted/20">
+                        <TableCell colSpan={10} className="p-0 border-t-0">
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="p-6">
+                              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                {/* Left — Project Details */}
+                                <div className="lg:col-span-2 space-y-6">
+                                  <div>
+                                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                                      <FileText className="size-4" />
+                                      Description
+                                    </h4>
+                                    <p className="whitespace-pre-wrap text-muted-foreground">
+                                      {project.description}
+                                    </p>
+                                  </div>
 
-                                      {/* Milestones */}
-                                      {project.milestones && (
-                                        <div>
-                                          <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                            <CheckCircle2 className="size-4" />
-                                            Milestones
-                                          </h4>
-                                          <div className="space-y-3">
-                                            {project.milestones.map(
-                                              (milestone, idx) => (
-                                                <div
-                                                  key={idx}
-                                                  className="flex items-center gap-3"
-                                                >
-                                                  <div
-                                                    className={cn(
-                                                      "w-2 h-1 rounded-full",
-                                                      milestone.completed
-                                                        ? "bg-emerald-500"
-                                                        : "bg-amber-500",
-                                                    )}
-                                                  />
-                                                  <div className="flex-1">
-                                                    <div className="flex justify-between items-center">
-                                                      <span className="font-medium">
-                                                        {milestone.name}
-                                                      </span>
-                                                      <span className="text-xs text-muted-foreground">
-                                                        Due:{" "}
-                                                        {formatDate(
-                                                          milestone.dueDate,
-                                                        )}
-                                                      </span>
-                                                    </div>
-                                                    <Badge
-                                                      variant="outline"
-                                                      className={cn(
-                                                        "mt-1 text-xs",
-                                                        milestone.completed
-                                                          ? "bg-emerald-500/10 text-emerald-600"
-                                                          : "bg-amber-500/10 text-amber-600",
-                                                      )}
-                                                    >
-                                                      {milestone.completed
-                                                        ? "Completed"
-                                                        : "In Progress"}
-                                                    </Badge>
-                                                  </div>
-                                                </div>
-                                              ),
-                                            )}
-                                          </div>
-                                        </div>
-                                      )}
-                                    </div>
-
-                                    {/* Right Column - Additional Info */}
-                                    <div className="space-y-6">
-                                      {/* Client Information */}
-                                      {project.clientInfo && (
-                                        <div>
-                                          <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                            <Building2 className="size-4" />
-                                            Client Information
-                                          </h4>
-                                          <div className="space-y-2 text-sm">
-                                            <div className="flex items-center gap-2 text-muted-foreground">
-                                              <Mail className="size-4" />
-                                              {project.clientInfo.email}
-                                            </div>
-                                            <div className="flex items-center gap-2 text-muted-foreground">
-                                              <Phone className="size-4" />
-                                              {project.clientInfo.phone}
-                                            </div>
-                                            <div className="flex items-center gap-2 text-muted-foreground">
-                                              <MapPin className="size-4" />
-                                              {project.clientInfo.location}
-                                            </div>
-                                            <div className="flex items-center gap-2 text-muted-foreground">
-                                              <Briefcase className="size-4" />
-                                              {project.clientInfo.industry}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      )}
-
-                                      {/* Team Members */}
-                                      <div>
-                                        <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                          <Users className="size-4" />
-                                          Team ({project.team.length})
-                                        </h4>
-                                        <div className="space-y-3">
-                                          {project.team.map((member, idx) => (
-                                            <div
-                                              key={idx}
-                                              className="flex items-center gap-3"
-                                            >
-                                              <Avatar className="size-8 border-0 rounded-sm">
-                                                <AvatarFallback
-                                                  className={cn(
-                                                    "text-white text-xs rounded-sm",
-                                                    avatarColors[
-                                                      idx % avatarColors.length
-                                                    ],
+                                  {project.milestones && (
+                                    <div>
+                                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                        <CheckCircle2 className="size-4" />
+                                        Milestones
+                                      </h4>
+                                      <div className="space-y-3">
+                                        {project.milestones.map(
+                                          (milestone, idx) => (
+                                            <div key={idx} className="flex-1">
+                                              <div className="flex justify-between items-center">
+                                                <span className="font-semibold">
+                                                  {milestone.name}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                  Due:{" "}
+                                                  {formatDate(
+                                                    milestone.dueDate,
                                                   )}
-                                                >
-                                                  {member.name
-                                                    .split(" ")
-                                                    .map((n) => n[0])
-                                                    .join("")}
-                                                </AvatarFallback>
-                                              </Avatar>
-                                              <div>
-                                                <div className="font-medium text-sm">
-                                                  {member.name}
-                                                </div>
-                                                <div className="text-xs text-muted-foreground">
-                                                  {member.role}
-                                                </div>
+                                                </span>
                                               </div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-
-                                      {/* Risks */}
-                                      {project.risks && (
-                                        <div>
-                                          <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                            <AlertCircle className="size-4" />
-                                            Risks & Issues
-                                          </h4>
-                                          <div className="space-y-2">
-                                            {project.risks.map((risk, idx) => (
-                                              <div
-                                                key={idx}
-                                                className="border rounded-lg p-3"
+                                              <Badge
+                                                variant="outline"
+                                                className={cn(
+                                                  "mt-2 p-3 text-xs",
+                                                  milestone.completed
+                                                    ? "bg-green-500/15 border-green-500/50 text-green-500"
+                                                    : "bg-yellow-500/15 border-yellow-500/50 text-yellow-500",
+                                                )}
                                               >
-                                                <div className="flex items-center justify-between mb-1">
-                                                  <span className="font-medium text-sm">
-                                                    {risk.type}
-                                                  </span>
-                                                  <Badge
-                                                    variant="outline"
-                                                    className={cn(
-                                                      "text-xs",
-                                                      risk.severity === "Low" &&
-                                                        "bg-emerald-500/10 text-emerald-600",
-                                                      risk.severity ===
-                                                        "Medium" &&
-                                                        "bg-amber-500/10 text-amber-600",
-                                                      risk.severity ===
-                                                        "High" &&
-                                                        "bg-rose-500/10 text-rose-600",
-                                                    )}
-                                                  >
-                                                    {risk.severity}
-                                                  </Badge>
-                                                </div>
-                                                <p className="text-xs text-muted-foreground">
-                                                  {risk.description}
-                                                </p>
-                                              </div>
-                                            ))}
-                                          </div>
-                                        </div>
-                                      )}
+                                                {milestone.completed
+                                                  ? "Completed"
+                                                  : "In Progress"}
+                                              </Badge>
+                                            </div>
+                                          ),
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
 
-                                      {/* Financial Summary */}
-                                      <div>
-                                        <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                          <DollarSign className="size-4" />
-                                          Financial Summary
-                                        </h4>
-                                        <div className="space-y-2">
-                                          <div className="flex justify-between text-sm">
-                                            <span className="text-muted-foreground">
-                                              Budget:
-                                            </span>
-                                            <span className="font-semibold">
-                                              ${project.budget.toLocaleString()}
-                                            </span>
-                                          </div>
-                                          <div className="flex justify-between text-sm">
-                                            <span className="text-muted-foreground">
-                                              Spent:
-                                            </span>
-                                            <span className="font-semibold">
-                                              ${project.spent.toLocaleString()}
-                                            </span>
-                                          </div>
-                                          <div className="flex justify-between text-sm">
-                                            <span className="text-muted-foreground">
-                                              Remaining:
-                                            </span>
-                                            <span
-                                              className={cn(
-                                                "font-semibold",
-                                                project.budget - project.spent <
-                                                  0
-                                                  ? "text-rose-600"
-                                                  : "text-emerald-600",
-                                              )}
-                                            >
-                                              $
-                                              {(
-                                                project.budget - project.spent
-                                              ).toLocaleString()}
-                                            </span>
-                                          </div>
-                                          <Separator className="my-2" />
-                                          <div className="flex justify-between text-sm">
-                                            <span className="text-muted-foreground">
-                                              Utilization:
-                                            </span>
-                                            <span
-                                              className={cn(
-                                                "font-semibold",
-                                                progress > 90
-                                                  ? "text-rose-600"
-                                                  : "text-emerald-600",
-                                              )}
-                                            >
-                                              {progress.toFixed(1)}%
-                                            </span>
-                                          </div>
+                                {/* Right — Additional Info */}
+                                <div className="space-y-6">
+                                  {project.clientInfo && (
+                                    <div>
+                                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                        <Building2 className="size-4" />
+                                        Client Information
+                                      </h4>
+                                      <div className="space-y-2 text-sm">
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                          <Mail className="size-4" />
+                                          {project.clientInfo.email}
+                                        </div>
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                          <Phone className="size-4" />
+                                          {project.clientInfo.phone}
+                                        </div>
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                          <MapPin className="size-4" />
+                                          {project.clientInfo.location}
+                                        </div>
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                          <Briefcase className="size-4" />
+                                          {project.clientInfo.industry}
                                         </div>
                                       </div>
+                                    </div>
+                                  )}
 
-                                      {/* Action Buttons */}
-                                      <div className="flex gap-2 pt-2">
-                                        <Button
-                                          size="sm"
-                                          className="flex-1 gap-2"
+                                  <div>
+                                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                      <Users className="size-4" />
+                                      Team ({project.team.length})
+                                    </h4>
+                                    <div className="space-y-3">
+                                      {project.team.map((member, idx) => (
+                                        <div
+                                          key={idx}
+                                          className="flex items-center gap-3"
                                         >
-                                          <Eye className="size-4" />
-                                          View
-                                        </Button>
-                                        <Button
-                                          size="sm"
-                                          variant="outline"
-                                          className="flex-1 gap-2"
+                                          <Avatar className="size-8 border-0 rounded-sm">
+                                            <AvatarFallback
+                                              className={cn(
+                                                "text-white text-xs rounded-sm",
+                                                avatarColors[
+                                                  idx % avatarColors.length
+                                                ],
+                                              )}
+                                            >
+                                              {member.name
+                                                .split(" ")
+                                                .map((n) => n[0])
+                                                .join("")}
+                                            </AvatarFallback>
+                                          </Avatar>
+                                          <div>
+                                            <div className="font-semibold text-sm">
+                                              {member.name}
+                                            </div>
+                                            <div className="text-xs text-muted-foreground">
+                                              {member.role}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  {project.risks && (
+                                    <div>
+                                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                        <AlertCircle className="size-4" />
+                                        Risks & Issues
+                                      </h4>
+                                      <div className="space-y-2">
+                                        {project.risks.map((risk, idx) => (
+                                          <div
+                                            key={idx}
+                                            className="border rounded-lg p-3"
+                                          >
+                                            <div className="flex items-center justify-between mb-1">
+                                              <span className="font-semibold text-sm">
+                                                {risk.type}
+                                              </span>
+                                              <Badge
+                                                variant="outline"
+                                                className={cn(
+                                                  "text-xs p-3",
+                                                  risk.severity === "Low" &&
+                                                    "bg-green-500/15 border-green-500/50 text-green-500",
+                                                  risk.severity === "Medium" &&
+                                                    "bg-yellow-500/15 border-yellow-500/50 text-yellow-500",
+                                                  risk.severity === "High" &&
+                                                    "bg-red-500/15 border-red-500/50 text-red-500",
+                                                )}
+                                              >
+                                                {risk.severity}
+                                              </Badge>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground">
+                                              {risk.description}
+                                            </p>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  <div>
+                                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                      <DollarSign className="size-4" />
+                                      Financial Summary
+                                    </h4>
+                                    <div className="space-y-2">
+                                      <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                          Budget:
+                                        </span>
+                                        <span className="font-semibold">
+                                          ${project.budget.toLocaleString()}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                          Spent:
+                                        </span>
+                                        <span className="font-semibold">
+                                          ${project.spent.toLocaleString()}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                          Remaining:
+                                        </span>
+                                        <span
+                                          className={cn(
+                                            "font-semibold",
+                                            project.budget - project.spent < 0
+                                              ? "text-red-500"
+                                              : "text-green-500",
+                                          )}
                                         >
-                                          <Download className="size-4" />
-                                          Report
-                                        </Button>
+                                          $
+                                          {(
+                                            project.budget - project.spent
+                                          ).toLocaleString()}
+                                        </span>
+                                      </div>
+                                      <Separator className="my-2" />
+                                      <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                          Utilization:
+                                        </span>
+                                        <span
+                                          className={cn(
+                                            "font-semibold",
+                                            progress > 90
+                                              ? "text-red-500"
+                                              : "text-green-500",
+                                          )}
+                                        >
+                                          {progress.toFixed(1)}%
+                                        </span>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </motion.div>
-                            </TableCell>
-                          </TableRow>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </AnimatePresence>
-              </TableBody>
-            </Table>
-          </div>
 
-          {/* Empty State */}
-          {filteredProjects.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-12"
-            >
-              <Briefcase className="size-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No projects found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try changing your view filter or create a new project
-              </p>
-            </motion.div>
-          )}
-        </CardContent>
-      </Card>
-    </main>
+                                  <div className="flex gap-2 pt-2">
+                                    <Button className="flex-1 p-5 bg-foreground! text-secondary! font-bold">
+                                      View
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      className="flex-1 gap-2 p-5"
+                                    >
+                                      <Download />
+                                      Report
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </AnimatePresence>
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Empty State ─────────────────────────────────── */}
+      {filteredProjects.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
+          <Briefcase className="size-12 mx-auto text-muted-foreground mb-4" />
+          <h3 className="text-xl font-semibold mb-2">No projects found</h3>
+          <p className="text-muted-foreground mb-4">
+            Try changing your view filter or create a new project
+          </p>
+        </motion.div>
+      )}
+    </div>
   );
 }
-
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-};
