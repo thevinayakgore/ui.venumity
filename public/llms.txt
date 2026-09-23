@@ -533,9 +533,11 @@ npx venumityui@latest add <component-name>
 **Description:** A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.
 **Tags:** grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components
 **Technologies:** Next.js, Tailwind CSS, TypeScript, Motion
-**Components:** 1
+**Components:** 3
 
-- **Bento Grid 1** — /components/sections/bento-grids/bento-grid-1 (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+- **Product Overview Bento** — /components/sections/bento-grids/product-overview-bento (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+- **Analytics Pulse Bento** — /components/sections/bento-grids/analytics-pulse-bento (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
+- **Aurora Feature Bento** — /components/sections/bento-grids/aurora-feature-bento (grid, layout, responsive, ui, dashboard, modern, cards, showcase, design, components) [Next.js, Tailwind CSS, TypeScript, Motion] — Author: @thevinayakgore
 
 #### FAQ ⭐ NEW
 

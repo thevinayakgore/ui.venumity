@@ -1,13 +1,22 @@
 "use client";
-import {
-  AreaChart,
-  Area,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 import { TrendingUp, TrendingDown, Activity } from "lucide-react";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+
+const chartConfig = {
+  min: {
+    label: "Minimum",
+    color: "#3b82f6",
+  },
+  max: {
+    label: "Maximum",
+    color: "#3b82f6",
+  },
+  avg: {
+    label: "Average",
+    color: "#06b6d4",
+  },
+} satisfies ChartConfig;
 
 const rangeData = [
   { hour: "00:00", min: 45, max: 78, avg: 62, volatility: 33 },
@@ -24,73 +33,102 @@ const rangeData = [
   { hour: "11:00", min: 72, max: 130, avg: 101, volatility: 58 },
 ];
 
-export default function RangeSparkline() {
-  const maxRange = Math.max(...rangeData.map((d) => d.max - d.min));
-  const avgVolatility = Math.round(
-    rangeData.reduce((acc, d) => acc + d.volatility, 0) / rangeData.length,
-  );
-  const peakHour = rangeData.reduce((max, d) => (d.avg > max.avg ? d : max));
+type TooltipPayloadItem = {
+  payload?: {
+    hour: string;
+    min: number;
+    max: number;
+    avg: number;
+    volatility: number;
+  };
+};
+
+type CustomTooltipProps = {
+  active?: boolean;
+  payload?: TooltipPayloadItem[];
+};
+
+function CustomTooltip({ active, payload }: CustomTooltipProps) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+
+  const data = payload[0]?.payload;
+
+  if (!data) {
+    return null;
+  }
 
   return (
-    <main className="my-10 p-4 md:p-6 border rounded-2xl max-w-3xl m-auto">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
+    <div className="rounded-lg border border-border/60 bg-background/95 p-3 shadow-lg backdrop-blur-sm">
+      <p className="mb-2 text-sm font-medium">{data.hour}</p>
+      <div className="space-y-1">
+        <p className="text-xs">Min: {data.min}</p>
+        <p className="text-xs font-bold text-blue-600">Avg: {data.avg}</p>
+        <p className="text-xs">Max: {data.max}</p>
+        <p className="text-xs text-foreground/50">
+          Range: {data.max - data.min}
+        </p>
+        <p className="text-xs text-cyan-600">Volatility: {data.volatility}%</p>
+      </div>
+    </div>
+  );
+}
+
+export default function RangeSparkline() {
+  const peakHour = rangeData.reduce((max, item) =>
+    item.avg > max.avg ? item : max,
+  );
+
+  const globalMax = Math.max(...rangeData.map((item) => item.max));
+  const globalMin = Math.min(...rangeData.map((item) => item.min));
+
+  return (
+    <div className="p-5 md:p-10 w-full">
+      <div className="flex flex-col border rounded-2xl overflow-hidden m-auto max-w-lg w-full">
+        <div className="p-5">
           <h2 className="text-3xl font-semibold">Range/Band Sparkline</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="mt-1 text-sm text-foreground/50">
             Min-max range with confidence bands
           </p>
         </div>
-        <div className="flex gap-3">
-          <div className="bg-blue-500/10 px-4 py-2 rounded-lg border border-blue-500/20">
-            <span className="text-xs text-blue-600">Max Range</span>
-            <p className="text-lg font-bold text-blue-600">{maxRange}</p>
-          </div>
-          <div className="bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/20">
-            <span className="text-xs text-cyan-600">Volatility</span>
-            <p className="text-lg font-bold text-cyan-600">{avgVolatility}%</p>
-          </div>
-        </div>
-      </div>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <Activity className="size-4 text-blue-600" />
-            <span className="text-sm">Peak Average</span>
-          </div>
-          <div className="text-lg font-medium">{peakHour.avg}</div>
-          <div className="text-xs text-muted-foreground">
-            at {peakHour.hour}
-          </div>
-        </div>
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="size-4 text-green-600" />
-            <span className="text-sm">Global Max</span>
-          </div>
-          <div className="text-lg font-medium">
-            {Math.max(...rangeData.map((d) => d.max))}
-          </div>
-          <div className="text-xs text-muted-foreground">Peak value</div>
-        </div>
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <TrendingDown className="size-4 text-red-600" />
-            <span className="text-sm">Global Min</span>
-          </div>
-          <div className="text-lg font-medium">
-            {Math.min(...rangeData.map((d) => d.min))}
-          </div>
-          <div className="text-xs text-muted-foreground">Lowest value</div>
-        </div>
-      </div>
 
-      {/* Chart */}
-      <div className="h-50 w-full">
-        <ResponsiveContainer width="100%" height="100%">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 px-5">
+          <div className="p-4 bg-foreground/5 border rounded-xl">
+            <div className="mb-1 flex items-center gap-2">
+              <Activity className="size-4 text-blue-600" />
+              <span className="text-sm">Peak Average</span>
+            </div>
+            <div className="text-lg font-medium">{peakHour.avg}</div>
+            <div className="text-xs text-foreground/50">at {peakHour.hour}</div>
+          </div>
+          <div className="p-4 bg-foreground/5 border rounded-xl">
+            <div className="mb-1 flex items-center gap-2">
+              <TrendingUp className="size-4 text-green-600" />
+              <span className="text-sm">Global Max</span>
+            </div>
+            <div className="text-lg font-medium">{globalMax}</div>
+            <div className="text-xs text-foreground/50">Peak value</div>
+          </div>
+          <div className="p-4 bg-foreground/5 border rounded-xl">
+            <div className="mb-1 flex items-center gap-2">
+              <TrendingDown className="size-4 text-red-600" />
+              <span className="text-sm">Global Min</span>
+            </div>
+            <div className="text-lg font-medium">{globalMin}</div>
+            <div className="text-xs text-foreground/50">Lowest value</div>
+          </div>
+        </div>
+
+        <ChartContainer config={chartConfig} className="h-50 w-full">
           <AreaChart
             data={rangeData}
-            margin={{ left: -20, right: 20, top: 20, bottom: 20 }}
+            margin={{
+              top: 20,
+              right: 0,
+              left: -60,
+              bottom: -30,
+            }}
           >
             <defs>
               <linearGradient id="rangeGradient" x1="0" y1="0" x2="0" y2="1">
@@ -104,44 +142,12 @@ export default function RangeSparkline() {
             </defs>
             <XAxis
               dataKey="hour"
-              axisLine={false}
               tickLine={false}
-              tick={{ fill: "hsl(215 20% 65%)", fontSize: 10 }}
-              interval={1}
-            />
-            <YAxis
               axisLine={false}
-              tickLine={false}
-              tick={{ fill: "hsl(215 20% 65%)", fontSize: 10 }}
-              domain={[0, "dataMax + 20"]}
+              tick={false}
             />
-            <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
-                      <p className="text-sm font-medium mb-2">{data.hour}</p>
-                      <div className="space-y-1">
-                        <p className="text-xs">Min: {data.min}</p>
-                        <p className="text-xs font-bold text-blue-600">
-                          Avg: {data.avg}
-                        </p>
-                        <p className="text-xs">Max: {data.max}</p>
-                        <p className="text-xs text-muted-foreground">
-                          Range: {data.max - data.min}
-                        </p>
-                        <p className="text-xs text-cyan-600">
-                          Volatility: {data.volatility}%
-                        </p>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            {/* Range band */}
+            <YAxis tickLine={false} axisLine={false} tick={false} />
+            <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
               dataKey="max"
@@ -156,7 +162,6 @@ export default function RangeSparkline() {
               fill="url(#rangeGradient)"
               animationDuration={2000}
             />
-            {/* Average line */}
             <Area
               type="monotone"
               dataKey="avg"
@@ -168,46 +173,43 @@ export default function RangeSparkline() {
               animationDuration={2000}
             />
           </AreaChart>
-        </ResponsiveContainer>
-      </div>
+        </ChartContainer>
 
-      {/* Volatility Indicators */}
-      <div className="mt-6">
-        <div className="text-sm font-medium mb-3">Volatility by Hour</div>
-        <div className="grid grid-cols-12 gap-1">
-          {rangeData.map((item, index) => (
-            <div key={index} className="text-center">
-              <div
-                className="h-10 bg-linear-to-t from-sky-500 to-cyan-500 rounded-sm"
-                style={{
-                  opacity: 0.3 + (item.volatility / 100) * 0.7,
-                  height: `${(item.volatility / 65) * 60}px`,
-                }}
-              />
-              <div className="text-[8px] mt-1 text-muted-foreground">
-                {item.hour}
+        <div className="p-3 border-y">
+          <div className="mb-3 text-sm font-medium">Volatility by Hour</div>
+          <div className="grid grid-cols-12 gap-1.5">
+            {rangeData.map((item) => (
+              <div key={item.hour} className="text-center">
+                <div
+                  className="h-10 rounded-sm bg-linear-to-tl from-sky-500 to-cyan-500"
+                  style={{
+                    height: `${(item.volatility / 65) * 60}px`,
+                  }}
+                />
+                <div className="mt-1 text-[0.7rem] text-foreground/40">
+                  {item.hour}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Confidence Band Legend */}
-      <div className="flex justify-between items-center mt-4 pt-4 border-t">
-        <div className="flex gap-4">
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-blue-500/30 rounded" />
-            <span className="text-xs">Min-Max Range</span>
+        <div className="flex items-center justify-between p-5 bg-foreground/5">
+          <div className="flex gap-4">
+            <div className="flex items-center gap-1.5">
+              <div className="size-3 rounded-[3px] bg-blue-600" />
+              <span className="text-xs">Min-Max Range</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="h-0.5 w-3 rounded bg-cyan-500" />
+              <span className="text-xs">Average</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-0.5 bg-cyan-500 rounded" />
-            <span className="text-xs">Average</span>
+          <div className="text-xs text-foreground/50">
+            Confidence : 95% within range
           </div>
-        </div>
-        <div className="text-xs text-muted-foreground">
-          Confidence : 95% within range
         </div>
       </div>
-    </main>
+    </div>
   );
 }

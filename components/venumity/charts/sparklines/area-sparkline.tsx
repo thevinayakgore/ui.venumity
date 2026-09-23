@@ -1,92 +1,164 @@
-// app/charts/sparklines/area/page.tsx
 "use client";
-import {
-  AreaChart,
-  Area,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
-import { TrendingUp, Users, Clock } from "lucide-react";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { TrendingUp, Users, Clock, ArrowUpRight } from "lucide-react";
+import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
+
+const chartConfig = {
+  value: {
+    label: "Visitors",
+    color: "#3b82f6",
+  },
+} satisfies ChartConfig;
 
 const areaSparklineData = [
-  { hour: "9AM", value: 4000, label: "9:00" },
-  { hour: "10AM", value: 3000, label: "10:00" },
-  { hour: "11AM", value: 5000, label: "11:00" },
-  { hour: "12PM", value: 4500, label: "12:00" },
-  { hour: "1PM", value: 6000, label: "13:00" },
-  { hour: "2PM", value: 5500, label: "14:00" },
-  { hour: "3PM", value: 7000, label: "15:00" },
-  { hour: "4PM", value: 6500, label: "16:00" },
-  { hour: "5PM", value: 8000, label: "17:00" },
+  { hour: "9AM", value: 4000, label: "9:00 AM" },
+  { hour: "10AM", value: 3000, label: "10:00 AM" },
+  { hour: "11AM", value: 5000, label: "11:00 AM" },
+  { hour: "12PM", value: 4500, label: "12:00 PM" },
+  { hour: "1PM", value: 6000, label: "1:00 PM" },
+  { hour: "2PM", value: 5500, label: "2:00 PM" },
+  { hour: "3PM", value: 7000, label: "3:00 PM" },
+  { hour: "4PM", value: 6500, label: "4:00 PM" },
+  { hour: "5PM", value: 8000, label: "5:00 PM" },
 ];
 
-export default function AreaSparkline() {
-  const total = areaSparklineData.reduce((acc, item) => acc + item.value, 0);
-  const peak = Math.max(...areaSparklineData.map((d) => d.value));
-  const peakHour = areaSparklineData.find((d) => d.value === peak)?.hour;
+type TooltipPayloadItem = {
+  name?: string;
+  value?: number;
+  color?: string;
+  payload?: {
+    hour: string;
+    value: number;
+    label: string;
+  };
+};
+
+type CustomTooltipProps = {
+  active?: boolean;
+  payload?: TooltipPayloadItem[];
+};
+
+function formatNumber(value: number) {
+  return value.toLocaleString("en-US");
+}
+
+function formatCompactNumber(value: number) {
+  return `${(value / 1000).toFixed(1)}K`;
+}
+
+function CustomTooltip({ active, payload }: CustomTooltipProps) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+
+  const item = payload[0]?.payload;
+
+  if (!item) {
+    return null;
+  }
 
   return (
-    <main className="my-10 p-4 md:p-6 border rounded-2xl max-w-3xl m-auto">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h2 className="text-3xl font-semibold">Area Sparkline</h2>
-          <p className="text-sm text-muted-foreground mt-1">
-            Hourly traffic pattern with smooth area fill
-          </p>
-        </div>
-        <div className="flex gap-3">
-          <div className="bg-blue-500/10 px-4 py-2 rounded-lg border border-blue-500/20">
-            <span className="text-xs text-blue-600">Total</span>
-            <p className="text-g font-medium text-blue-600">
-              {(total / 1000).toFixed(1)}K
-            </p>
-          </div>
-          <div className="bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/20">
-            <span className="text-xs text-cyan-600">Peak</span>
-            <p className="text-g font-medium text-cyan-600">{peakHour}</p>
-          </div>
-        </div>
-      </div>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-muted-foreground mb-1">
-            <Users className="size-4" />
-            <span className="text-xs">Average</span>
-          </div>
-          <div className="text-xl font-medium">
-            {(total / areaSparklineData.length).toFixed(0)}
-          </div>
-          <div className="text-xs text-muted-foreground">per hour</div>
-        </div>
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-muted-foreground mb-1">
-            <TrendingUp className="size-4" />
-            <span className="text-xs">Growth</span>
-          </div>
-          <div className="text-xl font-medium text-green-600">+100%</div>
-          <div className="text-xs text-muted-foreground">9AM → 5PM</div>
-        </div>
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-muted-foreground mb-1">
-            <Clock className="size-4" />
-            <span className="text-xs">Peak Hour</span>
-          </div>
-          <div className="text-xl font-medium">{peakHour}</div>
-          <div className="text-xs text-muted-foreground">
-            {peak.toLocaleString()} visitors
-          </div>
-        </div>
+    <div className="min-w-36 rounded-xl border border-border/60 bg-background/95 p-3 shadow-xl backdrop-blur-sm">
+      <div className="mb-2 flex items-center gap-2">
+        <span className="size-2 rounded-full bg-blue-500" />
+
+        <p className="text-xs font-medium text-foreground/50">{item.label}</p>
       </div>
 
-      {/* Chart */}
-      <div className="h-50 w-full">
-        <ResponsiveContainer width="100%" height="100%">
+      <p className="text-base font-semibold text-blue-600">
+        {formatNumber(item.value)}
+      </p>
+
+      <p className="mt-0.5 text-xs text-foreground/50">visitors</p>
+    </div>
+  );
+}
+
+export default function AreaSparkline() {
+  const total = areaSparklineData.reduce(
+    (totalValue, item) => totalValue + item.value,
+    0,
+  );
+
+  const average = Math.round(total / areaSparklineData.length);
+  const peak = Math.max(...areaSparklineData.map((item) => item.value));
+  const lowest = Math.min(...areaSparklineData.map((item) => item.value));
+
+  const peakHour =
+    areaSparklineData.find((item) => item.value === peak)?.hour ?? "—";
+
+  const firstValue = areaSparklineData[0]?.value ?? 0;
+  const lastValue = areaSparklineData[areaSparklineData.length - 1]?.value ?? 0;
+
+  const growth =
+    firstValue > 0 ? ((lastValue - firstValue) / firstValue) * 100 : 0;
+
+  return (
+    <div className="p-5 md:p-10 w-full">
+      <div className="flex flex-col border rounded-2xl overflow-hidden m-auto max-w-xl w-full">
+        {/* Header */}
+        <div className="p-5">
+          <h2 className="text-3xl font-semibold tracking-tight">
+            Area Sparkline
+          </h2>
+          <p className="mt-1 text-sm text-foreground/50">
+            Hourly traffic pattern with a smooth area fill.
+          </p>
+        </div>
+
+        {/* Summary cards */}
+        <div className="grid grid-cols-1 gap-3 px-5 sm:grid-cols-3">
+          <div className="rounded-xl border bg-foreground/5 p-4">
+            <div className="mb-2 flex items-center gap-2 text-foreground/50">
+              <Users className="size-4" />
+              <span className="text-xs font-medium">Average</span>
+            </div>
+
+            <p className="text-2xl font-semibold tracking-tight">
+              {formatNumber(average)}
+            </p>
+
+            <p className="mt-1 text-xs text-foreground/50">visitors per hour</p>
+          </div>
+
+          <div className="rounded-xl border bg-foreground/5 p-4">
+            <div className="mb-2 flex items-center gap-2 text-foreground/50">
+              <TrendingUp className="size-4" />
+              <span className="text-xs font-medium">Growth</span>
+            </div>
+
+            <p
+              className={`flex items-center gap-1 text-2xl font-semibold tracking-tight ${
+                growth >= 0 ? "text-emerald-600" : "text-red-600"
+              }`}
+            >
+              <ArrowUpRight className="size-5" />
+              {growth >= 0 ? "+" : ""}
+              {growth.toFixed(1)}%
+            </p>
+
+            <p className="mt-1 text-xs text-foreground/50">9AM → 5PM</p>
+          </div>
+
+          <div className="rounded-xl border bg-foreground/5 p-4">
+            <div className="mb-2 flex items-center gap-2 text-foreground/50">
+              <Clock className="size-4" />
+              <span className="text-xs font-medium">Peak hour</span>
+            </div>
+
+            <p className="text-2xl font-semibold tracking-tight">{peakHour}</p>
+
+            <p className="mt-1 text-xs text-foreground/50">
+              {formatNumber(peak)} visitors
+            </p>
+          </div>
+        </div>
+
+        {/* Chart */}
+        <ChartContainer config={chartConfig} className="h-50 w-full border-0!">
           <AreaChart
             data={areaSparklineData}
-            margin={{ left: -20, right: 20, top: 20, bottom: 20 }}
+            margin={{ top: 20, right: 0, left: -60, bottom: -30 }}
           >
             <defs>
               <linearGradient
@@ -96,62 +168,89 @@ export default function AreaSparkline() {
                 x2="0"
                 y2="1"
               >
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
+                <stop
+                  offset="0%"
+                  stopColor="var(--color-value)"
+                  stopOpacity={0.35}
+                />
+
+                <stop
+                  offset="55%"
+                  stopColor="var(--color-value)"
+                  stopOpacity={0.12}
+                />
+
+                <stop
+                  offset="100%"
+                  stopColor="var(--color-value)"
+                  stopOpacity={0}
+                />
               </linearGradient>
             </defs>
+
             <XAxis
               dataKey="hour"
-              axisLine={false}
               tickLine={false}
-              tick={{ fill: "hsl(215 20% 65%)", fontSize: 11 }}
+              axisLine={false}
+              tick={false}
             />
-            <YAxis hide domain={[0, "dataMax + 1000"]} />
+
+            <YAxis tickLine={false} axisLine={false} tick={false} width={0} />
+
             <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  return (
-                    <div className="bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg p-3">
-                      <p className="text-sm font-medium mb-1">
-                        {payload[0].payload.label}
-                      </p>
-                      <p className="text-g font-medium text-blue-600">
-                        {payload[0].value?.toLocaleString()} visitors
-                      </p>
-                    </div>
-                  );
-                }
-                return null;
+              cursor={{
+                stroke: "currentColor",
+                strokeOpacity: 0.15,
               }}
+              content={<CustomTooltip />}
             />
+
             <Area
               type="monotone"
               dataKey="value"
-              stroke="#3b82f6"
+              name="Visitors"
+              stroke="var(--color-value)"
               strokeWidth={3}
               fill="url(#areaSparkGradient)"
-              animationDuration={2000}
+              fillOpacity={1}
+              activeDot={{
+                r: 5,
+                fill: "var(--color-value)",
+                stroke: "hsl(var(--background))",
+                strokeWidth: 3,
+              }}
+              animationDuration={1600}
               animationEasing="ease-out"
             />
           </AreaChart>
-        </ResponsiveContainer>
-      </div>
+        </ChartContainer>
 
-      {/* Hourly Breakdown */}
-      <div className="grid grid-cols-9 gap-1 mt-4">
-        {areaSparklineData.map((item) => (
-          <div key={item.hour} className="text-center">
-            <div
-              className="h-1 bg-blue-500 rounded-full mb-1"
-              style={{ opacity: item.value / peak }}
-            />
-            <div className="text-[10px] text-muted-foreground">{item.hour}</div>
-            <div className="text-xs font-medium">
-              {(item.value / 1000).toFixed(1)}K
+        {/* Hourly breakdown */}
+        <div className="grid grid-cols-9 gap-1 border-y p-5">
+          {areaSparklineData.map((item) => (
+            <div key={item.hour} className="text-center">
+              <div className="mb-2 flex h-1.5 items-center rounded-full bg-foreground/10">
+                <div
+                  className="h-full rounded-full bg-linear-to-r from-blue-500 to-cyan-500"
+                  style={{
+                    width: `${(item.value / peak) * 100}%`,
+                  }}
+                />
+              </div>
+              <p className="text-[10px] text-foreground/50">{item.hour}</p>
+              <p className="mt-0.5 text-xs font-semibold">
+                {formatCompactNumber(item.value)}
+              </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Footer summary */}
+        <div className="flex items-center justify-between bg-foreground/5 p-5 text-xs w-full">
+          <span>{formatNumber(lowest)} lowest visitors</span>
+          <span>{formatNumber(peak)} highest visitors</span>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

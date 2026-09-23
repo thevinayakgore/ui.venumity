@@ -1145,7 +1145,20 @@ export const COMPONENTS = createComponents([
           "components",
         ],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
-        items: [{ itemName: "Bento Grid 1", githubUsername: "thevinayakgore" }],
+        items: [
+          {
+            itemName: "Product Overview Bento",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Analytics Pulse Bento",
+            githubUsername: "thevinayakgore",
+          },
+          {
+            itemName: "Aurora Feature Bento",
+            githubUsername: "thevinayakgore",
+          },
+        ],
       },
       {
         name: "FAQ",
