@@ -1,39 +1,38 @@
 // app/api/featured-components/route.ts
 import { NextResponse } from "next/server";
+import { toKebabCase } from "@/utils/slug-kebab";
 import { COMPONENTS } from "@/registry/components";
 import type { ComponentCategory, ComponentItem } from "@/registry/types";
 
-// Helper to convert to kebab-case
-function toKebabCase(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
 // Hardcoded list of featured component names (20 components)
-const FEATURED_COMPONENT_NAMES = [
-  "summary-block",
-  "enhance-mail",
-  "profile-card-1",
-  "gradient-spotlight-1",
-  "system-status-badge",
-  "range-sparkline",
-  "personal-panel-1",
-  "sortable-table",
-  "filters-table",
-  "real-time-filterable-table",
-  "pricing-table-2",
-  "masonry-image-gallery",
-  "snackbar-1",
-  "full-page-loader",
-  "carousel-testimonial-2",
-  "premium-wave-loader",
-  "standard-footer",
-  "dashboard-skeleton-loader",
-  "editable-table",
-  "shiny-button-loader",
+export const FEATURED_COMPONENTS = [
+  "Fixed Column Table",
+  "Premium Wave Loader",
+  "Standard Pricing Table",
+  "Real Time Filterable Table",
+  "Connection Status Badge",
+  "Chat Card Suggestion",
+  "Nested Accordion",
+  "Carousel Testimonial 2",
+  "System Status Badge",
+  "Range Sparkline",
+  "Masonry Image Gallery",
+  "Logo Page Loader",
+  "Gradient Spinner",
+  "Analytics Stats Bento",
+  "Gradient Spotlight 1",
+  "Gemini Style Chat Shell",
+  "Icon Style FAQ",
+  "Multi Layer Pulse Loader",
+  "Simple Profile Card",
+  "Shiny Button Loader",
+  "Personal Panel 1",
+  "Filters Table",
 ];
+
+const FEATURED_COMPONENT_NAMES = FEATURED_COMPONENTS.map((name) =>
+  toKebabCase(name),
+);
 
 // Types
 interface ComponentMeta {

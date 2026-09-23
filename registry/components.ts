@@ -1130,6 +1130,8 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Bento Grids",
+        newItem: true,
+        thumbnail: "analytics-stats-bento",
         description:
           "A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.",
         tags: [
@@ -1151,7 +1153,7 @@ export const COMPONENTS = createComponents([
             githubUsername: "thevinayakgore",
           },
           {
-            itemName: "Analytics Pulse Bento",
+            itemName: "Analytics Stats Bento",
             githubUsername: "thevinayakgore",
           },
           {

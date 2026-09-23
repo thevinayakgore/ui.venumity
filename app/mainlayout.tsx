@@ -16,29 +16,24 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const FULL_PREVIEW = pathname?.startsWith("/preview");
 
-  return (
+  return FULL_PREVIEW ? (
+    children
+  ) : (
     <ScrollContainerContext.Provider value={scrollContainerRef}>
       <NextTopLoader
         color="oklch(0.73 0.21 47)"
         height={1.5}
         showSpinner={false}
       />
-      {FULL_PREVIEW ? (
-        children
-      ) : (
-        <main className="fixed inset-0 px-2 sm:px-2.5 bg-foreground/5 overflow-auto w-full h-full">
-          <Navbar />
-          <section className="aspect-video z-1000! transform-gpu overflow-auto bg-background border border-foreground/15 rounded-xl md:rounded-2xl max-h-[calc(100%-6rem)] w-full">
-            <div
-              ref={scrollContainerRef}
-              className="overflow-auto w-full h-full"
-            >
-              {children}
-            </div>
-          </section>
-          <BottomFooter />
-        </main>
-      )}
+      <main className="fixed inset-0 h-full w-full overflow-auto bg-foreground/5 px-2 sm:px-2.5">
+        <Navbar />
+        <section className="z-1000! aspect-video max-h-[calc(100%-6rem)] w-full overflow-auto rounded-xl border border-foreground/15 bg-background md:rounded-2xl">
+          <div ref={scrollContainerRef} className="h-full w-full overflow-auto">
+            {children}
+          </div>
+        </section>
+        <BottomFooter />
+      </main>
     </ScrollContainerContext.Provider>
   );
 }

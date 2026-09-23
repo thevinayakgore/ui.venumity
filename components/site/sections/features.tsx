@@ -1,8 +1,16 @@
+// components/site/sections/features.tsx
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { COMPONENTS } from "@/registry/components";
+import { Camera } from "@/components/utility/camera";
+import { FEATURED_COMPONENTS } from "@/app/api/featured-components/route";
+import { InfiniteLogoMovingCards } from "@/components/ui/infinite-logo-moving-cards";
 import {
   Card,
   CardContent,
@@ -10,15 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
-import {
-  getCategoryCards,
-  type CategoryCard,
-} from "@/app/components/cards-data";
-import Link from "next/link";
-import { InfiniteLogoMovingCards } from "@/components/ui/infinite-logo-moving-cards";
-import { Camera } from "@/components/utility/camera";
-import { Button } from "@/components/ui/button";
+import { toKebabCase } from "@/utils/slug-kebab";
 
 // ─── Type definitions ────────────────────────────────────────
 type IconElement =
@@ -43,125 +43,158 @@ type Feature = {
   bg: string;
 };
 
-// Add this component before the Features function
+interface FeaturedItem {
+  id: string;
+  displayName: string;
+  description: string;
+  tags: string[];
+  thumbnail: string;
+  href: string;
+}
+
+// Build a lookup of every item across all categories/subcategories
+function buildFeaturedItems(): FeaturedItem[] {
+  // Normalize featured names to kebab-case for matching
+  const featuredSet = new Set(FEATURED_COMPONENTS.map(toKebabCase));
+
+  const items: FeaturedItem[] = [];
+
+  COMPONENTS.forEach((category) => {
+    const catSlug = toKebabCase(category.name);
+
+    category.subcategories.forEach((subcategory) => {
+      const subSlug = toKebabCase(subcategory.name);
+      const subTags = subcategory.tags || [];
+
+      subcategory.items.forEach((item) => {
+        const itemSlug = toKebabCase(item.itemName);
+        if (!featuredSet.has(itemSlug)) return;
+
+        items.push({
+          id: itemSlug,
+          displayName: item.itemName,
+          description: subcategory.description || `${item.itemName} component`,
+          tags: item.tags?.length ? item.tags : subTags,
+          thumbnail: `/thumbnails/${itemSlug}.webp`,
+          href: `/components/${catSlug}/${subSlug}/${itemSlug}`,
+        });
+      });
+    });
+  });
+
+  // Preserve original FEATURED_COMPONENTS order
+  const orderMap = new Map(
+    FEATURED_COMPONENTS.map((name, i) => [toKebabCase(name), i]),
+  );
+  items.sort(
+    (a, b) => (orderMap.get(a.id) ?? 999) - (orderMap.get(b.id) ?? 999),
+  );
+
+  return items;
+}
+
 function ComponentsShowcase() {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [imageError, setImageError] = useState<boolean>(false);
+  const [imageError, setImageError] = useState(false);
 
-  // Pick 10 featured component cards from the registry
-  const featuredComponents = React.useMemo(() => {
-    const cards = getCategoryCards();
-    // Select specific interesting subcategories to showcase
-    const featuredNames = [
-      "AI Chats",
-      "Status Badges",
-      "Area Charts",
-      "Bar Charts",
-      "Pie Charts",
-      "Profile Cards",
-      "Pricing Tables",
-      "Product Cards",
-      "Bento Grids",
-      "Testimonials",
-    ];
+  // Build once — synchronous, no fetch needed
+  const featuredComponents = useMemo(
+    () => buildFeaturedItems().slice(0, 15),
+    [],
+  );
 
-    return featuredNames
-      .map((name) => cards.find((card) => card.title === name))
-      .filter(Boolean) as CategoryCard[];
-  }, []);
-
+  // Auto-advance every 5s — restarts whenever activeCardIndex changes
+  // (whether from user click or from the interval itself)
   useEffect(() => {
     if (featuredComponents.length === 0) return;
+
     const interval = setInterval(() => {
       setActiveCardIndex((prev) => (prev + 1) % featuredComponents.length);
-    }, 10000);
+    }, 5000);
+
     return () => clearInterval(interval);
-  }, [featuredComponents.length]);
+  }, [featuredComponents.length, activeCardIndex]);
 
-  const currentCard = featuredComponents[activeCardIndex];
+  // Reset image error when card changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setImageError(false);
+    }, 150);
 
-  if (!currentCard) {
+    return () => clearTimeout(timer);
+  }, [activeCardIndex]);
+
+  if (featuredComponents.length === 0) {
     return (
-      <div className="relative mt-5 md:mt-10 p-10 md:p-15 text-xl font-semibold w-full">
-        No Component Available !
+      <div className="relative mt-5 md:mt-10 p-10 md:p-15 text-sm text-foreground/50 w-full">
+        No featured components available.
       </div>
     );
   }
 
+  const current = featuredComponents[activeCardIndex];
+
   return (
     <div className="block md:hidden lg:block relative mt-5 w-full">
-      <Link href={`/components${currentCard.path}`}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`${currentCard.id}-${currentCard.thumbnail}`}
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="relative cursor-pointer p-2 group bg-card shadow-2xl shadow-blue-500/30 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 w-full"
-          >
-            <div className="aspect-square relative shadow-xl/15 max-h-40 sm:max-h-60 md:max-h-80 w-full overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-500">
-              {!imageError && currentCard.thumbnail ? (
-                <Image
-                  key={currentCard.id}
-                  src={currentCard.thumbnail}
-                  alt={currentCard.title}
-                  width={5000}
-                  height={5000}
-                  unoptimized
-                  onError={() => setImageError(true)}
-                  className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
-                />
-              ) : (
-                <div className="bg-linear-to-br from-blue-600/20 via-background to-background w-full h-full flex items-center justify-center">
-                  <span className="text-4xl sm:text-5xl md:text-7xl font-bold text-blue-600/30">
-                    {currentCard.title.charAt(0)}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="p-3 sm:p-4 pt-4 sm:pt-5">
-              <div className="flex items-start justify-between font-semibold gap-2">
-                <h3 className="text-sm sm:text-base md:text-lg whitespace-nowrap truncate">
-                  {currentCard.title}
-                </h3>
-                <span className="text-xs sm:text-sm font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm bg-primary/20 text-primary shrink-0">
-                  {currentCard.itemCount > 0 &&
-                    currentCard.itemCount <= 9 &&
-                    "0"}
-                  {currentCard.itemCount}
+      <Link key={`${current.id}-${current.thumbnail}`} href={current.href}>
+        <div className="relative cursor-pointer p-2 group bg-card shadow-2xl shadow-blue-500/30 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 w-full">
+          <div className="aspect-square relative shadow-xl/15 max-h-40 sm:max-h-60 md:max-h-70 w-full overflow-hidden rounded-xl sm:rounded-2xl">
+            {!imageError && current.thumbnail ? (
+              <Image
+                key={current.id}
+                src={current.thumbnail}
+                alt={current.displayName}
+                width={5000}
+                height={5000}
+                priority
+                unoptimized
+                onError={() => setImageError(true)}
+                className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              />
+            ) : (
+              <div className="bg-linear-to-br from-blue-600/20 via-background to-background w-full h-full flex items-center justify-center">
+                <span className="text-4xl sm:text-5xl md:text-7xl font-bold text-blue-600/30">
+                  {current.displayName.charAt(0)}
                 </span>
               </div>
+            )}
+          </div>
 
-              <p className="text-xs sm:text-sm font-semibold tracking-wide line-clamp-2 opacity-40 mt-2 mb-3 sm:mb-4">
-                {currentCard.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1 sm:gap-1.5">
-                {currentCard.tags.slice(0, 2).map((tag, idx) => (
-                  <span
-                    key={`${tag}-${idx}`}
-                    className="text-[10px] sm:text-xs px-2 sm:px-2.75 h-5 sm:h-6.5 flex items-center bg-foreground/5 border text-foreground/60 capitalize font-medium trackism-wide rounded-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {currentCard.tags.length > 2 && (
-                  <span className="text-[10px] sm:text-xs px-2 sm:px-2.75 h-5 sm:h-6.5 flex items-center bg-foreground/5 border text-foreground/60 font-medium rounded-sm">
-                    +{currentCard.tags.length - 2}
-                  </span>
-                )}
-              </div>
+          <div className="p-3 sm:p-4 pt-4 sm:pt-5">
+            <div className="flex items-start justify-between font-semibold gap-2">
+              <h3 className="text-sm sm:text-base md:text-lg whitespace-nowrap truncate">
+                {current.displayName}
+              </h3>
             </div>
 
-            <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-blue-600 to-transparent transition-all duration-500 h-px w-full" />
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-blue-600 to-transparent rounded-full transition-all duration-500 h-1.5 w-2/3" />
-          </motion.div>
-        </AnimatePresence>
+            <p className="text-xs sm:text-sm font-semibold tracking-wide line-clamp-2 opacity-40 mt-2 mb-3 sm:mb-4">
+              {current.description}
+            </p>
+
+            <div className="flex flex-wrap gap-1 sm:gap-1.5">
+              {current.tags.slice(0, 2).map((tag, idx) => (
+                <span
+                  key={`${tag}-${idx}`}
+                  className="text-[10px] sm:text-xs px-2 sm:px-2.75 h-5 sm:h-6.5 flex items-center bg-foreground/5 border text-foreground/60 capitalize font-medium tracking-wide rounded-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+              {current.tags.length > 2 && (
+                <span className="text-[10px] sm:text-xs px-2 sm:px-2.75 h-5 sm:h-6.5 flex items-center bg-foreground/5 border text-foreground/60 font-medium rounded-sm">
+                  +{current.tags.length - 2}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-blue-600 to-transparent transition-all duration-500 h-px w-full" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-blue-600 to-transparent rounded-full transition-all duration-500 h-1.5 w-2/3" />
+        </div>
       </Link>
 
-      {/* Card indicators */}
-      <div className="flex items-center justify-center gap-1 sm:gap-1.5 mt-4 sm:mt-5 md:mt-10">
+      {/* Indicator dots */}
+      <div className="flex items-center justify-center gap-1 sm:gap-1.5 mt-4 sm:mt-5 md:mt-10 flex-wrap">
         {featuredComponents.map((card, index) => (
           <button
             key={card.id}
@@ -171,7 +204,7 @@ function ComponentsShowcase() {
                 ? "w-6 sm:w-8 md:w-10 bg-blue-600"
                 : "w-2 sm:w-3 bg-blue-600/40 backdrop-blur-md hover:bg-blue-600"
             }`}
-            aria-label={`View ${card.title}`}
+            aria-label={`View ${card.displayName}`}
           />
         ))}
       </div>
@@ -199,6 +232,7 @@ function MobileFirstDesign() {
             width={500}
             height={500}
             priority
+            unoptimized
             className="aspect-video object-cover shadow-lg/20 rounded-lg sm:rounded-xl w-full"
           />
           <div className="space-y-1 sm:space-y-2 p-1 sm:p-2 w-full">

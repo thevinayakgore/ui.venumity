@@ -24,47 +24,45 @@ export function getCategoryCards(): CategoryCard[] {
   const cards: CategoryCard[] = [];
 
   COMPONENTS.forEach((category) => {
-    if (category.subcategories.length > 0) {
-      category.subcategories.forEach((subcategory) => {
-        const itemCount = subcategory.items?.length || 0;
-        const path = `/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
+    // Every category has subcategories — iterate them
+    category.subcategories.forEach((subcategory) => {
+      const itemCount = subcategory.items?.length || 0;
+      if (itemCount === 0) return; // Skip empty subcategories
 
-        const allTags =
-          subcategory.tags ||
-          getSubcategoryTags(
-            toKebabCase(category.name),
-            toKebabCase(subcategory.name),
-          ) ||
-          [];
+      const catSlug = toKebabCase(category.name);
+      const subSlug = toKebabCase(subcategory.name);
+      const path = `/${catSlug}/${subSlug}`;
 
-        const allTechs =
-          subcategory.techs ||
-          getSubcategoryTechs(
-            toKebabCase(category.name),
-            toKebabCase(subcategory.name),
-          ) ||
-          [];
+      // Prefer subcategory-level tags/techs; fall back to computed
+      const allTags =
+        (subcategory.tags && subcategory.tags.length > 0
+          ? subcategory.tags
+          : getSubcategoryTags(catSlug, subSlug)) || [];
 
-        const description =
-          subcategory.description ||
-          `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
+      const allTechs =
+        (subcategory.techs && subcategory.techs.length > 0
+          ? subcategory.techs
+          : getSubcategoryTechs(catSlug, subSlug)) || [];
 
-        const thumbnailPath = getCategoryCardThumbnailPath(subcategory);
+      const description =
+        subcategory.description ||
+        `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-        cards.push({
-          id: `${category.name}-${subcategory.name}`,
-          title: subcategory.name,
-          description,
-          type: "subcategory",
-          parentCategory: category.name,
-          path,
-          itemCount,
-          tags: allTags,
-          techs: allTechs,
-          thumbnail: thumbnailPath,
-        });
+      const thumbnailPath = getCategoryCardThumbnailPath(subcategory);
+
+      cards.push({
+        id: `${catSlug}-${subSlug}`,
+        title: subcategory.name,
+        description,
+        type: "subcategory",
+        parentCategory: category.name,
+        path,
+        itemCount,
+        tags: allTags,
+        techs: allTechs,
+        thumbnail: thumbnailPath || undefined,
       });
-    }
+    });
   });
 
   return [...cards].sort((a, b) =>

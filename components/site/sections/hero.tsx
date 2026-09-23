@@ -78,7 +78,7 @@ export default function Hero() {
               orientation="vertical"
               className="hidden md:block mx-3 bg-foreground/20 h-7 my-auto"
             />
-            <span className="pl-3 md:pl-0">Expandable Row Table</span>
+            <span className="pl-3 md:pl-0">Fixed Column Table</span>
             <span className="hidden md:block ml-2 px-2 py-0.5 text-xs uppercase rounded-full bg-primary/20 text-primary border border-primary/50">
               NEW
             </span>
