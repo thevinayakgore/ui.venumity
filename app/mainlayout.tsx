@@ -14,7 +14,7 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const FULL_PREVIEW = pathname?.startsWith("/preview");
+  const FULL_PREVIEW = pathname?.startsWith("/preview") ||  pathname?.startsWith("/thumbnails");
 
   return FULL_PREVIEW ? (
     children

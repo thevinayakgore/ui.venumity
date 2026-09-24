@@ -69,7 +69,7 @@ export default function StandardFooter() {
 
   return (
     <>
-      <footer className="relative flex flex-col m-auto overflow-auto bg-linear-to-t from-primary/20 via-transparent w-full h-full">
+      <footer className="relative flex flex-col mt-auto overflow-auto bg-linear-to-t from-primary/20 via-transparent w-full h-full">
         <div className="absolute top-0 left-0 animate-energy-flow h-px w-full bg-linear-to-r from-transparent via-primary to-transparent" />
         {/* Top Section */}
         <div className="grid grid-cols-1 gap-12 py-12 md:grid-cols-2 lg:grid-cols-5 p-6 md:p-10 w-full h-full">
@@ -88,7 +88,7 @@ export default function StandardFooter() {
                 <span className="text-primary mr-2">mity</span> UI
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground max-w-md">
+            <p className="text-sm text-foreground/50 max-w-md">
               Building innovative solutions for modern businesses. Fast,
               reliable, and scalable.
             </p>
@@ -100,10 +100,10 @@ export default function StandardFooter() {
                     size="icon"
                     variant="outline"
                     asChild
-                    className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-500 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
+                    className="hover:bg-primary dark:hover:bg-primary border-foreground/15! hover:border-primary! cursor-pointer shadow-none transition-all duration-500 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
                   >
                     <Link href={href}>
-                      <Icon className="h-4 w-4" />
+                      <Icon className="size-4" />
                     </Link>
                   </Button>
                 ))}
@@ -112,12 +112,12 @@ export default function StandardFooter() {
                 variant="outline"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="hover:bg-primary dark:hover:bg-primary border-primary/30! hover:border-primary! cursor-pointer shadow-none transition-all duration-1000 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
+                className="hover:bg-primary dark:hover:bg-primary border-foreground/15! hover:border-primary! cursor-pointer shadow-none transition-all duration-1000 hover:scale-110 hover:-rotate-12 hover:text-white hover:shadow-md rounded-sm"
               >
                 {theme === "dark" ? (
-                  <Sun className="h-4 w-4" />
+                  <Sun className="size-4" />
                 ) : (
-                  <Moon className="h-4 w-4" />
+                  <Moon className="size-4" />
                 )}
                 <span className="sr-only">Toggle theme</span>
               </Button>
@@ -139,12 +139,12 @@ export default function StandardFooter() {
                 />
                 <Button
                   type="submit"
-                  className="absolute top-1.5 right-1.5 cursor-pointer transition-all duration-1000 hover:px-10 rounded-sm"
+                  className="absolute top-1.5 right-1.5 text-white transition-all duration-1000 hover:px-10 rounded-sm"
                 >
                   Subscribe
                 </Button>
               </div>
-              <p className="text-muted-foreground text-xs">
+              <p className="text-foreground/50 text-xs">
                 Get the latest updates, tutorials, and exclusive offers.
               </p>
             </form>
@@ -166,7 +166,7 @@ export default function StandardFooter() {
                       <li key={item.name}>
                         <Link
                           href={item.href}
-                          className="group text-sm text-muted-foreground hover:text-foreground decoration-primary -ml-6 inline-flex items-center gap-2 underline-offset-8 transition-all duration-500 hover:pl-5 hover:underline"
+                          className="group text-sm text-foreground/50 hover:text-foreground decoration-primary -ml-6 inline-flex items-center gap-2 underline-offset-8 transition-all duration-500 hover:pl-5 hover:underline"
                         >
                           <ArrowDownLeft className="size-5 text-primary rotate-225 opacity-0 transition-all duration-500 group-hover:scale-120 group-hover:opacity-100 sm:group-hover:rotate-225 md:rotate-0" />
                           {item.name}
@@ -181,7 +181,7 @@ export default function StandardFooter() {
         </div>
 
         {/* Bottom Section */}
-        <div className="relative text-muted-foreground/70 flex flex-col items-center justify-between m-auto gap-4 p-4 md:p-6 md:px-10 text-xs md:flex-row md:text-sm w-full">
+        <div className="relative text-foreground/50 flex flex-col items-center justify-between m-auto gap-4 p-4 md:p-6 md:px-10 text-xs md:flex-row md:text-sm w-full">
           <div className="absolute top-0 left-0 animate-rotate-3d h-px w-full bg-linear-to-r from-transparent via-primary to-transparent" />
           <span>
             &copy; {currentYear} {brandName} | All rights reserved

@@ -1,4 +1,4 @@
-// utils/slug-kebab.ts 
+// utils/slug-kebab.ts
 /**
  * Convert a string to kebab-case
  * Handles special characters, numbers, and edge cases properly
@@ -73,4 +73,15 @@ export function toKebabCaseWithNumbers(str: string): string {
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-")
   );
+}
+
+// utility (can be inside the same file)
+export function removeKebabCase(str: string) {
+  return str
+    .replace(/[-_]/g, " ") // replace - and _ with space
+    .replace(/\s+/g, " ") // collapse multiple spaces
+    .trim()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }

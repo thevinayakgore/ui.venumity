@@ -1,3 +1,4 @@
+// app/api/components/og/route.ts
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { COMPONENTS } from "@/registry/components";

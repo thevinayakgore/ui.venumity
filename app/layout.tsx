@@ -8,7 +8,6 @@ import type { Metadata, Viewport } from "next";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { Toaster } from "@/components/ui/sonner";
 import { COMPONENTS } from "@/registry/components";
-import { getAllThumbnails } from "@/lib/thumbnails";
 import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Footer from "@/components/site/navigations/footer";
@@ -121,7 +120,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const thumbnails = getAllThumbnails();
 
   return (
     <html
@@ -209,7 +207,7 @@ export default function RootLayout({
                 <Analytics />
                 <SpeedInsights />
                 {children}
-                <Footer baseImages={thumbnails} />
+                <Footer />
               </MainLayout>
             </SearchProvider>
           </TooltipProvider>

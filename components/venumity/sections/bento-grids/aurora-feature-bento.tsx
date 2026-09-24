@@ -1,4 +1,6 @@
 "use client";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { motion, type Variants } from "framer-motion";
 import {
   ArrowUpRight,
@@ -10,12 +12,8 @@ import {
   LucideIcon,
   MousePointer2,
   Palette,
-  Sparkles,
   Zap,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 const cardVariants: Variants = {
   hidden: {
@@ -162,11 +160,9 @@ export default function AuroraFeatureBento() {
 
         <div className="relative z-10 flex h-full flex-col justify-between">
           <div className="flex items-start justify-between gap-4">
-            <Badge className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary hover:bg-primary/10">
-              <Sparkles className="size-3.5" />
-              Venumity UI
-            </Badge>
-
+            <p className="mb-4 text-sm font-medium text-foreground/45">
+              A better way to build interfaces
+            </p>
             <Button
               size="icon"
               variant="ghost"
@@ -177,10 +173,6 @@ export default function AuroraFeatureBento() {
           </div>
 
           <div className="max-w-2xl">
-            <p className="mb-4 text-sm font-medium text-foreground/45">
-              A better way to build interfaces
-            </p>
-
             <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.06em] sm:text-6xl lg:text-7xl">
               Build less.
               <br />

@@ -533,7 +533,6 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Product Cards",
-        thumbnail: "detailed-product-card",
         description:
           "Commerce-ready card components designed to showcase products with clarity and impact.",
         tags: ["product", "ecommerce", "card", "catalog"],
@@ -623,6 +622,8 @@ export const COMPONENTS = createComponents([
     subcategories: [
       {
         name: "Financial",
+        thumbnail: "analytics-dashboard",
+        newItem: true,
         description:
           "Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.",
         tags: [
@@ -637,11 +638,11 @@ export const COMPONENTS = createComponents([
         techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
         items: [
           {
-            itemName: "Personal Panel 1",
+            itemName: "Personal Finance Dashboard",
             githubUsername: "thevinayakgore",
           },
           {
-            itemName: "Charts Dashboard",
+            itemName: "Analytics Dashboard",
             githubUsername: "thevinayakgore",
           },
         ],
@@ -1057,6 +1058,7 @@ export const COMPONENTS = createComponents([
         tags: ["footer", "sitemap", "bottom", "legal", "branding"],
         techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
         items: [
+          { itemName: "Simple Footer", githubUsername: "thevinayakgore" },
           { itemName: "Standard Footer", githubUsername: "thevinayakgore" },
         ],
       },

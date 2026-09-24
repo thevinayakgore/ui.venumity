@@ -119,6 +119,7 @@ export default function ThemeToggle() {
             ? "Switch to light mode"
             : "Switch to dark mode"
         }
+       className="bg-transparent!"
       >
         {icon}
       </Button>
