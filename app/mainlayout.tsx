@@ -27,7 +27,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       />
       <main className="fixed inset-0 h-full w-full overflow-auto bg-foreground/5 px-2 sm:px-2.5">
         <Navbar />
-        <section className="z-1000! aspect-video max-h-[calc(100%-6rem)] w-full overflow-auto rounded-xl border border-foreground/15 bg-background md:rounded-2xl">
+        <section className="z-1000! lg:aspect-video max-h-[calc(100%-6rem)] w-full overflow-auto rounded-xl border border-foreground/15 bg-background md:rounded-2xl">
           <div ref={scrollContainerRef} className="h-full w-full overflow-auto">
             {children}
           </div>

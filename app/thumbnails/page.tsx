@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { removeKebabCase } from "@/utils/slug-kebab";
 import ThemeToggle from "@/components/site/navigations/theme-toggle";
+import { formatCount } from "@/utils/format-count";
 
 interface ThumbnailItem {
   name: string;
@@ -39,7 +40,7 @@ export default function ThumbnailsPage() {
   }
 
   return (
-    <div className="p-5 space-y-5 max-w-400 m-auto w-full">
+    <div className="p-3 sm:p-5 space-y-3 sm:space-y-5 max-w-400 m-auto w-full">
       {/* Header */}
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
         <div className="space-y-2">
@@ -51,17 +52,17 @@ export default function ThumbnailsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-auto">
           <div className="relative border rounded-md overflow-hidden w-auto h-9.5">
             <Input
               type="search"
               value={search}
               placeholder="Search thumbnails…"
               onChange={(e) => setSearch(e.target.value)}
-              className="px-3 placeholder:text-foreground/50! outline-0! ring-0! shadow-none! border-0! bg-transparent! text-sm w-sm! h-full"
+              className="border-0! bg-transparent px-3 text-sm shadow-none! outline-0! ring-0! placeholder:text-foreground/50! h-full w-xs sm:w-sm [&::-webkit-search-cancel-button]:hidden"
             />
-            <Badge className="mr-1 p-2! bg-foreground/15! text-foreground/60! text-sm rounded-sm w-15! h-7!">
-              {filtered.length} / {items.length}
+            <Badge className="absolute top-1 right-1 z-40 p-1.5! bg-foreground/15! text-foreground dark:text-foreground/60! text-sm rounded-sm min-w-15! h-7!">
+              {formatCount(filtered.length)} / {formatCount(items.length)}
             </Badge>
           </div>
           <div className="bg-foreground/10 rounded-md">
@@ -75,7 +76,8 @@ export default function ThumbnailsPage() {
         className="
           columns-1
           sm:columns-2
-          gap-4
+          gap-2
+          sm:gap-4
           [column-fill:balance]
           w-full
         "
@@ -92,7 +94,7 @@ export default function ThumbnailsPage() {
             <Link
               href={`/thumbnails/${item.name}`}
               target="_blank"
-              className="group relative block rounded-3xl overflow-hidden bg-foreground/5 border hover:shadow-lg/10 transition-all duration-500"
+              className="group relative block rounded-lg sm:rounded-3xl overflow-hidden bg-foreground/5 border hover:shadow-lg/10 transition-all duration-500"
             >
               {/* Image container with natural aspect ratio */}
               <div className="relative w-full">

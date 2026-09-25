@@ -279,7 +279,10 @@ export const COMPONENTS = createComponents([
         items: [
           { itemName: "Basic Area Chart", githubUsername: "thevinayakgore" },
           { itemName: "Gradient Area Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Multi Area Chart", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Multi Layer Area Chart",
+            githubUsername: "thevinayakgore",
+          },
           { itemName: "Percent Area Chart", githubUsername: "thevinayakgore" },
           { itemName: "Spline Area Chart", githubUsername: "thevinayakgore" },
           { itemName: "Stacked Area Chart", githubUsername: "thevinayakgore" },
@@ -287,7 +290,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Bar Charts",
-        thumbnail: "mixed-bar-chart",
+        thumbnail: "mixed-line-bar-chart",
         description:
           "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
         tags: ["bar", "comparison", "histogram", "data", "analytics"],
@@ -299,8 +302,11 @@ export const COMPONENTS = createComponents([
             itemName: "Horizontal Bar Chart",
             githubUsername: "thevinayakgore",
           },
-          { itemName: "Mixed Bar Chart", githubUsername: "thevinayakgore" },
           { itemName: "Stacked Bar Chart", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Mixed Line Bar Chart",
+            githubUsername: "thevinayakgore",
+          },
         ],
       },
       {
@@ -336,14 +342,12 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Pie Charts",
-        thumbnail: "donut-pie-chart",
         description:
           "Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns.",
         tags: ["pie", "proportion", "distribution", "graph", "segments"],
         techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
         items: [
           { itemName: "Basic Pie Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Donut Pie Chart", githubUsername: "thevinayakgore" },
         ],
       },
       {
@@ -360,7 +364,7 @@ export const COMPONENTS = createComponents([
       },
       {
         name: "Radial Charts",
-        thumbnail: "label-radial-chart",
+        thumbnail: "stacked-radial-chart",
         description:
           "Visualize progress and distribution with radial chart components built for circular data representation.",
         tags: [
@@ -383,8 +387,10 @@ export const COMPONENTS = createComponents([
         items: [
           { itemName: "Basic Radial Chart", githubUsername: "thevinayakgore" },
           { itemName: "Label Radial Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Grid Radial Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Text Radial Chart", githubUsername: "thevinayakgore" },
+          {
+            itemName: "Center Text Radial Chart",
+            githubUsername: "thevinayakgore",
+          },
           { itemName: "Shape Radial Chart", githubUsername: "thevinayakgore" },
           {
             itemName: "Stacked Radial Chart",
@@ -1146,12 +1152,7 @@ export const COMPONENTS = createComponents([
           "saas",
           "form",
         ],
-        techs: [
-          "Next.js",
-          "TypeScript",
-          "Tailwind CSS",
-          "Shadcn UI",
-        ],
+        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
         items: [
           {
             itemName: "Standard Sign In Form",

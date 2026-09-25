@@ -67,13 +67,13 @@ function useThumbnails() {
 
 export const BottomFooter = () => {
   return (
-    <div className="relative z-50 flex items-start justify-start py-1.5 sm:py-4 lg:py-0 px-2.5 text-xs font-semibold overflow-hidden w-full lg:h-10">
-      <div className="flex flex-col lg:flex-row items-center md:justify-between gap-1.25 sm:gap-4 leading-none text-foreground/50 w-full h-full">
+    <div className="relative z-50 flex items-start justify-start py-1.5 md:py-4 lg:py-0 px-2.5 text-xs font-semibold overflow-hidden w-full lg:h-10">
+      <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-1.25 lg:gap-4 leading-none text-foreground/50 w-full h-full">
         <div className="flex items-center whitespace-nowrap">
           © {new Date().getFullYear()} Venumity
           <Separator
             orientation="vertical"
-            className="mx-2 sm:mx-3 bg-foreground/30 min-h-4! sm:min-h-5!"
+            className="mx-2 lg:mx-3 bg-foreground/30 min-h-4! lg:min-h-5!"
           />
           All rights reserved
         </div>
@@ -145,10 +145,10 @@ export default function Footer() {
   const secondHalfResources = resourcePages.slice(resourceChunkSize);
 
   return (
-    <footer className="p-3 md:p-5 lg:p-10 m-auto max-w-400 w-full">
+    <footer className="p-3 lg:p-5 xl:p-10 m-auto max-w-400 w-full">
       <div className="lg:bg-foreground/5 lg:p-2 pb-0! lg:border-b-30 sm:rounded-[1.3rem] sm:rounded-b-xl overflow-hidden">
         {/* 3D Morquee Banner */}
-        <section className="relative lg:p-3 lg:shadow-2xl/10 lg:bg-foreground/5 backdrop-blur-md rounded-xl lg:rounded-2xl overflow-hidden w-full min-h-60 lg:min-h-150">
+        <section className="relative lg:p-3 lg:shadow-2xl/10 lg:bg-foreground/5 backdrop-blur-md rounded-xl lg:rounded-2xl overflow-hidden w-full min-h-65 max-h-max lg:min-h-150">
           {/* Only render marquee once thumbnails are loaded */}
           {loaded && images.length > 0 && (
             <ThreeDMarquee
@@ -156,18 +156,18 @@ export default function Footer() {
               images={images}
             />
           )}
-          <div className="absolute inset-0 z-20 flex items-center m-auto p-5 md:p-10 w-full h-full">
-            <div className="flex flex-col items-center m-auto gap-5 p-5 md:p-8 bg-white/5 backdrop-blur-3xl text-white shadow-2xl rounded-[2rem] max-w-270 w-full h-fit">
-              <div className="flex items-start justify-between gap-5 m-auto w-full">
-                <div className="flex items-center gap-5 md:gap-7 w-ull">
-                  <div className="relative shrink-0 p-2 shadow-xl rounded-[1.6rem] overflow-hidden min-w-27 h-33">
+          <div className="absolute inset-0 z-20 flex items-center m-auto lg:p-5 xl:p-10 w-full h-fit">
+            <div className="flex flex-col items-center m-auto sm:gap-3 lg:gap-5 p-1 md:p-5 xl:p-10 md:bg-foreground/5 lg:bg-white/5 backdrop-blur-3xl lg:text-white lg:shadow-2xl rounded-2xl xl:rounded-4xl max-w-270 w-full h-full">
+              <div className="flex flex-col sm:flex-row items-start justify-between gap-4 lg:gap-5 xl:gap-10 m-auto w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-5 lg:gap-7 w-full">
+                  <div className="relative shrink-0 p-1 sm:p-1.5 lg:p-2 shadow-xl rounded-[0.8rem] sm:rounded-[1.2rem] lg:rounded-[1.6rem] overflow-hidden min-w-15 md:min-w-20 lg:min-w-27 h-15 md:h-24 lg:h-33">
                     <Image
                       src="/logo.png"
                       alt="logo"
                       width={2000}
                       height={2000}
                       unoptimized
-                      className="z-20 transform-gpu border-5 border-white rounded-[1.3rem] w-full h-full"
+                      className="z-20 transform-gpu border-2 lg:border-5 border-white rounded-[0.6rem] md:rounded-[0.8rem] lg:rounded-[1.3rem] w-full h-full"
                     />
                     <motion.span
                       animate={{
@@ -202,13 +202,17 @@ export default function Footer() {
                       className="absolute inset-0 -z-10 scale-[1.5] w-full h-full"
                     />
                   </div>
-                  <h2 className="text-2xl md:text-4xl font-semibold text-shadow-lg/10 tracking-tight leading-none">
-                    Let&apos;s build, share & improve <br /> this open-source{" "}
-                    <br /> together 🙌🏻 🎉
+                  <h2 className="text-white text-shadow-lg/10 text-xl md:text-2xl lg:text-[2.4rem] font-semibold tracking-tight leading-tight sm:leading-none">
+                    <span>
+                      Let&apos;s build, share & improve{" "}
+                      <br className="hidden sm:block" /> this open-source{" "}
+                      <br className="hidden md:block" /> together
+                    </span>{" "}
+                    🙌🏻 🎉
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mb-3 sm:mb-0">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link
@@ -250,7 +254,7 @@ export default function Footer() {
                   </Tooltip>
                 </div>
               </div>
-              <p className="text-sm sm:text-base md:text-lg text-white/80 dark:text-white/60 tracking-wide text-shadow-lg/10 leading-snug w-full">
+              <p className="text-xs md:text-base lg:text-lg text-white/80 dark:text-white/60 tracking-wide text-shadow-lg/10 md:leading-snug w-full">
                 Discover beautifully crafted components built for developers who
                 care about clean design, smooth interactions and modern user
                 experiences. Copy, customize and launch stunning interfaces
@@ -261,7 +265,7 @@ export default function Footer() {
         </section>
 
         {/* Brand & Links Columns */}
-        <div className="mt-2 sm:mt-3 p-3 sm:p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
+        <div className="mt-2 sm:mt-3 p-1 sm:p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-start justify-between gap-5 lg:gap-10 w-full">
           <div className="col-span-2 space-y-3">
             <div className="hidden md:flex items-center gap-2 sm:gap-3">
               <Image

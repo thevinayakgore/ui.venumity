@@ -1,6 +1,6 @@
 # Venumity UI
 
-> Free, MIT-licensed React & Next.js component library — 126+ production-ready, copy-paste UI components built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
+> Free, MIT-licensed React & Next.js component library — 124+ production-ready, copy-paste UI components built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
 
 Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directly into the consumer's project — there is no compiled package to depend on, so every component is fully owned and editable once installed.
 
@@ -26,7 +26,7 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 - [Background Effects](https://ui.venumity.com/components/background-effects): 1 components
 - [Buttons](https://ui.venumity.com/components/buttons): 2 components
 - [Cards](https://ui.venumity.com/components/cards): 1 components
-- [Charts](https://ui.venumity.com/components/charts): 38 components
+- [Charts](https://ui.venumity.com/components/charts): 36 components
 - [Commerce](https://ui.venumity.com/components/commerce): 5 components
 - [Dashboards](https://ui.venumity.com/components/dashboards): 2 components
 - [Data Display](https://ui.venumity.com/components/data-display): 10 components
