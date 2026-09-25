@@ -1,0 +1,46 @@
+# public/robots.txt
+# Standard crawlers
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# --- AI crawlers: explicit Allow so they can actually reach /llms.txt and /llms-full.txt ---
+# Without these, some AI crawlers default to a more restrictive posture on sites
+# with no explicit signal. Allowing them here is what makes the llms.txt work at all.
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (both current and legacy identifiers included — harmless if a name is retired)
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: claude-web
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI (Gemini training signal — separate from Googlebot/Search ranking above)
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://ui.venumity.com/sitemap.xml

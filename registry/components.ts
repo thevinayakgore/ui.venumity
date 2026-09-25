@@ -82,7 +82,6 @@ export const COMPONENTS = createComponents([
       // },
       {
         name: "AI Chats Panel",
-        newItem: true,
         description:
           "Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
         tags: ["ai", "chat", "assistant", "conversation", "messaging"],
@@ -1130,6 +1129,52 @@ export const COMPONENTS = createComponents([
     category: "Sections",
     icon: "layout-grid",
     subcategories: [
+      {
+        name: "Auth Forms",
+        newItem: true,
+        description:
+          "Conversion-optimized authentication forms for modern SaaS products — sign-in, sign-up, OTP verification, password reset, and multi-step onboarding.",
+        tags: [
+          "auth",
+          "authentication",
+          "signin",
+          "signup",
+          "login",
+          "otp",
+          "password",
+          "onboarding",
+          "saas",
+          "form",
+        ],
+        techs: [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI",
+        ],
+        items: [
+          {
+            itemName: "Standard Sign In Form",
+            githubUsername: "thevinayakgore",
+          },
+          // {
+          //   itemName: "Minimal Sign Up Form",
+          //   githubUsername: "thevinayakgore",
+          // },
+          // {
+          //   itemName: "Split Screen Auth Form",
+          //   githubUsername: "thevinayakgore",
+          // },
+          // {
+          //   itemName: "OTP Verification Form",
+          //   githubUsername: "thevinayakgore",
+          // },
+          // {
+          //   itemName: "Forgot Password Form",
+          //   githubUsername: "thevinayakgore",
+          // },
+        ],
+      },
       {
         name: "Bento Grids",
         newItem: true,
