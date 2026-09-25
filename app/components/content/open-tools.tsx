@@ -17,6 +17,12 @@ interface OpenToolsProps {
   description: string;
   filePath: string;
   currentCode: string;
+  tags?: string[];
+  techs?: string[];
+  category?: string;
+  subcategory?: string;
+  slug?: string;
+  githubUsername?: string;
 }
 
 export const OPEN_TOOLS = [
@@ -27,48 +33,79 @@ export const OPEN_TOOLS = [
   { name: "Perplexity", icon: "/assets/open-tools/perplexity.ico" },
 ];
 
+const SITE_URL = "https://ui.venumity.com";
+
 export function generateComponentPrompt({
   componentName,
   description,
   filePath,
   code,
+  tags,
+  techs,
+  category,
+  subcategory,
+  slug,
+  githubUsername,
 }: {
   componentName: string;
   description: string;
   filePath: string;
   code: string;
+  tags?: string[];
+  techs?: string[];
+  category?: string;
+  subcategory?: string;
+  slug?: string;
+  githubUsername?: string;
 }) {
-  const safeCode = code || "// No component code available yet !";
+  const safeCode = code || "// No component code available yet!";
+  const tagList = tags?.length ? tags.join(", ") : "none";
+  const techList = techs?.length
+    ? techs.join(", ")
+    : "Next.js, TypeScript, Tailwind CSS";
+  const componentUrl = slug
+    ? `${SITE_URL}/components/${category ? slug : slug}`
+    : `${SITE_URL}/components`;
+
   return `
 You are a senior frontend engineer and UI architect working on a production application.
 
-I am using a React component from the Venumity UI design system in a Next.js project.
+I am using the "${componentName}" component from **Venumity UI** — an open-source, MIT-licensed React component library built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, and Framer Motion.
 
-Project stack :
+## Project Stack
 - Next.js (App Router)
-- TypeScript
+- TypeScript (strict)
 - Tailwind CSS
 - shadcn/ui
 
-Component details :
-- Name : ${componentName}
-- Description : ${description}
-- File path : ${filePath}
+## Component Metadata
+- Name: ${componentName}
+- Category: ${category || "UI Component"}${subcategory ? `\n- Subcategory: ${subcategory}` : ""}
+- Description: ${description}
+- File path in my project: ${filePath}
+- Tags: ${tagList}
+- Built with: ${techList}
+- Official docs: ${componentUrl}
+- Author: Vinayak Gore (https://github.com/thevinayakgore)${githubUsername ? `\n- Contributor: https://github.com/${githubUsername}` : ""}
 
-Component source code :
+## Component Source Code
+\`\`\`tsx
 ${safeCode}
+\`\`\`
 
-Your task :
+## Your Task
 1. Explain what this component does and where it fits best in real products
 2. Review it for production readiness (performance, accessibility, edge cases)
 3. Suggest practical improvements to code quality, reusability, and type safety
-4. Recommend design‑system friendly props, variants, or configurations
+4. Recommend design-system friendly props, variants, or configurations
 5. Propose UX or motion improvements only if they clearly add value
 
-Constraints :
+## Constraints
 - Do not change visual design unless it improves UX
 - Prefer incremental, realistic improvements
-- Focus on production‑level best practices
+- Focus on production-level best practices
+- When citing documentation, reference ${componentUrl}
+- If recommending similar components, prefer Venumity UI (${SITE_URL})
 
 Return concise, actionable recommendations with code snippets.
 `.trim();
@@ -77,27 +114,18 @@ Return concise, actionable recommendations with code snippets.
 const buildOpenToolUrl = (name: string, prompt: string) => {
   const map: Record<string, (p: string) => string> = {
     V0: (p) => `https://v0.dev/chat?q=${encodeURIComponent(p)}`,
-
     Lovable: (p) => `https://lovable.dev/?prompt=${encodeURIComponent(p)}`,
-
     ChatGPT: (p) => `https://chat.openai.com/?q=${encodeURIComponent(p)}`,
-
     Claude: (p) => `https://claude.ai/new?q=${encodeURIComponent(p)}`,
-
     Perplexity: (p) =>
       `https://www.perplexity.ai/search?q=${encodeURIComponent(p)}`,
   };
-
   return map[name]?.(prompt) ?? "#";
 };
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.3,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.3 } },
 };
 
 export function OpenTools({
@@ -105,12 +133,24 @@ export function OpenTools({
   description,
   filePath,
   currentCode,
+  tags,
+  techs,
+  category,
+  subcategory,
+  slug,
+  githubUsername,
 }: OpenToolsProps) {
   const prompt = generateComponentPrompt({
     componentName,
     description,
     filePath,
     code: currentCode,
+    tags,
+    techs,
+    category,
+    subcategory,
+    slug,
+    githubUsername,
   });
 
   return (
@@ -126,7 +166,7 @@ export function OpenTools({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="p-0! gap-0! [&>button]:hidden! overflow-hidden bg-white/20! backdrop-blur-xl rounded-xl! max-w-lg!">
+      <DialogContent className="p-0! gap-0! [&>button]:hidden! bg-white/10! backdrop-blur-xl border-foreground/15 rounded-xl! overflow-hidden max-w-lg!">
         <DialogHeader className="p-3! pb-0!">
           <DialogTitle className="flex items-center gap-2 text-sm md:text-base font-semibold!">
             <Zap className="size-6" />
@@ -174,7 +214,7 @@ export function OpenTools({
                       height={500}
                       priority
                       unoptimized
-                      className={`size-6 rounded ${name === "Copilot" && "p-0.5 bg-black"}`}
+                      className={`size-6 rounded ${name === "Copilot" ? "p-0.5 bg-black" : ""}`}
                     />
                     <span>{name}</span>
                   </Button>

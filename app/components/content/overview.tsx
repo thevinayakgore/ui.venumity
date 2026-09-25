@@ -1,8 +1,16 @@
 // app/components/content/overview.tsx
 "use client";
-import { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { OpenTools } from "./open-tools";
+import ComponentPreview from "./preview";
 import { Button } from "@/components/ui/button";
+import { toKebabCase } from "@/utils/slug-kebab";
+import Shimmer from "@/components/utility/shimmer";
+import { useMemo, useState, useEffect } from "react";
+import CodeBlock from "@/components/site/common/code-block";
+import ShareComponent from "@/components/site/navigations/share-component";
 import {
   Fullscreen,
   Terminal,
@@ -10,14 +18,6 @@ import {
   PictureInPicture2,
   RotateCcw,
 } from "lucide-react";
-import CodeBlock from "@/components/site/common/code-block";
-import ComponentPreview from "./preview";
-import { toKebabCase } from "@/utils/slug-kebab";
-import { OpenTools } from "./open-tools";
-import Image from "next/image";
-import Link from "next/link";
-import ShareComponent from "@/components/site/navigations/share-component";
-import Shimmer from "@/components/utility/shimmer";
 
 interface ExtendedOverviewProps {
   itemName?: string;
@@ -43,6 +43,8 @@ const VIDEO_TAB: TabType = "video";
 export default function Overview({
   itemName,
   description,
+  tags,
+  techs,
   youtubeUrl,
   code,
   componentName,
@@ -66,9 +68,7 @@ export default function Overview({
     }
   }, [tabs, activeTab]);
 
-  const handleRefresh = () => {
-    setRefreshKey((prev) => prev + 1);
-  };
+  const handleRefresh = () => setRefreshKey((p) => p + 1);
 
   const kebabItemName = useMemo(
     () => toKebabCase(itemName || componentName),
@@ -81,6 +81,12 @@ export default function Overview({
     if (parts.length >= 2) return parts[1];
     return null;
   }, [subcategory, slugPath]);
+
+  // category comes from slugPath's first segment, or componentName fallback
+  const resolvedCategory = useMemo(() => {
+    const parts = slugPath.split("/").filter(Boolean);
+    return parts[0] || toKebabCase(componentName);
+  }, [slugPath, componentName]);
 
   const liveDemoUrl = useMemo(() => {
     const kebabCategory = toKebabCase(componentName);
@@ -145,7 +151,6 @@ export default function Overview({
     youtubeEmbedUrl,
   ]);
 
-  // Calculate tab position for the sliding indicator
   const getTabLeftPosition = () => {
     if (activeTab === PREVIEW_TAB) return 0;
     if (activeTab === CODE_TAB) return 120;
@@ -216,6 +221,12 @@ export default function Overview({
               description={description || ""}
               filePath={code ? `${componentName}/${kebabItemName}.tsx` : ""}
               currentCode={code || ""}
+              tags={tags}
+              techs={techs}
+              category={resolvedCategory}
+              subcategory={resolvedSubcategory || undefined}
+              slug={kebabItemName}
+              githubUsername={githubUsername}
             />
 
             <Button

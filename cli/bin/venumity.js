@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { Command } from "commander";
 import chalk from "chalk";
 import gradient from "gradient-string";
@@ -8,16 +7,12 @@ import ora from "ora";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { exec } from "child_process";
-import { promisify } from "util";
+import { execSync, spawn } from "child_process";
 import boxen from "boxen";
-
-const execAsync = promisify(exec);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Read package.json using fs
 const pkg = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../package.json"), "utf8"),
 );
@@ -25,9 +20,140 @@ const pkg = JSON.parse(
 const API_BASE_URL = "https://ui.venumity.com";
 
 // ============================================================
-// HEADER / LOGO
+// YARN VERSION DETECTION (cached)
 // ============================================================
+let _yarnMajor = null;
+function yarnMajor() {
+  if (_yarnMajor !== null) return _yarnMajor;
+  try {
+    const v = execSync("yarn --version", {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    _yarnMajor = parseInt(v.split(".")[0], 10) || 1;
+  } catch {
+    _yarnMajor = 1;
+  }
+  return _yarnMajor;
+}
 
+// ============================================================
+// PACKAGE MANAGER DETECTION
+//   Priority:
+//     1. Lock files in the target project (source of truth)
+//     2. User agent (how the CLI was invoked)
+//     3. Fallback: npm
+// ============================================================
+function detectPackageManager(cwd) {
+  // 1. Lock files — this is what the project actually uses
+  if (fs.existsSync(path.join(cwd, "pnpm-lock.yaml"))) return "pnpm";
+  if (fs.existsSync(path.join(cwd, "yarn.lock"))) return "yarn";
+  if (
+    fs.existsSync(path.join(cwd, "bun.lockb")) ||
+    fs.existsSync(path.join(cwd, "bun.lock"))
+  )
+    return "bun";
+  if (fs.existsSync(path.join(cwd, "package-lock.json"))) return "npm";
+
+  // 2. User agent — how CLI was invoked
+  const ua = process.env.npm_config_user_agent || "";
+  if (ua.startsWith("pnpm")) return "pnpm";
+  if (ua.startsWith("yarn")) return "yarn";
+  if (ua.startsWith("bun")) return "bun";
+  if (ua.startsWith("npm")) return "npm";
+
+  // 3. Fallback
+  return "npm";
+}
+
+// ============================================================
+// COMMAND BUILDERS (with Yarn 1.x fallback)
+// ============================================================
+function getInstallCmd(pm) {
+  switch (pm) {
+    case "pnpm":
+      return "pnpm add";
+    case "yarn":
+      return "yarn add";
+    case "bun":
+      return "bun add";
+    default:
+      return "npm install";
+  }
+}
+
+function getShadcnCmd(pm, args) {
+  const a = args.join(" ");
+  if (pm === "pnpm") return `pnpm dlx shadcn@latest ${a}`;
+  if (pm === "bun") return `bunx shadcn@latest ${a}`;
+  if (pm === "yarn") {
+    return yarnMajor() >= 2
+      ? `yarn dlx shadcn@latest ${a}`
+      : `npx shadcn@latest ${a}`; // Yarn 1.x has no dlx
+  }
+  return `npx shadcn@latest ${a}`;
+}
+
+function getCreateNextAppCmd(pm, projectName, tsFlag) {
+  const args = `${projectName} ${tsFlag} --tailwind --app --no-eslint --import-alias "@/*" --yes`;
+  if (pm === "pnpm") return `pnpm dlx create-next-app@latest ${args}`;
+  if (pm === "bun") return `bunx create-next-app@latest ${args}`;
+  if (pm === "yarn") {
+    return yarnMajor() >= 2
+      ? `yarn dlx create-next-app@latest ${args}`
+      : `npx create-next-app@latest ${args}`;
+  }
+  return `npx create-next-app@latest ${args}`;
+}
+
+function getRunCmd(pm, script) {
+  if (pm === "pnpm") return `pnpm ${script}`;
+  if (pm === "bun") return `bun run ${script}`;
+  if (pm === "yarn") return `yarn ${script}`;
+  return `npm run ${script}`;
+}
+
+function getCliInvokeCmd(pm) {
+  if (pm === "pnpm") return "pnpm dlx venumityui@latest";
+  if (pm === "bun") return "bunx venumityui@latest";
+  if (pm === "yarn") {
+    return yarnMajor() >= 2
+      ? "yarn dlx venumityui@latest"
+      : "npx venumityui@latest";
+  }
+  return "npx venumityui@latest";
+}
+
+// ============================================================
+// STREAMED EXEC — used for all install commands
+// Shows live output so nothing looks stuck
+// ============================================================
+function runStreamed(cmd, cwd, label) {
+  return new Promise((resolve, reject) => {
+    if (label) console.log(chalk.gray(`   ${cmd}`));
+
+    const child = spawn(cmd, {
+      cwd,
+      shell: true,
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        CI: "true", // force non-interactive
+        FORCE_COLOR: "1",
+      },
+    });
+
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`Command exited with code ${code}`));
+    });
+  });
+}
+
+// ============================================================
+// HEADER
+// ============================================================
 function printHeader() {
   const venumityGradient = gradient(
     "#ffedd5",
@@ -60,7 +186,6 @@ function printHeader() {
 // ============================================================
 // API HELPERS
 // ============================================================
-
 function toKebabCase(str) {
   return str
     .toLowerCase()
@@ -94,7 +219,6 @@ async function fetchComponentData(componentPath) {
 // ============================================================
 // PROJECT HELPERS
 // ============================================================
-
 async function detectProject(cwd) {
   const packageJsonPath = path.join(cwd, "package.json");
   const hasPackageJson = fs.existsSync(packageJsonPath);
@@ -143,142 +267,180 @@ async function detectProject(cwd) {
   return { hasPackageJson: true, hasTypeScript, hasSrc, hasApp, cwd };
 }
 
-async function createNextJsProjectInCurrentDir(cwd, installMotion) {
-  const spinner = ora(
-    chalk.cyan("Creating Next.js project in current directory..."),
-  ).start();
+function setupProjectFiles(cwd) {
+  const componentsJson = {
+    $schema: "https://ui.shadcn.com/schema.json",
+    style: "new-york",
+    rsc: false,
+    tsx: true,
+    tailwind: {
+      config: "tailwind.config.js",
+      css: "app/globals.css",
+      baseColor: "neutral",
+      cssVariables: true,
+      prefix: "",
+    },
+    aliases: {
+      components: "@/components",
+      utils: "@/lib/utils",
+      ui: "@/components/ui",
+      lib: "@/lib",
+      hooks: "@/hooks",
+    },
+    iconLibrary: "lucide",
+  };
 
-  try {
-    // Check if current directory already has files
-    const files = fs.readdirSync(cwd);
-    const hasFiles = files.some(
-      (f) =>
-        !f.startsWith(".") && f !== "package-lock.json" && f !== "node_modules",
-    );
+  fs.writeFileSync(
+    path.join(cwd, "components.json"),
+    JSON.stringify(componentsJson, null, 2),
+  );
 
-    if (hasFiles) {
-      const { proceed } = await inquirer.prompt([
-        {
-          type: "confirm",
-          name: "proceed",
-          message: "Current directory is not empty. Continue anyway?",
-          default: false,
-        },
-      ]);
-      if (!proceed) {
-        spinner.stop();
-        console.log(
-          chalk.yellow(
-            "💡 Create a new folder or choose a different location.",
-          ),
-        );
-        process.exit(0);
-      }
-    }
+  const hasSrc = fs.existsSync(path.join(cwd, "src"));
+  const baseDir = hasSrc ? "src" : "";
 
-    const createCmd = `npx create-next-app@latest . --typescript --tailwind --app --no-eslint --import-alias "@/*" --yes`;
-    spinner.text = "Running create-next-app in current directory...";
-    console.log(chalk.dim(`   ${createCmd}`));
+  const libDir = path.join(cwd, baseDir, "lib");
+  fs.mkdirSync(libDir, { recursive: true });
 
-    await execAsync(createCmd, { cwd });
-
-    spinner.text = "Installing dependencies...";
-    const deps = [
-      "class-variance-authority",
-      "clsx",
-      "tailwind-merge",
-      "lucide-react",
-      "@radix-ui/react-slot",
-      "@radix-ui/react-accordion",
-      "@radix-ui/react-alert-dialog",
-      "@radix-ui/react-avatar",
-      "@radix-ui/react-checkbox",
-      "@radix-ui/react-collapsible",
-      "@radix-ui/react-context-menu",
-      "@radix-ui/react-dialog",
-      "@radix-ui/react-dropdown-menu",
-      "@radix-ui/react-hover-card",
-      "@radix-ui/react-label",
-      "@radix-ui/react-menubar",
-      "@radix-ui/react-navigation-menu",
-      "@radix-ui/react-popover",
-      "@radix-ui/react-progress",
-      "@radix-ui/react-radio-group",
-      "@radix-ui/react-scroll-area",
-      "@radix-ui/react-select",
-      "@radix-ui/react-separator",
-      "@radix-ui/react-slider",
-      "@radix-ui/react-switch",
-      "@radix-ui/react-tabs",
-      "@radix-ui/react-toggle",
-      "@radix-ui/react-toggle-group",
-      "@radix-ui/react-tooltip",
-    ];
-    await execAsync(`npm install ${deps.join(" ")}`, { cwd });
-
-    spinner.text = "Configuring shadcn/ui...";
-
-    const componentsJson = {
-      $schema: "https://ui.shadcn.com/schema.json",
-      style: "new-york",
-      rsc: false,
-      tsx: true,
-      tailwind: {
-        config: "tailwind.config.js",
-        css: "app/globals.css",
-        baseColor: "neutral",
-        cssVariables: true,
-        prefix: "",
-      },
-      aliases: {
-        components: "@/components",
-        utils: "@/lib/utils",
-        ui: "@/components/ui",
-        lib: "@/lib",
-        hooks: "@/hooks",
-      },
-      iconLibrary: "lucide",
-    };
-
+  const utilsPath = path.join(libDir, "utils.ts");
+  if (!fs.existsSync(utilsPath)) {
     fs.writeFileSync(
-      path.join(cwd, "components.json"),
-      JSON.stringify(componentsJson, null, 2),
-    );
-
-    if (installMotion) {
-      spinner.text = "Installing motion...";
-      await execAsync("npm install motion", { cwd });
-    }
-
-    const hasSrc = fs.existsSync(path.join(cwd, "src"));
-    const baseDir = hasSrc ? "src" : "";
-    const libDir = path.join(cwd, baseDir, "lib");
-    fs.mkdirSync(libDir, { recursive: true });
-
-    const utilsContent = `import { type ClassValue, clsx } from "clsx";
+      utilsPath,
+      `import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}`;
-
-    fs.writeFileSync(path.join(libDir, "utils.ts"), utilsContent);
-
-    const uiDir = path.join(cwd, baseDir, "components", "ui");
-    fs.mkdirSync(uiDir, { recursive: true });
-
-    spinner.succeed(chalk.green("Project ready in current directory!"));
-    return cwd;
-  } catch (error) {
-    spinner.fail(chalk.red(`Failed to create project: ${error.message}`));
-    throw error;
+}
+`,
+    );
   }
+
+  const uiDir = path.join(cwd, baseDir, "components", "ui");
+  fs.mkdirSync(uiDir, { recursive: true });
+
+  return { baseDir, uiDir };
+}
+
+// Core deps installed in every fresh project
+const CORE_DEPS = [
+  "class-variance-authority",
+  "clsx",
+  "tailwind-merge",
+  "lucide-react",
+  "@radix-ui/react-slot",
+  "@radix-ui/react-accordion",
+  "@radix-ui/react-alert-dialog",
+  "@radix-ui/react-avatar",
+  "@radix-ui/react-checkbox",
+  "@radix-ui/react-collapsible",
+  "@radix-ui/react-context-menu",
+  "@radix-ui/react-dialog",
+  "@radix-ui/react-dropdown-menu",
+  "@radix-ui/react-hover-card",
+  "@radix-ui/react-label",
+  "@radix-ui/react-menubar",
+  "@radix-ui/react-navigation-menu",
+  "@radix-ui/react-popover",
+  "@radix-ui/react-progress",
+  "@radix-ui/react-radio-group",
+  "@radix-ui/react-scroll-area",
+  "@radix-ui/react-select",
+  "@radix-ui/react-separator",
+  "@radix-ui/react-slider",
+  "@radix-ui/react-switch",
+  "@radix-ui/react-tabs",
+  "@radix-ui/react-toggle",
+  "@radix-ui/react-toggle-group",
+  "@radix-ui/react-tooltip",
+];
+
+// ============================================================
+// CREATE NEXT.JS PROJECT — in current dir
+// ============================================================
+async function createNextJsProjectInCurrentDir(cwd, installMotion) {
+  const pm = detectPackageManager(cwd);
+  console.log(chalk.cyan(`🚀 Creating Next.js project (using ${pm})...\n`));
+
+  const files = fs.readdirSync(cwd);
+  const hasFiles = files.some(
+    (f) =>
+      !f.startsWith(".") &&
+      f !== "package-lock.json" &&
+      f !== "pnpm-lock.yaml" &&
+      f !== "yarn.lock" &&
+      f !== "bun.lockb" &&
+      f !== "bun.lock" &&
+      f !== "node_modules",
+  );
+
+  if (hasFiles) {
+    const { proceed } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "proceed",
+        message: "Current directory is not empty. Continue anyway?",
+        default: false,
+      },
+    ]);
+    if (!proceed) {
+      console.log(
+        chalk.yellow("💡 Create a new folder or choose a different location."),
+      );
+      process.exit(0);
+    }
+  }
+
+  const createCmd = getCreateNextAppCmd(pm, ".", "--typescript");
+  console.log(chalk.gray("   Running create-next-app...\n"));
+  await runStreamed(createCmd, cwd);
+
+  console.log(chalk.cyan("\n📦 Installing core dependencies...\n"));
+  await runStreamed(`${getInstallCmd(pm)} ${CORE_DEPS.join(" ")}`, cwd);
+
+  if (installMotion) {
+    console.log(chalk.cyan("\n🎬 Installing motion...\n"));
+    await runStreamed(`${getInstallCmd(pm)} motion`, cwd);
+  }
+
+  console.log(chalk.cyan("\n🔧 Configuring shadcn/ui...\n"));
+  setupProjectFiles(cwd);
+
+  console.log(chalk.green("✅ Project ready in current directory!"));
+  return cwd;
 }
 
 // ============================================================
-// DEPENDENCY DETECTION HELPERS
+// CREATE NEXT.JS PROJECT — in subfolder
 // ============================================================
+async function createNextJsProject(projectName, cwd, installMotion) {
+  const pm = detectPackageManager(cwd);
+  console.log(
+    chalk.cyan(`🚀 Creating Next.js project "${projectName}" (${pm})...\n`),
+  );
 
+  const createCmd = getCreateNextAppCmd(pm, projectName, "--typescript");
+  await runStreamed(createCmd, cwd);
+
+  const projectPath = path.join(cwd, projectName);
+
+  console.log(chalk.cyan("\n📦 Installing core dependencies...\n"));
+  await runStreamed(`${getInstallCmd(pm)} ${CORE_DEPS.join(" ")}`, projectPath);
+
+  if (installMotion) {
+    console.log(chalk.cyan("\n🎬 Installing motion...\n"));
+    await runStreamed(`${getInstallCmd(pm)} motion`, projectPath);
+  }
+
+  console.log(chalk.cyan("\n🔧 Configuring shadcn/ui...\n"));
+  setupProjectFiles(projectPath);
+
+  console.log(chalk.green(`✅ Project "${projectName}" ready!`));
+  return projectPath;
+}
+
+// ============================================================
+// DEPENDENCY DETECTION
+// ============================================================
 const SHADCN_BASE_MAP = {
   "card-content": "card",
   "card-header": "card",
@@ -324,9 +486,7 @@ function detectShadcnDependencies(code) {
       .replace(/\/index$/, "");
     if (comp && !deps.includes(comp)) {
       const baseComp = SHADCN_BASE_MAP[comp] || comp;
-      if (!deps.includes(baseComp)) {
-        deps.push(baseComp);
-      }
+      if (!deps.includes(baseComp)) deps.push(baseComp);
     }
   }
   const patterns = [
@@ -378,9 +538,7 @@ function detectNpmDependencies(code) {
         !skipPackages.includes(packageName.split("/")[0])
       ) {
         const mappedName = KNOWN_NPM_PACKAGES[packageName] || packageName;
-        if (!deps.includes(mappedName)) {
-          deps.push(mappedName);
-        }
+        if (!deps.includes(mappedName)) deps.push(mappedName);
       }
     }
   }
@@ -394,12 +552,8 @@ function scanFilesForDependencies(files) {
   for (const file of files) {
     const content = file.content || file.code || "";
     if (!content) continue;
-
-    const shadcn = detectShadcnDependencies(content);
-    shadcn.forEach((dep) => shadcnDeps.add(dep));
-
-    const npm = detectNpmDependencies(content);
-    npm.forEach((dep) => npmDeps.add(dep));
+    detectShadcnDependencies(content).forEach((d) => shadcnDeps.add(d));
+    detectNpmDependencies(content).forEach((d) => npmDeps.add(d));
   }
 
   return {
@@ -408,25 +562,36 @@ function scanFilesForDependencies(files) {
   };
 }
 
-async function installNpmDependencies(deps, cwd) {
+// ============================================================
+// INSTALL: npm dependencies (streamed)
+// ============================================================
+async function installNpmDependencies(deps, cwd, pm) {
   if (!deps || deps.length === 0) return [];
 
-  const failed = [];
-  const spinner = ora(`Installing npm dependencies...`).start();
+  console.log(
+    chalk.cyan(
+      `\n📦 Installing ${deps.length} dependencies via ${pm}: ${deps.join(", ")}\n`,
+    ),
+  );
 
   try {
-    await execAsync(`npm install ${deps.join(" ")}`, { cwd });
-    spinner.succeed("npm dependencies installed");
-  } catch (error) {
-    spinner.fail("Failed to install npm dependencies" + error);
-    console.log(chalk.yellow(`  Try manually: npm install ${deps.join(" ")}`));
-    failed.push(...deps);
+    await runStreamed(`${getInstallCmd(pm)} ${deps.join(" ")}`, cwd);
+    console.log(chalk.green("\n✅ Dependencies installed"));
+    return [];
+  } catch {
+    console.log(
+      chalk.yellow(
+        `\n  ⚠️  Try manually: ${getInstallCmd(pm)} ${deps.join(" ")}\n`,
+      ),
+    );
+    return deps;
   }
-
-  return failed;
 }
 
-async function installShadcnComponents(deps, cwd) {
+// ============================================================
+// INSTALL: shadcn/ui components
+// ============================================================
+async function installShadcnComponents(deps, cwd, pm) {
   if (!deps || deps.length === 0) return [];
 
   const failed = [];
@@ -436,40 +601,37 @@ async function installShadcnComponents(deps, cwd) {
   fs.mkdirSync(uiDir, { recursive: true });
 
   for (const dep of deps) {
+    const depPath = path.join(uiDir, `${dep}.tsx`);
+    if (fs.existsSync(depPath)) continue; // already installed
+
     try {
-      await execAsync(`npx shadcn@latest add ${dep} --yes`, {
-        cwd: cwd,
-        timeout: 60000,
-      });
-    } catch (error) {
-      spinner.fail("Failed to install npm dependencies" + error);
+      await runStreamed(getShadcnCmd(pm, ["add", dep, "--yes"]), cwd);
+    } catch {
+      // Create placeholder so imports don't break
       const componentName = dep.charAt(0).toUpperCase() + dep.slice(1);
-      const componentContent = `// Placeholder for ${dep} - Install manually with: npx shadcn@latest add ${dep}
+      const componentContent = `// Placeholder for ${dep}
+// Install manually with: ${getShadcnCmd(pm, ["add", dep])}
 import * as React from "react";
 
 export interface ${componentName}Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 const ${componentName} = React.forwardRef<HTMLDivElement, ${componentName}Props>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={\`flex items-center justify-center p-4 border rounded-lg \${className || ''}\`}
-        {...props}
-      >
-        ${dep} Component
-      </div>
-    );
-  }
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={\`flex items-center justify-center p-4 border rounded-lg \${className || ""}\`}
+      {...props}
+    >
+      ${dep} Component
+    </div>
+  )
 );
 
 ${componentName}.displayName = "${componentName}";
 
 export { ${componentName} };
 `;
-
-      const filePath = path.join(uiDir, `${dep}.tsx`);
-      fs.writeFileSync(filePath, componentContent, "utf8");
+      fs.writeFileSync(depPath, componentContent, "utf8");
       failed.push(dep);
     }
   }
@@ -479,7 +641,6 @@ export { ${componentName} };
 // ============================================================
 // SUCCESS MESSAGE
 // ============================================================
-
 function showSuccessMessage(
   displayName,
   installed,
@@ -488,6 +649,7 @@ function showSuccessMessage(
   shadcnDeps,
   npmDeps,
   isFolder,
+  pm,
 ) {
   const relativePath = path.relative(projectDir, targetDir);
   const componentName = toKebabCase(displayName);
@@ -497,15 +659,16 @@ function showSuccessMessage(
     .join("");
 
   let importPath;
-  if (isFolder) {
-    importPath = relativePath.includes("src/")
-      ? `@/${relativePath.replace(/^src\//, "")}/${componentName}`
-      : `./${relativePath}/${componentName}`;
+  if (relativePath.includes("src/")) {
+    importPath = `@/${relativePath.replace(/^src\//, "")}${isFolder ? "" : `/${componentName}`}`;
   } else {
-    importPath = relativePath.includes("src/")
-      ? `@/${relativePath.replace(/^src\//, "")}/${componentName}`
-      : `./${relativePath}/${componentName}`;
+    importPath = `./${relativePath}${isFolder ? "" : `/${componentName}`}`;
   }
+
+  const installCmd = getCliInvokeCmd(pm);
+  const runCmd = getRunCmd(pm, "dev");
+  const listCmd = `${installCmd} list`;
+  const addCmd = `${installCmd} add <component-name>`;
 
   const content = [
     chalk.green.bold("🎉 Installation Completed!"),
@@ -520,13 +683,14 @@ function showSuccessMessage(
     chalk.dim("─".repeat(80)),
     chalk.bold("🚀 What's Next?"),
     chalk.dim("─".repeat(80)),
-    `  1. Start dev server : ${chalk.cyan("npm run dev")}`,
+    `  1. Start dev server : ${chalk.cyan(runCmd)}`,
     `  2. Import component : ${chalk.cyan(`import ${importName} from "${importPath}"`)}`,
-    `  3. Add more components : ${chalk.cyan("npx venumityui@latest add <component-name>")}`,
-    `  4. See all components : ${chalk.cyan("npx venumityui@latest list")}`,
+    `  3. Add more components : ${chalk.cyan(addCmd)}`,
+    `  4. See all components : ${chalk.cyan(listCmd)}`,
     chalk.dim("─".repeat(80)),
+    chalk.dim("💡 Detected package manager: ") + chalk.cyan(pm),
     chalk.dim("💡 Need help? ") +
-      chalk.cyan("npx venumityui@latest --help") +
+      chalk.cyan(`${installCmd} --help`) +
       chalk.dim(" or visit: ") +
       chalk.cyan("https://ui.venumity.com"),
     chalk.dim("─".repeat(80)),
@@ -547,12 +711,10 @@ function showSuccessMessage(
 // ============================================================
 // COMMAND: ADD
 // ============================================================
-
 async function addComponentAction(componentNames, options) {
   console.clear();
   printHeader();
 
-  // If --all flag is used, install all components
   if (options.all) {
     console.log(chalk.blue(`\n📦 Installing all components...\n`));
     try {
@@ -614,7 +776,6 @@ async function addComponentAction(componentNames, options) {
         }
       }
 
-      // In the project creation section of addComponentAction
       if (!foundProject) {
         console.log(
           chalk.yellow(
@@ -628,10 +789,9 @@ async function addComponentAction(componentNames, options) {
             name: "projectName",
             message: "Where would you like to create the project?",
             default: "my-app",
-            hint: 'Enter folder name (e.g. my-app) or "." for current directory',
             validate: (input) => {
               if (!input) return "Project name is required";
-              if (input === ".") return true; // Allow current directory
+              if (input === ".") return true;
               if (!/^[a-z0-9-]+$/.test(input)) {
                 return "Project name must be lowercase, numbers, and dashes only";
               }
@@ -646,7 +806,6 @@ async function addComponentAction(componentNames, options) {
           },
         ]);
 
-        // If user enters ".", create in current directory
         if (answers.projectName === ".") {
           projectPath = cwd;
           await createNextJsProjectInCurrentDir(cwd, answers.installMotion);
@@ -662,6 +821,9 @@ async function addComponentAction(componentNames, options) {
         projectInfo = await detectProject(projectPath);
       }
     }
+
+    const pm = detectPackageManager(projectPath);
+    console.log(chalk.gray(`🔧 Using package manager: ${pm}\n`));
 
     const registry = await fetchRegistry();
     if (!registry.length) {
@@ -734,8 +896,7 @@ async function addComponentAction(componentNames, options) {
 
           for (const file of componentData.files) {
             const filePath = path.join(componentFolder, file.path);
-            const fileDir = path.dirname(filePath);
-            fs.mkdirSync(fileDir, { recursive: true });
+            fs.mkdirSync(path.dirname(filePath), { recursive: true });
             fs.writeFileSync(filePath, file.content, "utf8");
           }
 
@@ -767,23 +928,32 @@ async function addComponentAction(componentNames, options) {
       }
     }
 
+    // NPM deps
     let npmDepsList = [];
     if (allNpmDeps.size > 0) {
       npmDepsList = Array.from(allNpmDeps);
-      await installNpmDependencies(npmDepsList, projectPath);
+      await installNpmDependencies(npmDepsList, projectPath, pm);
     }
 
+    // shadcn deps
     let shadcnDepsList = [];
     if (allShadcnDeps.size > 0) {
       shadcnDepsList = Array.from(allShadcnDeps);
-      const spinner = ora(`Installing shadcn/ui components...`).start();
-      const failed = await installShadcnComponents(shadcnDepsList, projectPath);
+      console.log(
+        chalk.cyan(`\n🎨 Installing shadcn/ui: ${shadcnDepsList.join(", ")}\n`),
+      );
+      const failed = await installShadcnComponents(
+        shadcnDepsList,
+        projectPath,
+        pm,
+      );
       if (failed.length === 0) {
-        spinner.succeed("shadcn/ui components installed");
+        console.log(chalk.green("\n✅ shadcn/ui components installed"));
       } else {
-        spinner.warn(`Some components failed: ${failed.join(", ")}`);
         console.log(
-          chalk.yellow(`  Try: npx shadcn@latest add ${failed.join(" ")}`),
+          chalk.yellow(
+            `\n⚠️  Some failed: ${failed.join(", ")}\n  Try: ${getShadcnCmd(pm, ["add", failed.join(" ")])}\n`,
+          ),
         );
       }
     }
@@ -800,6 +970,7 @@ async function addComponentAction(componentNames, options) {
         shadcnDepsList,
         npmDepsList,
         isFolderComponent,
+        pm,
       );
     } else {
       console.log(chalk.red("❌ No components were installed."));
@@ -813,7 +984,6 @@ async function addComponentAction(componentNames, options) {
 // ============================================================
 // COMMAND: LIST
 // ============================================================
-
 async function listComponentsAction(options) {
   console.clear();
   printHeader();
@@ -845,9 +1015,7 @@ async function listComponentsAction(options) {
     );
     for (const [group, items] of grouped.entries()) {
       console.log(chalk.green(`📁 ${group}`));
-      for (const name of items) {
-        console.log(`  • ${name}`);
-      }
+      for (const name of items) console.log(`  • ${name}`);
       console.log("");
     }
     console.log(chalk.dim("💡 To add: venumityui@latest add <component-name>"));
@@ -859,7 +1027,6 @@ async function listComponentsAction(options) {
 // ============================================================
 // COMMAND: SEARCH
 // ============================================================
-
 async function searchComponentsAction(query) {
   console.clear();
   printHeader();
@@ -901,7 +1068,6 @@ async function searchComponentsAction(query) {
 // ============================================================
 // COMMAND: INFO
 // ============================================================
-
 async function infoComponentAction(componentName) {
   console.clear();
   printHeader();
@@ -939,7 +1105,6 @@ async function infoComponentAction(componentName) {
 // ============================================================
 // COMMAND: CATEGORIES
 // ============================================================
-
 async function categoriesAction() {
   console.clear();
   printHeader();
@@ -970,7 +1135,6 @@ async function categoriesAction() {
 // ============================================================
 // COMMAND: SUBCATEGORY
 // ============================================================
-
 async function subcategoryAction(category) {
   console.clear();
   printHeader();
@@ -1020,7 +1184,6 @@ async function subcategoryAction(category) {
 // ============================================================
 // MAIN
 // ============================================================
-
 async function main() {
   const program = new Command();
 
@@ -1065,21 +1228,27 @@ async function main() {
     .action(subcategoryAction);
 
   program.on("--help", () => {
-    console.log(chalk.cyan.bold("\n📚 Examples:"));
+    console.log(chalk.cyan.bold("\n📚 Examples (npm):"));
     console.log(chalk.dim("━".repeat(60)));
     console.log(
       `  ${chalk.green("$")} npx venumityui@latest add profile-card-1`,
     );
-    console.log(
-      `  ${chalk.green("$")} npx venumityui@latest add personal-panel-1`,
-    );
-    console.log(`  ${chalk.green("$")} npx venumityui@latest add --all`);
     console.log(`  ${chalk.green("$")} npx venumityui@latest list`);
     console.log(`  ${chalk.green("$")} npx venumityui@latest search hero`);
     console.log(chalk.dim("━".repeat(60)));
+    console.log(chalk.cyan.bold("\n📚 Other Package Managers:"));
+    console.log(chalk.dim("━".repeat(60)));
     console.log(
-      chalk.dim("\n📖 Documentation: https://ui.venumity.com/docs\n"),
+      `  ${chalk.green("$")} pnpm dlx venumityui@latest add profile-card-1`,
     );
+    console.log(
+      `  ${chalk.green("$")} yarn dlx venumityui@latest add profile-card-1`,
+    );
+    console.log(
+      `  ${chalk.green("$")} bunx venumityui@latest add profile-card-1`,
+    );
+    console.log(chalk.dim("━".repeat(60)));
+    console.log(chalk.dim("\n📖 Documentation: https://ui.venumity.com/cli\n"));
   });
 
   try {
