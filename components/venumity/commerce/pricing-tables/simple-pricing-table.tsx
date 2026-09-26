@@ -85,7 +85,7 @@ export default function SimplePricingTable() {
   };
 
   return (
-    <div className="p-5 md:p-10 space-y-5 md:space-y-10 w-full">
+    <div className="p-5 lg:p-10 space-y-5 lg:space-y-10 w-full">
       {/* Header Section */}
       <header className="text-center flex flex-col items-center gap-5">
         <h1 className="text-4xl font-semibold tracking-tight">
@@ -111,7 +111,7 @@ export default function SimplePricingTable() {
       </header>
 
       {/* Pricing Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full h-fit">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 w-full h-full">
         {PLANS_DATA.map((plan) => (
           <div key={plan.id} className="flex">
             {plan.isHighlighted ? (

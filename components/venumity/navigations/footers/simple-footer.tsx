@@ -35,7 +35,7 @@ export default function SimpleFooter() {
   return (
     <div className="p-5 md:p-10 w-full">
       <footer className="relative p-5 border-5 border-background text-white ring-8 ring-foreground/10 rounded-[2rem] overflow-hidden w-full h-fit">
-        <div className="relative z-20 grid grid-cols-2 md:grid-cols-6 gap-5 md:gap-10 p-5 md:p-10 w-full h-full">
+        <div className="relative z-20 grid grid-cols-2 lg:grid-cols-6 gap-5 lg:gap-10 p-5 lg:p-10 w-full h-full">
           {/* Brand + Newsletter */}
           <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-3">

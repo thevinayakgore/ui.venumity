@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -325,7 +324,6 @@ export default function AnalyticsDashboard() {
             </AreaChart>
           </ChartContainer>
         );
-
       case "pie": {
         const id = "pie-interactive";
 
@@ -335,10 +333,12 @@ export default function AnalyticsDashboard() {
 
             <div className="flex flex-col">
               {/* Header with title + select */}
-              <header className="flex items-start justify-between gap-5 p-5">
+              <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5 p-4 sm:p-5">
                 <div className="grid">
-                  <h3 className="font-semibold">Category Distribution</h3>
-                  <p className="text-sm md:text-base text-foreground/50">
+                  <h3 className="text-lg sm:text-xl font-semibold">
+                    Category Distribution
+                  </h3>
+                  <p className="text-xs sm:text-sm md:text-base text-foreground/50">
                     Revenue by product category
                   </p>
                 </div>
@@ -349,11 +349,11 @@ export default function AnalyticsDashboard() {
                 >
                   <SelectTrigger
                     aria-label="Select a category"
-                    className="p-4! bg-background! border-foreground/15! cursor-pointer rounded-md w-50 h-11!"
+                    className="p-4! bg-background! border-foreground/15! cursor-pointer rounded-md w-full sm:w-50 h-11!"
                   >
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent align="end" className="p-2! w-50!">
+                  <SelectContent align="end" className="p-2! w-full sm:w-50!">
                     {categoryNames.map((key) => {
                       const config =
                         pieChartConfig[key as keyof typeof pieChartConfig];
@@ -393,7 +393,7 @@ export default function AnalyticsDashboard() {
                 <ChartContainer
                   id={id}
                   config={pieChartConfig}
-                  className="aspect-video w-full h-full"
+                  className="aspect-video w-full h-60 sm:h-72 md:h-96 lg:h-100"
                 >
                   <PieChart>
                     <ChartTooltip
@@ -404,7 +404,7 @@ export default function AnalyticsDashboard() {
                       data={categoryData}
                       dataKey="value"
                       nameKey="name"
-                      innerRadius={150}
+                      innerRadius={90}
                       strokeWidth={10}
                       shape={renderPieShape}
                     >
@@ -427,14 +427,14 @@ export default function AnalyticsDashboard() {
                                 <tspan
                                   x={viewBox.cx}
                                   y={viewBox.cy}
-                                  className="fill-foreground text-3xl md:text-5xl font-semibold tracking-tight"
+                                  className="fill-foreground text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight"
                                 >
                                   ${value.toLocaleString()}
                                 </tspan>
                                 <tspan
                                   x={viewBox.cx}
-                                  y={(viewBox.cy || 0) + 45}
-                                  className="fill-foreground text-lg md:text-xl lg:text-2xl tracking-widest uppercase"
+                                  y={(viewBox.cy || 0) + 28}
+                                  className="fill-foreground text-sm tracking-widest uppercase"
                                 >
                                   {activeItem?.name ?? "Category"}
                                 </tspan>

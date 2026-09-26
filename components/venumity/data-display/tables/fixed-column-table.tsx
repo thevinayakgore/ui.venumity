@@ -301,8 +301,8 @@ export default function FixedColumnTable() {
   return (
     <div className="p-5 w-full h-full">
       <Card className="p-0! gap-0! bg-foreground/5! shadow-none hover:shadow-xl/10 overflow-hidden transition-all duration-500 w-full">
-        <CardHeader className="pt-6 border-b">
-          <div className="flex items-end justify-between w-full">
+        <CardHeader className="p-3! md:p-5! border-b">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-3 w-full">
             <div>
               <CardTitle className="text-2xl font-semibold">
                 Sales Dashboard
@@ -329,8 +329,8 @@ export default function FixedColumnTable() {
           </div>
 
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-5 text-white">
-            <div className="relative p-5 bg-linear-to-br from-sky-400 to-blue-600 rounded-xl overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 mt-5 text-white w-full">
+            <div className="relative p-5 bg-linear-to-br from-sky-400 to-blue-600 rounded-xl overflow-hidden w-full">
               <div className="flex flex-col items-start gap-2 text-xs">
                 <p className="text-sm md:text-base">Total Revenue</p>
                 <p className="text-4xl font-bold leading-none">
@@ -347,7 +347,7 @@ export default function FixedColumnTable() {
               <DollarSign className="absolute -bottom-5 -right-5 -rotate-10 size-30 opacity-50 stroke-1" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-green-400 to-green-600 p-5 text-white">
+            <div className="relative p-5 bg-linear-to-br from-green-400 to-green-600 rounded-xl overflow-hidden w-full">
               <div className="relative z-10 flex flex-col items-start gap-2 text-xs">
                 <p className="text-sm md:text-base">Monthly Average</p>
                 <p className="text-3xl font-bold leading-none">
@@ -363,7 +363,7 @@ export default function FixedColumnTable() {
               <BarChart3 className="absolute -bottom-5 -right-5 size-30 -rotate-10 stroke-1 opacity-30" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-amber-400 to-orange-600 p-5 text-white">
+            <div className="relative p-5 bg-linear-to-br from-amber-400 to-orange-600 rounded-xl overflow-hidden w-full">
               <div className="relative z-10 flex flex-col items-start gap-2 text-xs">
                 <p className="text-sm md:text-base">Best Month</p>
 
@@ -385,7 +385,7 @@ export default function FixedColumnTable() {
               <TrendingUp className="absolute -bottom-5 -right-5 size-30 -rotate-10 stroke-1 opacity-30" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-purple-500 to-indigo-700 p-5 text-white">
+            <div className="relative p-5 bg-linear-to-br from-purple-400 to-indigo-600 rounded-xl overflow-hidden w-full">
               <div className="relative z-10 flex flex-col items-start gap-2 text-xs">
                 <p className="text-sm md:text-base">Growth Rate</p>
 
@@ -405,7 +405,7 @@ export default function FixedColumnTable() {
           </div>
 
           {/* View Controls */}
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 overflow-hidden mt-4 w-full">
             <Tabs
               value={viewMode}
               onValueChange={(v: string) => {
@@ -440,7 +440,7 @@ export default function FixedColumnTable() {
               </TabsList>
             </Tabs>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 w-full">
               <span className="text-sm md:text-base mr-3">Filters</span>
               {products.map((product) => (
                 <Button

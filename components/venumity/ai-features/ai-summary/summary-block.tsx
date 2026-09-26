@@ -1,6 +1,11 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { motion, spring } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
@@ -37,11 +42,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
 interface SummaryCard {
   title: string;
@@ -480,24 +480,22 @@ export default function AISummaryBlock() {
   };
 
   return (
-    <main className="flex m-auto p-6 md:p-10 overflow-auto w-full max-h-screen h-full">
-      <section className="relative flex flex-col xl:flex-row bg-foreground/3 backdrop-blur-md border-10 rounded-[2rem] overflow-hidden mx-auto max-w-4xl w-full">
+    <div className="flex m-auto p-3 sm:p-5 md:p-10 overflow-auto w-full max-h-screen h-full">
+      <div className="relative flex flex-col xl:flex-row bg-foreground/3 backdrop-blur-md border-5 rounded-3xl overflow-hidden mx-auto max-w-4xl w-full">
         {/* Original Text Section */}
         {!showSummary && (
           <section className="relative flex flex-col overflow-auto w-full">
-            <nav className="sticky top-0 z-50 flex items-center justify-between p-6 bg-background/90 border-b h-15">
+            <nav className="sticky top-0 z-50 flex items-center justify-between p-2 md:px-4 bg-background/90 border-b h-fit">
               <div className="flex items-center gap-1 w-full">
-                <div className="size-3 rounded-full bg-red-500" />
-                <div className="size-3 rounded-full bg-yellow-400" />
-                <div className="size-3 rounded-full bg-green-500" />
+                <div className="hidden md:block size-3 rounded-full bg-red-500" />
+                <div className="hidden md:block size-3 rounded-full bg-yellow-400" />
+                <div className="hidden md:block size-3 rounded-full bg-green-500" />
                 <span className="ml-3 text-sm font-medium">
                   Original Document
                 </span>
               </div>
               <Button
-                size="lg"
-                variant="outline"
-                className="cursor-pointer rounded-sm"
+                className="[&>svg]:size-3! px-3! text-xs font-semibold bg-foreground! text-secondary!"
                 onClick={handleGenerateSummary}
                 disabled={isGenerating}
               >
@@ -519,13 +517,13 @@ export default function AISummaryBlock() {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="p-6 prose prose-slate dark:prose-invert max-w-none"
+              className="p-4 md:p-5 prose prose-slate dark:prose-invert max-w-none"
             >
               {originalText.split("\n\n").map((paragraph, idx) => (
                 <motion.p
                   key={idx}
                   variants={itemVariants}
-                  className="text-base text-foreground/50 leading-relaxed"
+                  className="text-sm md:text-base text-foreground/50 leading-relaxed"
                 >
                   {paragraph}
                 </motion.p>
@@ -536,23 +534,27 @@ export default function AISummaryBlock() {
 
         {isGenerating && (
           <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 flex flex-col items-center justify-center m-auto bg-background overflow-hidden w-full h-full">
-            <Loader className="size-15 text-primary animate-spin" />
-            <span className="text-xl font-medium mt-2">Generating...</span>
+            <Loader className="size-10 md:size-15 text-primary animate-spin" />
+            <span className="text-base md:text-xl font-medium mt-2">
+              Generating...
+            </span>
           </div>
         )}
 
-        {/* AI Summary Section - Now 3/5 width */}
+        {/* AI Summary Section */}
         {showSummary && (
           <section className="flex flex-col overflow-hidden w-full h-full">
-            <nav className="sticky top-0 z-50 flex items-center justify-between p-6 bg-background/90 border-b h-15">
+            {/* Header */}
+            <nav className="sticky top-0 z-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 sm:p-6 bg-background/90 border-b h-auto sm:h-15">
               <div className="flex items-center gap-2">
-                <Bot className="size-6" />
-                <span className="text-lg font-medium">
+                <Bot className="size-5 sm:size-6" />
+                <span className="text-base sm:text-lg font-medium">
                   AI-Generated Summary
                 </span>
               </div>
+
               <Select defaultValue="gpt-4">
-                <SelectTrigger className="h-8 px-3 text-xs rounded-sm cursor-pointer">
+                <SelectTrigger className="h-8 px-3 text-xs rounded-sm cursor-pointer w-full sm:w-auto">
                   <SelectValue placeholder="Select AI" />
                 </SelectTrigger>
                 <SelectContent>
@@ -572,38 +574,39 @@ export default function AISummaryBlock() {
               </Select>
             </nav>
 
+            {/* Content + Sidebar */}
             <motion.section
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 xl:grid-cols-3 overflow-hidden max-h-screen"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-0 overflow-hidden max-h-screen"
             >
-              {/* EXISTING SUMMARY CONTENT — UNCHANGED */}
-              {/* Main Content Column - Takes 2/3 */}
-              <section className="col-span-2 space-y-6 p-6 pr-0! overflow-auto h-full">
+              {/* Main Content Column */}
+              <section className="col-span-1 lg:col-span-2 space-y-6 p-3 md:p-5 overflow-auto h-full">
                 {/* Quick Summary Accordion */}
                 <motion.div variants={itemVariants}>
                   <Accordion
+                    collapsible
                     type="single"
                     defaultValue="summary"
-                    collapsible
                     className="w-full"
                   >
                     <AccordionItem
                       value="summary"
                       className="relative group/quick border-2! border-yellow-400/40 hover:border-yellow-400/70 rounded-lg bg-linear-to-tr from-yellow-400/10 via-background to-background overflow-hidden transition-all duration-500"
                     >
-                      <AccordionTrigger className="cursor-pointer relative z-10 hover:no-underline px-5 py-3.5 border-b border-transparent data-[state=open]:border-border rounded-none">
-                        <span className="flex items-center gap-2  text-sm font-medium">
+                      <AccordionTrigger className="cursor-pointer relative z-10 hover:no-underline px-4 sm:px-5 py-3.5 border-b border-transparent data-[state=open]:border-border rounded-none">
+                        <span className="flex items-center gap-2 text-sm font-medium">
                           <Sparkles className="size-4 text-yellow-400" />
                           Quick Summary
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="px-5 py-4 relative z-10">
+                      <AccordionContent className="px-4 sm:px-5 py-4 relative z-10">
                         <p className="text-sm leading-relaxed">
                           {shortSummary}
                         </p>
                       </AccordionContent>
+
                       <motion.span
                         animate={{ rotate: [0, 360] }}
                         transition={{
@@ -615,6 +618,7 @@ export default function AISummaryBlock() {
                       >
                         <Sparkle className="fill-yellow-400/60 stroke-yellow-400 stroke-1 w-full h-full" />
                       </motion.span>
+
                       <motion.span
                         animate={{ rotate: [0, 360] }}
                         transition={{
@@ -633,23 +637,27 @@ export default function AISummaryBlock() {
                 {/* Stats Cards */}
                 <motion.div
                   variants={itemVariants}
-                  className="grid grid-cols-2 gap-5"
+                  className="grid grid-cols-2 gap-4 sm:gap-5"
                 >
                   {summaryStats.map((stat, idx) => (
                     <Card
                       key={idx}
                       className="relative gap-0 p-0 group/stats bg-linear-to-br from-accent/30/30 hover:from-yellow-400/20 backdrop-blur-sm to-background border-2 border-yellow-400/40 hover:border-yellow-400/90 rounded-lg shadow-none hover:shadow-2xl hover:shadow-yellow-400/20 overflow-hidden transition-all duration-500 group"
                     >
-                      <CardHeader className="flex flex-row items-start justify-between space-y-0 p-4 pb-0">
-                        <CardTitle className="text-xs tracking-normal uppercase z-10 text-muted-foreground group-hover:text-foreground transition-colors">
+                      <CardHeader className="flex flex-row items-start justify-between space-y-0 p-3 sm:p-4 pb-0">
+                        <CardTitle className="text-[11px] sm:text-xs tracking-normal uppercase z-10 text-muted-foreground group-hover:text-foreground transition-colors">
                           {stat.title}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="p-4 z-10">
-                        <div className="text-3xl font-bold">{stat.value}</div>
-                        <p className="text-sm font-medium mt-1">{stat.trend}</p>
+                      <CardContent className="p-3 sm:p-4 z-10">
+                        <div className="text-2xl sm:text-3xl font-bold">
+                          {stat.value}
+                        </div>
+                        <p className="text-[11px] sm:text-sm font-medium mt-1">
+                          {stat.trend}
+                        </p>
                       </CardContent>
-                      <div className="absolute -bottom-5 -right-2 z-0 group-hover/stats:bottom-3 group-hover/stats:right-4 rotate-12 size-24 opacity-20 group-hover/stats:opacity-60 transition-all duration-500">
+                      <div className="absolute -bottom-5 -right-2 z-0 group-hover/stats:bottom-3 group-hover/stats:right-4 rotate-12 size-20 sm:size-24 opacity-20 group-hover/stats:opacity-60 transition-all duration-500">
                         <Image
                           src={stat.icon}
                           alt="Icons"
@@ -666,18 +674,18 @@ export default function AISummaryBlock() {
                 {keyInsights.map((section, idx) => (
                   <motion.div key={idx} variants={itemVariants}>
                     <Card className="p-0 gap-0 border-2 shadow-none hover:shadow-xl bg-linear-to-br from-accent/30/30 to-background transition-all duration-500">
-                      <CardHeader className="px-6! py-3! border-b gap-0!">
-                        <CardTitle className="flex items-center gap-2 text-base font-medium uppercase">
+                      <CardHeader className="px-4 sm:px-6! py-3! border-b gap-0!">
+                        <CardTitle className="flex items-center gap-2 text-sm sm:text-base font-medium uppercase">
                           {idx === 0 ? (
-                            <Telescope className="size-6 text-blue-500" />
+                            <Telescope className="size-5 sm:size-6 text-blue-500" />
                           ) : (
-                            <SearchCheck className="size-6 text-green-500" />
+                            <SearchCheck className="size-5 sm:size-6 text-green-500" />
                           )}
                           {section.title}
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-0">
-                        <ul className="space-y-2.5 px-6 py-4">
+                        <ul className="space-y-2 sm:space-y-2.5 px-4 sm:px-6 py-4">
                           {section.points.map((point, pidx) => (
                             <motion.li
                               key={pidx}
@@ -701,11 +709,11 @@ export default function AISummaryBlock() {
                 {/* Important Notes / Remember Section */}
                 <motion.div
                   variants={itemVariants}
-                  className="grid grid-cols-2 gap-5"
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5"
                 >
-                  <Card className="p-4 gap-2 shadow-none hover:shadow-xl bg-linear-to-br from-yellow-400/20 via-background to-background border-2 border-yellow-400/60 transition-all duration-500">
+                  <Card className="p-3 sm:p-4 gap-2 shadow-none hover:shadow-xl bg-linear-to-br from-yellow-400/20 via-background to-background border-2 border-yellow-400/60 transition-all duration-500">
                     <CardHeader className="p-0">
-                      <CardTitle className="flex items-center gap-2 text-sm">
+                      <CardTitle className="flex items-center gap-2 text-xs sm:text-sm">
                         <AlertCircle className="size-4 text-yellow-400" />
                         Important Notes
                       </CardTitle>
@@ -725,9 +733,9 @@ export default function AISummaryBlock() {
                     </CardContent>
                   </Card>
 
-                  <Card className="p-4 gap-2 shadow-none hover:shadow-xl bg-linear-to-tl from-green-500/20 via-background to-background border-2 border-green-500/60 transition-all duration-500">
+                  <Card className="p-3 sm:p-4 gap-2 shadow-none hover:shadow-xl bg-linear-to-tl from-green-500/20 via-background to-background border-2 border-green-500/60 transition-all duration-500">
                     <CardHeader className="p-0">
-                      <CardTitle className="flex items-center gap-2 text-sm">
+                      <CardTitle className="flex items-center gap-2 text-xs sm:text-sm">
                         <Bookmark className="size-4 text-green-500" />
                         Remember
                       </CardTitle>
@@ -755,13 +763,13 @@ export default function AISummaryBlock() {
                       value="item-1"
                       className="border-2! rounded-lg bg-linear-to-br from-accent/30 to-background"
                     >
-                      <AccordionTrigger className="cursor-pointer hover:no-underline px-5 py-3.5 border-b border-transparent data-[state=open]:border-border rounded-none">
+                      <AccordionTrigger className="cursor-pointer hover:no-underline px-4 sm:px-5 py-3.5 border-b border-transparent data-[state=open]:border-b-border rounded-none">
                         <span className="flex items-center gap-2 text-sm font-medium">
                           <Lightbulb className="size-4 text-blue-500" />
                           Deep Dive - Ethical Considerations
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="px-5 py-4 space-y-3">
+                      <AccordionContent className="px-4 sm:px-5 py-4 space-y-3">
                         <p className="text-xs text-muted-foreground">
                           AI ethics encompasses four primary concerns
                         </p>
@@ -809,8 +817,8 @@ export default function AISummaryBlock() {
                 </motion.div>
               </section>
 
-              {/* Right Sidebar - New Mini Components Column */}
-              <section className="sticky top-0 col-span-1 flex flex-col gap-6 p-6 overflow-auto h-full">
+              {/* Right Sidebar - Mini Components Column */}
+              <section className="sticky top-0 col-span-1 flex flex-col gap-4 md:gap-6 p-3 md:p-5 overflow-auto h-full border-t lg:border-t-0 lg:border-l">
                 <motion.div variants={itemVariants}>
                   <components.TopicMaturityScore />
                 </motion.div>
@@ -846,7 +854,7 @@ export default function AISummaryBlock() {
             </motion.section>
           </section>
         )}
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }

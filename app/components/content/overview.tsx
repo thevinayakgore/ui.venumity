@@ -89,9 +89,10 @@ export default function Overview({
   }, [slugPath, componentName]);
 
   const liveDemoUrl = useMemo(() => {
-    const kebabCategory = toKebabCase(componentName);
-    return `/preview/${kebabCategory}/${kebabItemName}?ref=overview&source=${kebabCategory}`;
-  }, [componentName, kebabItemName]);
+    return `/preview/${toKebabCase(componentName)}${
+      subcategory ? `/${toKebabCase(subcategory)}` : ""
+    }/${kebabItemName}`;
+  }, [componentName, subcategory, kebabItemName]);
 
   const youtubeEmbedUrl = useMemo(() => {
     if (!youtubeUrl) return "";

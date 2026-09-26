@@ -30,16 +30,22 @@ const chartConfig = {
 
 export default function ChartLineDotsCustom() {
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-5">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-5">
         <div>
-          <h1 className="text-3xl font-bold">Custom Dot Icons</h1>
-          <p className="text-base text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">Custom Dot Icons</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Git commit style markers · January – June
           </p>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -55,79 +61,87 @@ export default function ChartLineDotsCustom() {
             axisLine={false}
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
-            className="text-xs"
+            className="text-[10px] sm:text-xs"
           />
           <ChartTooltip
             cursor={false}
             content={<ChartTooltipContent hideLabel />}
           />
+
+          {/* Desktop line */}
           <Line
             dataKey="desktop"
             type="natural"
             stroke="var(--color-desktop)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={({ cx, cy, payload }) => {
               if (cx == null || cy == null) return null;
-
               return (
                 <GitCommitVertical
-                  key={payload.month}
-                  x={cx - 12}
-                  y={cy - 12}
-                  width={24}
-                  height={24}
+                  key={`desktop-${payload.month}`}
+                  x={cx - 9}
+                  y={cy - 9}
+                  width={18}
+                  height={18}
                   fill="white"
                   stroke="var(--color-desktop)"
                   strokeWidth={2}
                 />
               );
             }}
+            activeDot={{ r: 6 }}
           />
+
+          {/* Mobile line */}
           <Line
             dataKey="mobile"
             type="natural"
             stroke="var(--color-mobile)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={({ cx, cy, payload }) => {
               if (cx == null || cy == null) return null;
-
               return (
                 <GitCommitVertical
-                  key={payload.month}
-                  x={cx - 12}
-                  y={cy - 12}
-                  width={24}
-                  height={24}
+                  key={`mobile-${payload.month}`}
+                  x={cx - 9}
+                  y={cy - 9}
+                  width={18}
+                  height={18}
                   fill="white"
                   stroke="var(--color-mobile)"
                   strokeWidth={2}
                 />
               );
             }}
+            activeDot={{ r: 6 }}
           />
         </LineChart>
       </ChartContainer>
-      <div className="flex items-center justify-between w-full">
+
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mt-4">
         <div className="space-y-1">
-          <p className="text-sm font-medium">Custom SVG markers</p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs sm:text-sm font-medium">Custom SVG markers</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
             Each point is a Git commit icon
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1">
+
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-1.5">
             <GitCommitVertical
-              className="w-4 h-4"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
               style={{ color: chartConfig.desktop.color }}
             />
-            <span className="text-xs">Desktop</span>
+            <span className="text-[10px] sm:text-xs">Desktop</span>
           </div>
-          <div className="flex items-center gap-1">
+
+          <div className="flex items-center gap-1.5">
             <GitCommitVertical
-              className="w-4 h-4"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
               style={{ color: chartConfig.mobile.color }}
             />
-            <span className="text-xs">Mobile</span>
+            <span className="text-[10px] sm:text-xs">Mobile</span>
           </div>
         </div>
       </div>

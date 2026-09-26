@@ -100,6 +100,13 @@ export default function ChartRadialLabel() {
     filteredData[0] ?? { month: "—", name: "—", revenue: 0, fill: "" },
   );
 
+  const lowestMonth = filteredData.length
+    ? filteredData.reduce(
+        (min, item) => (item.revenue < min.revenue ? item : min),
+        filteredData[0],
+      )
+    : { name: "—", revenue: 0 };
+
   const averageRevenue = filteredData.length
     ? totalRevenue / filteredData.length
     : 0;
@@ -113,20 +120,22 @@ export default function ChartRadialLabel() {
   }
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full p-4 sm:p-5 lg:p-5">
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border">
         {/* Header */}
-        <header className="flex flex-col gap-5 border-b bg-foreground/5 p-5">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-4 sm:gap-5 border-b bg-foreground/5 p-4 sm:p-5 lg:p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="w-full">
-              <h1 className="text-2xl font-semibold">Monthly Revenue</h1>
-              <p className="mt-1 text-sm text-foreground/50 md:text-base">
+              <h1 className="text-xl sm:text-2xl lg:text-2xl font-semibold">
+                Monthly Revenue
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm lg:text-base text-foreground/50">
                 Radial chart with value labels and interactive bars
               </p>
             </div>
 
             {/* Filters */}
-            <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
+            <div className="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
               <Select
                 value={view}
                 onValueChange={(value) => setView(value as ViewFilter)}
@@ -194,14 +203,14 @@ export default function ChartRadialLabel() {
                 disabled={!hasActiveFilters}
                 className="h-11! rounded-lg"
               >
-                <RotateCcw />
-                Reset
+                <RotateCcw className="size-4" />
+                <span className="hidden sm:inline">Reset</span>
               </Button>
             </div>
           </div>
 
           {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 text-sm text-foreground/50">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm lg:text-sm text-foreground/50">
               <span>
                 Showing {filteredData.length} of {baseChartData.length} months
               </span>
@@ -209,7 +218,7 @@ export default function ChartRadialLabel() {
               {view !== "all" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   View: {view === "top-half" ? "Top half" : "Bottom half"}
                 </Badge>
@@ -218,7 +227,7 @@ export default function ChartRadialLabel() {
               {sort !== "default" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   Sort: {sort === "highest" ? "Highest first" : "Lowest first"}
                 </Badge>
@@ -228,7 +237,7 @@ export default function ChartRadialLabel() {
         </header>
 
         {/* Statistic Cards */}
-        <div className="grid grid-cols-1 gap-3 p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 lg:p-8">
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <TrendingUp
@@ -239,10 +248,12 @@ export default function ChartRadialLabel() {
                   ),
                 }}
               />
-              <span className="text-sm">Best Month</span>
+              <span className="text-xs sm:text-sm">Best Month</span>
             </div>
-            <div className="text-xl font-medium">{bestMonth.name}</div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
+              {bestMonth.name}
+            </div>
+            <div className="text-xs sm:text-sm text-foreground/50">
               ${formatNumber(bestMonth.revenue)}k
             </div>
           </div>
@@ -250,62 +261,51 @@ export default function ChartRadialLabel() {
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <ChartPie className="size-4 text-blue-500" />
-              <span className="text-sm">Lowest Month</span>
+              <span className="text-xs sm:text-sm">Lowest Month</span>
             </div>
-            <div className="text-xl font-medium">
-              {filteredData.length
-                ? filteredData.reduce(
-                    (min, item) => (item.revenue < min.revenue ? item : min),
-                    filteredData[0],
-                  ).name
-                : "—"}
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
+              {lowestMonth.name}
             </div>
-            <div className="text-sm text-foreground/50">
-              $
-              {formatNumber(
-                filteredData.length
-                  ? filteredData.reduce(
-                      (min, item) => (item.revenue < min.revenue ? item : min),
-                      filteredData[0],
-                    ).revenue
-                  : 0,
-              )}
-              k
+            <div className="text-xs sm:text-sm text-foreground/50">
+              ${formatNumber(lowestMonth.revenue)}k
             </div>
           </div>
 
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <BarChart3 className="size-4 text-green-500" />
-              <span className="text-sm">Average Revenue</span>
+              <span className="text-xs sm:text-sm">Average Revenue</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               ${formatNumber(Math.round(averageRevenue))}k
             </div>
-            <div className="text-sm text-foreground/50">Per selected month</div>
+            <div className="text-xs sm:text-sm text-foreground/50">
+              Per selected month
+            </div>
           </div>
 
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <ChartPie className="size-4 text-orange-500" />
-              <span className="text-sm">Months</span>
+              <span className="text-xs sm:text-sm">Months</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               {filteredData.length}/{baseChartData.length}
             </div>
-            <div className="text-sm text-foreground/50">Selected months</div>
+            <div className="text-xs sm:text-sm text-foreground/50">
+              Selected months
+            </div>
           </div>
         </div>
 
         {/* Main Chart */}
-        <div className="h-180 w-full">
+        <div className="h-90 lg:h-180 w-full">
           <ChartContainer config={chartConfig} className="h-full w-full">
             <RadialBarChart
               data={filteredData}
+              innerRadius={30}
               startAngle={90}
               endAngle={-270}
-              innerRadius={85}
-              outerRadius={285}
             >
               <ChartTooltip
                 cursor={false}
@@ -334,7 +334,7 @@ export default function ChartRadialLabel() {
                 label={{
                   position: "insideStart",
                   fill: "#fff",
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: 600,
                 }}
                 // @ts-expect-error Recharts types may omit activeIndex.
@@ -347,7 +347,7 @@ export default function ChartRadialLabel() {
         </div>
 
         {/* Month Summary */}
-        <div className="grid grid-cols-2 gap-3 border-t p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 lg:p-8 border-t">
           {filteredData.map((item, index) => {
             const isActive = activeIndex === index;
             const color = getMonthColor(item.month.toLowerCase().slice(0, 3));
@@ -375,14 +375,19 @@ export default function ChartRadialLabel() {
                     className="size-3.5 rounded-full"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="text-sm font-semibold">{item.name}</span>
+                  <span className="text-xs sm:text-sm lg:text-sm font-semibold">
+                    {item.name}
+                  </span>
                 </div>
 
-                <p className="text-xl font-bold" style={{ color }}>
+                <p
+                  className="text-base sm:text-xl lg:text-xl font-bold"
+                  style={{ color }}
+                >
                   {percentage}%
                 </p>
 
-                <p className="mt-1 text-xs text-foreground/50">
+                <p className="mt-1 text-[10px] sm:text-xs lg:text-xs text-foreground/50">
                   ${formatNumber(item.revenue)}k revenue
                 </p>
 
@@ -401,13 +406,13 @@ export default function ChartRadialLabel() {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col items-start justify-between gap-5 border-t p-5 sm:flex-row sm:items-center md:p-8">
-          <div className="text-sm">
+        <div className="flex flex-col items-start justify-between gap-4 sm:gap-5 border-t p-4 sm:p-5 lg:p-8 sm:flex-row sm:items-center">
+          <div className="text-xs sm:text-sm lg:text-sm">
             <span className="text-foreground/50">Filtered revenue: </span>
             <span className="font-bold">${formatNumber(totalRevenue)}k</span>
           </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             {baseChartData.map((item) => (
               <div key={item.month} className="flex items-center gap-1.5">
                 <span
@@ -418,7 +423,9 @@ export default function ChartRadialLabel() {
                     ),
                   }}
                 />
-                <span className="text-sm">{item.name}</span>
+                <span className="text-[10px] sm:text-xs lg:text-sm">
+                  {item.name}
+                </span>
               </div>
             ))}
           </div>

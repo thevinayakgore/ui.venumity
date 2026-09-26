@@ -192,7 +192,7 @@ export default function LearningAccordion({
               <button
                 type="button"
                 onClick={() => toggleItem(item.id)}
-                className="flex w-full items-center justify-between gap-4 p-2 text-white text-left transition-colors"
+                className="flex items-center justify-between gap-4 p-2 text-white text-left transition-colors w-full h-fit"
               >
                 <div className="flex items-center gap-3">
                   <div className="relative flex size-12 shrink-0 bg-white rounded-md overflow-hidden">
@@ -209,17 +209,9 @@ export default function LearningAccordion({
                       }}
                     />
                   </div>
-
-                  <div className="flex flex-col">
-                    <p className="text-base font-semibold tracking-tight sm:text-lg">
-                      0{index + 1}. {item.title}
-                    </p>
-                    <p className="text-xs opacity-80">
-                      {isOpen
-                        ? "Click to collapse module details"
-                        : "Click to reveal module insights & roadmap"}
-                    </p>
-                  </div>
+                  <p className="text-base font-semibold tracking-tight sm:text-lg leading-snug">
+                    0{index + 1}. {item.title}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-3 mr-0.5">

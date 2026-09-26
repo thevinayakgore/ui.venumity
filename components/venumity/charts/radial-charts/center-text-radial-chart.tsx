@@ -1,4 +1,5 @@
 "use client";
+
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -97,20 +98,22 @@ export default function CenterTextChartRadial() {
   }
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full p-4 sm:p-5 lg:p-5">
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border">
         {/* Header */}
-        <header className="flex flex-col gap-5 border-b bg-foreground/5 p-5">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-4 sm:gap-5 border-b bg-foreground/5 p-4 sm:p-5 lg:p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="w-full">
-              <h1 className="text-2xl font-semibold">Project Progress</h1>
-              <p className="mt-1 text-sm text-foreground/50 md:text-base">
+              <h1 className="text-xl sm:text-2xl lg:text-2xl font-semibold">
+                Project Progress
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm lg:text-base text-foreground/50">
                 Radial chart with center label
               </p>
             </div>
 
             {/* Filters */}
-            <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
+            <div className="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
               <Select
                 value={view}
                 onValueChange={(value) => setView(value as ViewFilter)}
@@ -178,14 +181,14 @@ export default function CenterTextChartRadial() {
                 disabled={!hasActiveFilters}
                 className="h-11! rounded-lg"
               >
-                <RotateCcw />
-                Reset
+                <RotateCcw className="size-4" />
+                <span className="hidden sm:inline">Reset</span>
               </Button>
             </div>
           </div>
 
           {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 text-sm text-foreground/50">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm lg:text-sm text-foreground/50">
               <span>
                 Showing {filteredData.length} of {baseChartData.length} segments
               </span>
@@ -193,7 +196,7 @@ export default function CenterTextChartRadial() {
               {view !== "all" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   View: {view === "completed" ? "Completed" : "Remaining"}
                 </Badge>
@@ -202,7 +205,7 @@ export default function CenterTextChartRadial() {
               {sort !== "default" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   Sort: {sort === "highest" ? "Highest first" : "Lowest first"}
                 </Badge>
@@ -212,12 +215,14 @@ export default function CenterTextChartRadial() {
         </header>
 
         {/* Chart + Stats */}
-        <div className="flex flex-col items-center justify-center m-auto gap-5 p-5 w-full">
-          <ChartContainer config={chartConfig} className="w-full h-160">
+        <div className="flex flex-col items-center justify-center gap-4 sm:gap-5 p-4 sm:p-5 lg:p-8 w-full">
+          <ChartContainer
+            config={chartConfig}
+            className="w-full min-h-90"
+          >
             <RadialBarChart
               data={filteredData}
-              innerRadius={100}
-              outerRadius={300}
+              innerRadius={80}
               startAngle={90}
               endAngle={-270}
             >
@@ -264,16 +269,16 @@ export default function CenterTextChartRadial() {
                 y="50%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-foreground text-3xl md:text-5xl font-bold"
+                className="fill-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold"
               >
                 {formatPercentage(completedValue)}
               </text>
               <text
                 x="50%"
-                y="55%"
+                y={completedValue >= 100 ? "58%" : "56%"}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-foreground text-sm uppercase tracking-widest"
+                className="fill-foreground text-[10px] sm:text-xs md:text-sm lg:text-sm uppercase tracking-widest"
               >
                 Complete
               </text>
@@ -281,7 +286,7 @@ export default function CenterTextChartRadial() {
           </ChartContainer>
 
           {/* Stats Panel */}
-          <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-3 sm:gap-4 w-full">
             {/* Summary cards */}
             <div className="grid grid-cols-2 gap-3">
               {baseChartData.map((item) => {
@@ -308,7 +313,7 @@ export default function CenterTextChartRadial() {
                         return current === idx ? undefined : idx;
                       })
                     }
-                    className={`rounded-xl border bg-foreground/5 p-4 text-left transition ${
+                    className={`rounded-xl border bg-foreground/5 p-3 sm:p-4 text-left transition ${
                       isActive
                         ? "border-foreground/40 bg-foreground/10 shadow-sm"
                         : "hover:bg-foreground/10"
@@ -319,16 +324,19 @@ export default function CenterTextChartRadial() {
                         className="size-3.5 rounded-full"
                         style={{ backgroundColor: color }}
                       />
-                      <span className="text-sm font-semibold">
+                      <span className="text-xs sm:text-sm font-semibold">
                         {item.label}
                       </span>
                     </div>
 
-                    <p className="text-2xl font-bold" style={{ color }}>
+                    <p
+                      className="text-lg sm:text-2xl lg:text-2xl font-bold"
+                      style={{ color }}
+                    >
                       {formatPercentage(item.value)}
                     </p>
 
-                    <p className="mt-1 text-xs text-foreground/50">
+                    <p className="mt-1 text-[10px] sm:text-xs text-foreground/50">
                       {item.goal === "completed"
                         ? "Of total target"
                         : "Still to complete"}
@@ -339,19 +347,21 @@ export default function CenterTextChartRadial() {
             </div>
 
             {/* Progress details */}
-            <div className="rounded-xl border bg-foreground/5 p-4">
-              <div className="mb-3 flex items-center gap-2">
+            <div className="rounded-xl border bg-foreground/5 p-3 sm:p-4">
+              <div className="mb-2 sm:mb-3 flex items-center gap-2">
                 <Target className="size-4 text-emerald-600" />
-                <h4 className="text-sm font-semibold">Progress Details</h4>
+                <h4 className="text-xs sm:text-sm font-semibold">
+                  Progress Details
+                </h4>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span>Completion</span>
                     <span className="font-medium">{completedValue}%</span>
                   </div>
-                  <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
+                  <div className="mt-2 h-2 sm:h-2.5 w-full rounded-full bg-muted">
                     <div
                       className="h-full rounded-full bg-emerald-500"
                       style={{ width: `${completedValue}%` }}
@@ -359,7 +369,7 @@ export default function CenterTextChartRadial() {
                   </div>
                 </div>
 
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs sm:text-sm">
                   <span>Remaining</span>
                   <span className="font-medium">{100 - completedValue}%</span>
                 </div>
@@ -369,14 +379,14 @@ export default function CenterTextChartRadial() {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col items-start justify-between gap-5 border-t p-5 sm:flex-row sm:items-center md:p-8">
+        <div className="flex flex-col items-start justify-between gap-4 sm:gap-5 border-t p-4 sm:p-5 lg:p-8 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
-            <TrendingUp className="size-5 text-emerald-600" />
-            <span className="text-sm font-medium">
+            <TrendingUp className="size-4 sm:size-5 text-emerald-600" />
+            <span className="text-xs sm:text-sm font-medium">
               Project progress is on track
             </span>
           </div>
-          <p className="text-xs text-foreground/50">
+          <p className="text-[10px] sm:text-xs text-foreground/50">
             Target completion: Q3 2024
           </p>
         </div>

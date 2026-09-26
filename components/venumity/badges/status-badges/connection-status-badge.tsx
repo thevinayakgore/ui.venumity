@@ -10,7 +10,7 @@ import {
 
 export default function ConnectionStatusBadge() {
   return (
-    <div className="flex items-center justify-center m-auto gap-3 p-5 md:p-10 w-full h-full">
+    <div className="flex flex-wrap items-center justify-center m-auto gap-3 p-5 md:p-10 w-full h-full">
       {/* Ultra Fast — emerald, 5 bars, scaled */}
       <Tooltip>
         <TooltipTrigger asChild>

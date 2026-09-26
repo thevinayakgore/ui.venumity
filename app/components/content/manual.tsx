@@ -10,6 +10,15 @@ import {
 
 const BASE_DEPENDENCIES = ["lucide-react"];
 
+type PackageManagerName = "npm" | "pnpm" | "yarn" | "bun";
+
+interface ManualProps {
+  componentName: string;
+  componentPath: string;
+  code?: string;
+  packageManager?: PackageManagerName; // ← ADD (optional, defaults to npm)
+}
+
 interface ManualProps {
   componentName: string;
   componentPath: string;
@@ -26,6 +35,21 @@ interface TreeNode {
   type: "file" | "folder";
   path: string;
   children?: TreeNode[];
+}
+
+function buildInstallCommand(pm: PackageManagerName, deps: string[]): string {
+  const pkgs = deps.join(" ");
+  switch (pm) {
+    case "pnpm":
+      return `pnpm add ${pkgs}`;
+    case "yarn":
+      return `yarn add ${pkgs}`;
+    case "bun":
+      return `bun add ${pkgs}`;
+    case "npm":
+    default:
+      return `npm install ${pkgs}`;
+  }
 }
 
 // StepItem component moved OUTSIDE of the main component
@@ -92,9 +116,10 @@ function collectTsxFiles(node: TreeNode, results: FileEntry[] = []) {
 }
 
 export default function Manual({
+  code,
   componentName,
   componentPath,
-  code,
+  packageManager = "npm",
 }: ManualProps) {
   const [files, setFiles] = useState<FileEntry[]>([]);
   const [fileContents, setFileContents] = useState<Record<string, string>>({});
@@ -308,6 +333,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }`;
 
+  const installCommand = useMemo(
+    () => buildInstallCommand(packageManager, installDeps),
+    [packageManager, installDeps],
+  );
+
   // Memoized render function to avoid creating components during render
   const renderStepItems = useCallback(() => {
     const items = [];
@@ -315,10 +345,7 @@ export function cn(...inputs: ClassValue[]) {
     // Step 1: Install Dependencies
     items.push(
       <StepItem key="step-1" number={1} title="Install Dependencies">
-        <CodeBlock
-          code={`npm install ${installDeps.join(" ")}`}
-          language="bash"
-        />
+        <CodeBlock code={installCommand} language="bash" />
       </StepItem>,
     );
 
@@ -400,14 +427,14 @@ export function cn(...inputs: ClassValue[]) {
 
     return items;
   }, [
-    installDeps,
+    code,
+    files,
+    kebabName,
     utilsCode,
     multiPage,
-    files,
     fileContents,
-    code,
+    installCommand,
     subFileContents,
-    kebabName,
   ]);
 
   // Handle loading state

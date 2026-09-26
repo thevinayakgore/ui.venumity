@@ -29,16 +29,24 @@ const chartConfig = {
 
 export default function ChartLineDotsColors() {
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-5">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-5">
         <div>
-          <h1 className="text-3xl font-bold">Colored Dots by Browser</h1>
-          <p className="text-base text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            Colored Dots by Browser
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Each point colored by browser type
           </p>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -62,23 +70,38 @@ export default function ChartLineDotsColors() {
             dataKey="visitors"
             type="natural"
             stroke="#3b82f6"
-            strokeWidth={3}
-            dot={{ r: 8, strokeWidth: 2 }}
-            activeDot={{ r: 12, stroke: "white", strokeWidth: 3 }}
+            strokeWidth={2.5}
+            dot={({ cx, cy, payload }) => {
+              if (cx == null || cy == null) return null;
+              return (
+                <circle
+                  key={payload.browser}
+                  cx={cx}
+                  cy={cy}
+                  r={6}
+                  fill={payload.fill}
+                  stroke="white"
+                  strokeWidth={2}
+                />
+              );
+            }}
+            activeDot={{ r: 8, stroke: "white", strokeWidth: 2 }}
           />
         </LineChart>
       </ChartContainer>
-      <div className="grid grid-cols-5 gap-2 w-full">
+
+      {/* Legend */}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-2 w-full mt-4">
         {chartData.map((item) => (
           <div key={item.browser} className="text-center">
             <div
               className="w-3 h-3 rounded-full mx-auto mb-1"
               style={{ backgroundColor: item.fill }}
             />
-            <span className="text-xs font-medium capitalize">
+            <span className="text-[10px] sm:text-xs font-medium capitalize">
               {item.browser}
             </span>
-            <p className="text-sm font-bold">{item.visitors}</p>
+            <p className="text-xs sm:text-sm font-bold">{item.visitors}</p>
           </div>
         ))}
       </div>

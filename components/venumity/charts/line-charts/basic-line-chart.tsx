@@ -25,31 +25,47 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function ChartLineDefault() {
+  const total = chartData.reduce((acc, item) => acc + item.desktop, 0);
+  const peak = Math.max(...chartData.map((d) => d.desktop));
+  const average = (total / chartData.length).toFixed(0);
+
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-semibold">Line Chart - Natural</h2>
-          <p className="text-base mt-1">
-            Smooth curve interpolation · January - June 
+          <h2 className="text-2xl sm:text-3xl font-semibold">
+            Line Chart - Natural
+          </h2>
+          <p className="text-sm sm:text-base mt-1 text-foreground/70">
+            Smooth curve interpolation · January - June
           </p>
         </div>
-        <div className="flex gap-3">
-          <div className="bg-blue-500/10 px-4 py-2 rounded-lg border border-blue-500/20 w-30">
-            <span className="text-xs text-blue-600">Total</span>
-            <p className="text-lg font-bold text-blue-600">
-              {chartData.reduce((acc, item) => acc + item.desktop, 0)}
+
+        <div className="flex flex-wrap gap-3">
+          <div className="bg-blue-500/10 px-3 sm:px-4 py-2 rounded-lg border border-blue-500/20 w-full sm:w-30">
+            <span className="text-[10px] sm:text-xs text-blue-600">Total</span>
+            <p className="text-base sm:text-lg font-bold text-blue-600">
+              {total}
             </p>
           </div>
-          <div className="bg-emerald-500/10 px-4 py-2 rounded-lg border border-emerald-500/20 w-30">
-            <span className="text-xs text-emerald-600">Peak</span>
-            <p className="text-lg font-bold text-emerald-600">
-              {Math.max(...chartData.map((d) => d.desktop))}
+
+          <div className="bg-emerald-500/10 px-3 sm:px-4 py-2 rounded-lg border border-emerald-500/20 w-full sm:w-30">
+            <span className="text-[10px] sm:text-xs text-emerald-600">
+              Peak
+            </span>
+            <p className="text-base sm:text-lg font-bold text-emerald-600">
+              {peak}
             </p>
           </div>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -65,7 +81,7 @@ export default function ChartLineDefault() {
             axisLine={false}
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
-            className="text-xs"
+            className="text-[10px] sm:text-xs"
           />
           <ChartTooltip
             cursor={false}
@@ -75,28 +91,28 @@ export default function ChartLineDefault() {
             dataKey="desktop"
             type="natural"
             stroke="var(--color-desktop)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 6, fill: "#3b82f6" }}
+            activeDot={{ r: 5, fill: "#3b82f6" }}
           />
         </LineChart>
       </ChartContainer>
-      <div className="flex items-center justify-between w-full">
+
+      {/* Footer stats */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mt-4">
         <div className="space-y-1">
           <div className="flex flex-col gap-1 text-sm font-medium leading-none">
-            <span>Average</span>
-            <span className="text-2xl font-bold">
-              {(
-                chartData.reduce((acc, item) => acc + item.desktop, 0) /
-                chartData.length
-              ).toFixed(0)}
-            </span>
+            <span className="text-xs sm:text-sm">Average</span>
+            <span className="text-xl sm:text-2xl font-bold">{average}</span>
           </div>
-          <p className="text-xs text-muted-foreground">Per month average</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
+            Per month average
+          </p>
         </div>
-        <div className="flex items-center gap-2 text-sm">
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm">
           <span className="text-emerald-600 font-medium">+15.2%</span>
-          <TrendingUp className="h-4 w-4 text-emerald-600" />
+          <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600" />
           <span className="text-muted-foreground">growth</span>
         </div>
       </div>

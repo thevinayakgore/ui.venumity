@@ -1,7 +1,19 @@
 "use client";
-import type { DateRange } from "react-day-picker";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 import { useState, useMemo } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import type { DateRange } from "react-day-picker";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { Separator } from "@/components/ui/separator";
 import { motion, AnimatePresence } from "framer-motion";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -10,16 +22,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -27,17 +35,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Search,
   Filter,
@@ -50,8 +52,6 @@ import {
   Globe,
   Clock,
 } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 export default function FiltersTable() {
   const [customers] = useState<Customer[]>(
@@ -209,7 +209,7 @@ export default function FiltersTable() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 items-end gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 items-end gap-3">
           {/* Search */}
           <div>
             <Label className="text-xs md:text-sm mb-3 block">Search</Label>
@@ -273,7 +273,7 @@ export default function FiltersTable() {
             </Popover>
           </div>
 
-          <div className="col-span-2 grid grid-cols-3 gap-3">
+          <div className="col-span-2 grid grid-cols-2 md:grid-cols-3 gap-3">
             {/* Status */}
             <div className="w-full">
               <Label className="text-xs md:text-sm mb-3 block">Status</Label>
@@ -389,7 +389,7 @@ export default function FiltersTable() {
       </div>
 
       {/* View Toggle */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-4">
         <Tabs
           value={view}
           onValueChange={(v) => setView(v as "grid" | "table")}

@@ -234,14 +234,12 @@ export default function ChartRadialStacked() {
         {/* Chart + Stats */}
         <div className="flex flex-col gap-5 p-5 w-full">
           {/* Chart */}
-            <ChartContainer config={chartConfig} className="w-full h-full">
+            <ChartContainer config={chartConfig}          className="w-full min-h-90">
               <RadialBarChart
                 data={filteredData}
+                innerRadius={80}
                 startAngle={90}
                 endAngle={-270}
-                innerRadius={100}
-                outerRadius={300}
-                barSize={80}
               >
                 <ChartTooltip
                   cursor={false}
@@ -292,14 +290,14 @@ export default function ChartRadialStacked() {
                   >
                     <tspan
                       x="50%"
-                      className="fill-foreground text-3xl md:text-5xl font-bold"
+                      className="fill-foreground text-3xl lg:text-4xl font-bold"
                     >
                       {formatNumber(averagePerMonth)}
                     </tspan>
                     <tspan
                       x="50%"
-                      dy="40"
-                      className="fill-muted-foreground text-sm md:text-base"
+                      dy="30"
+                      className="fill-muted-foreground text-sm lg:text-base"
                     >
                       Avg Monthly
                     </tspan>

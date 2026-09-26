@@ -28,9 +28,9 @@ export default function SimpleProfileCard() {
 
   return (
     <div className="p-5 md:p-10 w-full">
-      <Card className="p-0! gap-0! bg-foreground/5! border-2 border-background ring-10 ring-foreground/15 mx-auto overflow-hidden rounded-4xl shadow-lg/10 hover:shadow-2xl transition-all duration-500 max-w-xl w-full">
+      <Card className="p-0! gap-0! bg-foreground/5! border-2 border-background ring-5 md:ring-10 ring-foreground/15 mx-auto overflow-hidden rounded-4xl shadow-lg/10 hover:shadow-2xl transition-all duration-500 max-w-xl w-full">
         {/* Cover Image */}
-        <div className="relative border-b h-50">
+        <div className="relative border-b h-40 md:h-50">
           <Image
             src="/banner.png"
             alt="Banner Image"
@@ -55,7 +55,7 @@ export default function SimpleProfileCard() {
             </AvatarFallback>
           </Avatar>
           <div className="flex items-center gap-5 pt-2 -mr-4 ml-auto">
-            <div className="flex text-end gap-5">
+            <div className="hidden md:flex text-end gap-5">
               {Object.entries(USER_DATA.stats).map(([key, value]) => (
                 <div key={key}>
                   <div className="text-base font-bold tracking-tight">
@@ -97,6 +97,18 @@ export default function SimpleProfileCard() {
             </div>
           </div>
 
+        <div className="flex md:hidden mt-2 gap-5">
+              {Object.entries(USER_DATA.stats).map(([key, value]) => (
+                <div key={key}>
+                  <div className="text-base font-bold tracking-tight">
+                    {value.toLocaleString()}
+                  </div>
+                  <div className="text-xs capitalize opacity-50">{key}</div>
+                </div>
+              ))}
+            </div>
+
+
           {/* Bio */}
           <p className="mt-4 text-sm font-medium tracking-wide opacity-80 w-full">
             {USER_DATA.bio}
@@ -133,7 +145,7 @@ export default function SimpleProfileCard() {
               <p className="font-mono tracking-wider text-base uppercase">
                 Skills & Expertise
               </p>
-              <div className="flex flex-wrap gap-5">
+              <div className="flex flex-wrap gap-2 md:gap-5">
                 {USER_DATA.skills.map((skill) => (
                   <span key={skill} className="text-sm opacity-60">
                     {skill}

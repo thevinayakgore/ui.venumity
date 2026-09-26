@@ -308,11 +308,11 @@ export default function StandardPricingTable() {
   const [isAnnual, setIsAnnual] = useState(true);
 
   return (
-    <div className="p-5 md:p-10 space-y-5 md:space-y-10 w-full">
+    <div className="p-5 lg:p-10 space-y-5 lg:space-y-10 w-full">
       {/* Header */}
 
-      <header className="flex items-end justify-between w-full">
-        <div className="text-start w-full">
+      <header className="flex flex-col md:flex-row items-end justify-between w-full">
+        <div className="flex flex-col text-start w-full">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
             Simple pricing
           </h1>
@@ -372,7 +372,7 @@ export default function StandardPricingTable() {
       </header>
 
       {/* Pricing table */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-5 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 w-full">
         {PLANS_DATA.map((plan) => (
           <PricingCard key={plan.id} plan={plan} isAnnual={isAnnual} />
         ))}

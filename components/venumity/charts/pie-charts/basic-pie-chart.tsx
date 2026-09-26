@@ -63,7 +63,7 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   const total = pieData.reduce((sum, entry) => sum + entry.value, 0);
 
   return (
-    <div className="min-w-48 rounded-lg border border-border/60 bg-background p-3 shadow-lg">
+    <div className="min-w-40 sm:min-w-48 rounded-lg border border-border/60 bg-background p-3 shadow-lg">
       <div className="mb-3 flex items-center gap-2 border-b border-dashed border-foreground/15 pb-2">
         <span
           className="size-3.5 rounded"
@@ -72,11 +72,14 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
         <p className="text-sm font-semibold">{item.name}</p>
       </div>
 
-      <p className="text-lg font-bold" style={{ color: item.color }}>
+      <p
+        className="text-base sm:text-lg font-bold"
+        style={{ color: item.color }}
+      >
         {formatNumber(item.value)} units
       </p>
 
-      <p className="mt-1 text-xs text-foreground/50">
+      <p className="mt-1 text-[10px] sm:text-xs text-foreground/50">
         {formatPercentage(item.value, total)}% of total
       </p>
     </div>
@@ -146,14 +149,16 @@ export default function BasicPieChart() {
   }
 
   return (
-    <div className="p-5 w-full">
+    <div className="p-4 sm:p-5 w-full">
       <div className="flex flex-col border rounded-2xl overflow-hidden w-full">
         {/* Header */}
-        <header className="flex flex-col gap-5 border-b p-5 bg-foreground/5">
+        <header className="flex flex-col gap-4 sm:gap-5 border-b p-4 sm:p-5 bg-foreground/5">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="w-full">
-              <h1 className="text-2xl font-semibold">Basic Pie Chart</h1>
-              <p className="mt-1 text-sm text-foreground/50 md:text-base">
+              <h1 className="text-xl sm:text-2xl font-semibold">
+                Basic Pie Chart
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm text-foreground/50 md:text-base">
                 Distribution with percentage labels and interactive segments
               </p>
             </div>
@@ -225,21 +230,21 @@ export default function BasicPieChart() {
                 disabled={!hasActiveFilters}
                 className="h-11! rounded-lg"
               >
-                <RotateCcw />
-                Reset
+                <RotateCcw className="size-4" />
+                <span className="hidden sm:inline">Reset</span>
               </Button>
             </div>
           </div>
 
           {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 text-sm text-foreground/50">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-foreground/50">
               <span>
                 Showing {filteredData.length} of {pieData.length} groups
               </span>
               {view !== "all" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs"
                 >
                   View: {view === "top-half" ? "Top half" : "Bottom half"}
                 </Badge>
@@ -247,7 +252,7 @@ export default function BasicPieChart() {
               {sort !== "default" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs"
                 >
                   Sort: {sort === "highest" ? "Highest first" : "Lowest first"}
                 </Badge>
@@ -257,54 +262,65 @@ export default function BasicPieChart() {
         </header>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 gap-3 p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 md:p-8">
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <TrendingUp
                 className="size-4"
                 style={{ color: largestGroup.color }}
               />
-              <span className="text-sm">Largest Group</span>
+              <span className="text-xs sm:text-sm">Largest Group</span>
             </div>
-            <div className="text-xl font-medium">{largestGroup.name}</div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-base sm:text-xl font-medium">
+              {largestGroup.name}
+            </div>
+            <div className="text-xs sm:text-sm text-foreground/50">
               {formatNumber(largestGroup.value)} units
             </div>
           </div>
+
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <ChartPie className="size-4 text-blue-500" />
-              <span className="text-sm">Smallest Group</span>
+              <span className="text-xs sm:text-sm">Smallest Group</span>
             </div>
-            <div className="text-xl font-medium">{smallestGroup.name}</div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-base sm:text-xl font-medium">
+              {smallestGroup.name}
+            </div>
+            <div className="text-xs sm:text-sm text-foreground/50">
               {formatNumber(smallestGroup.value)} units
             </div>
           </div>
+
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <BarChart3 className="size-4 text-green-500" />
-              <span className="text-sm">Average Group</span>
+              <span className="text-xs sm:text-sm">Average Group</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl font-medium">
               {formatNumber(Math.round(average))}
             </div>
-            <div className="text-sm text-foreground/50">Per selected group</div>
+            <div className="text-xs sm:text-sm text-foreground/50">
+              Per selected group
+            </div>
           </div>
+
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <ChartPie className="size-4 text-orange-500" />
-              <span className="text-sm">Groups</span>
+              <span className="text-xs sm:text-sm">Groups</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl font-medium">
               {filteredData.length}/{pieData.length}
             </div>
-            <div className="text-sm text-foreground/50">Selected groups</div>
+            <div className="text-xs sm:text-sm text-foreground/50">
+              Selected groups
+            </div>
           </div>
         </div>
 
         {/* Main Chart */}
-        <div className="w-full h-180">
+        <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96">
           <ChartContainer config={chartConfig} className="h-full w-full">
             <PieChart accessibilityLayer>
               <Pie
@@ -312,13 +328,13 @@ export default function BasicPieChart() {
                 dataKey="value"
                 nameKey="name"
                 cx="50%"
-                cy="46%"
-                innerRadius={100}
-                outerRadius={300}
+                cy="50%"
+                innerRadius={60}
+                outerRadius={140}
                 paddingAngle={3}
                 stroke="hsl(var(--background))"
-                strokeWidth={5}
-                // @ts-expect-error Recharts types don’t include activeIndex here
+                strokeWidth={4}
+                // @ts-expect-error Recharts types don't include activeIndex here
                 activeIndex={activeIndex}
                 activeShape={ActiveShape}
                 onMouseEnter={(_, index) => setActiveIndex(index)}
@@ -336,7 +352,7 @@ export default function BasicPieChart() {
         </div>
 
         {/* Group Summary */}
-        <div className="grid grid-cols-2 gap-3 border-t p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 md:p-8 border-t">
           {filteredData.map((item) => (
             <div
               key={item.name}
@@ -347,12 +363,17 @@ export default function BasicPieChart() {
                   className="size-3.5 rounded"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-sm font-semibold">{item.name}</span>
+                <span className="text-xs sm:text-sm font-semibold">
+                  {item.name}
+                </span>
               </div>
-              <p className="text-xl font-bold" style={{ color: item.color }}>
+              <p
+                className="text-base sm:text-xl font-bold"
+                style={{ color: item.color }}
+              >
                 {formatPercentage(item.value, filteredTotal)}%
               </p>
-              <p className="mt-1 text-xs text-foreground/50">
+              <p className="mt-1 text-[10px] sm:text-xs text-foreground/50">
                 {formatNumber(item.value)} units
               </p>
               <div className="mt-3 h-1.5 w-full rounded-full bg-foreground/10">
@@ -369,19 +390,20 @@ export default function BasicPieChart() {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col items-start justify-between gap-5 border-t p-5 sm:flex-row sm:items-center md:p-8">
-          <div className="text-sm">
+        <div className="flex flex-col items-start justify-between gap-4 sm:gap-5 border-t p-4 sm:p-5 md:p-8 sm:flex-row sm:items-center">
+          <div className="text-xs sm:text-sm">
             <span className="text-foreground/50">Filtered units: </span>
             <span className="font-bold">{formatNumber(filteredTotal)}</span>
           </div>
-          <div className="flex flex-wrap gap-4">
+
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             {pieData.map((item) => (
               <div key={item.name} className="flex items-center gap-1.5">
                 <div
                   className="size-2 rounded-full"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-sm">{item.name}</span>
+                <span className="text-[10px] sm:text-xs">{item.name}</span>
               </div>
             ))}
           </div>

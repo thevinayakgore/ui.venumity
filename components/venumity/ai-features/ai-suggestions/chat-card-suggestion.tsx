@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { Wand2, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
-import { Wand2, ArrowUp } from "lucide-react";
 
 const MESSAGES = [
   {
@@ -134,10 +134,10 @@ export default function ChatSuggestion() {
   };
 
   return (
-    <div className="flex flex-col p-5 md:p-10 overflow-auto w-full h-full">
+    <div className="flex flex-col p-3 sm:p-5 md:p-10 overflow-auto w-full h-full">
       {/* Chat Interface Panel */}
-      <div className="aspect-5/4 p-1.5 bg-foreground/5 border rounded-[2rem] overflow-hidden max-w-3xl m-auto w-full h-full">
-        <div className="relative flex flex-col justify-between bg-background border rounded-4xl overflow-auto m-auto w-full h-full">
+      <div className="md:aspect-5/4 p-1.5 bg-foreground/5 border rounded-4xl md:rounded-[2rem] overflow-hidden max-w-3xl m-auto w-full h-full sm:h-svh md:h-full">
+        <div className="relative flex flex-col justify-between bg-background border rounded-3xl md:rounded-4xl overflow-auto m-auto w-full h-full">
           {/* Chat Messages */}
           <div className="flex-1 p-5 space-y-5 overflow-y-auto w-full h-full">
             {messages.map((msg) => (
@@ -145,7 +145,7 @@ export default function ChatSuggestion() {
                 {msg.sender === "user1" ? (
                   <div className="flex items-start gap-2 ml-auto max-w-lg justify-end">
                     {msg.text && (
-                      <p className="px-3 pt-2 pb-2.5 bg-primary text-white text-sm rounded-xl rounded-tr-none max-w-md">
+                      <p className="px-2 md:px-3 pt-1.5 md:pt-2 pb-2 md:pb-2.5 bg-primary text-white text-xs md:text-sm rounded-md md:rounded-xl rounded-tl-none max-w-md">
                         {msg.text}
                       </p>
                     )}
@@ -175,7 +175,7 @@ export default function ChatSuggestion() {
                       />
                     </div>
                     {msg.text && (
-                      <p className="px-3 pt-2 pb-2.5 bg-foreground text-secondary text-sm rounded-xl rounded-tl-none max-w-md">
+                      <p className="px-2 md:px-3 pt-1.5 md:pt-2 pb-2 md:pb-2.5 bg-foreground text-secondary text-xs md:text-sm rounded-md md:rounded-xl rounded-tl-none max-w-md">
                         {msg.text}
                       </p>
                     )}

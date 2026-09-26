@@ -338,3 +338,87 @@ export function getAllPaths(): string[] {
   });
   return paths;
 }
+
+
+
+// ==================== PREVIEW METADATA RESOLVER ====================
+/**
+ * Resolve a component + its parent subcategory metadata (description, tags,
+ * techs) from a preview slug path.
+ *
+ * URL shapes accepted:
+ *   - "data-display/basic-accordion"                     (category + component)
+ *   - "data-display/accordions/basic-accordion"          (category + subcat + component)
+ *   - "accordions/basic-accordion"                       (subcat + component)
+ *
+ * Since items themselves don't carry description/tags/techs in the registry,
+ * the subcategory's metadata is used. Falls back to a generated description
+ * if the subcategory doesn't define one.
+ */
+export interface ResolvedPreview {
+  itemName: string;
+  description: string;
+  tags: string[];
+  techs: string[];
+  category: string; // kebab
+  subcategory: string; // kebab
+  categoryName: string; // display
+  subcategoryName: string; // display
+  slugPath: string; // canonical: category/subcategory/component (kebab)
+}
+
+export function resolvePreviewBySlug(slugPath: string): ResolvedPreview | null {
+  const parts = slugPath.split("/").filter(Boolean);
+  if (parts.length < 2) return null;
+
+  const lastKebab = toKebabCase(parts[parts.length - 1]);
+  const firstKebab = toKebabCase(parts[0]);
+  const middleKebab = parts.length >= 3 ? toKebabCase(parts[1]) : null;
+
+  for (const category of COMPONENTS) {
+    const categoryKebab = toKebabCase(category.name);
+
+    for (const subcategory of category.subcategories) {
+      const subcategoryKebab = toKebabCase(subcategory.name);
+
+      const matched = subcategory.items.find(
+        (i) => toKebabCase(i.itemName) === lastKebab,
+      );
+      if (!matched) continue;
+
+      // Ensure the URL actually refers to this category/subcategory.
+      // Accept when:
+      //   - URL starts with the category kebab (e.g. data-display/...)
+      //   - OR URL starts with the subcategory kebab (e.g. accordions/...)
+      const categoryMatches = firstKebab === categoryKebab;
+      const subcategoryMatches = firstKebab === subcategoryKebab;
+
+      if (!categoryMatches && !subcategoryMatches) continue;
+
+      // If the URL has a middle segment, it must match the subcategory
+      if (
+        middleKebab &&
+        middleKebab !== subcategoryKebab &&
+        middleKebab !== categoryKebab
+      ) {
+        continue;
+      }
+
+      return {
+        itemName: matched.itemName,
+        description:
+          subcategory.description ||
+          `Live preview of ${matched.itemName}, a premium component from the ${subcategory.name} collection in ${category.name}.`,
+        tags: subcategory.tags || [],
+        techs: subcategory.techs || [],
+        category: categoryKebab,
+        subcategory: subcategoryKebab,
+        categoryName: category.name,
+        subcategoryName: subcategory.name,
+        slugPath: `${categoryKebab}/${subcategoryKebab}/${toKebabCase(matched.itemName)}`,
+      };
+    }
+  }
+
+  return null;
+}

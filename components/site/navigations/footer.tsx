@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { handle, username } from "@/lib/brand";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ import { toKebabCase } from "@/utils/slug-kebab";
 import SocialIcons from "../common/social-icons";
 import { COMPANY_SECTION } from "@/lib/constants";
 import { COMPONENTS } from "@/registry/components";
+import { useEffect, useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
 import { RESOURCE_CATEGORIES } from "@/registry/resources";
@@ -21,38 +21,95 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-// ── Thumbnail API endpoint ─────────────────────────────────
+// ── Thumbnail cache constants ──────────────────────────────
 const THUMBNAILS_API = "/api/thumbnails";
+const CACHE_KEY = "venumity:thumbnails";
 
-function shuffleImages(images: string[]) {
-  const shuffled = [...images];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+interface ThumbnailCache {
+  thumbnails: string[];
+  fingerprint: number;
+  updatedAt: number;
 }
 
-// ── Hook: fetch thumbnail list once ────────────────────────
-function useThumbnails() {
-  const [thumbnails, setThumbnails] = useState<string[]>([]);
-  const [loaded, setLoaded] = useState(false);
+interface ThumbnailsApiResponse {
+  total: number;
+  fingerprint: number;
+  updatedAt: string;
+  thumbnails: string[];
+}
 
+// ── Sync cache helpers ─────────────────────────────────────
+function readCache(): ThumbnailCache | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as ThumbnailCache;
+    if (!Array.isArray(parsed.thumbnails)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(cache: ThumbnailCache) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    /* ignore quota / disabled storage */
+  }
+}
+
+// ── Hook: cache-first + background refresh ─────────────────
+function useThumbnails() {
+  // Lazy initializer — reads localStorage synchronously on first render,
+  // no effect needed, no cascading renders.
+  const [thumbnails, setThumbnails] = useState<string[]>(() => {
+    const cached = readCache();
+    return cached?.thumbnails ?? [];
+  });
+
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  // Background fetch — setState only happens inside the async callback,
+  // never synchronously in the effect body.
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
-        const res = await fetch(THUMBNAILS_API);
+        const res = await fetch(THUMBNAILS_API, { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        if (!cancelled && Array.isArray(data.thumbnails)) {
+        const data: ThumbnailsApiResponse = await res.json();
+
+        if (cancelled || !mountedRef.current) return;
+
+        const cached = readCache();
+        const sameFingerprint =
+          cached && cached.fingerprint === data.fingerprint;
+        const sameLength = cached?.thumbnails.length === data.thumbnails.length;
+
+        if (sameFingerprint && sameLength && cached) {
+          // Server unchanged — keep cached array reference
+          setThumbnails(cached.thumbnails);
+        } else {
           setThumbnails(data.thumbnails);
+          writeCache({
+            thumbnails: data.thumbnails,
+            fingerprint: data.fingerprint,
+            updatedAt: Date.now(),
+          });
         }
       } catch (err) {
         console.error("Failed to fetch thumbnails:", err);
-      } finally {
-        if (!cancelled) setLoaded(true);
       }
     }
 
@@ -62,9 +119,20 @@ function useThumbnails() {
     };
   }, []);
 
-  return { thumbnails, loaded };
+  return { thumbnails };
 }
 
+// ── Shuffle ────────────────────────────────────────────────
+function shuffleImages(images: string[]) {
+  const shuffled = [...images];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// ── BottomFooter (unchanged) ───────────────────────────────
 export const BottomFooter = () => {
   return (
     <div className="relative z-50 flex items-start justify-start py-1.5 md:py-4 lg:py-0 px-2.5 text-xs font-semibold overflow-hidden w-full lg:h-10">
@@ -98,22 +166,34 @@ export const BottomFooter = () => {
   );
 };
 
+// ── Footer ─────────────────────────────────────────────────
 export default function Footer() {
   const pathname = usePathname();
-  const { thumbnails, loaded } = useThumbnails();
+  const { thumbnails } = useThumbnails();
   const [images, setImages] = useState<string[]>([]);
 
-  // Initial deterministic render + start rotation once data arrives
+  // Rotate shuffle every 10s. All setState calls happen inside the timer
+  // callback, not in the effect body, so ESLint is happy.
   useEffect(() => {
     if (thumbnails.length === 0) return;
 
     const interval = setInterval(() => {
-      // Initial shuffle (post-hydration, safe)
-      setImages(shuffleImages(thumbnails));
       setImages(shuffleImages(thumbnails));
     }, 10000);
 
     return () => clearInterval(interval);
+  }, [thumbnails]);
+
+  // Separate effect for the initial shuffle — also inside a timer to avoid
+  // the "setState synchronously in effect" warning.
+  useEffect(() => {
+    if (thumbnails.length === 0) return;
+
+    const id = setTimeout(() => {
+      setImages(shuffleImages(thumbnails));
+    }, 0);
+
+    return () => clearTimeout(id);
   }, [thumbnails]);
 
   if (
@@ -149,8 +229,8 @@ export default function Footer() {
       <div className="lg:bg-foreground/5 lg:p-2 pb-0! lg:border-b-30 sm:rounded-[1.3rem] sm:rounded-b-xl overflow-hidden">
         {/* 3D Morquee Banner */}
         <section className="relative lg:p-3 lg:shadow-2xl/10 lg:bg-foreground/5 backdrop-blur-md rounded-xl lg:rounded-2xl overflow-hidden w-full min-h-65 max-h-max lg:min-h-150">
-          {/* Only render marquee once thumbnails are loaded */}
-          {loaded && images.length > 0 && (
+          {/* Marquee renders as soon as we have any images (cache or fresh) */}
+          {images.length > 0 && (
             <ThreeDMarquee
               className="hidden lg:block pointer-events-none absolute inset-0 bg-background! h-full w-full"
               images={images}

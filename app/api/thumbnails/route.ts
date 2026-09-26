@@ -3,14 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-export const revalidate = 3600; // cache for 1 hour
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const THUMBNAILS_DIR = path.join(process.cwd(), "public", "thumbnails");
 
-// ─────────────────────────────────────────────────────────────
-// List all thumbnails by scanning the filesystem
-// ─────────────────────────────────────────────────────────────
-function listAllThumbnails(): string[] {
+function listAllThumbnails(): { name: string; mtimeMs: number }[] {
   if (!fs.existsSync(THUMBNAILS_DIR)) return [];
 
   const files = fs.readdirSync(THUMBNAILS_DIR, { withFileTypes: true });
@@ -22,20 +20,23 @@ function listAllThumbnails(): string[] {
         entry.name.toLowerCase().endsWith(".webp") &&
         !entry.name.startsWith("."),
     )
-    .map((entry) => entry.name.replace(/\.webp$/i, ""))
-    .sort();
+    .map((entry) => {
+      const full = path.join(THUMBNAILS_DIR, entry.name);
+      const stat = fs.statSync(full);
+      return {
+        name: entry.name.replace(/\.webp$/i, ""),
+        mtimeMs: stat.mtimeMs,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// ─────────────────────────────────────────────────────────────
-// GET handler
-// ─────────────────────────────────────────────────────────────
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
 
-  // ── Case 1: Serve a single image ─────────────────────────
+  // ── Single image ─────────────────────────────────────────
   if (name) {
-    // Sanitize to prevent directory traversal
     const safeName = path.basename(name).replace(/\.webp$/i, "");
     const filePath = path.join(THUMBNAILS_DIR, `${safeName}.webp`);
 
@@ -55,18 +56,24 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // ── Case 2: Return the list of all thumbnails ────────────
-  const names = listAllThumbnails();
+  // ── List all ─────────────────────────────────────────────
+  const entries = listAllThumbnails();
   const origin = new URL(request.url).origin;
 
-  const items = names.map((name) => ({
-    name,
-    thumbnail: `${origin}/api/thumbnails?name=${encodeURIComponent(name)}`,
+  const fingerprint = entries.reduce(
+    (max, e) => Math.max(max, e.mtimeMs),
+    0,
+  );
+
+  const items = entries.map((e) => ({
+    name: e.name,
+    thumbnail: `${origin}/api/thumbnails?name=${encodeURIComponent(e.name)}`,
   }));
 
   return NextResponse.json(
     {
       total: items.length,
+      fingerprint,
       updatedAt: new Date().toISOString(),
       thumbnails: items.map((i) => i.thumbnail),
       items,
@@ -75,15 +82,12 @@ export async function GET(request: NextRequest) {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Cache-Control":
-          "public, s-maxage=3600, stale-while-revalidate=86400",
+          "public, s-maxage=60, stale-while-revalidate=86400",
       },
     },
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// CORS preflight
-// ─────────────────────────────────────────────────────────────
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,

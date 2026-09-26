@@ -33,31 +33,57 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function ChartLineMultiple() {
+  const desktopTotal = chartData.reduce((acc, d) => acc + d.desktop, 0);
+  const mobileTotal = chartData.reduce((acc, d) => acc + d.mobile, 0);
+  const tabletTotal = chartData.reduce((acc, d) => acc + d.tablet, 0);
+  const grandTotal = desktopTotal + mobileTotal + tabletTotal;
+
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-5 w-full">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4 lg:mb-5 w-full">
         <div>
-          <h1 className="text-3xl font-bold">Multiple Line Chart</h1>
-          <p className="text-base text-muted-foreground mt-1">
-            Device comparison · January – June 
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            Multiple Line Chart
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
+            Device comparison · January – June
           </p>
         </div>
-        <div className="flex gap-3">
-          <div className="bg-violet-500/10 px-3 py-2 rounded-md w-30">
-            <span className="text-xs text-violet-600">Desktop</span>
-            <p className="text-sm font-bold text-violet-600">1,224</p>
+
+        <div className="flex flex-wrap gap-3">
+          <div className="bg-violet-500/10 px-3 py-2 rounded-md w-full sm:w-30">
+            <span className="text-[10px] sm:text-xs text-violet-600">
+              Desktop
+            </span>
+            <p className="text-xs sm:text-sm font-bold text-violet-600">
+              {desktopTotal}
+            </p>
           </div>
-          <div className="bg-orange-500/10 px-3 py-2 rounded-md w-30">
-            <span className="text-xs text-orange-600">Mobile</span>
-            <p className="text-sm font-bold text-orange-600">860</p>
+
+          <div className="bg-orange-500/10 px-3 py-2 rounded-md w-full sm:w-30">
+            <span className="text-[10px] sm:text-xs text-orange-600">
+              Mobile
+            </span>
+            <p className="text-xs sm:text-sm font-bold text-orange-600">
+              {mobileTotal}
+            </p>
           </div>
-          <div className="bg-cyan-500/10 px-3 py-2 rounded-md w-30">
-            <span className="text-xs text-cyan-600">Tablet</span>
-            <p className="text-sm font-bold text-cyan-600">438</p>
+
+          <div className="bg-cyan-500/10 px-3 py-2 rounded-md w-full sm:w-30">
+            <span className="text-[10px] sm:text-xs text-cyan-600">Tablet</span>
+            <p className="text-xs sm:text-sm font-bold text-cyan-600">
+              {tabletTotal}
+            </p>
           </div>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -73,46 +99,51 @@ export default function ChartLineMultiple() {
             axisLine={false}
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
-            className="text-xs"
+            className="text-[10px] sm:text-xs"
           />
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Line
             dataKey="desktop"
             type="monotone"
             stroke="var(--color-desktop)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 6 }}
+            activeDot={{ r: 5 }}
           />
           <Line
             dataKey="mobile"
             type="monotone"
             stroke="var(--color-mobile)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 6 }}
+            activeDot={{ r: 5 }}
           />
           <Line
             dataKey="tablet"
             type="monotone"
             stroke="var(--color-tablet)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 6 }}
+            activeDot={{ r: 5 }}
           />
         </LineChart>
       </ChartContainer>
-      <div className="flex items-center justify-between w-full">
+
+      {/* Footer stats */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mt-4">
         <div className="space-y-1">
           <div className="flex flex-col gap-1 text-sm font-medium leading-none">
-            <span>Total</span>
-            <span className="text-2xl font-bold">2,522</span>
+            <span className="text-xs sm:text-sm">Total</span>
+            <span className="text-xl sm:text-2xl font-bold">{grandTotal}</span>
           </div>
-          <p className="text-xs text-muted-foreground">Across all devices</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
+            Across all devices
+          </p>
         </div>
-        <div className="flex items-center gap-2 text-sm">
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm">
           <span className="text-emerald-600 font-medium">+18.5%</span>
-          <TrendingUp className="h-4 w-4 text-emerald-600" />
+          <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600" />
           <span className="text-muted-foreground">YoY growth</span>
         </div>
       </div>

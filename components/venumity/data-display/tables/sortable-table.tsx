@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -9,16 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -532,8 +532,8 @@ export default function SortableTable() {
   return (
     <div className="p-5 space-y-5 w-full h-full">
       {/* Filters */}
-      <nav className="flex items-center justify-between w-full">
-        <div className="relative flex-1 max-w-lg">
+      <nav className="flex flex-wrap items-center justify-between gap-3 w-full">
+        <div className="relative flex-1 flex-wrap max-w-lg">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 opacity-50" />
           <Input
             value={searchQuery}
@@ -542,13 +542,13 @@ export default function SortableTable() {
             className="pl-10 rounded-lg h-11!"
           />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 w-full">
           <div className="opacity-50">
             Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
             {Math.min(currentPage * ITEMS_PER_PAGE, sortedEmployees.length)} of{" "}
             {employees.length} employees
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               variant="outline"
               disabled={currentPage === 1}
@@ -565,9 +565,8 @@ export default function SortableTable() {
             >
               Next
             </Button>
-          </div>
           <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-            <SelectTrigger className="cursor-pointer w-full md:w-45">
+            <SelectTrigger className="cursor-pointer w-45">
               <Filter className="size-4 mr-2" />
               <SelectValue placeholder="Department" />
             </SelectTrigger>
@@ -579,6 +578,7 @@ export default function SortableTable() {
               ))}
             </SelectContent>
           </Select>
+          </div>
         </div>
       </nav>
 

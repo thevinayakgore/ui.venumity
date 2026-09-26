@@ -71,7 +71,7 @@ export default function TieredPricingCard() {
           </p>
         </div>
 
-        <div className="flex p-1 bg-foreground/10 rounded-lg">
+        <div className="flex p-1 bg-foreground/10 rounded-lg w-fit">
           {(["starter", "growth", "scale"] as const).map((tier) => (
             <button
               key={tier}
@@ -126,8 +126,8 @@ export default function TieredPricingCard() {
         </div>
 
         {/* CTA Section */}
-        <div className="flex items-start justify-between m-auto mt-6 pt-6 border-t border-dashed border-foreground/15 w-full">
-          <div className="flex items-center justify-center gap-6 text-sm text-foreground/50">
+        <div className="flex flex-wrap items-start justify-between gap-5 whitespace-nowrap m-auto mt-6 pt-6 border-t border-dashed border-foreground/15 w-full">
+          <div className="flex flex-wrap items-center md:justify-center gap-3 md:gap-6 text-sm text-foreground/50 w-full">
             <div className="flex items-center gap-2">
               <Check className="size-5 text-green-500" />
               <span>14-day free trial</span>

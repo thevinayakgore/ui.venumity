@@ -28,18 +28,35 @@ const chartConfig = {
   other: { label: "Other", color: "#ef4444" },
 } satisfies ChartConfig;
 
+// Simple icon map (you can replace emojis with SVGs or Lucide icons)
+const browserIcons: Record<string, string> = {
+  chrome: "🌐",
+  safari: "🧭",
+  firefox: "🦊",
+  edge: "🌊",
+  other: "⋯",
+};
+
 export default function ChartLineLabelCustom() {
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-5">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-5">
         <div>
-          <h1 className="text-3xl font-bold">Custom Browser Labels</h1>
-          <p className="text-base text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            Custom Browser Labels
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Browser names as data labels
           </p>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -63,19 +80,34 @@ export default function ChartLineLabelCustom() {
             dataKey="visitors"
             type="natural"
             stroke="#3b82f6"
-            strokeWidth={3}
-            dot={({ payload, ...props }) => (
-              <circle
-                key={payload.browser}
-                r={6}
-                cx={props.cx}
-                cy={props.cy}
-                fill={payload.fill}
-                stroke="white"
-                strokeWidth={2}
-              />
-            )}
-            activeDot={{ r: 8 }}
+            strokeWidth={2.5}
+            dot={({ payload, cx, cy }) => {
+              const icon = browserIcons[payload.browser] ?? "•";
+              return (
+                <g key={payload.browser}>
+                  <circle
+                    r={5}
+                    cx={cx}
+                    cy={cy}
+                    fill={payload.fill}
+                    stroke="white"
+                    strokeWidth={2}
+                  />
+                  <text
+                    x={cx}
+                    y={cy}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fontSize={10}
+                    fill="white"
+                    style={{ pointerEvents: "none" }}
+                  >
+                    {icon}
+                  </text>
+                </g>
+              );
+            }}
+            activeDot={{ r: 6 }}
           >
             <LabelList
               position="top"
@@ -91,16 +123,21 @@ export default function ChartLineLabelCustom() {
           </Line>
         </LineChart>
       </ChartContainer>
-      <div className="flex items-center justify-between w-full">
+
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mt-4">
         <div className="space-y-1">
-          <p className="text-sm font-medium">Browser names as labels</p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs sm:text-sm font-medium">
+            Browser names as labels
+          </p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
             Custom formatting applied
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm">
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm">
           <span className="text-emerald-600 font-medium">Chrome leads</span>
-          <TrendingUp className="h-4 w-4 text-emerald-600" />
+          <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600" />
         </div>
       </div>
     </main>

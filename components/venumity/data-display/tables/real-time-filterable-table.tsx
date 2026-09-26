@@ -1,6 +1,20 @@
 "use client";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { forwardRef } from "react";
 import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import type { DateRange } from "react-day-picker";
+import { Calendar } from "@/components/ui/calendar";
+import { Separator } from "@/components/ui/separator";
 import { motion, AnimatePresence } from "framer-motion";
+import type { LucideProps, LucideIcon } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -9,15 +23,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -25,17 +36,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { Separator } from "@/components/ui/separator";
 import {
   Activity,
   AlertCircle,
@@ -60,11 +65,6 @@ import {
   Wifi,
   CalendarIcon,
 } from "lucide-react";
-import type { LucideProps, LucideIcon } from "lucide-react";
-import type { DateRange } from "react-day-picker";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
 
 // ── Custom CreditCard icon (kept as-is) ────────────────────
 const CreditCard = forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
@@ -614,7 +614,7 @@ export default function RealTimeFilterableTable() {
       </div>
 
       {/* ── View toggle + actions ───────────────────────── */}
-      <div className="flex items-center gap-5 mb-5 w-full">
+      <div className="flex flex-wrap items-center gap-5 mb-5 w-full">
         <Tabs
           value={view}
           onValueChange={(v) => setView(v as "table" | "compact")}
@@ -637,7 +637,7 @@ export default function RealTimeFilterableTable() {
           </TabsList>
         </Tabs>
 
-        <div className="flex items-center justify-end gap-2 w-full">
+        <div className="flex flex-wrap items-center justify-end gap-4 md:gap-2 w-full">
           {/* Duration Range */}
           <div className="w-1/3">
             <Label className="text-xs md:text-sm mb-3 block">
@@ -884,16 +884,11 @@ export default function RealTimeFilterableTable() {
                   <div className="flex-1 font-mono text-sm truncate">
                     {log.message}
                   </div>
-                  <Badge
-                    
-                    className="p-3! bg-foreground! text-secondary! font-semibold"
-                  >
+                  <Badge className="p-3! bg-foreground! text-secondary! font-semibold">
                     {log.user}
                   </Badge>
                   {log.duration && (
-                    <span className="text-sm">
-                      {log.duration}ms
-                    </span>
+                    <span className="text-sm">{log.duration}ms</span>
                   )}
                 </motion.div>
               );

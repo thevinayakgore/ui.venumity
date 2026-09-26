@@ -86,13 +86,11 @@ function formatPercentage(value: number, total: number) {
 
 function getBrowserColor(browser: string) {
   const entry = chartConfig[browser as keyof typeof chartConfig];
-
   return "color" in entry ? entry.color : "hsl(var(--muted-foreground))";
 }
 
 function getBrowserLabel(browser: string) {
   const entry = chartConfig[browser as keyof typeof chartConfig];
-
   return "label" in entry ? entry.label : browser;
 }
 
@@ -159,20 +157,22 @@ export default function BasicRadialChart() {
   }
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full p-4 sm:p-5 lg:p-5">
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border">
         {/* Header */}
-        <header className="flex flex-col gap-5 border-b bg-foreground/5 p-5">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-4 sm:gap-5 border-b bg-foreground/5 p-4 sm:p-5 lg:p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="w-full">
-              <h1 className="text-2xl font-semibold">Browser Distribution</h1>
-              <p className="mt-1 text-sm text-foreground/50 md:text-base">
+              <h1 className="text-xl sm:text-2xl lg:text-2xl font-semibold">
+                Browser Distribution
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm lg:text-base text-foreground/50">
                 Visitor distribution with interactive radial bars
               </p>
             </div>
 
             {/* Filters */}
-            <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
+            <div className="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
               <Select
                 value={view}
                 onValueChange={(value) => setView(value as ViewFilter)}
@@ -240,14 +240,14 @@ export default function BasicRadialChart() {
                 disabled={!hasActiveFilters}
                 className="h-11! rounded-lg"
               >
-                <RotateCcw />
-                Reset
+                <RotateCcw className="size-4" />
+                <span className="hidden sm:inline">Reset</span>
               </Button>
             </div>
           </div>
 
           {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 text-sm text-foreground/50">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm lg:text-sm text-foreground/50">
               <span>
                 Showing {filteredData.length} of {chartData.length} browsers
               </span>
@@ -255,7 +255,7 @@ export default function BasicRadialChart() {
               {view !== "all" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   View: {view === "top-half" ? "Top half" : "Bottom half"}
                 </Badge>
@@ -264,7 +264,7 @@ export default function BasicRadialChart() {
               {sort !== "default" && (
                 <Badge
                   variant="outline"
-                  className="bg-foreground/5! px-3! py-3.5!"
+                  className="bg-foreground/5! px-2.5! py-1! text-[10px] sm:text-xs lg:text-sm"
                 >
                   Sort: {sort === "highest" ? "Highest first" : "Lowest first"}
                 </Badge>
@@ -274,19 +274,19 @@ export default function BasicRadialChart() {
         </header>
 
         {/* Statistic Cards */}
-        <div className="grid grid-cols-1 gap-3 p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 lg:p-8">
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <TrendingUp
                 className="size-4"
                 style={{ color: getBrowserColor(largestBrowser.browser) }}
               />
-              <span className="text-sm">Top Browser</span>
+              <span className="text-xs sm:text-sm">Top Browser</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               {getBrowserLabel(largestBrowser.browser)}
             </div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-xs sm:text-sm text-foreground/50">
               {formatNumber(largestBrowser.visitors)} visitors
             </div>
           </div>
@@ -294,12 +294,12 @@ export default function BasicRadialChart() {
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <ChartPie className="size-4 text-blue-500" />
-              <span className="text-sm">Lowest Browser</span>
+              <span className="text-xs sm:text-sm">Lowest Browser</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               {getBrowserLabel(smallestBrowser.browser)}
             </div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-xs sm:text-sm text-foreground/50">
               {formatNumber(smallestBrowser.visitors)} visitors
             </div>
           </div>
@@ -307,12 +307,12 @@ export default function BasicRadialChart() {
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <BarChart3 className="size-4 text-green-500" />
-              <span className="text-sm">Average Visitors</span>
+              <span className="text-xs sm:text-sm">Average Visitors</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               {formatNumber(Math.round(averageVisitors))}
             </div>
-            <div className="text-sm text-foreground/50">
+            <div className="text-xs sm:text-sm text-foreground/50">
               Per selected browser
             </div>
           </div>
@@ -320,24 +320,26 @@ export default function BasicRadialChart() {
           <div className="rounded-xl border bg-foreground/5 p-4">
             <div className="mb-1 flex items-center gap-2 text-foreground/50">
               <Monitor className="size-4 text-orange-500" />
-              <span className="text-sm">Browsers</span>
+              <span className="text-xs sm:text-sm">Browsers</span>
             </div>
-            <div className="text-xl font-medium">
+            <div className="text-base sm:text-xl lg:text-xl font-medium">
               {filteredData.length}/{chartData.length}
             </div>
-            <div className="text-sm text-foreground/50">Selected browsers</div>
+            <div className="text-xs sm:text-sm text-foreground/50">
+              Selected browsers
+            </div>
           </div>
         </div>
 
         {/* Main Chart */}
-        <div className="h-180 w-full">
+        <div className="h-90 lg:h-180 w-full">
           <ChartContainer config={chartConfig} className="h-full w-full">
             <RadialBarChart
               data={filteredData}
-              innerRadius={85}
-              outerRadius={285}
+              innerRadius={30}
               startAngle={90}
               endAngle={-270}
+              className="lg:[&_.recharts-radial-bar-background-sector]:opacity-100"
             >
               <ChartTooltip
                 cursor={false}
@@ -378,7 +380,7 @@ export default function BasicRadialChart() {
         </div>
 
         {/* Browser Summary */}
-        <div className="grid grid-cols-2 gap-3 border-t p-5 md:grid-cols-4 md:p-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 sm:p-5 lg:p-8 border-t">
           {filteredData.map((item, index) => {
             const isActive = activeIndex === index;
             const color = getBrowserColor(item.browser);
@@ -406,16 +408,19 @@ export default function BasicRadialChart() {
                     className="size-3.5 rounded-full"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="text-sm font-semibold">
+                  <span className="text-xs sm:text-sm lg:text-sm font-semibold">
                     {getBrowserLabel(item.browser)}
                   </span>
                 </div>
 
-                <p className="text-xl font-bold" style={{ color }}>
+                <p
+                  className="text-base sm:text-xl lg:text-xl font-bold"
+                  style={{ color }}
+                >
                   {percentage}%
                 </p>
 
-                <p className="mt-1 text-xs text-foreground/50">
+                <p className="mt-1 text-[10px] sm:text-xs lg:text-xs text-foreground/50">
                   {formatNumber(item.visitors)} visitors
                 </p>
 
@@ -434,13 +439,13 @@ export default function BasicRadialChart() {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col items-start justify-between gap-5 border-t p-5 sm:flex-row sm:items-center md:p-8">
-          <div className="text-sm">
+        <div className="flex flex-col items-start justify-between gap-4 sm:gap-5 border-t p-4 sm:p-5 lg:p-8 sm:flex-row sm:items-center">
+          <div className="text-xs sm:text-sm lg:text-sm">
             <span className="text-foreground/50">Filtered visitors: </span>
             <span className="font-bold">{formatNumber(totalVisitors)}</span>
           </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             {chartData.map((item) => (
               <div key={item.browser} className="flex items-center gap-1.5">
                 <span
@@ -449,7 +454,9 @@ export default function BasicRadialChart() {
                     backgroundColor: getBrowserColor(item.browser),
                   }}
                 />
-                <span className="text-sm">{getBrowserLabel(item.browser)}</span>
+                <span className="text-[10px] sm:text-xs lg:text-sm">
+                  {getBrowserLabel(item.browser)}
+                </span>
               </div>
             ))}
           </div>

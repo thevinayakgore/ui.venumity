@@ -29,16 +29,24 @@ const chartConfig = {
 
 export default function ChartLineDots() {
   return (
-    <main className="p-6 md:p-10">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-5">
+    <main className="p-4 sm:p-6 md:p-10 w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-5">
         <div>
-          <h1 className="text-3xl font-bold">Line Chart with Dots</h1>
-          <p className="text-base text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            Line Chart with Dots
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Highlighted data points · January – June
           </p>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-100 w-full">
+
+      {/* Chart */}
+      <ChartContainer
+        config={chartConfig}
+        className="h-56 sm:h-64 md:h-72 lg:h-80 w-full"
+      >
         <LineChart
           accessibilityLayer
           data={chartData}
@@ -54,7 +62,7 @@ export default function ChartLineDots() {
             axisLine={false}
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
-            className="text-xs"
+            className="text-[10px] sm:text-xs"
           />
           <ChartTooltip
             cursor={false}
@@ -64,33 +72,41 @@ export default function ChartLineDots() {
             dataKey="desktop"
             type="natural"
             stroke="var(--color-desktop)"
-            strokeWidth={3}
-            dot={{ fill: "var(--color-desktop)", r: 4 }}
-            activeDot={{ r: 8, fill: "var(--color-desktop)" }}
+            strokeWidth={2.5}
+            dot={{ fill: "var(--color-desktop)", r: 3.5 }}
+            activeDot={{ r: 6, fill: "var(--color-desktop)" }}
           />
           <Line
             dataKey="mobile"
             type="natural"
             stroke="var(--color-mobile)"
-            strokeWidth={3}
-            dot={{ fill: "var(--color-mobile)", r: 4 }}
-            activeDot={{ r: 8, fill: "var(--color-mobile)" }}
+            strokeWidth={2.5}
+            dot={{ fill: "var(--color-mobile)", r: 3.5 }}
+            activeDot={{ r: 6, fill: "var(--color-mobile)" }}
           />
         </LineChart>
       </ChartContainer>
-      <div className="flex items-center justify-between w-full">
+
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mt-4">
         <div className="space-y-1">
-          <p className="text-sm font-medium">Desktop peaks in February</p>
-          <p className="text-xs text-muted-foreground">Mobile peaks in April</p>
+          <p className="text-xs sm:text-sm font-medium">
+            Desktop peaks in February
+          </p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
+            Mobile peaks in April
+          </p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1">
+
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-fuchsia-500" />
-            <span className="text-xs">Desktop</span>
+            <span className="text-[10px] sm:text-xs">Desktop</span>
           </div>
-          <div className="flex items-center gap-1">
+
+          <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-teal-500" />
-            <span className="text-xs">Mobile</span>
+            <span className="text-[10px] sm:text-xs">Mobile</span>
           </div>
         </div>
       </div>
