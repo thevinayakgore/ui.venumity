@@ -93,12 +93,18 @@ function useThumbnails() {
         if (cancelled || !mountedRef.current) return;
 
         const cached = readCache();
+
+        // Reconcile: only trust the server's list as the source of truth.
+        // If fingerprint AND length AND every URL match, keep the cached
+        // array (stable reference → no re-render). Otherwise replace it.
         const sameFingerprint =
           cached && cached.fingerprint === data.fingerprint;
         const sameLength = cached?.thumbnails.length === data.thumbnails.length;
+        const sameUrls =
+          cached &&
+          cached.thumbnails.every((url, i) => url === data.thumbnails[i]);
 
-        if (sameFingerprint && sameLength && cached) {
-          // Server unchanged — keep cached array reference
+        if (sameFingerprint && sameLength && sameUrls && cached) {
           setThumbnails(cached.thumbnails);
         } else {
           setThumbnails(data.thumbnails);
@@ -109,6 +115,7 @@ function useThumbnails() {
           });
         }
       } catch (err) {
+        // Non-critical: marquee just won't render on the first paint.
         console.error("Failed to fetch thumbnails:", err);
       }
     }

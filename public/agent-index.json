@@ -4,7 +4,7 @@
   "author": "Vinayak Gore",
   "authorUrl": "https://github.com/thevinayakgore",
   "license": "MIT",
-  "generatedAt": "2026-09-26T10:01:24.121Z",
+  "generatedAt": "2026-09-26T12:06:59.548Z",
   "cli": {
     "command": "npx venumityui@latest",
     "install": "npx venumityui@latest add <slug>",
