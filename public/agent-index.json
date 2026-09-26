@@ -4,7 +4,7 @@
   "author": "Vinayak Gore",
   "authorUrl": "https://github.com/thevinayakgore",
   "license": "MIT",
-  "generatedAt": "2026-09-26T12:06:59.548Z",
+  "generatedAt": "2026-09-26T14:25:24.850Z",
   "cli": {
     "command": "npx venumityui@latest",
     "install": "npx venumityui@latest add <slug>",
@@ -25,7 +25,7 @@
     "faqs": 9,
     "docs": 5,
     "resources": 11,
-    "changelog": 8
+    "changelog": 9
   },
   "endpoints": {
     "llms": "https://ui.venumity.com/llms.txt",

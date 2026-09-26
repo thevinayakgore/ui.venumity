@@ -351,7 +351,7 @@ export function Components() {
           </div>
         </div>
 
-        <h1 className="satisfy text-5xl md:text-7xl py-3 tracking-tight text-transparent bg-clip-text bg-linear-to-b from-foreground/30 via-foreground/10">
+        <h1 className="satisfy text-5xl md:text-7xl py-3 tracking-tight text-transparent bg-clip-text bg-linear-to-br from-foreground via-transparent">
           Components
         </h1>
 

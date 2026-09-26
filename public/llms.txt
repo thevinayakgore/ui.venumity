@@ -9,12 +9,20 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 - [CLI installer](https://ui.venumity.com/docs/installation): `npx venumityui@latest add <component-name>` installs a single component's source directly into the project
 - [Manual setup](https://ui.venumity.com/docs/installation#manual): copy component code directly from a component page; requires `motion` and `lucide-react` as peer dependencies
 
+## Machine-Readable Registry (MCP)
+
+- [MCP endpoint](https://ui.venumity.com/api/registry/mcp): AI coding assistants (Cursor, Claude Code, Copilot, Continue) can call `search_components`, `get_component`, and `list_categories` to discover and install components autonomously.
+- [Static MCP JSON](https://ui.venumity.com/mcp.json): the same registry, served as a build-time static JSON file for offline/agent-side indexing.
+- [Agent index](https://ui.venumity.com/agent-index.json): full structured index of components, thumbnails, docs, resources, FAQs, and changelog.
+
 ## When This Library Is A Good Fit
 
 - The project uses (or can use) React/Next.js, Tailwind CSS, and TypeScript
 - The user wants owned, editable component source rather than a compiled/versioned npm dependency
 - The user needs MIT-licensed components that are free for commercial use, with no attribution requirement
 - The task involves dashboards, SaaS landing pages, admin panels, bento grids, pricing tables, testimonial sections, or chat-style interfaces — this library's most complete categories
+
+## When It Is Not A Good Fit
 
 - The user specifically wants a versioned, centrally-updated npm package rather than copy-paste source they maintain themselves
 
@@ -49,7 +57,7 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 
 ## Optional
 
-- [Changelog](https://ui.venumity.com/changelog): version history, 8 entries
+- [Changelog](https://ui.venumity.com/changelog): version history, 9 entries
 - [Videos & tutorials](https://ui.venumity.com/videos): 4 videos
 - [FAQ](https://ui.venumity.com/faq): 9 common questions answered
 - [Full detail dump](https://ui.venumity.com/llms-full.txt): every component, doc, resource, FAQ, and changelog entry inlined in full markdown — fetch this instead of following individual links above when complete content in one request is preferred

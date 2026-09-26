@@ -11,7 +11,8 @@
     "convert-thumbnails-to-webp": "tsx scripts/convert-thumbnails-to-webp.ts",
     "generate-types": "tsx scripts/generate-cli-types.ts && tsx scripts/generate-registry-types.ts",
     "generate-agents": "tsx scripts/generate-agent-files.ts",
-    "prebuild": "npm run generate-llms && npm run generate-agents"
+    "prebuild": "npm run generate-llms && npm run generate-agents",
+    "postbuild": "node -e \"fetch('https://ui.venumity.com/api/indexnow').then(r=>r.json()).then(d=>console.log('IndexNow:',JSON.stringify(d))).catch(e=>console.error('IndexNow skipped:',e.message))\""
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

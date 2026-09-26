@@ -20,6 +20,146 @@ const LICENSE = "MIT";
 const LAST_UPDATED = new Date().toISOString().split("T")[0];
 
 // ─────────────────────────────────────────────────────────────
+// MCP — Machine-readable component metadata
+// Mapped from the same component records used by AGENTS.md.
+// ─────────────────────────────────────────────────────────────
+function buildMcpIndex(components: ComponentRecord[]) {
+  const generatedAt = new Date().toISOString();
+
+  // Minimal, token-friendly component shape. Includes everything an
+  // AI assistant needs to recommend + install + link a component.
+  const compactComponents = components.map((c) => ({
+    name: c.itemName,
+    slug: c.slug,
+    category: c.category,
+    categorySlug: c.categorySlug,
+    subcategory: c.subcategory,
+    subcategorySlug: c.subcategorySlug,
+    description: c.description,
+    tags: c.tags,
+    techs: c.techs,
+    install: c.installCommand,
+    source: c.pageUrl,
+    preview: c.previewUrl,
+    thumbnail: c.thumbnailUrl,
+    video: c.video,
+    author: c.githubUsername,
+  }));
+
+  // Category + subcategory summary (small, easy to filter on).
+  const categories = Array.from(new Set(components.map((c) => c.category))).map(
+    (name) => {
+      const inCat = components.filter((c) => c.category === name);
+      return {
+        name,
+        slug: toKebabCase(name),
+        count: inCat.length,
+        subcategories: Array.from(new Set(inCat.map((c) => c.subcategory))),
+      };
+    },
+  );
+
+  return {
+    // Per Model Context Protocol conventions
+    schema_version: "1.0",
+    protocol: "mcp",
+    name: "venumity-ui",
+    title: "Venumity UI Component Registry",
+    description:
+      "Open-source React + Next.js + Tailwind CSS component library with copy-paste components. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
+    version: generatedAt.split("T")[0],
+    homepage: SITE_URL,
+    repository: REPO_URL,
+    license: LICENSE,
+    author: {
+      name: AUTHOR,
+      url: AUTHOR_GITHUB,
+    },
+    // ── The two tools MCP clients will call ──
+    tools: [
+      {
+        name: "search_components",
+        description:
+          "Search the Venumity UI registry for components. Filter by free-text query (matches name and description), category, subcategory, tag, or tech stack. Returns a compact list with slug, description, install command, and source URL.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            query: {
+              type: "string",
+              description:
+                "Free-text search across component name and description. Case-insensitive.",
+            },
+            category: {
+              type: "string",
+              description:
+                'Kebab-case category slug, e.g. "charts", "sections", "loaders".',
+            },
+            subcategory: {
+              type: "string",
+              description:
+                'Kebab-case subcategory slug, e.g. "area-charts", "testimonials".',
+            },
+            tag: {
+              type: "string",
+              description: 'A single tag, e.g. "pricing", "auth".',
+            },
+            tech: {
+              type: "string",
+              description: 'A single tech, e.g. "recharts", "motion".',
+            },
+            limit: {
+              type: "integer",
+              minimum: 1,
+              maximum: 100,
+              default: 20,
+              description: "Maximum results to return.",
+            },
+          },
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "get_component",
+        description:
+          "Fetch full metadata for a single Venumity UI component by its kebab-case slug (e.g. 'basic-accordion'). Returns description, tags, techs, install command, source URL, live preview URL, and thumbnail URL.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            slug: {
+              type: "string",
+              description:
+                "Kebab-case component slug. Must match the `slug` field returned by `search_components`.",
+            },
+          },
+          required: ["slug"],
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "list_categories",
+        description:
+          "Return every category and subcategory in the registry with component counts. Useful for browsing before calling `search_components`.",
+        inputSchema: {
+          type: "object",
+          properties: {},
+          additionalProperties: false,
+        },
+      },
+    ],
+    // ── The data that backs the tools ──
+    data: {
+      categories,
+      components: compactComponents,
+    },
+    counts: {
+      components: components.length,
+      categories: categories.length,
+    },
+    generatedAt,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────
 // HELPERS
 // ─────────────────────────────────────────────────────────────
 function listThumbnails(): string[] {
@@ -605,6 +745,14 @@ function main() {
     "utf-8",
   );
   console.log("[agents] ✅ Wrote public/agent-index.json");
+
+  // 4. public/mcp.json — machine-readable registry for AI assistants
+  fs.writeFileSync(
+    path.join(publicDir, "mcp.json"),
+    JSON.stringify(buildMcpIndex(components), null, 2),
+    "utf-8",
+  );
+  console.log("[agents] ✅ Wrote public/mcp.json");
 
   console.log("[agents] 🎉 Done.");
 }

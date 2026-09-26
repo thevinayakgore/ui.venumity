@@ -1,0 +1,3692 @@
+{
+  "schema_version": "1.0",
+  "protocol": "mcp",
+  "name": "venumity-ui",
+  "title": "Venumity UI Component Registry",
+  "description": "Open-source React + Next.js + Tailwind CSS component library with copy-paste components. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
+  "version": "2026-09-26",
+  "homepage": "https://ui.venumity.com",
+  "repository": "https://github.com/thevinayakgore/ui.venumity",
+  "license": "MIT",
+  "author": {
+    "name": "Vinayak Gore",
+    "url": "https://github.com/thevinayakgore"
+  },
+  "tools": [
+    {
+      "name": "search_components",
+      "description": "Search the Venumity UI registry for components. Filter by free-text query (matches name and description), category, subcategory, tag, or tech stack. Returns a compact list with slug, description, install command, and source URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Free-text search across component name and description. Case-insensitive."
+          },
+          "category": {
+            "type": "string",
+            "description": "Kebab-case category slug, e.g. \"charts\", \"sections\", \"loaders\"."
+          },
+          "subcategory": {
+            "type": "string",
+            "description": "Kebab-case subcategory slug, e.g. \"area-charts\", \"testimonials\"."
+          },
+          "tag": {
+            "type": "string",
+            "description": "A single tag, e.g. \"pricing\", \"auth\"."
+          },
+          "tech": {
+            "type": "string",
+            "description": "A single tech, e.g. \"recharts\", \"motion\"."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20,
+            "description": "Maximum results to return."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_component",
+      "description": "Fetch full metadata for a single Venumity UI component by its kebab-case slug (e.g. 'basic-accordion'). Returns description, tags, techs, install command, source URL, live preview URL, and thumbnail URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "Kebab-case component slug. Must match the `slug` field returned by `search_components`."
+          }
+        },
+        "required": [
+          "slug"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_categories",
+      "description": "Return every category and subcategory in the registry with component counts. Useful for browsing before calling `search_components`.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  ],
+  "data": {
+    "categories": [
+      {
+        "name": "AI Features",
+        "slug": "ai-features",
+        "count": 4,
+        "subcategories": [
+          "AI Chats Panel",
+          "AI Suggestions",
+          "AI Summary"
+        ]
+      },
+      {
+        "name": "Badges",
+        "slug": "badges",
+        "count": 5,
+        "subcategories": [
+          "Status Badges"
+        ]
+      },
+      {
+        "name": "Background Effects",
+        "slug": "background-effects",
+        "count": 1,
+        "subcategories": [
+          "Gradient Spotlight"
+        ]
+      },
+      {
+        "name": "Buttons",
+        "slug": "buttons",
+        "count": 2,
+        "subcategories": [
+          "Action Buttons"
+        ]
+      },
+      {
+        "name": "Cards",
+        "slug": "cards",
+        "count": 1,
+        "subcategories": [
+          "Profile Cards"
+        ]
+      },
+      {
+        "name": "Charts",
+        "slug": "charts",
+        "count": 36,
+        "subcategories": [
+          "Area Charts",
+          "Bar Charts",
+          "Line Charts",
+          "Pie Charts",
+          "Radar Charts",
+          "Radial Charts",
+          "Scatter Plots",
+          "Sparklines"
+        ]
+      },
+      {
+        "name": "Commerce",
+        "slug": "commerce",
+        "count": 5,
+        "subcategories": [
+          "Pricing Tables",
+          "Product Cards"
+        ]
+      },
+      {
+        "name": "Dashboards",
+        "slug": "dashboards",
+        "count": 2,
+        "subcategories": [
+          "Financial"
+        ]
+      },
+      {
+        "name": "Data Display",
+        "slug": "data-display",
+        "count": 10,
+        "subcategories": [
+          "Accordions",
+          "Tables"
+        ]
+      },
+      {
+        "name": "Feedbacks",
+        "slug": "feedbacks",
+        "count": 8,
+        "subcategories": [
+          "Alerts",
+          "Popups",
+          "Snackbars",
+          "Toasts"
+        ]
+      },
+      {
+        "name": "Layouts",
+        "slug": "layouts",
+        "count": 6,
+        "subcategories": [
+          "Containers",
+          "Masonry Layouts"
+        ]
+      },
+      {
+        "name": "Loaders",
+        "slug": "loaders",
+        "count": 26,
+        "subcategories": [
+          "Button Loaders",
+          "Grid Loaders",
+          "Inline Loaders",
+          "Page Loaders",
+          "Progress Loaders",
+          "Pulse Loaders",
+          "Skeletons",
+          "Spinners",
+          "Wave Loaders"
+        ]
+      },
+      {
+        "name": "Navigations",
+        "slug": "navigations",
+        "count": 4,
+        "subcategories": [
+          "Footers",
+          "Navbars"
+        ]
+      },
+      {
+        "name": "Sections",
+        "slug": "sections",
+        "count": 14,
+        "subcategories": [
+          "Auth Forms",
+          "Bento Grids",
+          "FAQ",
+          "Testimonials"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "name": "Gemini Style Chat Shell",
+        "slug": "gemini-style-chat-shell",
+        "category": "AI Features",
+        "categorySlug": "ai-features",
+        "subcategory": "AI Chats Panel",
+        "subcategorySlug": "ai-chats-panel",
+        "description": "Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
+        "tags": [
+          "ai",
+          "chat",
+          "assistant",
+          "conversation",
+          "messaging"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add gemini-style-chat-shell",
+        "source": "https://ui.venumity.com/components/ai-features/ai-chats-panel/gemini-style-chat-shell",
+        "preview": "https://ui.venumity.com/preview/component/ai-features/ai-chats-panel/gemini-style-chat-shell",
+        "thumbnail": "https://ui.venumity.com/thumbnails/gemini-style-chat-shell.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Cursor Style AI Prompt Panel",
+        "slug": "cursor-style-ai-prompt-panel",
+        "category": "AI Features",
+        "categorySlug": "ai-features",
+        "subcategory": "AI Chats Panel",
+        "subcategorySlug": "ai-chats-panel",
+        "description": "Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
+        "tags": [
+          "ai",
+          "chat",
+          "assistant",
+          "conversation",
+          "messaging"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add cursor-style-ai-prompt-panel",
+        "source": "https://ui.venumity.com/components/ai-features/ai-chats-panel/cursor-style-ai-prompt-panel",
+        "preview": "https://ui.venumity.com/preview/component/ai-features/ai-chats-panel/cursor-style-ai-prompt-panel",
+        "thumbnail": "https://ui.venumity.com/thumbnails/cursor-style-ai-prompt-panel.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Chat Card Suggestion",
+        "slug": "chat-card-suggestion",
+        "category": "AI Features",
+        "categorySlug": "ai-features",
+        "subcategory": "AI Suggestions",
+        "subcategorySlug": "ai-suggestions",
+        "description": "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.",
+        "tags": [
+          "ai",
+          "suggestions",
+          "recommendations",
+          "predictive",
+          "ux"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add chat-card-suggestion",
+        "source": "https://ui.venumity.com/components/ai-features/ai-suggestions/chat-card-suggestion",
+        "preview": "https://ui.venumity.com/preview/component/ai-features/ai-suggestions/chat-card-suggestion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/chat-card-suggestion.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Summary Block",
+        "slug": "summary-block",
+        "category": "AI Features",
+        "categorySlug": "ai-features",
+        "subcategory": "AI Summary",
+        "subcategorySlug": "ai-summary",
+        "description": "Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights.",
+        "tags": [
+          "ai",
+          "summary",
+          "insights",
+          "layout",
+          "content"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add summary-block",
+        "source": "https://ui.venumity.com/components/ai-features/ai-summary/summary-block",
+        "preview": "https://ui.venumity.com/preview/component/ai-features/ai-summary/summary-block",
+        "thumbnail": "https://ui.venumity.com/thumbnails/summary-block.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Badge",
+        "slug": "basic-badge",
+        "category": "Badges",
+        "categorySlug": "badges",
+        "subcategory": "Status Badges",
+        "subcategorySlug": "status-badges",
+        "description": "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
+        "tags": [
+          "status",
+          "system",
+          "connection",
+          "priority",
+          "user"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add basic-badge",
+        "source": "https://ui.venumity.com/components/badges/status-badges/basic-badge",
+        "preview": "https://ui.venumity.com/preview/component/badges/status-badges/basic-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-badge.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "User Status Badge",
+        "slug": "user-status-badge",
+        "category": "Badges",
+        "categorySlug": "badges",
+        "subcategory": "Status Badges",
+        "subcategorySlug": "status-badges",
+        "description": "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
+        "tags": [
+          "status",
+          "system",
+          "connection",
+          "priority",
+          "user"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add user-status-badge",
+        "source": "https://ui.venumity.com/components/badges/status-badges/user-status-badge",
+        "preview": "https://ui.venumity.com/preview/component/badges/status-badges/user-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/user-status-badge.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "System Status Badge",
+        "slug": "system-status-badge",
+        "category": "Badges",
+        "categorySlug": "badges",
+        "subcategory": "Status Badges",
+        "subcategorySlug": "status-badges",
+        "description": "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
+        "tags": [
+          "status",
+          "system",
+          "connection",
+          "priority",
+          "user"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add system-status-badge",
+        "source": "https://ui.venumity.com/components/badges/status-badges/system-status-badge",
+        "preview": "https://ui.venumity.com/preview/component/badges/status-badges/system-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/system-status-badge.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Priority Status Badge",
+        "slug": "priority-status-badge",
+        "category": "Badges",
+        "categorySlug": "badges",
+        "subcategory": "Status Badges",
+        "subcategorySlug": "status-badges",
+        "description": "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
+        "tags": [
+          "status",
+          "system",
+          "connection",
+          "priority",
+          "user"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add priority-status-badge",
+        "source": "https://ui.venumity.com/components/badges/status-badges/priority-status-badge",
+        "preview": "https://ui.venumity.com/preview/component/badges/status-badges/priority-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/priority-status-badge.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Connection Status Badge",
+        "slug": "connection-status-badge",
+        "category": "Badges",
+        "categorySlug": "badges",
+        "subcategory": "Status Badges",
+        "subcategorySlug": "status-badges",
+        "description": "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
+        "tags": [
+          "status",
+          "system",
+          "connection",
+          "priority",
+          "user"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add connection-status-badge",
+        "source": "https://ui.venumity.com/components/badges/status-badges/connection-status-badge",
+        "preview": "https://ui.venumity.com/preview/component/badges/status-badges/connection-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/connection-status-badge.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Background Gradient Spotlight",
+        "slug": "background-gradient-spotlight",
+        "category": "Background Effects",
+        "categorySlug": "background-effects",
+        "subcategory": "Gradient Spotlight",
+        "subcategorySlug": "gradient-spotlight",
+        "description": "Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.",
+        "tags": [
+          "background",
+          "gradient",
+          "spotlight",
+          "animation",
+          "effects",
+          "ui",
+          "visual",
+          "hero",
+          "landing"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add background-gradient-spotlight",
+        "source": "https://ui.venumity.com/components/background-effects/gradient-spotlight/background-gradient-spotlight",
+        "preview": "https://ui.venumity.com/preview/component/background-effects/gradient-spotlight/background-gradient-spotlight",
+        "thumbnail": "https://ui.venumity.com/thumbnails/background-gradient-spotlight.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Delete Confirm Button",
+        "slug": "delete-confirm-button",
+        "category": "Buttons",
+        "categorySlug": "buttons",
+        "subcategory": "Action Buttons",
+        "subcategorySlug": "action-buttons",
+        "description": "Interactive action button components designed to improve user workflows with smooth motion-driven interactions.",
+        "tags": [
+          "button",
+          "magnetic",
+          "action",
+          "interactive",
+          "delete",
+          "drag",
+          "animation",
+          "motion"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add delete-confirm-button",
+        "source": "https://ui.venumity.com/components/buttons/action-buttons/delete-confirm-button",
+        "preview": "https://ui.venumity.com/preview/component/buttons/action-buttons/delete-confirm-button",
+        "thumbnail": "https://ui.venumity.com/thumbnails/delete-confirm-button.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Magnetic Drag Button",
+        "slug": "magnetic-drag-button",
+        "category": "Buttons",
+        "categorySlug": "buttons",
+        "subcategory": "Action Buttons",
+        "subcategorySlug": "action-buttons",
+        "description": "Interactive action button components designed to improve user workflows with smooth motion-driven interactions.",
+        "tags": [
+          "button",
+          "magnetic",
+          "action",
+          "interactive",
+          "delete",
+          "drag",
+          "animation",
+          "motion"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add magnetic-drag-button",
+        "source": "https://ui.venumity.com/components/buttons/action-buttons/magnetic-drag-button",
+        "preview": "https://ui.venumity.com/preview/component/buttons/action-buttons/magnetic-drag-button",
+        "thumbnail": "https://ui.venumity.com/thumbnails/magnetic-drag-button.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Simple Profile Card",
+        "slug": "simple-profile-card",
+        "category": "Cards",
+        "categorySlug": "cards",
+        "subcategory": "Profile Cards",
+        "subcategorySlug": "profile-cards",
+        "description": "Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.",
+        "tags": [
+          "profile",
+          "user",
+          "identity",
+          "card",
+          "avatar",
+          "dashboard",
+          "saas",
+          "team"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add simple-profile-card",
+        "source": "https://ui.venumity.com/components/cards/profile-cards/simple-profile-card",
+        "preview": "https://ui.venumity.com/preview/component/cards/profile-cards/simple-profile-card",
+        "thumbnail": "https://ui.venumity.com/thumbnails/simple-profile-card.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Area Chart",
+        "slug": "basic-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/basic-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/basic-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Gradient Area Chart",
+        "slug": "gradient-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add gradient-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/gradient-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/gradient-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/gradient-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Multi Layer Area Chart",
+        "slug": "multi-layer-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add multi-layer-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/multi-layer-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/multi-layer-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/multi-layer-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Percent Area Chart",
+        "slug": "percent-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add percent-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/percent-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/percent-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/percent-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Spline Area Chart",
+        "slug": "spline-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add spline-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/spline-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/spline-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spline-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Stacked Area Chart",
+        "slug": "stacked-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Charts",
+        "subcategorySlug": "area-charts",
+        "description": "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
+        "tags": [
+          "area",
+          "trend",
+          "data",
+          "shaded",
+          "growth"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add stacked-area-chart",
+        "source": "https://ui.venumity.com/components/charts/area-charts/stacked-area-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/area-charts/stacked-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/stacked-area-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Bar Chart",
+        "slug": "basic-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Charts",
+        "subcategorySlug": "bar-charts",
+        "description": "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
+        "tags": [
+          "bar",
+          "comparison",
+          "histogram",
+          "data",
+          "analytics"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-bar-chart",
+        "source": "https://ui.venumity.com/components/charts/bar-charts/basic-bar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/bar-charts/basic-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-bar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Grouped Bar Chart",
+        "slug": "grouped-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Charts",
+        "subcategorySlug": "bar-charts",
+        "description": "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
+        "tags": [
+          "bar",
+          "comparison",
+          "histogram",
+          "data",
+          "analytics"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add grouped-bar-chart",
+        "source": "https://ui.venumity.com/components/charts/bar-charts/grouped-bar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/bar-charts/grouped-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/grouped-bar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Horizontal Bar Chart",
+        "slug": "horizontal-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Charts",
+        "subcategorySlug": "bar-charts",
+        "description": "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
+        "tags": [
+          "bar",
+          "comparison",
+          "histogram",
+          "data",
+          "analytics"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add horizontal-bar-chart",
+        "source": "https://ui.venumity.com/components/charts/bar-charts/horizontal-bar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/bar-charts/horizontal-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/horizontal-bar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Stacked Bar Chart",
+        "slug": "stacked-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Charts",
+        "subcategorySlug": "bar-charts",
+        "description": "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
+        "tags": [
+          "bar",
+          "comparison",
+          "histogram",
+          "data",
+          "analytics"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add stacked-bar-chart",
+        "source": "https://ui.venumity.com/components/charts/bar-charts/stacked-bar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/bar-charts/stacked-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/stacked-bar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Mixed Line Bar Chart",
+        "slug": "mixed-line-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Charts",
+        "subcategorySlug": "bar-charts",
+        "description": "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
+        "tags": [
+          "bar",
+          "comparison",
+          "histogram",
+          "data",
+          "analytics"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add mixed-line-bar-chart",
+        "source": "https://ui.venumity.com/components/charts/bar-charts/mixed-line-bar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/bar-charts/mixed-line-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-line-bar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Line Chart",
+        "slug": "basic-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/basic-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/basic-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Linear Line Chart",
+        "slug": "linear-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add linear-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/linear-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/linear-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/linear-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Step Line Chart",
+        "slug": "step-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add step-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/step-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/step-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/step-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Multiple Line Chart",
+        "slug": "multiple-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add multiple-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/multiple-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/multiple-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/multiple-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Dots Line Chart",
+        "slug": "dots-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add dots-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/dots-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/dots-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/dots-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Custom Dots Line Chart",
+        "slug": "custom-dots-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add custom-dots-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/custom-dots-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/custom-dots-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/custom-dots-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Dots Color Line Chart",
+        "slug": "dots-color-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add dots-color-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/dots-color-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/dots-color-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/dots-color-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Label Line Chart",
+        "slug": "label-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add label-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/label-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/label-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/label-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Custom Label Line Chart",
+        "slug": "custom-label-line-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Line Charts",
+        "subcategorySlug": "line-charts",
+        "description": "Capture performance trends with precision line visualizations designed for time-series analysis.",
+        "tags": [
+          "line",
+          "time",
+          "pattern",
+          "graph",
+          "data"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add custom-label-line-chart",
+        "source": "https://ui.venumity.com/components/charts/line-charts/custom-label-line-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/line-charts/custom-label-line-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/custom-label-line-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Pie Chart",
+        "slug": "basic-pie-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Pie Charts",
+        "subcategorySlug": "pie-charts",
+        "description": "Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns.",
+        "tags": [
+          "pie",
+          "proportion",
+          "distribution",
+          "graph",
+          "segments"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-pie-chart",
+        "source": "https://ui.venumity.com/components/charts/pie-charts/basic-pie-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/pie-charts/basic-pie-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-pie-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Radar Chart",
+        "slug": "basic-radar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radar Charts",
+        "subcategorySlug": "radar-charts",
+        "description": "Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping.",
+        "tags": [
+          "radar",
+          "spider",
+          "analysis",
+          "skill",
+          "comparison"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-radar-chart",
+        "source": "https://ui.venumity.com/components/charts/radar-charts/basic-radar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radar-charts/basic-radar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-radar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Filled Radar Chart",
+        "slug": "filled-radar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radar Charts",
+        "subcategorySlug": "radar-charts",
+        "description": "Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping.",
+        "tags": [
+          "radar",
+          "spider",
+          "analysis",
+          "skill",
+          "comparison"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add filled-radar-chart",
+        "source": "https://ui.venumity.com/components/charts/radar-charts/filled-radar-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radar-charts/filled-radar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filled-radar-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Radial Chart",
+        "slug": "basic-radial-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radial Charts",
+        "subcategorySlug": "radial-charts",
+        "description": "Visualize progress and distribution with radial chart components built for circular data representation.",
+        "tags": [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui"
+        ],
+        "install": "npx venumityui@latest add basic-radial-chart",
+        "source": "https://ui.venumity.com/components/charts/radial-charts/basic-radial-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radial-charts/basic-radial-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-radial-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Label Radial Chart",
+        "slug": "label-radial-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radial Charts",
+        "subcategorySlug": "radial-charts",
+        "description": "Visualize progress and distribution with radial chart components built for circular data representation.",
+        "tags": [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui"
+        ],
+        "install": "npx venumityui@latest add label-radial-chart",
+        "source": "https://ui.venumity.com/components/charts/radial-charts/label-radial-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radial-charts/label-radial-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/label-radial-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Center Text Radial Chart",
+        "slug": "center-text-radial-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radial Charts",
+        "subcategorySlug": "radial-charts",
+        "description": "Visualize progress and distribution with radial chart components built for circular data representation.",
+        "tags": [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui"
+        ],
+        "install": "npx venumityui@latest add center-text-radial-chart",
+        "source": "https://ui.venumity.com/components/charts/radial-charts/center-text-radial-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radial-charts/center-text-radial-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/center-text-radial-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Shape Radial Chart",
+        "slug": "shape-radial-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radial Charts",
+        "subcategorySlug": "radial-charts",
+        "description": "Visualize progress and distribution with radial chart components built for circular data representation.",
+        "tags": [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui"
+        ],
+        "install": "npx venumityui@latest add shape-radial-chart",
+        "source": "https://ui.venumity.com/components/charts/radial-charts/shape-radial-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radial-charts/shape-radial-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/shape-radial-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Stacked Radial Chart",
+        "slug": "stacked-radial-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Radial Charts",
+        "subcategorySlug": "radial-charts",
+        "description": "Visualize progress and distribution with radial chart components built for circular data representation.",
+        "tags": [
+          "radial",
+          "circular",
+          "donut",
+          "progress",
+          "kpi",
+          "metrics",
+          "distribution",
+          "dashboard"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS",
+          "shadcnui"
+        ],
+        "install": "npx venumityui@latest add stacked-radial-chart",
+        "source": "https://ui.venumity.com/components/charts/radial-charts/stacked-radial-chart",
+        "preview": "https://ui.venumity.com/preview/component/charts/radial-charts/stacked-radial-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/stacked-radial-chart.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Scatter Plot",
+        "slug": "basic-scatter-plot",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Scatter Plots",
+        "subcategorySlug": "scatter-plots",
+        "description": "Uncover hidden relationships with correlation-focused scatter visualizations for statistical analysis.",
+        "tags": [
+          "scatter",
+          "dot",
+          "correlation",
+          "statistic",
+          "analysis"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-scatter-plot",
+        "source": "https://ui.venumity.com/components/charts/scatter-plots/basic-scatter-plot",
+        "preview": "https://ui.venumity.com/preview/component/charts/scatter-plots/basic-scatter-plot",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-scatter-plot.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "3D Scatter Plot",
+        "slug": "3d-scatter-plot",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Scatter Plots",
+        "subcategorySlug": "scatter-plots",
+        "description": "Uncover hidden relationships with correlation-focused scatter visualizations for statistical analysis.",
+        "tags": [
+          "scatter",
+          "dot",
+          "correlation",
+          "statistic",
+          "analysis"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add 3d-scatter-plot",
+        "source": "https://ui.venumity.com/components/charts/scatter-plots/3d-scatter-plot",
+        "preview": "https://ui.venumity.com/preview/component/charts/scatter-plots/3d-scatter-plot",
+        "thumbnail": "https://ui.venumity.com/thumbnails/3d-scatter-plot.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Line Sparkline",
+        "slug": "line-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add line-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/line-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/line-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/line-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Area Sparkline",
+        "slug": "area-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add area-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/area-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/area-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/area-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Bar Sparkline",
+        "slug": "bar-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add bar-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/bar-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/bar-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/bar-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Winloss Sparkline",
+        "slug": "winloss-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add winloss-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/winloss-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/winloss-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/winloss-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Scatter Sparkline",
+        "slug": "scatter-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add scatter-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/scatter-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/scatter-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/scatter-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Range Sparkline",
+        "slug": "range-sparkline",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Sparklines",
+        "subcategorySlug": "sparklines",
+        "description": "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
+        "tags": [
+          "sparkline",
+          "mini",
+          "inline",
+          "micro",
+          "trend"
+        ],
+        "techs": [
+          "Next.js",
+          "Recharts",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add range-sparkline",
+        "source": "https://ui.venumity.com/components/charts/sparklines/range-sparkline",
+        "preview": "https://ui.venumity.com/preview/component/charts/sparklines/range-sparkline",
+        "thumbnail": "https://ui.venumity.com/thumbnails/range-sparkline.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Simple Pricing Table",
+        "slug": "simple-pricing-table",
+        "category": "Commerce",
+        "categorySlug": "commerce",
+        "subcategory": "Pricing Tables",
+        "subcategorySlug": "pricing-tables",
+        "description": "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+        "tags": [
+          "pricing",
+          "comparison",
+          "subscription",
+          "features"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add simple-pricing-table",
+        "source": "https://ui.venumity.com/components/commerce/pricing-tables/simple-pricing-table",
+        "preview": "https://ui.venumity.com/preview/component/commerce/pricing-tables/simple-pricing-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/simple-pricing-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Pricing Table",
+        "slug": "standard-pricing-table",
+        "category": "Commerce",
+        "categorySlug": "commerce",
+        "subcategory": "Pricing Tables",
+        "subcategorySlug": "pricing-tables",
+        "description": "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+        "tags": [
+          "pricing",
+          "comparison",
+          "subscription",
+          "features"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add standard-pricing-table",
+        "source": "https://ui.venumity.com/components/commerce/pricing-tables/standard-pricing-table",
+        "preview": "https://ui.venumity.com/preview/component/commerce/pricing-tables/standard-pricing-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-pricing-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Tiered Pricing Card",
+        "slug": "tiered-pricing-card",
+        "category": "Commerce",
+        "categorySlug": "commerce",
+        "subcategory": "Pricing Tables",
+        "subcategorySlug": "pricing-tables",
+        "description": "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+        "tags": [
+          "pricing",
+          "comparison",
+          "subscription",
+          "features"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add tiered-pricing-card",
+        "source": "https://ui.venumity.com/components/commerce/pricing-tables/tiered-pricing-card",
+        "preview": "https://ui.venumity.com/preview/component/commerce/pricing-tables/tiered-pricing-card",
+        "thumbnail": "https://ui.venumity.com/thumbnails/tiered-pricing-card.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Interactive Product Card",
+        "slug": "interactive-product-card",
+        "category": "Commerce",
+        "categorySlug": "commerce",
+        "subcategory": "Product Cards",
+        "subcategorySlug": "product-cards",
+        "description": "Commerce-ready card components designed to showcase products with clarity and impact.",
+        "tags": [
+          "product",
+          "ecommerce",
+          "card",
+          "catalog"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add interactive-product-card",
+        "source": "https://ui.venumity.com/components/commerce/product-cards/interactive-product-card",
+        "preview": "https://ui.venumity.com/preview/component/commerce/product-cards/interactive-product-card",
+        "thumbnail": "https://ui.venumity.com/thumbnails/interactive-product-card.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Detailed Product Card",
+        "slug": "detailed-product-card",
+        "category": "Commerce",
+        "categorySlug": "commerce",
+        "subcategory": "Product Cards",
+        "subcategorySlug": "product-cards",
+        "description": "Commerce-ready card components designed to showcase products with clarity and impact.",
+        "tags": [
+          "product",
+          "ecommerce",
+          "card",
+          "catalog"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add detailed-product-card",
+        "source": "https://ui.venumity.com/components/commerce/product-cards/detailed-product-card",
+        "preview": "https://ui.venumity.com/preview/component/commerce/product-cards/detailed-product-card",
+        "thumbnail": "https://ui.venumity.com/thumbnails/detailed-product-card.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Personal Finance Dashboard",
+        "slug": "personal-finance-dashboard",
+        "category": "Dashboards",
+        "categorySlug": "dashboards",
+        "subcategory": "Financial",
+        "subcategorySlug": "financial",
+        "description": "Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.",
+        "tags": [
+          "finance",
+          "personal-finance",
+          "analytics",
+          "metrics",
+          "charts",
+          "reports",
+          "fintech"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add personal-finance-dashboard",
+        "source": "https://ui.venumity.com/components/dashboards/financial/personal-finance-dashboard",
+        "preview": "https://ui.venumity.com/preview/component/dashboards/financial/personal-finance-dashboard",
+        "thumbnail": "https://ui.venumity.com/thumbnails/personal-finance-dashboard.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Analytics Dashboard",
+        "slug": "analytics-dashboard",
+        "category": "Dashboards",
+        "categorySlug": "dashboards",
+        "subcategory": "Financial",
+        "subcategorySlug": "financial",
+        "description": "Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.",
+        "tags": [
+          "finance",
+          "personal-finance",
+          "analytics",
+          "metrics",
+          "charts",
+          "reports",
+          "fintech"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add analytics-dashboard",
+        "source": "https://ui.venumity.com/components/dashboards/financial/analytics-dashboard",
+        "preview": "https://ui.venumity.com/preview/component/dashboards/financial/analytics-dashboard",
+        "thumbnail": "https://ui.venumity.com/thumbnails/analytics-dashboard.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Accordion",
+        "slug": "basic-accordion",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Accordions",
+        "subcategorySlug": "accordions",
+        "description": "Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.",
+        "tags": [
+          "accordion",
+          "data-display",
+          "collapsible",
+          "expandable",
+          "hierarchical",
+          "dashboard",
+          "ui-pattern"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add basic-accordion",
+        "source": "https://ui.venumity.com/components/data-display/accordions/basic-accordion",
+        "preview": "https://ui.venumity.com/preview/component/data-display/accordions/basic-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-accordion.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Multiple Open Accordion",
+        "slug": "multiple-open-accordion",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Accordions",
+        "subcategorySlug": "accordions",
+        "description": "Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.",
+        "tags": [
+          "accordion",
+          "data-display",
+          "collapsible",
+          "expandable",
+          "hierarchical",
+          "dashboard",
+          "ui-pattern"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add multiple-open-accordion",
+        "source": "https://ui.venumity.com/components/data-display/accordions/multiple-open-accordion",
+        "preview": "https://ui.venumity.com/preview/component/data-display/accordions/multiple-open-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/multiple-open-accordion.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Nested Accordion",
+        "slug": "nested-accordion",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Accordions",
+        "subcategorySlug": "accordions",
+        "description": "Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.",
+        "tags": [
+          "accordion",
+          "data-display",
+          "collapsible",
+          "expandable",
+          "hierarchical",
+          "dashboard",
+          "ui-pattern"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add nested-accordion",
+        "source": "https://ui.venumity.com/components/data-display/accordions/nested-accordion",
+        "preview": "https://ui.venumity.com/preview/component/data-display/accordions/nested-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/nested-accordion.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Fixed Column Table",
+        "slug": "fixed-column-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add fixed-column-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/fixed-column-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/fixed-column-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/fixed-column-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Sortable Table",
+        "slug": "sortable-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add sortable-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/sortable-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/sortable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/sortable-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Editable Table",
+        "slug": "editable-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add editable-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/editable-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/editable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/editable-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Filters Table",
+        "slug": "filters-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add filters-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/filters-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/filters-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filters-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Real Time Filterable Table",
+        "slug": "real-time-filterable-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add real-time-filterable-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/real-time-filterable-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/real-time-filterable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/real-time-filterable-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Saved Views Filterable Table",
+        "slug": "saved-views-filterable-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add saved-views-filterable-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/saved-views-filterable-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/saved-views-filterable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/saved-views-filterable-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Expandable Row Table",
+        "slug": "expandable-row-table",
+        "category": "Data Display",
+        "categorySlug": "data-display",
+        "subcategory": "Tables",
+        "subcategorySlug": "tables",
+        "description": "Powerful table components for displaying, sorting, and managing structured data efficiently.",
+        "tags": [
+          "table",
+          "data-table",
+          "sortable",
+          "data-display",
+          "dashboard",
+          "admin",
+          "analytics",
+          "enterprise"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add expandable-row-table",
+        "source": "https://ui.venumity.com/components/data-display/tables/expandable-row-table",
+        "preview": "https://ui.venumity.com/preview/component/data-display/tables/expandable-row-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/expandable-row-table.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Alert",
+        "slug": "standard-alert",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Alerts",
+        "subcategorySlug": "alerts",
+        "description": "Enhance user experience with professional alert systems that communicate critical information effectively.",
+        "tags": [
+          "alert",
+          "notification",
+          "banner",
+          "action",
+          "animated"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add standard-alert",
+        "source": "https://ui.venumity.com/components/feedbacks/alerts/standard-alert",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/alerts/standard-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-alert.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Action Alert",
+        "slug": "action-alert",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Alerts",
+        "subcategorySlug": "alerts",
+        "description": "Enhance user experience with professional alert systems that communicate critical information effectively.",
+        "tags": [
+          "alert",
+          "notification",
+          "banner",
+          "action",
+          "animated"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add action-alert",
+        "source": "https://ui.venumity.com/components/feedbacks/alerts/action-alert",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/alerts/action-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/action-alert.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Modal Alert",
+        "slug": "modal-alert",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Alerts",
+        "subcategorySlug": "alerts",
+        "description": "Enhance user experience with professional alert systems that communicate critical information effectively.",
+        "tags": [
+          "alert",
+          "notification",
+          "banner",
+          "action",
+          "animated"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add modal-alert",
+        "source": "https://ui.venumity.com/components/feedbacks/alerts/modal-alert",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/alerts/modal-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/modal-alert.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Popup 1",
+        "slug": "popup-1",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Popups",
+        "subcategorySlug": "popups",
+        "description": "Boost engagement metrics with strategic popup implementations that capture attention without disrupting flow.",
+        "tags": [
+          "popup",
+          "modal",
+          "overlay",
+          "interactive"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add popup-1",
+        "source": "https://ui.venumity.com/components/feedbacks/popups/popup-1",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/popups/popup-1",
+        "thumbnail": "https://ui.venumity.com/thumbnails/popup-1.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Popup 2",
+        "slug": "popup-2",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Popups",
+        "subcategorySlug": "popups",
+        "description": "Boost engagement metrics with strategic popup implementations that capture attention without disrupting flow.",
+        "tags": [
+          "popup",
+          "modal",
+          "overlay",
+          "interactive"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add popup-2",
+        "source": "https://ui.venumity.com/components/feedbacks/popups/popup-2",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/popups/popup-2",
+        "thumbnail": "https://ui.venumity.com/thumbnails/popup-2.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Snackbar 1",
+        "slug": "snackbar-1",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Snackbars",
+        "subcategorySlug": "snackbars",
+        "description": "Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates.",
+        "tags": [
+          "snackbar",
+          "temporary",
+          "action",
+          "nonblocking"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add snackbar-1",
+        "source": "https://ui.venumity.com/components/feedbacks/snackbars/snackbar-1",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/snackbars/snackbar-1",
+        "thumbnail": "https://ui.venumity.com/thumbnails/snackbar-1.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Snackbar 2",
+        "slug": "snackbar-2",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Snackbars",
+        "subcategorySlug": "snackbars",
+        "description": "Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates.",
+        "tags": [
+          "snackbar",
+          "temporary",
+          "action",
+          "nonblocking"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add snackbar-2",
+        "source": "https://ui.venumity.com/components/feedbacks/snackbars/snackbar-2",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/snackbars/snackbar-2",
+        "thumbnail": "https://ui.venumity.com/thumbnails/snackbar-2.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Toast 1",
+        "slug": "toast-1",
+        "category": "Feedbacks",
+        "categorySlug": "feedbacks",
+        "subcategory": "Toasts",
+        "subcategorySlug": "toasts",
+        "description": "Improve system communication with elegant toast notifications that provide timely feedback.",
+        "tags": [
+          "toast",
+          "feedback",
+          "ephemeral",
+          "nonintrusive"
+        ],
+        "techs": [
+          "nextjs",
+          "tailwindcss",
+          "typescript",
+          "shadcnui",
+          "motion"
+        ],
+        "install": "npx venumityui@latest add toast-1",
+        "source": "https://ui.venumity.com/components/feedbacks/toasts/toast-1",
+        "preview": "https://ui.venumity.com/preview/component/feedbacks/toasts/toast-1",
+        "thumbnail": "https://ui.venumity.com/thumbnails/toast-1.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Container",
+        "slug": "basic-container",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Containers",
+        "subcategorySlug": "containers",
+        "description": "Establish visual consistency with professional container systems that structure content with precision.",
+        "tags": [
+          "container",
+          "page",
+          "wrapper",
+          "responsive",
+          "structure"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add basic-container",
+        "source": "https://ui.venumity.com/components/layouts/containers/basic-container",
+        "preview": "https://ui.venumity.com/preview/component/layouts/containers/basic-container",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-container.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Container",
+        "slug": "standard-container",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Containers",
+        "subcategorySlug": "containers",
+        "description": "Establish visual consistency with professional container systems that structure content with precision.",
+        "tags": [
+          "container",
+          "page",
+          "wrapper",
+          "responsive",
+          "structure"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add standard-container",
+        "source": "https://ui.venumity.com/components/layouts/containers/standard-container",
+        "preview": "https://ui.venumity.com/preview/component/layouts/containers/standard-container",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-container.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Premium Container",
+        "slug": "premium-container",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Containers",
+        "subcategorySlug": "containers",
+        "description": "Establish visual consistency with professional container systems that structure content with precision.",
+        "tags": [
+          "container",
+          "page",
+          "wrapper",
+          "responsive",
+          "structure"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add premium-container",
+        "source": "https://ui.venumity.com/components/layouts/containers/premium-container",
+        "preview": "https://ui.venumity.com/preview/component/layouts/containers/premium-container",
+        "thumbnail": "https://ui.venumity.com/thumbnails/premium-container.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Masonry Layout",
+        "slug": "basic-masonry-layout",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Masonry Layouts",
+        "subcategorySlug": "masonry-layouts",
+        "description": "Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.",
+        "tags": [
+          "masonry",
+          "grid",
+          "layout",
+          "gallery",
+          "cards"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-masonry-layout",
+        "source": "https://ui.venumity.com/components/layouts/masonry-layouts/basic-masonry-layout",
+        "preview": "https://ui.venumity.com/preview/component/layouts/masonry-layouts/basic-masonry-layout",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-masonry-layout.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Masonry Layout",
+        "slug": "standard-masonry-layout",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Masonry Layouts",
+        "subcategorySlug": "masonry-layouts",
+        "description": "Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.",
+        "tags": [
+          "masonry",
+          "grid",
+          "layout",
+          "gallery",
+          "cards"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add standard-masonry-layout",
+        "source": "https://ui.venumity.com/components/layouts/masonry-layouts/standard-masonry-layout",
+        "preview": "https://ui.venumity.com/preview/component/layouts/masonry-layouts/standard-masonry-layout",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-masonry-layout.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Masonry Image Gallery",
+        "slug": "masonry-image-gallery",
+        "category": "Layouts",
+        "categorySlug": "layouts",
+        "subcategory": "Masonry Layouts",
+        "subcategorySlug": "masonry-layouts",
+        "description": "Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.",
+        "tags": [
+          "masonry",
+          "grid",
+          "layout",
+          "gallery",
+          "cards"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add masonry-image-gallery",
+        "source": "https://ui.venumity.com/components/layouts/masonry-layouts/masonry-image-gallery",
+        "preview": "https://ui.venumity.com/preview/component/layouts/masonry-layouts/masonry-image-gallery",
+        "thumbnail": "https://ui.venumity.com/thumbnails/masonry-image-gallery.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Button Loader",
+        "slug": "basic-button-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Button Loaders",
+        "subcategorySlug": "button-loaders",
+        "description": "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.",
+        "tags": [
+          "button",
+          "loader",
+          "loading",
+          "async",
+          "feedback"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-button-loader",
+        "source": "https://ui.venumity.com/components/loaders/button-loaders/basic-button-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/button-loaders/basic-button-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-button-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Outline Button Loader",
+        "slug": "outline-button-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Button Loaders",
+        "subcategorySlug": "button-loaders",
+        "description": "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.",
+        "tags": [
+          "button",
+          "loader",
+          "loading",
+          "async",
+          "feedback"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add outline-button-loader",
+        "source": "https://ui.venumity.com/components/loaders/button-loaders/outline-button-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/button-loaders/outline-button-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/outline-button-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Animated Button Loader",
+        "slug": "animated-button-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Button Loaders",
+        "subcategorySlug": "button-loaders",
+        "description": "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.",
+        "tags": [
+          "button",
+          "loader",
+          "loading",
+          "async",
+          "feedback"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add animated-button-loader",
+        "source": "https://ui.venumity.com/components/loaders/button-loaders/animated-button-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/button-loaders/animated-button-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/animated-button-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Shiny Button Loader",
+        "slug": "shiny-button-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Button Loaders",
+        "subcategorySlug": "button-loaders",
+        "description": "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.",
+        "tags": [
+          "button",
+          "loader",
+          "loading",
+          "async",
+          "feedback"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add shiny-button-loader",
+        "source": "https://ui.venumity.com/components/loaders/button-loaders/shiny-button-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/button-loaders/shiny-button-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/shiny-button-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Grid Loader 1",
+        "slug": "grid-loader-1",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Grid Loaders",
+        "subcategorySlug": "grid-loaders",
+        "description": "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
+        "tags": [
+          "pulse",
+          "loader",
+          "activity",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add grid-loader-1",
+        "source": "https://ui.venumity.com/components/loaders/grid-loaders/grid-loader-1",
+        "preview": "https://ui.venumity.com/preview/component/loaders/grid-loaders/grid-loader-1",
+        "thumbnail": "https://ui.venumity.com/thumbnails/grid-loader-1.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Inline Loader",
+        "slug": "basic-inline-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Inline Loaders",
+        "subcategorySlug": "inline-loaders",
+        "description": "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.",
+        "tags": [
+          "inline",
+          "loader",
+          "text",
+          "micro",
+          "compact"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add basic-inline-loader",
+        "source": "https://ui.venumity.com/components/loaders/inline-loaders/basic-inline-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/inline-loaders/basic-inline-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-inline-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Pulse Inline Loader",
+        "slug": "pulse-inline-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Inline Loaders",
+        "subcategorySlug": "inline-loaders",
+        "description": "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.",
+        "tags": [
+          "inline",
+          "loader",
+          "text",
+          "micro",
+          "compact"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add pulse-inline-loader",
+        "source": "https://ui.venumity.com/components/loaders/inline-loaders/pulse-inline-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/inline-loaders/pulse-inline-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/pulse-inline-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Text Inline Loader",
+        "slug": "text-inline-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Inline Loaders",
+        "subcategorySlug": "inline-loaders",
+        "description": "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.",
+        "tags": [
+          "inline",
+          "loader",
+          "text",
+          "micro",
+          "compact"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "install": "npx venumityui@latest add text-inline-loader",
+        "source": "https://ui.venumity.com/components/loaders/inline-loaders/text-inline-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/inline-loaders/text-inline-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/text-inline-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Centered Page Loader",
+        "slug": "centered-page-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Page Loaders",
+        "subcategorySlug": "page-loaders",
+        "description": "Create polished transitions with professional page loaders that manage user expectations during critical waits.",
+        "tags": [
+          "page",
+          "loader",
+          "fullscreen",
+          "route",
+          "blocking"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add centered-page-loader",
+        "source": "https://ui.venumity.com/components/loaders/page-loaders/centered-page-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/page-loaders/centered-page-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/centered-page-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Full Page Loader",
+        "slug": "full-page-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Page Loaders",
+        "subcategorySlug": "page-loaders",
+        "description": "Create polished transitions with professional page loaders that manage user expectations during critical waits.",
+        "tags": [
+          "page",
+          "loader",
+          "fullscreen",
+          "route",
+          "blocking"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add full-page-loader",
+        "source": "https://ui.venumity.com/components/loaders/page-loaders/full-page-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/page-loaders/full-page-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/full-page-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Logo Page Loader",
+        "slug": "logo-page-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Page Loaders",
+        "subcategorySlug": "page-loaders",
+        "description": "Create polished transitions with professional page loaders that manage user expectations during critical waits.",
+        "tags": [
+          "page",
+          "loader",
+          "fullscreen",
+          "route",
+          "blocking"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add logo-page-loader",
+        "source": "https://ui.venumity.com/components/loaders/page-loaders/logo-page-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/page-loaders/logo-page-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/logo-page-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Linear Progress Loader",
+        "slug": "linear-progress-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Progress Loaders",
+        "subcategorySlug": "progress-loaders",
+        "description": "Track operation completion with visual progress indicators that manage user expectations during longer waits.",
+        "tags": [
+          "progress",
+          "loader",
+          "loading",
+          "indicator",
+          "status"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add linear-progress-loader",
+        "source": "https://ui.venumity.com/components/loaders/progress-loaders/linear-progress-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/progress-loaders/linear-progress-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/linear-progress-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Circular Progress Loader",
+        "slug": "circular-progress-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Progress Loaders",
+        "subcategorySlug": "progress-loaders",
+        "description": "Track operation completion with visual progress indicators that manage user expectations during longer waits.",
+        "tags": [
+          "progress",
+          "loader",
+          "loading",
+          "indicator",
+          "status"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add circular-progress-loader",
+        "source": "https://ui.venumity.com/components/loaders/progress-loaders/circular-progress-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/progress-loaders/circular-progress-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/circular-progress-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Pulse Loader",
+        "slug": "basic-pulse-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Pulse Loaders",
+        "subcategorySlug": "pulse-loaders",
+        "description": "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
+        "tags": [
+          "pulse",
+          "loader",
+          "activity",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-pulse-loader",
+        "source": "https://ui.venumity.com/components/loaders/pulse-loaders/basic-pulse-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/pulse-loaders/basic-pulse-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-pulse-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Multi Layer Pulse Loader",
+        "slug": "multi-layer-pulse-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Pulse Loaders",
+        "subcategorySlug": "pulse-loaders",
+        "description": "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
+        "tags": [
+          "pulse",
+          "loader",
+          "activity",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add multi-layer-pulse-loader",
+        "source": "https://ui.venumity.com/components/loaders/pulse-loaders/multi-layer-pulse-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/pulse-loaders/multi-layer-pulse-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/multi-layer-pulse-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Skeleton Loader",
+        "slug": "basic-skeleton-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Skeletons",
+        "subcategorySlug": "skeletons",
+        "description": "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
+        "tags": [
+          "skeleton",
+          "loader",
+          "placeholder",
+          "content",
+          "ui"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-skeleton-loader",
+        "source": "https://ui.venumity.com/components/loaders/skeletons/basic-skeleton-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/skeletons/basic-skeleton-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-skeleton-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Card Skeleton Loader",
+        "slug": "card-skeleton-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Skeletons",
+        "subcategorySlug": "skeletons",
+        "description": "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
+        "tags": [
+          "skeleton",
+          "loader",
+          "placeholder",
+          "content",
+          "ui"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add card-skeleton-loader",
+        "source": "https://ui.venumity.com/components/loaders/skeletons/card-skeleton-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/skeletons/card-skeleton-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/card-skeleton-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Profile Skeleton Loader",
+        "slug": "profile-skeleton-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Skeletons",
+        "subcategorySlug": "skeletons",
+        "description": "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
+        "tags": [
+          "skeleton",
+          "loader",
+          "placeholder",
+          "content",
+          "ui"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add profile-skeleton-loader",
+        "source": "https://ui.venumity.com/components/loaders/skeletons/profile-skeleton-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/skeletons/profile-skeleton-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/profile-skeleton-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Table Skeleton Loader",
+        "slug": "table-skeleton-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Skeletons",
+        "subcategorySlug": "skeletons",
+        "description": "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
+        "tags": [
+          "skeleton",
+          "loader",
+          "placeholder",
+          "content",
+          "ui"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add table-skeleton-loader",
+        "source": "https://ui.venumity.com/components/loaders/skeletons/table-skeleton-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/skeletons/table-skeleton-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/table-skeleton-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Dashboard Skeleton Loader",
+        "slug": "dashboard-skeleton-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Skeletons",
+        "subcategorySlug": "skeletons",
+        "description": "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
+        "tags": [
+          "skeleton",
+          "loader",
+          "placeholder",
+          "content",
+          "ui"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add dashboard-skeleton-loader",
+        "source": "https://ui.venumity.com/components/loaders/skeletons/dashboard-skeleton-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/skeletons/dashboard-skeleton-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/dashboard-skeleton-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Spinner",
+        "slug": "basic-spinner",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Spinners",
+        "subcategorySlug": "spinners",
+        "description": "Classic spinner animations that provide clear visual feedback during loading states.",
+        "tags": [
+          "spinner",
+          "loader",
+          "loading",
+          "waiting",
+          "animation"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-spinner",
+        "source": "https://ui.venumity.com/components/loaders/spinners/basic-spinner",
+        "preview": "https://ui.venumity.com/preview/component/loaders/spinners/basic-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-spinner.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Ring Spinner",
+        "slug": "ring-spinner",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Spinners",
+        "subcategorySlug": "spinners",
+        "description": "Classic spinner animations that provide clear visual feedback during loading states.",
+        "tags": [
+          "spinner",
+          "loader",
+          "loading",
+          "waiting",
+          "animation"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add ring-spinner",
+        "source": "https://ui.venumity.com/components/loaders/spinners/ring-spinner",
+        "preview": "https://ui.venumity.com/preview/component/loaders/spinners/ring-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/ring-spinner.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Gradient Spinner",
+        "slug": "gradient-spinner",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Spinners",
+        "subcategorySlug": "spinners",
+        "description": "Classic spinner animations that provide clear visual feedback during loading states.",
+        "tags": [
+          "spinner",
+          "loader",
+          "loading",
+          "waiting",
+          "animation"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add gradient-spinner",
+        "source": "https://ui.venumity.com/components/loaders/spinners/gradient-spinner",
+        "preview": "https://ui.venumity.com/preview/component/loaders/spinners/gradient-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/gradient-spinner.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Basic Wave Loader",
+        "slug": "basic-wave-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Wave Loaders",
+        "subcategorySlug": "wave-loaders",
+        "description": "Dynamic wave animations that create engaging loading experiences for modern applications.",
+        "tags": [
+          "wave",
+          "loader",
+          "loading",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add basic-wave-loader",
+        "source": "https://ui.venumity.com/components/loaders/wave-loaders/basic-wave-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/wave-loaders/basic-wave-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/basic-wave-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Gradient Wave Loader",
+        "slug": "gradient-wave-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Wave Loaders",
+        "subcategorySlug": "wave-loaders",
+        "description": "Dynamic wave animations that create engaging loading experiences for modern applications.",
+        "tags": [
+          "wave",
+          "loader",
+          "loading",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add gradient-wave-loader",
+        "source": "https://ui.venumity.com/components/loaders/wave-loaders/gradient-wave-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/wave-loaders/gradient-wave-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/gradient-wave-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Premium Wave Loader",
+        "slug": "premium-wave-loader",
+        "category": "Loaders",
+        "categorySlug": "loaders",
+        "subcategory": "Wave Loaders",
+        "subcategorySlug": "wave-loaders",
+        "description": "Dynamic wave animations that create engaging loading experiences for modern applications.",
+        "tags": [
+          "wave",
+          "loader",
+          "loading",
+          "animation",
+          "waiting"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add premium-wave-loader",
+        "source": "https://ui.venumity.com/components/loaders/wave-loaders/premium-wave-loader",
+        "preview": "https://ui.venumity.com/preview/component/loaders/wave-loaders/premium-wave-loader",
+        "thumbnail": "https://ui.venumity.com/thumbnails/premium-wave-loader.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Simple Footer",
+        "slug": "simple-footer",
+        "category": "Navigations",
+        "categorySlug": "navigations",
+        "subcategory": "Footers",
+        "subcategorySlug": "footers",
+        "description": "Maximize site engagement with comprehensive footer systems that improve navigation and conversion.",
+        "tags": [
+          "footer",
+          "sitemap",
+          "bottom",
+          "legal",
+          "branding"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add simple-footer",
+        "source": "https://ui.venumity.com/components/navigations/footers/simple-footer",
+        "preview": "https://ui.venumity.com/preview/component/navigations/footers/simple-footer",
+        "thumbnail": "https://ui.venumity.com/thumbnails/simple-footer.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Footer",
+        "slug": "standard-footer",
+        "category": "Navigations",
+        "categorySlug": "navigations",
+        "subcategory": "Footers",
+        "subcategorySlug": "footers",
+        "description": "Maximize site engagement with comprehensive footer systems that improve navigation and conversion.",
+        "tags": [
+          "footer",
+          "sitemap",
+          "bottom",
+          "legal",
+          "branding"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add standard-footer",
+        "source": "https://ui.venumity.com/components/navigations/footers/standard-footer",
+        "preview": "https://ui.venumity.com/preview/component/navigations/footers/standard-footer",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-footer.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Navbar",
+        "slug": "standard-navbar",
+        "category": "Navigations",
+        "categorySlug": "navigations",
+        "subcategory": "Navbars",
+        "subcategorySlug": "navbars",
+        "description": "Establish strong navigation foundations with professional navbar systems that guide users effectively.",
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "top",
+          "branding"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add standard-navbar",
+        "source": "https://ui.venumity.com/components/navigations/navbars/standard-navbar",
+        "preview": "https://ui.venumity.com/preview/component/navigations/navbars/standard-navbar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-navbar.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Sticky Glass Navbar",
+        "slug": "sticky-glass-navbar",
+        "category": "Navigations",
+        "categorySlug": "navigations",
+        "subcategory": "Navbars",
+        "subcategorySlug": "navbars",
+        "description": "Establish strong navigation foundations with professional navbar systems that guide users effectively.",
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "top",
+          "branding"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add sticky-glass-navbar",
+        "source": "https://ui.venumity.com/components/navigations/navbars/sticky-glass-navbar",
+        "preview": "https://ui.venumity.com/preview/component/navigations/navbars/sticky-glass-navbar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/sticky-glass-navbar.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Sign In Form",
+        "slug": "standard-sign-in-form",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Auth Forms",
+        "subcategorySlug": "auth-forms",
+        "description": "Conversion-optimized authentication forms for modern SaaS products — sign-in, sign-up, OTP verification, password reset, and multi-step onboarding.",
+        "tags": [
+          "auth",
+          "authentication",
+          "signin",
+          "signup",
+          "login",
+          "otp",
+          "password",
+          "onboarding",
+          "saas",
+          "form"
+        ],
+        "techs": [
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add standard-sign-in-form",
+        "source": "https://ui.venumity.com/components/sections/auth-forms/standard-sign-in-form",
+        "preview": "https://ui.venumity.com/preview/component/sections/auth-forms/standard-sign-in-form",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-sign-in-form.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Product Overview Bento",
+        "slug": "product-overview-bento",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Bento Grids",
+        "subcategorySlug": "bento-grids",
+        "description": "A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.",
+        "tags": [
+          "grid",
+          "layout",
+          "responsive",
+          "ui",
+          "dashboard",
+          "modern",
+          "cards",
+          "showcase",
+          "design",
+          "components"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add product-overview-bento",
+        "source": "https://ui.venumity.com/components/sections/bento-grids/product-overview-bento",
+        "preview": "https://ui.venumity.com/preview/component/sections/bento-grids/product-overview-bento",
+        "thumbnail": "https://ui.venumity.com/thumbnails/product-overview-bento.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Analytics Stats Bento",
+        "slug": "analytics-stats-bento",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Bento Grids",
+        "subcategorySlug": "bento-grids",
+        "description": "A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.",
+        "tags": [
+          "grid",
+          "layout",
+          "responsive",
+          "ui",
+          "dashboard",
+          "modern",
+          "cards",
+          "showcase",
+          "design",
+          "components"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add analytics-stats-bento",
+        "source": "https://ui.venumity.com/components/sections/bento-grids/analytics-stats-bento",
+        "preview": "https://ui.venumity.com/preview/component/sections/bento-grids/analytics-stats-bento",
+        "thumbnail": "https://ui.venumity.com/thumbnails/analytics-stats-bento.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Aurora Feature Bento",
+        "slug": "aurora-feature-bento",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Bento Grids",
+        "subcategorySlug": "bento-grids",
+        "description": "A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.",
+        "tags": [
+          "grid",
+          "layout",
+          "responsive",
+          "ui",
+          "dashboard",
+          "modern",
+          "cards",
+          "showcase",
+          "design",
+          "components"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add aurora-feature-bento",
+        "source": "https://ui.venumity.com/components/sections/bento-grids/aurora-feature-bento",
+        "preview": "https://ui.venumity.com/preview/component/sections/bento-grids/aurora-feature-bento",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aurora-feature-bento.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Single Open FAQ",
+        "slug": "single-open-faq",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "FAQ",
+        "subcategorySlug": "faq",
+        "description": "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
+        "tags": [
+          "faq",
+          "accordion",
+          "support",
+          "schema",
+          "collapsible"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add single-open-faq",
+        "source": "https://ui.venumity.com/components/sections/faq/single-open-faq",
+        "preview": "https://ui.venumity.com/preview/component/sections/faq/single-open-faq",
+        "thumbnail": "https://ui.venumity.com/thumbnails/single-open-faq.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Multiple Open FAQ",
+        "slug": "multiple-open-faq",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "FAQ",
+        "subcategorySlug": "faq",
+        "description": "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
+        "tags": [
+          "faq",
+          "accordion",
+          "support",
+          "schema",
+          "collapsible"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add multiple-open-faq",
+        "source": "https://ui.venumity.com/components/sections/faq/multiple-open-faq",
+        "preview": "https://ui.venumity.com/preview/component/sections/faq/multiple-open-faq",
+        "thumbnail": "https://ui.venumity.com/thumbnails/multiple-open-faq.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Masonry Grid FAQ",
+        "slug": "masonry-grid-faq",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "FAQ",
+        "subcategorySlug": "faq",
+        "description": "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
+        "tags": [
+          "faq",
+          "accordion",
+          "support",
+          "schema",
+          "collapsible"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add masonry-grid-faq",
+        "source": "https://ui.venumity.com/components/sections/faq/masonry-grid-faq",
+        "preview": "https://ui.venumity.com/preview/component/sections/faq/masonry-grid-faq",
+        "thumbnail": "https://ui.venumity.com/thumbnails/masonry-grid-faq.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Icon Style FAQ",
+        "slug": "icon-style-faq",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "FAQ",
+        "subcategorySlug": "faq",
+        "description": "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
+        "tags": [
+          "faq",
+          "accordion",
+          "support",
+          "schema",
+          "collapsible"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI"
+        ],
+        "install": "npx venumityui@latest add icon-style-faq",
+        "source": "https://ui.venumity.com/components/sections/faq/icon-style-faq",
+        "preview": "https://ui.venumity.com/preview/component/sections/faq/icon-style-faq",
+        "thumbnail": "https://ui.venumity.com/thumbnails/icon-style-faq.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Minimal Testimonial",
+        "slug": "minimal-testimonial",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add minimal-testimonial",
+        "source": "https://ui.venumity.com/components/sections/testimonials/minimal-testimonial",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/minimal-testimonial",
+        "thumbnail": "https://ui.venumity.com/thumbnails/minimal-testimonial.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Social Testimonial",
+        "slug": "social-testimonial",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add social-testimonial",
+        "source": "https://ui.venumity.com/components/sections/testimonials/social-testimonial",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/social-testimonial",
+        "thumbnail": "https://ui.venumity.com/thumbnails/social-testimonial.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Standard Testimonial",
+        "slug": "standard-testimonial",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add standard-testimonial",
+        "source": "https://ui.venumity.com/components/sections/testimonials/standard-testimonial",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/standard-testimonial",
+        "thumbnail": "https://ui.venumity.com/thumbnails/standard-testimonial.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Company Testimonial",
+        "slug": "company-testimonial",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add company-testimonial",
+        "source": "https://ui.venumity.com/components/sections/testimonials/company-testimonial",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/company-testimonial",
+        "thumbnail": "https://ui.venumity.com/thumbnails/company-testimonial.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Carousel Testimonial 1",
+        "slug": "carousel-testimonial-1",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add carousel-testimonial-1",
+        "source": "https://ui.venumity.com/components/sections/testimonials/carousel-testimonial-1",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/carousel-testimonial-1",
+        "thumbnail": "https://ui.venumity.com/thumbnails/carousel-testimonial-1.webp",
+        "author": "thevinayakgore"
+      },
+      {
+        "name": "Carousel Testimonial 2",
+        "slug": "carousel-testimonial-2",
+        "category": "Sections",
+        "categorySlug": "sections",
+        "subcategory": "Testimonials",
+        "subcategorySlug": "testimonials",
+        "description": "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
+        "tags": [
+          "testimonial",
+          "social",
+          "reviews",
+          "trust",
+          "carousel"
+        ],
+        "techs": [
+          "Next.js",
+          "Tailwind CSS",
+          "TypeScript",
+          "Shadcn UI",
+          "Motion"
+        ],
+        "install": "npx venumityui@latest add carousel-testimonial-2",
+        "source": "https://ui.venumity.com/components/sections/testimonials/carousel-testimonial-2",
+        "preview": "https://ui.venumity.com/preview/component/sections/testimonials/carousel-testimonial-2",
+        "thumbnail": "https://ui.venumity.com/thumbnails/carousel-testimonial-2.webp",
+        "author": "thevinayakgore"
+      }
+    ]
+  },
+  "counts": {
+    "components": 124,
+    "categories": 14
+  },
+  "generatedAt": "2026-09-26T14:25:24.851Z"
+}

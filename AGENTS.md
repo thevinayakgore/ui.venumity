@@ -1522,6 +1522,7 @@ Install:      npx venumityui@latest add profile-card-1
 
 ### Changelog
 
+- [🚀 New in CLI v1.0.4 - Multi–Package Manager Support](https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support) — Sep-26-2026
 - [🚀 Venumity UI CLI v1.0.0](https://ui.venumity.com/changelog#venumity-ui-cli-v1-0-0) — Jun-19-2026
 - [🎨 Site Redesign, SEO & llms.txt Added](https://ui.venumity.com/changelog#site-redesign-seo-llms-txt-added) — Jun-19-2026
 - [🧩 122+ New Components](https://ui.venumity.com/changelog#122-new-components) — Jun-19-2026

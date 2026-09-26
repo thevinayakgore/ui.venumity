@@ -8,6 +8,12 @@ export interface ChangelogEntry {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    title: "🚀 New in CLI v1.0.4 - Multi–Package Manager Support",
+    date: "Sep-26-2026",
+    images: ["/npm-cli-update.png", "/cli-update.png"],
+    contentPath: "/registry/site/changelog/2026",
+  },
+  {
     title: "🚀 Venumity UI CLI v1.0.0",
     date: "Jun-19-2026",
     images: ["/cli-release.png", "/cli-bar.png", "/compo-list.png", "/cli-help.png"],
