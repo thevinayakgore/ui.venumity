@@ -1,10 +1,10 @@
 // app/changelog/layout.client.tsx
 "use client";
 import { createContext, useContext } from "react";
-import { changelogEntries, ChangelogEntry } from "@/registry/site/changelog";
-import { LogSidebar } from "@/components/site/common/left-sidebar/log-sidebar";
+import { CHANGELOGS, ChangelogCategory } from "@/registry/site/changelog";
+import { LogSidebar } from "@/components/site/common/leftsidebar/changelog";
 
-const ChangelogContext = createContext<ChangelogEntry[]>([]);
+const ChangelogContext = createContext<ChangelogCategory[]>([]);
 
 export const useChangelog = () => useContext(ChangelogContext);
 
@@ -14,16 +14,11 @@ export default function ContentLayoutClient({
   children: React.ReactNode;
 }) {
   return (
-    <ChangelogContext.Provider value={changelogEntries}>
+    <ChangelogContext.Provider value={CHANGELOGS}>
       <section className="mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] m-auto max-w-400 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_5fr] m-auto max-w-400 w-full">
           <LogSidebar />
-          <div
-            id="content"
-            className="p-3 md:p-5 max-w-4xl m-auto overflow-hidden w-full"
-          >
-            {children}
-          </div>
+          <div id="content">{children}</div>
         </div>
       </section>
     </ChangelogContext.Provider>

@@ -1,9 +1,8 @@
+// components/ui/resizable.tsx
 "use client";
 
-import * as ResizablePrimitive from "react-resizable-panels";
-import type React from "react";
-
 import { cn } from "@/lib/utils";
+import * as ResizablePrimitive from "react-resizable-panels";
 
 function ResizablePanelGroup({
   className,

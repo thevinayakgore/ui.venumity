@@ -1,32 +1,33 @@
 // app/docs/[slug]/page.tsx
+import { join } from "path";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { brandName, website, authorName, gitRepo, handle } from "@/lib/brand";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toKebabCase } from "@/utils/slug-kebab";
+import { COMPONENTS } from "@/registry/components";
+import { readFileSync, existsSync, statSync } from "fs";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { MarkdownRenderer } from "@/components/site/common/markdown";
+import { brandName, website, authorName, gitRepo, handle } from "@/lib/brand";
 import {
   DOCS_DATA,
   getPageBySlug,
   getPageNavigation,
 } from "@/registry/site/docs";
-import { COMPONENTS } from "@/registry/components";
-import { readFileSync, existsSync, statSync } from "fs";
-import { join } from "path";
-import { MarkdownRenderer } from "@/components/site/common/markdown-renderer";
-import { toKebabCase } from "@/utils/slug-kebab";
+import Contributors from "@/registry/docs/contributors";
 
 // ── Helpers ──────────────────────────────────────────────
-function readDocsMarkdownContent(contentPath: string): {
+function readDocsMarkdownContent(slug: string): {
   content: string | null;
   lastModified: Date | null;
 } {
   try {
+    const contentPath = `/registry/docs/${slug}.md`;
     const fullPath = join(
       /* turbopackIgnore: true */ process.cwd(),
       contentPath,
     );
     if (!existsSync(fullPath)) {
-      console.error("Docs markdown file not found:", fullPath);
       return { content: null, lastModified: null };
     }
     const stats = statSync(fullPath);
@@ -55,7 +56,7 @@ export async function generateStaticParams() {
   const slugs: { slug: string }[] = [];
   DOCS_DATA.forEach((section) => {
     section.pages.forEach((page) => {
-      if (page.published !== false) slugs.push({ slug: page.slug });
+      slugs.push({ slug: toKebabCase(page.page) });
     });
   });
   return slugs;
@@ -78,10 +79,16 @@ export async function generateMetadata({
     };
   }
 
-  const { content } = readDocsMarkdownContent(page.contentPath);
-  const firstParagraph =
-    content?.split("\n\n")[1] || `Learn more about ${page.page} documentation.`;
-  const description = firstParagraph.substring(0, 160).replace(/[#`*]/g, "");
+  // Handle custom page metadata
+  let description = `Learn more about ${page.page} documentation.`;
+  if (slug !== "contributors") {
+    const { content } = readDocsMarkdownContent(slug);
+    const firstParagraph = content?.split("\n\n")[1] || description;
+    description = firstParagraph.substring(0, 160).replace(/[#`*]/g, "");
+  } else {
+    description =
+      "Meet the amazing contributors who make Venumity UI possible.";
+  }
 
   const title = `${page.page} – ${brandName} Docs`;
   const canonicalUrl = `${baseUrl}/docs/${slug}`;
@@ -150,13 +157,6 @@ export async function generateMetadata({
     other: {
       "script:ld+json": JSON.stringify(structuredData),
     },
-    verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
-      yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "",
-      other: {
-        "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
-      },
-    },
   };
 }
 
@@ -167,17 +167,23 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const page = getPageBySlug(slug);
+  const page = getPageBySlug(toKebabCase(slug));
   if (!page) notFound();
 
-  const { prevPage, nextPage } = getPageNavigation(slug);
+  const { prevPage, nextPage } = getPageNavigation(toKebabCase(slug));
   const firstComponent = getFirstComponent();
   const isLastPage = !nextPage;
 
-  const { content: markdownContent } = readDocsMarkdownContent(
-    page.contentPath,
-  );
-  const content = markdownContent || `# ${page.page}\n\nContent coming soon.`;
+  // 👈 Check if this is a custom TSX page or a Markdown page
+  const isCustomPage = slug === "contributors";
+
+  let content = "";
+  if (!isCustomPage) {
+    const { content: markdownContent } = readDocsMarkdownContent(
+      toKebabCase(slug),
+    );
+    content = markdownContent || `# ${page.page}\n\nContent coming soon.`;
+  }
 
   const nextButtonText =
     isLastPage && firstComponent
@@ -189,82 +195,94 @@ export default async function Page({ params }: PageProps) {
     isLastPage && firstComponent
       ? firstComponent.slug
       : nextPage
-        ? `/docs/${nextPage.slug}`
+        ? `/docs/${toKebabCase(nextPage.page)}`
         : "#";
 
   return (
-    <section className="mb-5 transition-all duration-500 w-full h-full">
-      <MarkdownRenderer
-        content={content}
-        title={page.page}
-        tags={page.tags}
-        showHeader={true}
-      />
+    <section className="w-full h-full">
+      {/* 👈 Render Custom TSX Page OR Markdown Page */}
+      {isCustomPage ? (
+        <div className="p-3 md:p-5 w-full">
+          <Contributors />
+        </div>
+      ) : (
+        <div className="p-3 md:p-5 w-full">
+          <MarkdownRenderer
+            content={content}
+            title={page.page}
+            tags={page.tags}
+            showHeader={true}
+          />
+        </div>
+      )}
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 font-semibold tracking-wide mt-5 md:mt-10 py-10 border-t border-foreground/10 w-full">
-        <form
-          action={prevPage ? `/docs/${prevPage.slug}` : ""}
-          method="get"
-          className={
-            prevPage
-              ? "p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
-              : "w-full"
-          }
-        >
-          <Button
-            type="submit"
-            variant="outline"
-            size="lg"
-            disabled={!prevPage}
-            className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
-              ${
-                prevPage
-                  ? "border-border hover:bg-muted"
-                  : "border-border text-muted-foreground"
-              }`}
+      {/* Navigation Buttons (Shared for both) */}
+      <div className="px-3 md:px-5 w-full">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 font-semibold tracking-wide mt-5 md:mt-10 py-10 border-t border-foreground/10 w-full">
+          <form
+            action={prevPage ? `/docs/${toKebabCase(prevPage.page)}` : ""}
+            method="get"
+            className={
+              prevPage
+                ? "p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
+                : "w-full"
+            }
           >
-            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
-              Previous
-            </span>
-            <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
-              <ChevronLeft className="absolute bottom-4 sm:bottom-5 left-3 sm:left-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
-              <span className="truncate max-w-30 sm:max-w-none">
-                {prevPage ? prevPage.page : "None"}
+            <Button
+              type="submit"
+              variant="outline"
+              size="lg"
+              disabled={!prevPage}
+              className={`relative cursor-pointer inline-flex flex-col items-end group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
+                ${
+                  prevPage
+                    ? "border-border hover:bg-muted"
+                    : "border-border text-muted-foreground"
+                }`}
+            >
+              <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
+                Previous
               </span>
-            </span>
-          </Button>
-        </form>
+              <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
+                <ChevronLeft className="absolute bottom-4 sm:bottom-5 left-3 sm:left-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
+                <span className="truncate max-w-30 sm:max-w-none">
+                  {prevPage ? prevPage.page : "None"}
+                </span>
+              </span>
+            </Button>
+          </form>
 
-        <form
-          action={nextButtonSlug}
-          method="get"
-          className="text-end ml-0 sm:ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
-        >
-          <Button
-            type="submit"
-            variant="outline"
-            size="lg"
-            disabled={nextButtonSlug === "#"}
-            className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
-              ${
-                nextPage || (isLastPage && firstComponent)
-                  ? isLastPage && firstComponent
-                    ? "text-foreground"
-                    : "border-border hover:bg-muted"
-                  : "border-border text-muted-foreground"
-              }`}
+          <form
+            action={nextButtonSlug}
+            method="get"
+            className="text-end ml-0 sm:ml-4 p-1 bg-foreground/5 rounded-[0.8rem] border w-full"
           >
-            <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
-              {isLastPage && firstComponent ? "Get Started" : "Next"}
-            </span>
-            <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
-              <span className="truncate max-w-30 sm:max-w-none">
-                {nextButtonText}
+            <Button
+              type="submit"
+              variant="outline"
+              size="lg"
+              disabled={nextButtonSlug === "#"}
+              className={`relative cursor-pointer inline-flex flex-col items-start group rounded-lg border-foreground/10! hover:border-foreground/30 hover:shadow-none! bg-background! px-4 sm:px-5 w-full md:w-2/3 hover:w-full h-20 sm:h-22! transition-all duration-500
+                ${
+                  nextPage || (isLastPage && firstComponent)
+                    ? isLastPage && firstComponent
+                      ? "text-foreground"
+                      : "border-border hover:bg-muted"
+                    : "border-border text-muted-foreground"
+                }`}
+            >
+              <span className="text-muted-foreground group-hover:text-foreground transition-all duration-500 text-sm sm:text-base">
+                {isLastPage && firstComponent ? "Get Started" : "Next"}
               </span>
-              <ChevronRight className="absolute bottom-4 sm:bottom-5 right-3 sm:right-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
-            </span>
-          </Button>
-        </form>
+              <span className="flex items-center text-sm sm:text-lg group-hover:text-primary leading-none transition-all duration-500">
+                <span className="truncate max-w-30 sm:max-w-none">
+                  {nextButtonText}
+                </span>
+                <ChevronRight className="absolute bottom-4 sm:bottom-5 right-3 sm:right-4 size-5 sm:size-7! text-muted-foreground/40 group-hover:text-foreground transition-all duration-500" />
+              </span>
+            </Button>
+          </form>
+        </div>
       </div>
     </section>
   );

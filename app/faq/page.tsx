@@ -1,11 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Minus, ChevronUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { CATEGORIES, Category, FAQ_DATA } from "@/registry/site/faq";
 import Script from "next/script";
+import { mail } from "@/lib/brand";
+import Shimmer from "@/components/utility/shimmer";
+import { motion, AnimatePresence } from "motion/react";
+import { Minus, ChevronUp, Mail, CheckCheck } from "lucide-react";
+import { GRADIENT_ANIMATION } from "@/components/utility/gradient";
+import { insetButtonVariants } from "@/components/ui/inset-button";
+import { CATEGORIES, Category, FAQ_DATA } from "@/registry/site/faq";
 
 function CategoryCard({
   title,
@@ -22,23 +25,24 @@ function CategoryCard({
     <div
       className={`relative group/cat bg-foreground/10 ${isOpen ? "p-1" : "p-0"} rounded-lg overflow-hidden transition-all duration-700 w-full`}
     >
-      <Button
-        type="button"
+      <button
         onClick={onToggle}
-        className={cn(
-          "relative flex items-start justify-between text-start gap-2 sm:gap-3 w-full cursor-pointer rounded-lg transition-all duration-700",
-          isOpen ? "p-0.5 sm:p-1 pb-1.5 sm:pb-2 h-auto" : "p-1 sm:p-2 h-auto",
-          "bg-transparent! text-foreground!",
-        )}
+        className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-0.5 pb-1.5 sm:pb-2" : "p-1.5"} transition-all duration-700 w-full`}
       >
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="flex p-2 sm:p-3 shrink-0 items-center justify-center rounded-sm sm:rounded-md bg-white text-black shadow-lg/10">
-            <Icon className="size-3.5 sm:size-5" />
+          <div
+            className={insetButtonVariants(
+              "relative size-11 overflow-hidden",
+              "icon",
+            )}
+          >
+            <Icon className="size-4 sm:size-5" />
+            <Shimmer className="via-white/40" />
           </div>
 
-          <div className="min-w-0 sm:space-y-0.5">
+          <div className="min-w-0 text-start font-medium">
             <p className="truncate text-sm sm:text-base">{title}</p>
-            <p className="text-[10px] sm:text-xs text-foreground/50">
+            <p className="text-[10px] sm:text-xs text-muted-foreground">
               {articles}
             </p>
           </div>
@@ -52,7 +56,7 @@ function CategoryCard({
             className={`absolute inset-0 size-4 sm:size-5 rotate-90 ${isOpen && "rotate-180"} transition-all duration-700`}
           />
         </div>
-      </Button>
+      </button>
 
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -87,7 +91,7 @@ function CategoryCard({
                 ease: [0.22, 1, 0.36, 1],
                 delay: 0.2,
               }}
-              className="text-xs sm:text-sm md:text-[0.85rem] tracking-wide! text-foreground/50 font-semibold py-2 sm:py-4 px-3 sm:px-5 bg-background rounded-md"
+              className="text-xs sm:text-sm font-medium tracking-wide! text-muted-foreground py-2 sm:py-4 px-3 sm:px-5 bg-background rounded-md"
             >
               {description}
             </motion.p>
@@ -112,8 +116,20 @@ const faqSchema = {
 };
 
 export default function FAQ() {
-  const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(null);
+  const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(
+    null,
+  );
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    await navigator.clipboard.writeText(mail);
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 5000);
+  };
 
   const toggleFAQ = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -125,43 +141,59 @@ export default function FAQ() {
         {JSON.stringify(faqSchema)}
       </Script>
 
-      <main id="faq" className="p-3 sm:p-5 md:p-10 m-auto max-w-400 w-full">
-        <div className="relative z-10 flex flex-col gap-5 md:gap-10 m-auto w-full">
-          <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-20 xl:p-30 text-white selection:bg-primary! selection:text-white! rounded-2xl overflow-hidden w-full">
+      <section
+        id="faq"
+        className="px-3 py-5 sm:px-5 md:p-10 lg:py-20 border-b w-full"
+      >
+        <div className="relative z-10 flex flex-col gap-5 md:gap-10 m-auto max-w-400 w-full">
+          <section className="relative flex flex-col items-center justify-center m-auto gap-5 md:gap-10 p-5 md:p-10 lg:p-15 text-white selection:bg-primary! selection:text-white! rounded-2xl md:rounded-3xl lg:rounded-4xl overflow-hidden w-full">
+            {/* Background Gradient Animation */}
             <motion.div
-              className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom_right,#f97316,#fb923c,#fdba74,#f59e0b,#facc15,#fde047,#84cc16,#22c55e,#14b8a6,#06b6d4,#3b82f6,#a855f7)] bg-size-[300%_300%]"
-              animate={{
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              }}
-              transition={{
-                duration: 5,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
+              className="absolute inset-0 -z-10 inset-shadow-sm inset-shadow-white/70 rounded-2xl md:rounded-3xl lg:rounded-4xl overflow-hidden w-full h-full"
+              {...GRADIENT_ANIMATION}
             />
 
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center font-medium">
               <motion.h2
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="satisfy p-3 md:p-5 text-4xl md:text-6xl font-medium text-white text-shadow-lg"
+                className="cinzel p-3 md:p-5 text-3xl md:text-5xl lg:text-6xl text-white font-semibold text-shadow-lg leading-snug max-w-2xl"
               >
-                Frequently Asked Questions
+                Any Questions ?
               </motion.h2>
 
-              <p className="sm:mb-3 md:mt-5 text-xs sm:text-sm md:text-base lg:text-lg font-semibold w-full md:max-w-3xl">
+              <p className="sm:mb-3 text-sm sm:text-base md:text-lg lg:text-xl text-shadow-lg/10 w-full md:max-w-3xl">
                 Explore everything about Venumity UI from beautifully crafted
                 components and modern layouts to customization, development
                 workflow, integrations, and building stunning digital
                 experiences faster.
               </p>
+
+              <button
+                onClick={handleCopyEmail}
+                className="flex items-center gap-1.5 p-1 pr-4 mt-5 bg-white text-black text-xs md:text-sm font-medium shadow-lg/10 rounded-full"
+              >
+                <div
+                  className={cn(
+                    "flex size-7 items-center justify-center text-white rounded-full",
+                    isCopied ? "bg-green-500" : "bg-blue-500",
+                  )}
+                >
+                  {isCopied ? (
+                    <CheckCheck className="size-4" />
+                  ) : (
+                    <Mail className="size-4" />
+                  )}
+                </div>
+                <span>{mail}</span>
+              </button>
             </div>
           </section>
 
-          <section className="flex flex-col lg:flex-row items-start gap-3 w-full">
-            <div className="hidden md:flex flex-col gap-3 w-full lg:w-1/3">
+          <section className="flex flex-col lg:flex-row items-start gap-3 m-auto w-full max-w-5xl">
+            <div className="hidden md:flex flex-col gap-3 w-full lg:w-[40%]">
               {CATEGORIES.map((category, index) => (
                 <CategoryCard
                   key={category.title}
@@ -176,7 +208,7 @@ export default function FAQ() {
               ))}
             </div>
 
-            <section className="flex flex-col gap-3 items-center justify-center w-full lg:w-2/3">
+            <section className="flex flex-col gap-3 items-center justify-center w-full lg:w-[60%]">
               {FAQ_DATA.map((item, index) => {
                 const IconComponent = item.icon;
                 const isOpen = openIndex === index;
@@ -187,11 +219,17 @@ export default function FAQ() {
                   >
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-0.5 sm:p-1 pb-1.5 sm:pb-2" : "p-1.5 sm:p-2"} transition-all duration-700 w-full`}
+                      className={`flex items-start justify-between cursor-pointer ${isOpen ? "p-0.5 pb-1.5 sm:pb-2" : "p-1.5"} transition-all duration-700 w-full`}
                     >
                       <div className="flex items-center gap-2 sm:gap-3 pr-6 truncate min-w-0 w-fit">
-                        <div className="bg-white text-black shadow-lg/10 p-2 sm:p-3 rounded-sm sm:rounded-md shrink-0">
+                        <div
+                          className={insetButtonVariants(
+                            "relative size-11 overflow-hidden",
+                            "icon",
+                          )}
+                        >
                           <IconComponent className="size-4 sm:size-5" />
+                          <Shimmer className="via-white/40" />
                         </div>
                         <h3 className="text-base md:text-lg font-medium truncate min-w-0 w-fit">
                           {item.question}
@@ -234,7 +272,7 @@ export default function FAQ() {
                               ease: [0.22, 1, 0.36, 1],
                               delay: 0.2,
                             }}
-                            className="text-xs sm:text-sm md:text-base tracking-wider! text-foreground/50 py-2 sm:py-4 px-3 sm:px-5 bg-background rounded-md"
+                            className="text-xs sm:text-sm md:text-base font-medium py-2 sm:py-4 px-3 sm:px-5 bg-background text-muted-foreground rounded-md"
                           >
                             {item.answer}
                           </motion.p>
@@ -247,7 +285,7 @@ export default function FAQ() {
             </section>
           </section>
         </div>
-      </main>
+      </section>
     </>
   );
 }

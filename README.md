@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="./vui-badge.png" width="320" alt="Venumity UI Logo" />
+<img src="./vui.webp" width="320" alt="Venumity UI Logo" />
 
-### Beautiful, production-ready React components. Copy. Paste. Ship. ⚡️
+## 🐳 Amazing React, Next.js Components. Copy. Paste. Ship. 🐳
 
 [![GitHub stars](https://img.shields.io/github/stars/thevinayakgore/ui.venumity?style=flat&color=orange&label=Stars)](https://github.com/thevinayakgore/ui.venumity/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/thevinayakgore/ui.venumity?style=flat&color=blue&label=Forks)](https://github.com/thevinayakgore/ui.venumity/network)
@@ -15,17 +15,13 @@
 
 <br/>
 
-![Venumity UI demo](./public/banner.png)
+![Venumity UI demo](./public/banner.webp)
 
 <br/>
 
 > ⭐ **If Venumity UI saves you time, please star this repo** — it helps more developers discover it and motivates us to keep building. Takes 2 seconds and means a lot!
 
 <br/>
-
-[Live Site](https://ui.venumity.com) - [Components](https://ui.venumity.com/components) - [Docs](https://ui.venumity.com/docs/introduction) - [Templates](https://ui.venumity.com/templates) - [⚡ CLI](https://www.npmjs.com/package/venumityui) - [Thumbnails](https://ui.venumity.com/thumbnails) - [Discussions](https://github.com/thevinayakgore/ui.venumity/discussions)
-
----
 
 ## ⚡ Install Components via CLI
 
@@ -267,7 +263,7 @@ Open `registry/components.ts` and add your component entry following the existin
 
 ### Step 4 — Add a thumbnail screenshot
 
-Capture a full-screen screenshot at 1280×800px and save it to:
+Capture a full-screen screenshot and save it to:
 
 ```
 public/thumbnails/[your-component-name].webp
@@ -356,8 +352,8 @@ Want your avatar here? [Pick a component from the wishlist above](#️-component
 
 **Built with ❤️ by [Vinayak Gore](https://thevinayakgore.vercel.app)**
 
-[GitHub](https://github.com/thevinayakgore) ~ [Twitter / X](https://twitter.com/thevinayakgore) ~ [Instagram](https://instagram.com/thevinayakgore) ~ [LinkedIn](https://linkedin.com/in/thevinayakgore) ~ [YouTube](https://youtube.com/@TheVinayakGore)
+🪴 [GitHub](https://github.com/thevinayakgore) 🐥 [Twitter](https://twitter.com/thevinayakgore) 📸 [Instagram](https://instagram.com/thevinayakgore) ☘️ [LinkedIn](https://linkedin.com/in/thevinayakgore) 🎬 [YouTube](https://youtube.com/@TheVinayakGore)
 
-Venumity UI ⚡ Ship beautiful interfaces faster.
+Venumity UI ⚡ Ship amazing interfaces faster.
 
 </div>

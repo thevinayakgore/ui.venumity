@@ -1,47 +1,11 @@
 // app/api/registry/mcp/route.ts
-import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { McpIndex } from "@/types";
+import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // refresh hourly; swap to 0 for always-fresh
-
-interface McpComponent {
-  name: string;
-  slug: string;
-  category: string;
-  categorySlug: string;
-  subcategory: string;
-  subcategorySlug: string;
-  description: string;
-  tags: string[];
-  techs: string[];
-  install: string;
-  source: string;
-  preview: string;
-  thumbnail: string;
-  video?: string;
-  author?: string;
-}
-
-interface McpIndex {
-  tools: Array<{
-    name: string;
-    description: string;
-    inputSchema: Record<string, unknown>;
-  }>;
-  data: {
-    categories: Array<{
-      name: string;
-      slug: string;
-      count: number;
-      subcategories: string[];
-    }>;
-    components: McpComponent[];
-  };
-  counts: { components: number; categories: number };
-  generatedAt: string;
-}
 
 // Cache the file read in memory across requests within the same function instance.
 let cachedIndex: McpIndex | null = null;
@@ -120,14 +84,12 @@ export async function POST(request: NextRequest) {
         category,
         subcategory,
         tag,
-        tech,
         limit = 20,
       } = (params.arguments ?? params) as {
         query?: string;
         category?: string;
         subcategory?: string;
         tag?: string;
-        tech?: string;
         limit?: number;
       };
 
@@ -145,12 +107,6 @@ export async function POST(request: NextRequest) {
         const t = tag.toLowerCase();
         results = results.filter((c) =>
           c.tags.some((x) => x.toLowerCase() === t),
-        );
-      }
-      if (tech) {
-        const t = tech.toLowerCase();
-        results = results.filter((c) =>
-          c.techs.some((x) => x.toLowerCase() === t),
         );
       }
       if (q) {

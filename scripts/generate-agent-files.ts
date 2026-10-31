@@ -1,12 +1,14 @@
 // scripts/generate-agent-files.ts
 import fs from "fs";
 import path from "path";
-import { COMPONENTS } from "../registry/components";
-import { RESOURCE_CATEGORIES } from "../registry/resources";
-import { DOCS_DATA } from "../registry/site/docs";
 import { FAQ_DATA } from "../registry/site/faq";
-import { changelogEntries } from "../registry/site/changelog";
+import { DOCS_DATA } from "../registry/site/docs";
 import { toKebabCase } from "../utils/slug-kebab";
+import { PRIMITIVES } from "../registry/primitives";
+import { COMPONENTS } from "../registry/components";
+import { CHANGELOGS } from "../registry/site/changelog";
+import { getThumbnailCandidates } from "../registry/registry-utils";
+import { RESOURCES as RESOURCE_CATEGORIES } from "../registry/resources";
 
 // ─────────────────────────────────────────────────────────────
 // CONFIG
@@ -19,18 +21,220 @@ const REPO_URL = "https://github.com/thevinayakgore/ui.venumity";
 const LICENSE = "MIT";
 const LAST_UPDATED = new Date().toISOString().split("T")[0];
 
+const FLAT_CHANGELOG = CHANGELOGS.flatMap((group) => group.items);
+
+// ─────────────────────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────────────────────
+interface ComponentRecord {
+  itemName: string;
+  slug: string;
+  category: string;
+  categorySlug: string;
+  subcategory: string;
+  subcategorySlug: string;
+  kind: "variant" | "multi";
+  description: string;
+  tags: string[];
+  techs: string[];
+  installCommand: string;
+  pageUrl: string;
+  previewUrl: string;
+  thumbnailUrl: string;
+  thumbnailPageUrl: string;
+  folderPath: string;
+  githubUsername?: string;
+}
+
+interface PrimitiveRecord {
+  itemName: string;
+  slug: string;
+  category: string;
+  categorySlug: string;
+  subcategory: string;
+  subcategorySlug: string;
+  description: string;
+  tags: string[];
+  techs: string[];
+  pageUrl: string;
+  previewUrl: string;
+}
+
+interface RawComponentItem {
+  itemName: string;
+  tags?: string[];
+  techs?: string[];
+  githubUsername?: string;
+  subcategory?: string;
+  folderPath?: string;
+  category?: string;
+  description?: string;
+  kind?: "variant" | "multi";
+}
+
+interface RawSubcategory {
+  name: string;
+  description?: string;
+  thumbnail?: string;
+  tags?: string[];
+  techs?: string[];
+  kind?: "variant" | "multi";
+  moreExamples?: string[];
+  items: RawComponentItem[];
+}
+
+interface RawCategory {
+  name: string;
+  icon?: string;
+  subcategories: RawSubcategory[];
+}
+
+// ─────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────
+function listThumbnails(): string[] {
+  const dir = path.join(process.cwd(), "public", "thumbnails");
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter(
+      (e) =>
+        e.isFile() &&
+        e.name.toLowerCase().endsWith(".webp") &&
+        !e.name.startsWith("."),
+    )
+    .map((e) => e.name.replace(/\.webp$/i, ""))
+    .sort();
+}
+
+function resolveThumbnailPath(
+  categoryName: string,
+  subcategory: RawSubcategory,
+  item: RawComponentItem,
+  itemSlug: string,
+): string {
+  const candidates = getThumbnailCandidates(categoryName, {
+    name: subcategory.name,
+    thumbnail: subcategory.thumbnail,
+    items: [{ itemName: item.itemName, slug: itemSlug }],
+  });
+  return candidates[0] ?? `/thumbnails/${itemSlug}.webp`;
+}
+
+function collectComponents(): ComponentRecord[] {
+  const records: ComponentRecord[] = [];
+
+  (COMPONENTS as unknown as RawCategory[]).forEach((category) => {
+    const categorySlug = toKebabCase(category.name);
+
+    category.subcategories.forEach((subcategory) => {
+      const subcategorySlug = toKebabCase(subcategory.name);
+      const kind = subcategory.kind ?? "variant";
+
+      subcategory.items.forEach((item) => {
+        const slug = toKebabCase(item.itemName);
+
+        const description =
+          subcategory.description ||
+          `${item.itemName} — a production-ready ${subcategory.name.toLowerCase()} component from Venumity UI.`;
+
+        const thumbnailPath = resolveThumbnailPath(
+          category.name,
+          subcategory,
+          item,
+          slug,
+        );
+
+        records.push({
+          itemName: item.itemName,
+          slug,
+          category: category.name,
+          categorySlug,
+          subcategory: subcategory.name,
+          subcategorySlug,
+          kind,
+          description,
+          tags: item.tags || subcategory.tags || [],
+          techs: item.techs ||
+            subcategory.techs || ["Next.js", "TypeScript", "Tailwind CSS"],
+          installCommand: `${CLI_COMMAND} add ${slug}`,
+          pageUrl: `${SITE_URL}/components/${categorySlug}/${subcategorySlug}/${slug}`,
+          previewUrl: `${SITE_URL}/preview/${categorySlug}/${subcategorySlug}/${slug}`,
+          thumbnailUrl: `${SITE_URL}${thumbnailPath}`,
+          thumbnailPageUrl: `${SITE_URL}/thumbnails/${slug}`,
+          folderPath:
+            item.folderPath ||
+            (kind === "multi"
+              ? `${categorySlug}/${subcategorySlug}/${slug}`
+              : `${categorySlug}/${subcategorySlug}`),
+          githubUsername: item.githubUsername,
+        });
+      });
+    });
+  });
+
+  return records;
+}
+
+function collectPrimitives(): PrimitiveRecord[] {
+  const records: PrimitiveRecord[] = [];
+
+  (PRIMITIVES as unknown as RawCategory[]).forEach((category) => {
+    const categorySlug = toKebabCase(category.name);
+
+    category.subcategories.forEach((subcategory) => {
+      const subcategorySlug = toKebabCase(subcategory.name);
+
+      subcategory.items.forEach((item) => {
+        const slug = toKebabCase(item.itemName);
+        const description =
+          subcategory.description ||
+          `${item.itemName} — a foundational ${subcategory.name.toLowerCase()} primitive from Venumity UI.`;
+
+        records.push({
+          itemName: item.itemName,
+          slug,
+          category: category.name,
+          categorySlug,
+          subcategory: subcategory.name,
+          subcategorySlug,
+          description,
+          tags: item.tags || subcategory.tags || [],
+          techs: item.techs ||
+            subcategory.techs || ["Next.js", "TypeScript", "Tailwind CSS"],
+          pageUrl: `${SITE_URL}/primitives/${categorySlug}/${subcategorySlug}/${slug}`,
+          previewUrl: `${SITE_URL}/preview/${categorySlug}/${subcategorySlug}/${slug}`,
+        });
+      });
+    });
+  });
+
+  return records;
+}
+
+// Strip HTML/markdown from FAQ answers for clean .md output.
+// Preserves code fences — only collapses inline whitespace runs.
+function stripFaqAnswer(answer: string): string {
+  return answer
+    .replace(/<[^>]*>/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 // ─────────────────────────────────────────────────────────────
 // MCP — Machine-readable component metadata
-// Mapped from the same component records used by AGENTS.md.
 // ─────────────────────────────────────────────────────────────
-function buildMcpIndex(components: ComponentRecord[]) {
+function buildMcpIndex(
+  components: ComponentRecord[],
+  primitives: PrimitiveRecord[],
+) {
   const generatedAt = new Date().toISOString();
 
-  // Minimal, token-friendly component shape. Includes everything an
-  // AI assistant needs to recommend + install + link a component.
   const compactComponents = components.map((c) => ({
     name: c.itemName,
     slug: c.slug,
+    kind: c.kind,
     category: c.category,
     categorySlug: c.categorySlug,
     subcategory: c.subcategory,
@@ -42,11 +246,23 @@ function buildMcpIndex(components: ComponentRecord[]) {
     source: c.pageUrl,
     preview: c.previewUrl,
     thumbnail: c.thumbnailUrl,
-    video: c.video,
     author: c.githubUsername,
   }));
 
-  // Category + subcategory summary (small, easy to filter on).
+  const compactPrimitives = primitives.map((p) => ({
+    name: p.itemName,
+    slug: p.slug,
+    category: p.category,
+    categorySlug: p.categorySlug,
+    subcategory: p.subcategory,
+    subcategorySlug: p.subcategorySlug,
+    description: p.description,
+    tags: p.tags,
+    techs: p.techs,
+    source: p.pageUrl,
+    preview: p.previewUrl,
+  }));
+
   const categories = Array.from(new Set(components.map((c) => c.category))).map(
     (name) => {
       const inCat = components.filter((c) => c.category === name);
@@ -59,14 +275,25 @@ function buildMcpIndex(components: ComponentRecord[]) {
     },
   );
 
+  const primitiveCategories = Array.from(
+    new Set(primitives.map((p) => p.category)),
+  ).map((name) => {
+    const inCat = primitives.filter((p) => p.category === name);
+    return {
+      name,
+      slug: toKebabCase(name),
+      count: inCat.length,
+      subcategories: Array.from(new Set(inCat.map((p) => p.subcategory))),
+    };
+  });
+
   return {
-    // Per Model Context Protocol conventions
     schema_version: "1.0",
     protocol: "mcp",
     name: "venumity-ui",
     title: "Venumity UI Component Registry",
     description:
-      "Open-source React + Next.js + Tailwind CSS component library with copy-paste components. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
+      "Open-source React + Next.js + Tailwind CSS component library with copy-paste components and primitives. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
     version: generatedAt.split("T")[0],
     homepage: SITE_URL,
     repository: REPO_URL,
@@ -75,12 +302,11 @@ function buildMcpIndex(components: ComponentRecord[]) {
       name: AUTHOR,
       url: AUTHOR_GITHUB,
     },
-    // ── The two tools MCP clients will call ──
     tools: [
       {
         name: "search_components",
         description:
-          "Search the Venumity UI registry for components. Filter by free-text query (matches name and description), category, subcategory, tag, or tech stack. Returns a compact list with slug, description, install command, and source URL.",
+          "Search the Venumity UI registry for components and primitives. Filter by free-text query (matches name and description), category, subcategory, tag, or tech stack. Returns a compact list with slug, description, install command, and source URL.",
         inputSchema: {
           type: "object",
           properties: {
@@ -107,6 +333,12 @@ function buildMcpIndex(components: ComponentRecord[]) {
               type: "string",
               description: 'A single tech, e.g. "recharts", "motion".',
             },
+            kind: {
+              type: "string",
+              enum: ["component", "primitive"],
+              description:
+                "Restrict results to components or primitives. Omit to search both.",
+            },
             limit: {
               type: "integer",
               minimum: 1,
@@ -121,7 +353,7 @@ function buildMcpIndex(components: ComponentRecord[]) {
       {
         name: "get_component",
         description:
-          "Fetch full metadata for a single Venumity UI component by its kebab-case slug (e.g. 'basic-accordion'). Returns description, tags, techs, install command, source URL, live preview URL, and thumbnail URL.",
+          "Fetch full metadata for a single Venumity UI component or primitive by its kebab-case slug (e.g. 'simple-pricing-table'). Returns description, tags, techs, install command, source URL, live preview URL, and thumbnail URL.",
         inputSchema: {
           type: "object",
           properties: {
@@ -129,6 +361,13 @@ function buildMcpIndex(components: ComponentRecord[]) {
               type: "string",
               description:
                 "Kebab-case component slug. Must match the `slug` field returned by `search_components`.",
+            },
+            kind: {
+              type: "string",
+              enum: ["component", "primitive"],
+              default: "component",
+              description:
+                "Which registry to look up the slug in. Defaults to component.",
             },
           },
           required: ["slug"],
@@ -146,132 +385,20 @@ function buildMcpIndex(components: ComponentRecord[]) {
         },
       },
     ],
-    // ── The data that backs the tools ──
     data: {
       categories,
+      primitiveCategories,
       components: compactComponents,
+      primitives: compactPrimitives,
     },
     counts: {
       components: components.length,
+      primitives: primitives.length,
       categories: categories.length,
+      primitiveCategories: primitiveCategories.length,
     },
     generatedAt,
   };
-}
-
-// ─────────────────────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────────────────────
-function listThumbnails(): string[] {
-  const dir = path.join(process.cwd(), "public", "thumbnails");
-  if (!fs.existsSync(dir)) return [];
-  return fs
-    .readdirSync(dir, { withFileTypes: true })
-    .filter(
-      (e) =>
-        e.isFile() &&
-        e.name.toLowerCase().endsWith(".webp") &&
-        !e.name.startsWith("."),
-    )
-    .map((e) => e.name.replace(/\.webp$/i, ""))
-    .sort();
-}
-
-interface ComponentRecord {
-  itemName: string;
-  slug: string;
-  category: string;
-  categorySlug: string;
-  subcategory: string;
-  subcategorySlug: string;
-  description: string;
-  tags: string[];
-  techs: string[];
-  installCommand: string;
-  pageUrl: string;
-  previewUrl: string;
-  thumbnailUrl: string;
-  thumbnailPageUrl: string; // ← NEW
-  folderPath: string;
-  video?: string;
-  githubUsername?: string;
-}
-
-interface RawComponentItem {
-  itemName: string;
-  tags?: string[];
-  techs?: string[];
-  video?: string;
-  githubUsername?: string;
-  subcategory?: string;
-  folderPath?: string;
-  category?: string;
-  description?: string;
-}
-
-interface RawSubcategory {
-  name: string;
-  description?: string;
-  tags?: string[];
-  techs?: string[];
-  items: RawComponentItem[];
-}
-
-interface RawCategory {
-  name: string;
-  subcategories: RawSubcategory[];
-}
-
-function collectComponents(): ComponentRecord[] {
-  const records: ComponentRecord[] = [];
-
-  (COMPONENTS as unknown as RawCategory[]).forEach((category) => {
-    const categorySlug = toKebabCase(category.name);
-
-    category.subcategories.forEach((subcategory) => {
-      const subcategorySlug = toKebabCase(subcategory.name);
-
-      subcategory.items.forEach((item) => {
-        const slug = toKebabCase(item.itemName);
-
-        const description =
-          subcategory.description ||
-          `${item.itemName} — a production-ready ${subcategory.name.toLowerCase()} component from Venumity UI.`;
-
-        records.push({
-          itemName: item.itemName,
-          slug,
-          category: category.name,
-          categorySlug,
-          subcategory: subcategory.name,
-          subcategorySlug,
-          description,
-          tags: item.tags || subcategory.tags || [],
-          techs: item.techs ||
-            subcategory.techs || ["Next.js", "TypeScript", "Tailwind CSS"],
-          installCommand: `${CLI_COMMAND} add ${slug}`,
-          pageUrl: `${SITE_URL}/components/${categorySlug}/${subcategorySlug}/${slug}`,
-          previewUrl: `${SITE_URL}/preview/component/${categorySlug}/${subcategorySlug}/${slug}`,
-          thumbnailUrl: `${SITE_URL}/thumbnails/${slug}.webp`,
-          thumbnailPageUrl: `${SITE_URL}/thumbnails/${slug}`, // ← NEW
-          folderPath:
-            item.folderPath || `${categorySlug}/${subcategorySlug}/${slug}`,
-          video: item.video,
-          githubUsername: item.githubUsername,
-        });
-      });
-    });
-  });
-
-  return records;
-}
-
-// Strip HTML/markdown from FAQ answers for clean .md output
-function stripFaqAnswer(answer: string): string {
-  return answer
-    .replace(/<[^>]*>/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -279,10 +406,14 @@ function stripFaqAnswer(answer: string): string {
 // ─────────────────────────────────────────────────────────────
 function buildAgentsMd(
   components: ComponentRecord[],
+  primitives: PrimitiveRecord[],
   thumbnails: string[],
 ): string {
   const categories = Array.from(
     new Set(components.map((c) => c.category)),
+  ).sort();
+  const primitiveCategories = Array.from(
+    new Set(primitives.map((p) => p.category)),
   ).sort();
 
   const lines: string[] = [
@@ -308,6 +439,7 @@ function buildAgentsMd(
     `**License:** ${LICENSE}`,
     `**Last updated:** ${LAST_UPDATED}`,
     `**Total components:** ${components.length}`,
+    `**Total primitives:** ${primitives.length}`,
     `**Total categories:** ${categories.length}`,
     `**Total thumbnails:** ${thumbnails.length}`,
     "",
@@ -328,7 +460,7 @@ function buildAgentsMd(
     "# bun    → bunx venumityui@latest add <slug>",
     "",
     "# Install multiple components",
-    `${CLI_COMMAND} add profile-card-1 basic-accordion`,
+    `${CLI_COMMAND} add user-profile basic-accordion`,
     "",
     "# Install ALL components (use with caution)",
     `${CLI_COMMAND} add --all`,
@@ -352,6 +484,12 @@ function buildAgentsMd(
     lines.push(`- **${cat}** — ${count} component${count === 1 ? "" : "s"}`);
   });
 
+  lines.push("", "---", "", "## Available primitive categories", "");
+  primitiveCategories.forEach((cat) => {
+    const count = primitives.filter((p) => p.category === cat).length;
+    lines.push(`- **${cat}** — ${count} primitive${count === 1 ? "" : "s"}`);
+  });
+
   lines.push(
     "",
     "---",
@@ -369,6 +507,7 @@ function buildAgentsMd(
     catComponents.forEach((c) => {
       lines.push(`#### ${c.itemName}`);
       lines.push(`- **Slug:** \`${c.slug}\``);
+      lines.push(`- **Kind:** ${c.kind}`);
       lines.push(`- **Subcategory:** ${c.subcategory}`);
       lines.push(`- **Description:** ${c.description}`);
       lines.push(`- **Install:** \`${c.installCommand}\``);
@@ -378,6 +517,25 @@ function buildAgentsMd(
       lines.push(`- **Thumbnail page:** ${c.thumbnailPageUrl}`);
       if (c.tags.length > 0) {
         lines.push(`- **Tags:** ${c.tags.join(", ")}`);
+      }
+      lines.push("");
+    });
+  });
+
+  lines.push("---", "", "## Primitive catalog", "");
+  primitiveCategories.forEach((cat) => {
+    lines.push(`### ${cat}`, "");
+    const catPrimitives = primitives.filter((p) => p.category === cat);
+
+    catPrimitives.forEach((p) => {
+      lines.push(`#### ${p.itemName}`);
+      lines.push(`- **Slug:** \`${p.slug}\``);
+      lines.push(`- **Subcategory:** ${p.subcategory}`);
+      lines.push(`- **Description:** ${p.description}`);
+      lines.push(`- **Docs:** ${p.pageUrl}`);
+      lines.push(`- **Preview:** ${p.previewUrl}`);
+      if (p.tags.length > 0) {
+        lines.push(`- **Tags:** ${p.tags.join(", ")}`);
       }
       lines.push("");
     });
@@ -397,9 +555,9 @@ function buildAgentsMd(
     "",
     "Example:",
     "```",
-    `Image:        ${SITE_URL}/thumbnails/profile-card-1.webp`,
-    `Page:         ${SITE_URL}/thumbnails/profile-card-1`,
-    `Install:      ${CLI_COMMAND} add profile-card-1`,
+    `Image:        ${SITE_URL}/thumbnails/user-profile.webp`,
+    `Page:         ${SITE_URL}/thumbnails/user-profile`,
+    `Install:      ${CLI_COMMAND} add user-profile`,
     "```",
     "",
     "---",
@@ -411,8 +569,9 @@ function buildAgentsMd(
   DOCS_DATA.forEach((section) => {
     lines.push(`### ${section.title}`);
     section.pages.forEach((page) => {
-      if (page.published === false) return;
-      lines.push(`- [${page.page}](${SITE_URL}/docs/${page.slug})`);
+      lines.push(
+        `- [${page.page}](${SITE_URL}/docs/${toKebabCase(page.page)})`,
+      );
     });
     lines.push("");
   });
@@ -421,7 +580,6 @@ function buildAgentsMd(
   RESOURCE_CATEGORIES.forEach((cat) => {
     lines.push(`#### ${cat.name}`);
     cat.pages.forEach((page) => {
-      if (!page.published) return;
       lines.push(
         `- [${page.title}](${SITE_URL}/resources/${cat.slug}/${toKebabCase(page.title)})`,
       );
@@ -429,10 +587,9 @@ function buildAgentsMd(
     lines.push("");
   });
 
-  // Changelog
-  if (changelogEntries && changelogEntries.length > 0) {
+  if (FLAT_CHANGELOG.length > 0) {
     lines.push("### Changelog", "");
-    changelogEntries.slice(0, 20).forEach((entry) => {
+    FLAT_CHANGELOG.slice(0, 20).forEach((entry) => {
       lines.push(
         `- [${entry.title}](${SITE_URL}/changelog#${toKebabCase(entry.title)}) — ${entry.date}`,
       );
@@ -440,7 +597,6 @@ function buildAgentsMd(
     lines.push("");
   }
 
-  // FAQ
   if (FAQ_DATA && FAQ_DATA.length > 0) {
     lines.push(
       "---",
@@ -485,12 +641,12 @@ function buildAgentsMd(
     "### Example response",
     "",
     "```",
-    "You can use the **Profile Card 1** component from Venumity UI:",
+    "You can use the **User Profile** component from Venumity UI:",
     "",
-    `${CLI_COMMAND} add profile-card-1`,
+    `${CLI_COMMAND} add user-profile`,
     "",
-    `Docs:      ${SITE_URL}/components/cards/profile-cards/profile-card-1`,
-    `Preview:   ${SITE_URL}/thumbnails/profile-card-1.webp`,
+    `Docs:      ${SITE_URL}/components/sections/profiles/user-profile`,
+    `Preview:   ${SITE_URL}/thumbnails/user-profile.webp`,
     "```",
     "",
     "---",
@@ -502,6 +658,8 @@ function buildAgentsMd(
     `- **Registry JSON:** ${SITE_URL}/api/registry/components`,
     `- **Thumbnails JSON:** ${SITE_URL}/api/thumbnails`,
     `- **Agent index:** ${SITE_URL}/agent-index.json`,
+    `- **MCP endpoint:** ${SITE_URL}/api/registry/mcp`,
+    `- **MCP static JSON:** ${SITE_URL}/mcp.json`,
     `- **Sitemap:** ${SITE_URL}/sitemap.xml`,
     "",
     "---",
@@ -518,10 +676,14 @@ function buildAgentsMd(
 // ─────────────────────────────────────────────────────────────
 function buildClaudeMd(
   components: ComponentRecord[],
+  primitives: PrimitiveRecord[],
   thumbnails: string[],
 ): string {
   const categories = Array.from(
     new Set(components.map((c) => c.category)),
+  ).sort();
+  const primitiveCategories = Array.from(
+    new Set(primitives.map((p) => p.category)),
   ).sort();
 
   const base: string[] = [
@@ -540,6 +702,7 @@ function buildClaudeMd(
     `- **Author:** ${AUTHOR} (${AUTHOR_GITHUB})`,
     `- **License:** ${LICENSE}`,
     `- **Components:** ${components.length}`,
+    `- **Primitives:** ${primitives.length}`,
     `- **Thumbnails:** ${thumbnails.length}`,
     "",
     "---",
@@ -576,7 +739,8 @@ function buildClaudeMd(
     "npm run build               # Production build",
     "npm run start               # Run production build",
     "npm run lint                # ESLint",
-    "npm run generate-agents     # Regenerate AGENTS.md + CLAUDE.md + agent-index.json",
+    "npm run generate-agents     # Regenerate AGENTS.md + CLAUDE.md + agent-index.json + mcp.json",
+    "npm run generate-llms       # Regenerate llms.txt + llms-full.txt",
     "npm run generate-thumbnails # Sync thumbnails from registry",
     "```",
     "",
@@ -597,6 +761,7 @@ function buildClaudeMd(
     "## Component Registry",
     "",
     `All **${components.length}** components are registered in \`registry/components.ts\`.`,
+    `All **${primitives.length}** primitives are registered in \`registry/primitives.ts\`.`,
     "",
     "---",
     "",
@@ -621,6 +786,15 @@ function buildClaudeMd(
     "",
     "---",
     "",
+    "## Primitive Categories",
+    "",
+    ...primitiveCategories.map((cat) => {
+      const count = primitives.filter((p) => p.category === cat).length;
+      return `- **${cat}** (${count})`;
+    }),
+    "",
+    "---",
+    "",
     "## Thumbnails",
     "",
     `${thumbnails.length} thumbnails at \`${SITE_URL}/thumbnails/<slug>.webp\`.`,
@@ -629,7 +803,6 @@ function buildClaudeMd(
     "---",
   ];
 
-  // FAQ
   if (FAQ_DATA && FAQ_DATA.length > 0) {
     base.push("## FAQ (Quick Reference)", "");
     FAQ_DATA.forEach((faq) => {
@@ -644,9 +817,10 @@ function buildClaudeMd(
     "## Reference Files",
     "",
     "- `AGENTS.md` — tool-agnostic instructions for all AI agents",
-    `- \`public/llms.txt\` — machine-readable index at ${SITE_URL}/llms.txt`,
-    "- `public/llms-full.txt` — consolidated documentation",
-    `- \`public/agent-index.json\` — structured JSON index at ${SITE_URL}/agent-index.json`,
+    `- \`public/llms.txt\` — machine-readable index served at ${SITE_URL}/llms.txt`,
+    `- \`public/llms-full.txt\` — consolidated documentation served at ${SITE_URL}/llms-full.txt`,
+    `- \`public/agent-index.json\` — structured JSON index served at ${SITE_URL}/agent-index.json`,
+    `- \`public/mcp.json\` — MCP static registry served at ${SITE_URL}/mcp.json`,
     "",
     "---",
     "",
@@ -660,7 +834,11 @@ function buildClaudeMd(
 // ─────────────────────────────────────────────────────────────
 // AGENT-INDEX.json
 // ─────────────────────────────────────────────────────────────
-function buildAgentIndex(components: ComponentRecord[], thumbnails: string[]) {
+function buildAgentIndex(
+  components: ComponentRecord[],
+  primitives: PrimitiveRecord[],
+  thumbnails: string[],
+) {
   return {
     site: "Venumity UI",
     url: SITE_URL,
@@ -683,26 +861,54 @@ function buildAgentIndex(components: ComponentRecord[], thumbnails: string[]) {
     },
     counts: {
       components: components.length,
+      primitives: primitives.length,
       thumbnails: thumbnails.length,
       categories: new Set(components.map((c) => c.category)).size,
+      primitiveCategories: new Set(primitives.map((p) => p.category)).size,
       faqs: FAQ_DATA.length,
       docs: DOCS_DATA.reduce((n, s) => n + s.pages.length, 0),
       resources: RESOURCE_CATEGORIES.reduce((n, c) => n + c.pages.length, 0),
-      changelog: changelogEntries.length,
+      changelog: FLAT_CHANGELOG.length,
     },
     endpoints: {
       llms: `${SITE_URL}/llms.txt`,
       llmsFull: `${SITE_URL}/llms-full.txt`,
       registry: `${SITE_URL}/api/registry/components`,
+      mcp: `${SITE_URL}/api/registry/mcp`,
+      mcpStatic: `${SITE_URL}/mcp.json`,
       thumbnails: `${SITE_URL}/api/thumbnails`,
       sitemap: `${SITE_URL}/sitemap.xml`,
       thumbnailsGallery: `${SITE_URL}/thumbnails`,
     },
+    docs: DOCS_DATA.flatMap((section) =>
+      section.pages.map((page) => ({
+        section: section.title,
+        title: page.page,
+        url: `${SITE_URL}/docs/${toKebabCase(page.page)}`,
+        tags: page.tags ?? [],
+      })),
+    ),
+    resources: RESOURCE_CATEGORIES.flatMap((cat) =>
+      cat.pages.map((page) => ({
+        category: cat.name,
+        categorySlug: cat.slug,
+        title: page.title,
+        description: page.description ?? "",
+        url: `${SITE_URL}/resources/${cat.slug}/${toKebabCase(page.title)}`,
+        tags: page.tags ?? [],
+      })),
+    ),
+    changelog: FLAT_CHANGELOG.map((entry) => ({
+      title: entry.title,
+      date: entry.date,
+      url: `${SITE_URL}/changelog#${toKebabCase(entry.title)}`,
+    })),
     faq: FAQ_DATA.map((f) => ({
       question: f.question,
       answer: stripFaqAnswer(f.answer),
     })),
     components,
+    primitives,
     thumbnails,
   };
 }
@@ -713,19 +919,24 @@ function buildAgentIndex(components: ComponentRecord[], thumbnails: string[]) {
 function main() {
   console.log("[agents] Collecting registry data...");
   const components = collectComponents();
+  const primitives = collectPrimitives();
   const thumbnails = listThumbnails();
 
   console.log(
-    `[agents] Found ${components.length} components, ${thumbnails.length} thumbnails, ${FAQ_DATA.length} FAQs.`,
+    `[agents] Found ${components.length} components, ${primitives.length} primitives, ${thumbnails.length} thumbnails, ${FAQ_DATA.length} FAQs, ${FLAT_CHANGELOG.length} changelog entries.`,
   );
 
   const root = process.cwd();
   const publicDir = path.join(root, "public");
 
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+
   // 1. AGENTS.md
   fs.writeFileSync(
     path.join(root, "AGENTS.md"),
-    buildAgentsMd(components, thumbnails),
+    buildAgentsMd(components, primitives, thumbnails),
     "utf-8",
   );
   console.log("[agents] ✅ Wrote AGENTS.md");
@@ -733,7 +944,7 @@ function main() {
   // 2. CLAUDE.md
   fs.writeFileSync(
     path.join(root, "CLAUDE.md"),
-    buildClaudeMd(components, thumbnails),
+    buildClaudeMd(components, primitives, thumbnails),
     "utf-8",
   );
   console.log("[agents] ✅ Wrote CLAUDE.md");
@@ -741,15 +952,19 @@ function main() {
   // 3. public/agent-index.json
   fs.writeFileSync(
     path.join(publicDir, "agent-index.json"),
-    JSON.stringify(buildAgentIndex(components, thumbnails), null, 2),
+    JSON.stringify(
+      buildAgentIndex(components, primitives, thumbnails),
+      null,
+      2,
+    ),
     "utf-8",
   );
   console.log("[agents] ✅ Wrote public/agent-index.json");
 
-  // 4. public/mcp.json — machine-readable registry for AI assistants
+  // 4. public/mcp.json
   fs.writeFileSync(
     path.join(publicDir, "mcp.json"),
-    JSON.stringify(buildMcpIndex(components), null, 2),
+    JSON.stringify(buildMcpIndex(components, primitives), null, 2),
     "utf-8",
   );
   console.log("[agents] ✅ Wrote public/mcp.json");

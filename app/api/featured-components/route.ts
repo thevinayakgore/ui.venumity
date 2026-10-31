@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { COMPONENTS } from "@/registry/components";
-import type { ComponentCategory, ComponentItem } from "@/registry/types";
+import { ComponentCategory, ComponentItem } from "@/types";
 
 // Hardcoded list of featured component names (20 components)
 export const FEATURED_COMPONENTS = [
@@ -41,7 +41,6 @@ interface ComponentMeta {
   category: string;
   subcategory: string;
   description: string;
-  dependencies: string[];
   tags: string[];
 }
 
@@ -53,7 +52,6 @@ interface FeaturedComponent {
   description: string;
   thumbnail: string;
   componentUrl: string;
-  dependencies: string[];
   tags: string[];
   code: string | null;
   files?: Array<{ path: string; content: string }>;
@@ -82,8 +80,7 @@ function buildComponentMap(): Map<string, ComponentMeta> {
           displayName: item.itemName || "",
           category: category.name || "",
           subcategory: subcategory.name || "",
-          description: item.description || `${item.itemName || ""} component`,
-          dependencies: item.dependencies || [],
+          description: subcategory.description || `${item.itemName || ""} component`,
           tags: subcategoryTags, // Tags from subcategory
         });
       });
@@ -162,7 +159,6 @@ export async function GET() {
             comp.description || `${comp.displayName || comp.name} component`,
           thumbnail: `https://ui.venumity.com/thumbnails/${comp.name}.png`,
           componentUrl: `https://ui.venumity.com/component/${comp.name}`,
-          dependencies: comp.dependencies || [],
           tags: comp.tags || [], // Tags from subcategory
           code: null,
           files: undefined,

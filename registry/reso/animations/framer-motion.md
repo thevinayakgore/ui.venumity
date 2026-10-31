@@ -1,558 +1,1044 @@
-# Make React Animations Easy
+## Lesson 1: What Is Framer Motion ?
 
-Framer Motion is a production-ready motion library for React. It makes creating animations simple with a declarative API.
+Framer Motion is a React animation library that allows developers to animate HTML and SVG elements using declarative props. Instead of writing complex CSS keyframes or manually using `requestAnimationFrame`, developers describe animation states, and Motion handles interpolation, timing, physics, and DOM updates.
 
-#### Key Features
-
-- Declarative animations
-- Gesture support (drag, tap, hover)
-- Layout animations
-- Scroll-triggered animations
-- SVG animations
-
----
-
-## Installation
-
-```bash
-npm install framer-motion
-```
-
-**Basic Setup:**
+### Basic idea
 
 ```jsx
 import { motion } from "framer-motion";
 
-function App() {
-  return (
-    <motion.div animate={{ x: 100 }} transition={{ duration: 0.5 }}>
-      Animated Element
-    </motion.div>
-  );
-}
-```
-
----
-
-## Basic Animations
-
-### 1. Simple Animation
-
-```jsx
-import { motion } from "framer-motion";
-
-function Box() {
-  return (
-    <motion.div
-      animate={{
-        scale: [1, 2, 2, 1, 1],
-        rotate: [0, 0, 270, 270, 0],
-        borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-      }}
-      transition={{
-        duration: 2,
-        ease: "easeInOut",
-        times: [0, 0.2, 0.5, 0.8, 1],
-        repeat: Infinity,
-        repeatDelay: 1,
-      }}
-    />
-  );
-}
-```
-
-### 2. Entry Animations
-
-```jsx
-function Card() {
+export default function FadeIn() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2>Card Title</h2>
-      <p>Card content goes here</p>
+      Hello, Framer Motion
     </motion.div>
   );
 }
 ```
 
-### 3. Hover Effects
+This component starts invisible and slightly below its final position, then animates to full opacity and its normal position.
+
+### Why developers use it
+
+- Simple declarative API.
+- Smooth spring and physics-based animations.
+- Built-in gesture support.
+- Layout animations without manual calculations.
+- Enter and exit animations for conditional UI.
+- Scroll-based animations.
+- Strong React integration.
+- Suitable for modern React and Next.js applications.
+
+Motion is designed for React, JavaScript, and Vue, and supports layout, scroll, gestures, 3D, and hardware-accelerated animations. [103]
+
+---
+
+## Lesson 2: Installation and Setup
+
+Install Framer Motion in a React or Next.js project:
+
+```bash
+npm install framer-motion
+```
+
+Or using pnpm:
+
+```bash
+pnpm add framer-motion
+```
+
+Then import the `motion` component:
 
 ```jsx
-<motion.button
-  whileHover={{ scale: 1.1 }}
-  whileTap={{ scale: 0.9 }}
-  className="px-4 py-2 bg-blue-500 text-white"
+import { motion } from "framer-motion";
+```
+
+### Basic animation
+
+```jsx
+"use client";
+
+import { motion } from "framer-motion";
+
+export default function AnimatedBox() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      className="size-40 rounded-xl bg-blue-500"
+    />
+  );
+}
+```
+
+In Next.js App Router, animation components that use browser interactivity or client-side animation state should usually be Client Components.
+
+---
+
+## Lesson 3: Core Animation Props
+
+Framer Motion uses a small set of core props to define animations.
+
+| Prop | Purpose |
+|---|---|
+| `initial` | Starting state before animation |
+| `animate` | Target state after mount or state change |
+| `exit` | State before component unmounts |
+| `transition` | Timing, easing, spring, delay, and repetition |
+| `variants` | Named reusable animation states |
+| `whileHover` | Animation during hover |
+| `whileTap` | Animation while pressed |
+| `whileFocus` | Animation while focused |
+| `whileDrag` | Animation while dragging |
+| `whileInView` | Animation when element enters viewport |
+
+### Animating multiple properties
+
+```jsx
+<motion.div
+  initial={{ opacity: 0, x: -50 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
 >
-  Click Me
-</motion.button>
+  Animated content
+</motion.div>
+```
+
+### Animating on state change
+
+```jsx
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export default function ToggleBox() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        Toggle
+      </button>
+
+      <motion.div
+        animate={{
+          width: isOpen ? 300 : 120,
+          backgroundColor: isOpen ? "#22c55e" : "#3b82f6",
+        }}
+        transition={{ duration: 0.4 }}
+        className="h-20 rounded-xl"
+      />
+    </>
+  );
+}
+```
+
+When `isOpen` changes, Motion animates from the current value to the new target value.
+
+---
+
+## Lesson 4: Transition Types
+
+The `transition` prop controls how an animation behaves.
+
+### Duration and easing
+
+```jsx
+<motion.div
+  animate={{ x: 100 }}
+  transition={{ duration: 0.5, ease: "easeInOut" }}
+/>
+```
+
+### Delay
+
+```jsx
+<motion.div
+  animate={{ opacity: 1 }}
+  transition={{ delay: 0.3, duration: 0.5 }}
+/>
+```
+
+### Repeat
+
+```jsx
+<motion.div
+  animate={{ rotate: 360 }}
+  transition={{
+    repeat: Infinity,
+    repeatType: "loop",
+    duration: 2,
+    ease: "linear",
+  }}
+/>
+```
+
+### Spring animation
+
+Springs are useful for natural, physical movement.
+
+```jsx
+<motion.div
+  animate={{ scale: 1.1 }}
+  transition={{
+    type: "spring",
+    stiffness: 300,
+    damping: 20,
+  }}
+/>
+```
+
+| Property | Meaning |
+|---|---|
+| `stiffness` | How quickly the spring reacts |
+| `damping` | How much oscillation is reduced |
+| `mass` | Simulated weight of the object |
+| `velocity` | Initial velocity |
+
+### Per-property transitions
+
+```jsx
+<motion.div
+  animate={{
+    x: 100,
+    opacity: 1,
+  }}
+  transition={{
+    x: {
+      type: "spring",
+      stiffness: 200,
+    },
+    opacity: {
+      duration: 0.3,
+    },
+  }}
+/>
 ```
 
 ---
 
-## Advanced Animations
+## Lesson 5: Variants
 
-### 1. Staggered Children
+Variants are named animation states. They make complex animations reusable and easier to coordinate across parent and child components.
+
+Variants define named states that can be passed to `motion` components through the `variants` prop. [102]
+
+### Basic variant
 
 ```jsx
+"use client";
+
+import { motion } from "framer-motion";
+
+const boxVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
+export default function VariantBox() {
+  return (
+    <motion.div
+      variants={boxVariants}
+      initial="hidden"
+      animate="visible"
+      className="size-40 rounded-xl bg-purple-500"
+    />
+  );
+}
+```
+
+### Parent and child variants
+
+When a parent changes its animation state, child components with matching variant names can animate automatically.
+
+```jsx
+"use client";
+
+import { motion } from "framer-motion";
+
 const container = {
   hidden: { opacity: 0 },
-  show: {
+  visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.2,
     },
   },
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
 };
 
-function List() {
+export default function StaggeredList() {
   return (
-    <motion.ul variants={container} initial="hidden" animate="show">
-      <motion.li variants={item}>Item 1</motion.li>
-      <motion.li variants={item}>Item 2</motion.li>
-      <motion.li variants={item}>Item 3</motion.li>
+    <motion.ul
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      {["React", "Next.js", "Framer Motion"].map((text) => (
+        <motion.li key={text} variants={item}>
+          {text}
+        </motion.li>
+      ))}
     </motion.ul>
   );
 }
 ```
 
-### 2. Drag and Drop
+### Why variants matter
+
+- Avoid repeating animation objects.
+- Coordinate parent and child animations.
+- Support staggered list animations.
+- Make animation logic reusable.
+- Improve readability for complex UI sequences.
+
+---
+
+## Lesson 6: Gesture Animations
+
+Framer Motion provides built-in gesture props for common user interactions. Supported gestures include hover, tap, focus, drag, and in-view interactions. [102][108]
+
+### Hover animation
+
+```jsx
+<motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="rounded-lg bg-blue-600 px-5 py-2 text-white"
+>
+  Hover Me
+</motion.button>
+```
+
+### Tap animation
+
+```jsx
+<motion.div
+  whileTap={{ scale: 0.9 }}
+  className="size-24 rounded-full bg-red-500"
+/>
+```
+
+### Focus animation
+
+```jsx
+<motion.input
+  whileFocus={{
+    scale: 1.02,
+    boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.4)",
+  }}
+  className="rounded-lg border px-4 py-2"
+/>
+```
+
+### Drag animation
 
 ```jsx
 <motion.div
   drag
   dragConstraints={{
+    left: -100,
+    right: 100,
     top: -50,
-    left: -50,
-    right: 50,
     bottom: 50,
   }}
   whileDrag={{ scale: 1.1 }}
-  className="w-20 h-20 bg-blue-500 rounded-lg"
+  className="size-24 rounded-xl bg-green-500"
 />
 ```
 
-### 3. Scroll Animations
+### Drag with momentum
 
 ```jsx
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-
-function ScrollComponent() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-
-  return (
-    <section ref={ref}>
-      <motion.div
-        style={{
-          transform: isInView ? "none" : "translateX(-200px)",
-          opacity: isInView ? 1 : 0,
-          transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-        }}
-      >
-        Content that animates when scrolled into view
-      </motion.div>
-    </section>
-  );
-}
+<motion.div
+  drag
+  dragElastic={0.2}
+  dragMomentum={true}
+  className="size-24 rounded-xl bg-orange-500"
+/>
 ```
 
 ---
 
-## Layout Animations
+## Lesson 7: Enter and Exit Animations
 
-### 1. Animate Layout Changes
-
-```jsx
-function ToggleBox() {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  return (
-    <motion.div
-      layout
-      className="p-4 bg-gray-100 rounded-lg"
-      onClick={() => setIsExpanded(!isExpanded)}
-    >
-      <motion.h2 layout="position">Click to Expand</motion.h2>
-      {isExpanded && (
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          Additional content that appears
-        </motion.p>
-      )}
-    </motion.div>
-  );
-}
-```
-
-### 2. Shared Layout Animations
+When a component is conditionally rendered, it normally disappears instantly. Framer Motion’s `AnimatePresence` allows components to animate before they are removed from the DOM.
 
 ```jsx
-function ImageGallery() {
-  const [selectedId, setSelectedId] = useState(null);
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function ModalExample() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      {items.map((item) => (
-        <motion.div
-          key={item.id}
-          layoutId={item.id}
-          onClick={() => setSelectedId(item.id)}
-        >
-          <motion.h5>{item.title}</motion.h5>
-          <motion.h2>{item.subtitle}</motion.h2>
-        </motion.div>
-      ))}
+      <button onClick={() => setIsOpen(true)}>
+        Open Modal
+      </button>
 
-      {selectedId && (
-        <motion.div layoutId={selectedId}>
-          {/* Expanded view with same layoutId */}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-xl bg-white p-6 shadow-xl"
+          >
+            <h2>Modal Title</h2>
+            <button onClick={() => setIsOpen(false)}>
+              Close
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
 ```
 
+### Important rule
+
+The `exit` animation works only when the component is rendered inside `AnimatePresence`.
+
 ---
 
-## SVG Animations
+## Lesson 8: Layout Animations
 
-### 1. Path Drawing
+Layout animations animate changes in an element’s position or size. This is useful for sorting lists, expanding cards, moving elements between containers, and responsive UI changes.
+
+Framer Motion uses a FLIP-based approach: it measures the element before and after the DOM update, applies a transform to preserve the old visual position, then animates it to the new position. [112]
+
+### Basic layout animation
 
 ```jsx
-const draw = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: {
-    pathLength: 1,
-    opacity: 1,
-    transition: {
-      pathLength: { type: "spring", duration: 1.5, bounce: 0 },
-      opacity: { duration: 0.01 },
-    },
-  },
-};
+"use client";
 
-function SVGIcon() {
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export default function LayoutAnimation() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <motion.div
+      layout
+      onClick={() => setIsExpanded(!isExpanded)}
+      className="cursor-pointer rounded-xl bg-indigo-500 p-4 text-white"
+      style={{
+        width: isExpanded ? 400 : 200,
+      }}
+    >
+      Click to {isExpanded ? "collapse" : "expand"}
+    </motion.div>
+  );
+}
+```
+
+### Animating list order
+
+```jsx
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export default function SortableList() {
+  const [items, setItems] = useState(["A", "B", "C"]);
+
+  function shuffle() {
+    setItems([...items].sort(() => Math.random() - 0.5));
+  }
+
+  return (
+    <>
+      <button onClick={shuffle}>Shuffle</button>
+
+      <ul>
+        {items.map((item) => (
+          <motion.li
+            key={item}
+            layout
+            className="rounded-lg bg-gray-100 p-4"
+          >
+            {item}
+          </motion.li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+### Shared layout animation
+
+Use `layoutId` when the same visual element moves between different components or states.
+
+```jsx
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export default function SharedLayout() {
+  const [selected, setSelected] = useState("home");
+
+  return (
+    <div className="flex gap-2">
+      {["home", "profile", "settings"].map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setSelected(tab)}
+          className="relative px-4 py-2"
+        >
+          {selected === tab && (
+            <motion.span
+              layoutId="active-tab"
+              className="absolute inset-0 rounded-lg bg-blue-500"
+            />
+          )}
+          <span className="relative">{tab}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+When two components share the same `layoutId`, Motion automatically animates between their positions and sizes. [106]
+
+---
+
+## Lesson 9: Scroll-Based Animations
+
+Framer Motion can animate elements when they enter the viewport or based on scroll progress.
+
+### Animate when in view
+
+```jsx
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.3 }}
+  transition={{ duration: 0.6 }}
+>
+  This animates when scrolled into view.
+</motion.div>
+```
+
+| Option | Meaning |
+|---|---|
+| `once: true` | Animation runs only once |
+| `amount: 0.3` | Animation starts when 30% of element is visible |
+| `margin` | Adjusts the viewport detection area |
+
+### Scroll progress animation
+
+```jsx
+"use client";
+
+import { motion, useScroll } from "framer-motion";
+
+export default function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+
+  return (
+    <motion.div
+      style={{
+        scaleX: scrollYProgress,
+        transformOrigin: "left",
+      }}
+      className="fixed top-0 left-0 h-1 w-full bg-blue-600"
+    />
+  );
+}
+```
+
+### Parallax effect
+
+```jsx
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+
+export default function ParallaxSection() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY,, [0, -100]);[0][500]
+
+  return (
+    <motion.div style={{ y }} className="h-64 bg-linear-to-tl from-blue-500 to-purple-500">
+      Parallax content
+    </motion.div>
+  );
+}
+```
+
+---
+
+## Lesson 10: Animating React Router and Next.js Pages
+
+In React Router or Next.js, page transitions can be handled using `AnimatePresence` and route keys.
+
+### Basic page transition pattern
+
+```jsx
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function PageTransition({ routeKey, children }) {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={routeKey}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.25 }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+```
+
+### Important consideration in Next.js App Router
+
+Page transitions in the App Router require careful handling because Server Components and route segments have their own rendering behavior. For most applications, animate smaller UI sections, modals, lists, and shared layout elements rather than forcing complex full-page transitions.
+
+---
+
+## Lesson 11: Animating SVG
+
+Framer Motion can animate SVG attributes and path drawing.
+
+```jsx
+"use client";
+
+import { motion } from "framer-motion";
+
+export default function AnimatedSvg() {
   return (
     <motion.svg
       width="200"
       height="200"
-      viewBox="0 0 200 200"
-      initial="hidden"
-      animate="visible"
+      viewBox="0 0 100 100"
     >
       <motion.circle
-        cx="100"
-        cy="100"
-        r="80"
-        stroke="#ff0055"
-        variants={draw}
-        custom={1}
+        cx="50"
+        cy="50"
+        r="40"
+        stroke="#3b82f6"
+        strokeWidth="5"
+        fill="transparent"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2 }}
       />
     </motion.svg>
   );
 }
 ```
 
-### 2. Morphing SVG
+### Common SVG animations
+
+| Property | Use |
+|---|---|
+| `pathLength` | Draw or erase SVG paths |
+| `fill` | Animate fill color |
+| `stroke` | Animate stroke color |
+| `scale` | Scale SVG elements |
+| `rotate` | Rotate SVG elements |
+| `opacity` | Fade SVG elements |
+
+---
+
+## Lesson 12: Custom Hooks in Framer Motion
+
+Framer Motion provides hooks for advanced animation control.
+
+| Hook | Purpose |
+|---|---|
+| `useAnimation` | Manually start, stop, and sequence animations |
+| `useScroll` | Track scroll position or progress |
+| `useTransform` | Transform one motion value into another |
+| `useSpring` | Add spring physics to a motion value |
+| `useMotionValue` | Create a standalone animatable value |
+| `useInView` | Detect when an element enters the viewport |
+| `useAnimate` | Create imperative animations |
+
+### useAnimation example
 
 ```jsx
-const pathVariants = {
-  hidden: { pathLength: 0 },
-  visible: {
-    pathLength: 1,
-    transition: { duration: 2 },
-  },
-};
+"use client";
 
-function AnimatedLogo() {
+import { useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
+
+export default function ControlledAnimation() {
+  const controls = useAnimation();
+
+  async function startAnimation() {
+    await controls.start({
+      x: 100,
+      transition: { duration: 0.5 },
+    });
+
+    await controls.start({
+      x: 0,
+      transition: { duration: 0.5 },
+    });
+  }
+
   return (
-    <svg viewBox="0 0 100 100">
-      <motion.path
-        d="M20,50 Q50,10 80,50"
-        variants={pathVariants}
-        initial="hidden"
-        animate="visible"
-        stroke="black"
-        strokeWidth="2"
-        fill="none"
+    <>
+      <motion.div
+        animate={controls}
+        className="size-24 rounded-xl bg-pink-500"
       />
-    </svg>
+      <button onClick={startAnimation}>Animate</button>
+    </>
   );
 }
 ```
 
----
-
-## Gesture Animations
-
-### 1. Hover Gestures
+### useMotionValue example
 
 ```jsx
-<motion.div
-  whileHover="hover"
-  variants={{
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.2 },
-    },
-  }}
->
-  <motion.div
-    variants={{
-      hover: {
-        rotate: 180,
-        transition: { duration: 0.4 },
-      },
-    }}
-  >
-    🔄
-  </motion.div>
-</motion.div>
-```
+"use client";
 
-### 2. Tap Gestures
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
-```jsx
-<motion.button
-  whileTap="tap"
-  variants={{
-    tap: {
-      scale: 0.95,
-      boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
-    },
-  }}
->
-  Press Me
-</motion.button>
-```
-
----
-
-## Page Transitions
-
-### 1. Page Exit/Enter
-
-```jsx
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    x: "-100vw",
-  },
-  in: {
-    opacity: 1,
-    x: 0,
-  },
-  out: {
-    opacity: 0,
-    x: "100vw",
-  },
-};
-
-const pageTransition = {
-  type: "tween",
-  ease: "anticipate",
-  duration: 0.5,
-};
-
-function AnimatedPage({ children }) {
-  return (
-    <motion.div
-      initial="initial"
-      animate="in"
-      exit="out"
-      variants={pageVariants}
-      transition={pageTransition}
-    >
-      {children}
-    </motion.div>
+export default function MotionValueExample() {
+  const x = useMotionValue(0);
+  const background = useTransform(
+    x,
+    [-100, 0, 100],
+    ["#ef4444", "#3b82f6", "#22c55e"]
   );
-}
-```
-
-### 2. Router Integration (Next.js)
-
-```jsx
-import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/router";
-
-function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-
-  return (
-    <AnimatePresence mode="wait">
-      <Component key={router.route} {...pageProps} />
-    </AnimatePresence>
-  );
-}
-```
-
----
-
-## Performance Optimization
-
-### 1. Use will-change
-
-```jsx
-<motion.div style={{ willChange: "transform, opacity" }} animate={{ x: 100 }} />
-```
-
-### 2. Optimize Expensive Animations
-
-```jsx
-const optimizedVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      // Use transform properties instead of layout
-      opacity: { duration: 0.3 },
-      // Use hardware acceleration
-      x: { type: "spring", stiffness: 300, damping: 30 },
-    },
-  },
-};
-```
-
-### 3. Reduce Motion for Accessibility
-
-```jsx
-import { motion, useReducedMotion } from "framer-motion";
-
-function AccessibleAnimation() {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      animate={shouldReduceMotion ? {} : { x: 100 }}
-      transition={{ duration: 1 }}
-    >
-      Content
-    </motion.div>
-  );
-}
-```
-
----
-
-## Common Patterns
-
-### 1. Loading Spinner
-
-```jsx
-function LoadingSpinner() {
-  return (
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{
-        duration: 1,
-        repeat: Infinity,
-        ease: "linear",
-      }}
-      className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"
+      drag="x"
+      style={{ x, background }}
+      className="size-24 rounded-xl"
     />
   );
 }
 ```
 
-### 2. Notification Toast
+---
+
+## Lesson 13: Performance Optimization
+
+Animation performance depends heavily on which CSS properties are animated. Motion recommends animating transform and opacity-related properties for smooth high-frame-rate experiences. [105]
+
+### Prefer performant properties
+
+| Preferred | Avoid where possible |
+|---|---|
+| `x`, `y`, `scale`, `rotate` | `top`, `left`, `right`, `bottom` |
+| `opacity` | `width`, `height` |
+| `transform` | `margin`, `padding` |
+| `filter` | Complex layout changes |
+
+### Good example
 
 ```jsx
-function Toast({ message, isVisible }) {
+<motion.div
+  animate={{ opacity: 1, y: 0, scale: 1 }}
+/>
+```
+
+### Less performant example
+
+```jsx
+<motion.div
+  animate={{
+    width: 400,
+    height: 300,
+    marginTop: 40,
+  }}
+/>
+```
+
+### Optimization tips
+
+- Animate `transform` and `opacity` whenever possible.
+- Avoid animating layout properties on large lists.
+- Use `layout` only where necessary.
+- Use `will-change` carefully and sparingly.
+- Avoid animating too many elements at the same time.
+- Use `once: true` for in-view animations.
+- Respect user accessibility preferences.
+- Use production builds for accurate performance measurement.
+
+Motion can use hardware acceleration and transforms to keep animations smooth, but layout-heavy animations can still be expensive. [103][105]
+
+---
+
+## Lesson 14: Accessibility and Reduced Motion
+
+Animations should improve user experience, not create discomfort. Some users prefer reduced motion due to motion sensitivity or accessibility needs.
+
+### Respect reduced motion
+
+```jsx
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
+export default function AccessibleAnimation() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, x: 100 }}
-          className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded"
-        >
-          {message}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.5 }}
+    >
+      Accessible animated content
+    </motion.div>
   );
 }
 ```
 
-### 3. Accordion
+### Accessibility best practices
+
+- Avoid large or repeated movement.
+- Do not rely only on animation to communicate state.
+- Keep animations short and purposeful.
+- Respect the user’s reduced-motion preference.
+- Ensure animated controls remain keyboard accessible.
+- Avoid flashing or high-contrast rapid motion.
+
+---
+
+## Lesson 15: Framer Motion vs CSS Animation
+
+| Feature | CSS Animation | Framer Motion |
+|---|---|---|
+| Best for | Simple loops and hover effects | State-driven and interactive UI animations |
+| React integration | Manual | Native |
+| Gesture support | Limited | Built-in |
+| Exit animations | Difficult | Built-in with `AnimatePresence` |
+| Layout animations | Manual | Built-in with `layout` |
+| Spring physics | Limited | Built-in |
+| Scroll animations | Limited | Built-in hooks |
+| Bundle size | No extra library | Adds JavaScript bundle size |
+| Complexity | Simple animations | Complex sequences and interactions |
+
+Use CSS animations for simple, static effects such as hover states, loading spinners, and basic transitions. Use Framer Motion when animations depend on React state, gestures, layout changes, conditional rendering, or sequencing.
+
+---
+
+## Lesson 16: Advantages of Framer Motion
+
+- Declarative and easy-to-read API.
+- Strong React integration.
+- Smooth spring and physics-based animations.
+- Built-in gesture handling.
+- Layout animations without manual DOM measurement.
+- Exit animations through `AnimatePresence`.
+- Scroll-linked animations.
+- SVG animation support.
+- Useful for modern React and Next.js interfaces.
+- Good developer experience for component-level animation.
+
+---
+
+## Lesson 17: Disadvantages and Limitations
+
+| Limitation | Explanation |
+|---|---|
+| Extra bundle size | Adds JavaScript to the client bundle |
+| Overuse risk | Too many animations can harm usability and performance |
+| Learning curve | Variants, layout animations, and motion values require practice |
+| Not ideal for every animation | Simple CSS effects may not need a library |
+| Server Component limitations | Animation logic is client-side and usually requires Client Components |
+| Layout animation cost | Animating layout can be expensive for large or complex DOM trees |
+| Debugging complexity | Complex sequences can become difficult to maintain |
+
+Framer Motion is more feature-rich but larger than lighter animation libraries; it is designed to provide a complete declarative animation system for React. [104]
+
+---
+
+## Lesson 18: Most Important Interview Questions
+
+### 1. What is Framer Motion?
+
+Framer Motion, now known as Motion, is a React animation library used to create declarative animations, gestures, layout transitions, scroll effects, and enter/exit animations.
+
+### 2. What is the difference between CSS animations and Framer Motion?
+
+CSS animations are best for simple, static effects. Framer Motion is better for animations controlled by React state, user gestures, conditional rendering, layout changes, and complex sequences.
+
+### 3. What is the `motion` component?
+
+`motion` is a wrapper around HTML and SVG elements that adds animation capabilities.
 
 ```jsx
-function Accordion({ title, children }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div>
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left"
-      >
-        {title}
-      </motion.button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ overflow: "hidden" }}
-          >
-            {children}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+<motion.div animate={{ opacity: 1 }} />
 ```
 
+### 4. What is the difference between `initial` and `animate`?
+
+`initial` defines the starting state, while `animate` defines the target state. Motion animates from `initial` to `animate`.
+
+### 5. What is the `transition` prop?
+
+The `transition` prop controls animation timing, duration, delay, easing, spring physics, and repetition.
+
+### 6. What are variants?
+
+Variants are named animation states that can be reused and coordinated across parent and child components. [102]
+
+### 7. How do parent and child variants work?
+
+When a parent changes to a variant name, child components with matching variant names animate automatically without needing their own `animate` prop.
+
+### 8. What is `AnimatePresence`?
+
+`AnimatePresence` enables exit animations for components that are removed from the React tree.
+
+### 9. Why is `exit` not working?
+
+The `exit` prop works only when the conditional component is wrapped inside `AnimatePresence`.
+
+### 10. What is `whileHover`?
+
+`whileHover` defines the animation state applied while the user hovers over an element.
+
+### 11. What is `whileTap`?
+
+`whileTap` defines the animation state applied while the user presses an element.
+
+### 12. What is `whileInView`?
+
+`whileInView` animates an element when it enters the browser viewport.
+
+### 13. What is a layout animation?
+
+A layout animation animates an element’s position or size when the layout changes. It is enabled using the `layout` prop.
+
+### 14. What is `layoutId`?
+
+`layoutId` enables shared layout animations between components. Elements with the same `layoutId` animate smoothly from one position or size to another. [106]
+
+### 15. What is FLIP?
+
+FLIP stands for **First, Last, Invert, Play**. It is a technique used to animate layout changes by measuring positions before and after a DOM update, applying an inverse transform, and animating back to the final position. [112]
+
+### 16. What is `useScroll`?
+
+`useScroll` tracks page or element scroll position and exposes scroll progress as a motion value.
+
+### 17. What is `useTransform`?
+
+`useTransform` converts one motion value into another. For example, it can convert scroll progress into opacity, scale, or translation.
+
+### 18. What is `useMotionValue`?
+
+`useMotionValue` creates an independent animatable value that can be used for advanced animations without triggering React re-renders.
+
+### 19. What is `useAnimation`?
+
+`useAnimation` provides manual control over animations, allowing developers to start, stop, delay, or sequence animations programmatically.
+
+### 20. Which properties should you animate for performance?
+
+Prefer `opacity`, `x`, `y`, `scale`, and `rotate`. Avoid animating layout-heavy properties such as `width`, `height`, `top`, `left`, `margin`, and `padding` when possible. [105]
+
 ---
 
-## Best Practices
+## Lesson 19: Senior-Level Interview Questions
 
-### Do:
+### 1. How does Framer Motion handle layout animations?
 
-- Use `initial` and `animate` for entry animations
-- Implement exit animations with `AnimatePresence`
-- Use hardware-accelerated properties (transform, opacity)
-- Add `transition` properties for smooth animations
-- Consider accessibility with `useReducedMotion`
-- Test animations on mobile devices
+It uses a FLIP-based technique. It measures the element’s position and size before and after a DOM update, applies a transform to preserve the old visual position, and animates that transform back to zero. [112]
 
-### Avoid:
+### 2. Why can animating `width` and `height` be slow?
 
-- Animating layout properties (margin, padding)
-- Too many simultaneous animations
-- Long duration animations that block interaction
-- Animations that cause content shift
-- Forgetting exit animations
+These properties can trigger browser layout and paint operations. Transform-based properties such as `scale`, `x`, `y`, and `rotate` are generally more performant because they can be handled by the compositor. [105]
+
+### 3. What is the difference between `animate` and `useAnimation`?
+
+`animate` is declarative and tied to props or state. `useAnimation` is imperative and useful when animations must be started, stopped, delayed, or sequenced manually.
+
+### 4. How does `AnimatePresence` work internally?
+
+It keeps exiting components mounted temporarily, applies the `exit` animation, and removes them from the DOM after the animation completes.
+
+### 5. How would you animate a list efficiently?
+
+Use stable keys, animate transform-based properties, use variants with `staggerChildren`, avoid animating container layout repeatedly, and use `layout` only when list order or size changes.
+
+### 6. How would you implement a modal animation?
+
+Use `AnimatePresence`, conditionally render the modal, define `initial`, `animate`, and `exit` states, and animate only `opacity`, `scale`, and `y` for performance.
+
+### 7. How would you create a page transition in Next.js?
+
+Wrap route content in `AnimatePresence`, provide a stable route key, and animate the wrapper component. Keep transitions simple because App Router rendering and Server Components add complexity.
+
+### 8. How do you prevent animations from hurting accessibility?
+
+Use `useReducedMotion`, avoid excessive movement, keep durations short, preserve keyboard accessibility, and ensure animation is not the only way users understand UI state.
+
+### 9. When would you choose GSAP over Framer Motion?
+
+Choose GSAP for complex timeline-based animations, advanced sequencing, non-React-heavy projects, or highly customized scroll and canvas interactions. Choose Framer Motion for React component state, gestures, layout transitions, and enter/exit animations.
+
+### 10. How would you debug a broken Framer Motion animation?
+
+Check whether the component is a Client Component, verify `initial` and `animate` values, ensure stable keys, confirm `AnimatePresence` usage for exit animations, inspect conflicting CSS transforms, and check whether layout animations are being triggered unnecessarily.
 
 ---
 
-## Resources
+## Lesson 20: Best Practices
 
-**Official Documentation:**
+- Use animations to improve clarity, not decoration.
+- Keep animations short and purposeful.
+- Prefer `opacity` and transform properties.
+- Use variants for reusable animation logic.
+- Use `AnimatePresence` for conditional UI.
+- Use `layout` only when layout actually changes.
+- Respect reduced-motion preferences.
+- Avoid animating large lists or complex layouts.
+- Use stable keys for animated list items.
+- Keep animation components modular and reusable.
+- Test animations on low-end devices.
+- Use production builds for performance measurement.
 
-- [Framer Motion Docs](https://www.framer.com/motion/)
-- [API Reference](https://www.framer.com/motion/component/)
-- [Examples](https://www.framer.com/motion/examples/)
+---
 
-**Community Resources:**
+## Summary
 
-- [Framer Motion Examples](https://github.com/framer/motion/tree/main/examples)
-- [Animation Recipes](https://www.framer.com/motion/recipes/)
-- [Showcase](https://www.framer.com/showcase/)
+Framer Motion is a powerful animation library for React applications. It simplifies animations through declarative props, variants, gestures, layout animations, scroll effects, and exit transitions.
+
+For beginners, start with `motion.div`, `initial`, `animate`, `transition`, and `AnimatePresence`. For interviews, focus on variants, gestures, layout animations, `layoutId`, FLIP, `AnimatePresence`, `useScroll`, `useTransform`, and animation performance.
+
+This content is provided for learning purposes only. While we aim to keep it accurate and up to date, technologies evolve quickly. Please refer to the official Motion documentation for the latest guidance.

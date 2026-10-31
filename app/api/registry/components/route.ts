@@ -1,41 +1,56 @@
 // app/api/registry/components/route.ts
-import { COMPONENTS } from '@/registry/components';
-import { NextResponse } from 'next/server';
-import type { ComponentCategory, ComponentItem } from '@/registry/types';
+import { NextResponse } from "next/server";
+import { toKebabCase } from "@/utils/slug-kebab";
+import { COMPONENTS } from "@/registry/components";
+import { PRIMITIVES } from "@/registry/primitives";
 
-// Utility to convert to kebab-case
-function toKebabCase(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
+export const dynamic = "force-static";
+export const revalidate = 60;
 
 export async function GET() {
   try {
-    const components = (COMPONENTS as ComponentCategory[]).flatMap((cat: ComponentCategory) => {
-      return cat.subcategories.flatMap((sub) => {
-        return sub.items.map((item: ComponentItem) => ({
-          name: toKebabCase(item.itemName || ''),
-          displayName: item.itemName || '',
-          category: cat.name || '',
-          subcategory: sub.name || '',
-          path: `venumity/${toKebabCase(cat.name)}/${toKebabCase(sub.name)}/${toKebabCase(item.itemName)}`,
-          dependencies: item.dependencies || [],
-          description: item.description || '',
-        }));
-      });
-    });
-    
-    return NextResponse.json({
-      components,
-      total: components.length
-    });
+    const components = COMPONENTS.flatMap((cat) =>
+      cat.subcategories.flatMap((sub) =>
+        sub.items.map((item) => ({
+          name: toKebabCase(item.itemName || ""),
+          displayName: item.itemName || "",
+          category: cat.name || "",
+          subcategory: sub.name || "",
+          path: `venumity/components/${cat.slug}/${sub.slug}/${item.slug}`,
+          type: "component" as const,
+        })),
+      ),
+    );
+
+    const primitives = PRIMITIVES.flatMap((cat) =>
+      cat.subcategories.flatMap((sub) =>
+        sub.items.map((item) => ({
+          name: toKebabCase(item.slug || item.itemName),
+          displayName: item.itemName || "",
+          category: cat.name || "",
+          subcategory: sub.name || "",
+          path: `venumity/primitives/${cat.slug}/${sub.slug}/${item.slug}`,
+          type: "primitive" as const,
+        })),
+      ),
+    );
+
+    const all = [...components, ...primitives];
+
+    return NextResponse.json(
+      { components: all, total: all.length },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=60, s-maxage=60, must-revalidate",
+        },
+      },
+    );
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       { error: `Failed to fetch components: ${errorMessage}` },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

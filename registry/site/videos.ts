@@ -1,9 +1,9 @@
 // registry/site/videos.ts
 export interface VideoProps {
   id: string;
+  date: string;
   title: string;
   description: string;
-  date: string;
 }
 
 export const VIDEOS: VideoProps[] = [

@@ -1,15 +1,16 @@
 // app/sitemap.ts
-import { MetadataRoute } from "next";
 import fs from "fs";
 import path from "path";
-import { COMPONENTS } from "@/registry/components";
-import { RESOURCE_CATEGORIES } from "@/registry/resources";
-import { DOCS_DATA } from "@/registry/site/docs";
-import { changelogEntries } from "@/registry/site/changelog";
-import { VIDEOS } from "@/registry/site/videos";
-import { FAQ_DATA } from "@/registry/site/faq";
-import { toKebabCase } from "@/utils/slug-kebab";
+import { MetadataRoute } from "next";
 import { website } from "@/lib/brand";
+import { FAQ_DATA } from "@/registry/site/faq";
+import { VIDEOS } from "@/registry/site/videos";
+import { toKebabCase } from "@/utils/slug-kebab";
+import { DOCS_DATA } from "@/registry/site/docs";
+import { RESOURCES } from "@/registry/resources";
+import { COMPONENTS } from "@/registry/components";
+import { PRIMITIVES } from "@/registry/primitives";
+import { CHANGELOGS } from "@/registry/site/changelog";
 
 // ─────────────────────────────────────────────────────────────
 // Read thumbnail filenames directly from disk at build time
@@ -54,6 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }> = [
     { path: "", priority: 1.0, freq: "daily", lastModified: TODAY },
     { path: "/components", priority: 0.95, freq: "daily", lastModified: TODAY },
+    { path: "/primitives", priority: 0.95, freq: "daily", lastModified: TODAY },
     { path: "/cli", priority: 0.9, freq: "weekly", lastModified: TODAY },
     { path: "/resources", priority: 0.9, freq: "weekly", lastModified: TODAY },
     { path: "/docs", priority: 0.9, freq: "weekly", lastModified: TODAY },
@@ -130,12 +132,66 @@ export default function sitemap(): MetadataRoute.Sitemap {
           priority: 0.8,
         });
 
-        // Also expose the preview page for each component
+        // Live preview page (route matches resolvePreviewBySlug)
         pages.push({
-          url: `${baseUrl}/preview/component/${catSlug}/${subSlug}/${itemSlug}`,
+          url: `${baseUrl}/preview/${catSlug}/${subSlug}/${itemSlug}`,
           lastModified: TODAY,
           changeFrequency: "monthly",
           priority: 0.6,
+        });
+      });
+
+      // Subcategory-level extra examples exposed by the registry
+      (subcategory.moreExamples ?? []).forEach((example) => {
+        pages.push({
+          url: `${baseUrl}/preview/${catSlug}/${subSlug}/${toKebabCase(example)}`,
+          lastModified: TODAY,
+          changeFrequency: "monthly",
+          priority: 0.55,
+        });
+      });
+    });
+  });
+
+  // ============================================================
+  // PRIMITIVE CATEGORIES / SUBCATEGORIES / ITEMS
+  // ============================================================
+  PRIMITIVES.forEach((category) => {
+    const catSlug = toKebabCase(category.name);
+
+    category.subcategories.forEach((subcategory) => {
+      const subSlug = toKebabCase(subcategory.name);
+
+      pages.push({
+        url: `${baseUrl}/primitives/${catSlug}/${subSlug}`,
+        lastModified: TODAY,
+        changeFrequency: "weekly",
+        priority: 0.85,
+      });
+
+      subcategory.items.forEach((item) => {
+        const itemSlug = toKebabCase(item.itemName);
+        pages.push({
+          url: `${baseUrl}/primitives/${catSlug}/${subSlug}/${itemSlug}`,
+          lastModified: TODAY,
+          changeFrequency: "weekly",
+          priority: 0.8,
+        });
+
+        pages.push({
+          url: `${baseUrl}/preview/${catSlug}/${subSlug}/${itemSlug}`,
+          lastModified: TODAY,
+          changeFrequency: "monthly",
+          priority: 0.6,
+        });
+      });
+
+      (subcategory.moreExamples ?? []).forEach((example) => {
+        pages.push({
+          url: `${baseUrl}/preview/${catSlug}/${subSlug}/${toKebabCase(example)}`,
+          lastModified: TODAY,
+          changeFrequency: "monthly",
+          priority: 0.55,
         });
       });
     });
@@ -144,9 +200,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ============================================================
   // RESOURCES
   // ============================================================
-  RESOURCE_CATEGORIES.forEach((cat) => {
+  RESOURCES.forEach((cat) => {
+    // Category listing page
+    pages.push({
+      url: `${baseUrl}/resources/${cat.slug}`,
+      lastModified: TODAY,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    });
+
     cat.pages.forEach((page) => {
-      if (!page.published) return;
       pages.push({
         url: `${baseUrl}/resources/${cat.slug}/${toKebabCase(page.title)}`,
         lastModified: TODAY,
@@ -161,9 +224,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ============================================================
   DOCS_DATA.forEach((section) => {
     section.pages.forEach((page) => {
-      if (page.published === false) return;
       pages.push({
-        url: `${baseUrl}/docs/${page.slug}`,
+        url: `${baseUrl}/docs/${toKebabCase(page.page)}`,
         lastModified: TODAY,
         changeFrequency: "monthly",
         priority: 0.75,
@@ -172,15 +234,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   // ============================================================
-  // CHANGELOG
+  // CHANGELOG — flatten year groups → entries
   // ============================================================
-  changelogEntries.forEach((entry) => {
-    const entryDate = new Date(entry.date);
-    pages.push({
-      url: `${baseUrl}/changelog#${toKebabCase(entry.title)}`,
-      lastModified: isNaN(entryDate.getTime()) ? LAUNCH_DATE : entryDate,
-      changeFrequency: "yearly",
-      priority: 0.5,
+  CHANGELOGS.forEach((group) => {
+    group.items.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      pages.push({
+        url: `${baseUrl}/changelog#${toKebabCase(entry.title)}`,
+        lastModified: isNaN(entryDate.getTime()) ? LAUNCH_DATE : entryDate,
+        changeFrequency: "yearly",
+        priority: 0.5,
+      });
     });
   });
 

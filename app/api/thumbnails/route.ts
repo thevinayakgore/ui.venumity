@@ -1,7 +1,7 @@
 // app/api/thumbnails/route.ts
-import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -28,6 +28,7 @@ function listAllThumbnails(): {
       const full = path.join(THUMBNAILS_DIR, entry.name);
       const stat = fs.statSync(full);
       return {
+        // normalize to kebab-case so the client can match without guessing
         name: entry.name.replace(/\.webp$/i, ""),
         mtimeMs: stat.mtimeMs,
         size: stat.size,
@@ -45,16 +46,17 @@ export async function GET(request: NextRequest) {
     const safeName = path.basename(name).replace(/\.webp$/i, "");
     const filePath = path.join(THUMBNAILS_DIR, `${safeName}.webp`);
 
-    if (!filePath.startsWith(THUMBNAILS_DIR) || !fs.existsSync(filePath)) {
+    // Guard against traversal AND ensure the resolved path stays inside the dir
+    const resolved = path.resolve(filePath);
+    if (!resolved.startsWith(path.resolve(THUMBNAILS_DIR))) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+    if (!fs.existsSync(filePath)) {
       return new NextResponse("Not found", { status: 404 });
     }
 
     const stat = fs.statSync(filePath);
     const file = fs.readFileSync(filePath);
-
-    // Version the cache by mtime so an updated file gets a new ETag
-    // even if it keeps the same filename. Short TTL means deletions
-    // and replacements propagate within minutes, not a year.
     const etag = `"${stat.size}-${Math.floor(stat.mtimeMs)}"`;
 
     return new NextResponse(file, {
@@ -73,13 +75,10 @@ export async function GET(request: NextRequest) {
   const entries = listAllThumbnails();
   const origin = new URL(request.url).origin;
 
-  // Fingerprint changes whenever a file is added, removed, renamed,
-  // or modified — clients use it to invalidate their local cache.
   const fingerprint = entries.reduce((max, e) => Math.max(max, e.mtimeMs), 0);
 
   const items = entries.map((e) => ({
     name: e.name,
-    // Append v=mtime so the browser treats updated bytes as a new URL
     thumbnail: `${origin}/api/thumbnails?name=${encodeURIComponent(
       e.name,
     )}&v=${Math.floor(e.mtimeMs)}`,
@@ -91,14 +90,14 @@ export async function GET(request: NextRequest) {
       fingerprint,
       updatedAt: new Date().toISOString(),
       thumbnails: items.map((i) => i.thumbnail),
+      // Also expose a plain Set-friendly array of names for client-side
+      // "does this file exist?" checks
+      names: items.map((i) => i.name),
       items,
     },
     {
       headers: {
         "Access-Control-Allow-Origin": "*",
-        // List must never be cached by the CDN or the browser — every
-        // page load re-asks the function, which re-reads the deployed
-        // filesystem. That's how production stays in sync with deploys.
         "Cache-Control": "no-store, max-age=0, must-revalidate",
       },
     },

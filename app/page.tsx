@@ -1,20 +1,22 @@
 "use client";
-import Hero from "@/components/site/sections/hero";
-import Features from "@/components/site/sections/features";
-import YouTubeSection from "@/components/site/sections/youtube-section";
-import CTA from "@/components/site/sections/cta";
 import FAQ from "./faq/page";
-import LearningMaterials from "@/components/site/sections/learning-materials";
+import CTA from "@/components/site/sections/cta";
+import Hero from "@/components/site/sections/hero";
+import Blocks from "@/components/site/sections/blocks";
+import YouTube from "@/components/site/sections/youtube";
+import Articles from "@/components/site/sections/articles";
+import Primitives from "@/components/site/sections/primitives";
 
 export default function page() {
   return (
-    <main className="w-full">
+    <div className="w-full">
       <Hero />
-      <Features />
-      <YouTubeSection />
-      <LearningMaterials />
+      <Primitives />
+      <Blocks />
+      <YouTube />
+      <Articles />
       <CTA />
       <FAQ />
-    </main>
+    </div>
   );
 }

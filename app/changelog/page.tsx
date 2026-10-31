@@ -1,25 +1,26 @@
-// app/changelog/page.tsx (Server Component – NO "use client")
+// app/changelog/page.tsx
 export const dynamic = "force-dynamic";
-
 import fs from "fs";
 import path from "path";
 import ChangelogClient from "./page.client";
-import { changelogEntries } from "@/registry/site/changelog";
+import { CHANGELOGS } from "@/registry/site/changelog";
+
+export interface ChangelogLink {
+  name: string;
+  href: string;
+}
 
 export interface EntryWithContent {
   title: string;
   date: string;
-  images?: string[];
+  covers?: string[];
+  gallery?: string[];
+  links?: ChangelogLink[];
   markdownContent: string;
 }
 
-/**
- * Parse a year .md file into an array of { title, content }.
- * Sections are separated by ## Title headings.
- */
 function parseYearFile(markdown: string): { title: string; content: string }[] {
   const sections: { title: string; content: string }[] = [];
-  // Split by lines that start with "## " (level 2 headings)
   const regex = /^## (.+)$/gm;
   const matches: { index: number; title: string; headingLength: number }[] = [];
   let match: RegExpExecArray | null;
@@ -30,9 +31,8 @@ function parseYearFile(markdown: string): { title: string; content: string }[] {
       headingLength: match[0].length,
     });
   }
-  // Extract content between headings
   for (let i = 0; i < matches.length; i++) {
-    const start = matches[i].index + matches[i].headingLength; // after the heading
+    const start = matches[i].index + matches[i].headingLength;
     const end = i < matches.length - 1 ? matches[i + 1].index : markdown.length;
     const content = markdown.slice(start, end).trim();
     sections.push({ title: matches[i].title, content });
@@ -41,20 +41,10 @@ function parseYearFile(markdown: string): { title: string; content: string }[] {
 }
 
 async function getEntriesWithContent(): Promise<EntryWithContent[]> {
-  // Group entries by year to avoid reading the same file multiple times
-  const entriesByYear: Record<string, typeof changelogEntries> = {};
-  for (const entry of changelogEntries) {
-    // Extract year from contentPath: "/registry/site/changelog/2026/..."
-    const parts = entry.contentPath.split("/");
-    const year = parts[parts.indexOf("changelog") + 1];
-    if (!entriesByYear[year]) entriesByYear[year] = [];
-    entriesByYear[year].push(entry);
-  }
-
   const enrichedEntries: EntryWithContent[] = [];
 
-  for (const [year, entries] of Object.entries(entriesByYear)) {
-    // Read the corresponding .md file
+  for (const category of CHANGELOGS) {
+    const year = category.year;
     const filePath = path.join(
       process.cwd(),
       "registry",
@@ -62,17 +52,19 @@ async function getEntriesWithContent(): Promise<EntryWithContent[]> {
       "changelog",
       `${year}.md`,
     );
+    
     let fileContent = "";
     try {
       fileContent = fs.readFileSync(filePath, "utf-8");
     } catch (error) {
       console.error(`Failed to read changelog file for ${year}:`, error);
-      // Fallback: empty content for all entries of that year
-      for (const entry of entries) {
+      for (const entry of category.items) {
         enrichedEntries.push({
           title: entry.title,
           date: entry.date,
-          images: entry.images,
+          covers: entry.covers,
+          gallery: entry.gallery,
+          links: entry.links,
           markdownContent: "Content not available.",
         });
       }
@@ -81,13 +73,14 @@ async function getEntriesWithContent(): Promise<EntryWithContent[]> {
 
     const sections = parseYearFile(fileContent);
 
-    for (const entry of entries) {
-      // Find the section whose heading exactly matches the entry title
+    for (const entry of category.items) {
       const section = sections.find((s) => s.title === entry.title);
       enrichedEntries.push({
         title: entry.title,
         date: entry.date,
-        images: entry.images,
+        covers: entry.covers,
+        gallery: entry.gallery,
+        links: entry.links,
         markdownContent: section ? section.content : "Content not found.",
       });
     }

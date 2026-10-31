@@ -1,7 +1,7 @@
 // app/changelog/layout.tsx
 import type { Metadata } from "next";
-import ContentLayoutClient from "./layout.client";
 import { brandName, website } from "@/lib/brand";
+import ContentLayoutClient from "./layout.client";
 
 export const metadata: Metadata = {
   title: `Changelog - ${brandName}`,
