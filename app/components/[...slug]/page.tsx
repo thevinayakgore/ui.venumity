@@ -1,396 +1,157 @@
 // app/components/[...slug]/page.tsx
+import fs from "fs";
+import path from "path";
 import { Metadata } from "next";
-import {
-  getComponentByPath,
-  getSubcategory,
-  isSubcategoryPath,
-  getCategorySubcategoryFromPath,
-  getAllPaths,
-  getOGThumbnailPath,
-} from "@/registry/component-utils";
-import { authorName, gitRepo, handle, website } from "@/lib/brand";
+import { website } from "@/lib/brand";
 import PageClient from "./page.client";
-import Script from "next/script";
+import NoComponent from "@/app/no-component/page";
+import { COMPONENTS } from "@/registry/components";
 
-export const dynamic = "force-static";
-export const revalidate = 86400; // 24h
-
-// ── Helper types ──────────────────────────────────────────
-interface ComponentMeta {
-  itemName?: string;
-  tags?: string[];
-  techs?: string[];
-  category?: string;
-  subcategory?: string;
-  thumbnail?: string;
-  description?: string;
+interface PageProps {
+  params: Promise<{ slug: string[] }>;
 }
 
-interface SubcategoryMeta {
-  name: string;
-  tags?: string[];
-  items?: { itemName: string }[];
-  thumbnail?: string;
-  description?: string;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const COMPONENT_BASE = path.join(
+  process.cwd(),
+  "components",
+  "venumity",
+  "components",
+);
+
+const NON_SOURCE_NAMES = new Set(["demo", "default", "index"]);
+
+function isRealSourceFile(fileName: string): boolean {
+  if (!fileName.endsWith(".tsx")) return false;
+  const base = fileName.replace(/\.tsx$/, "").toLowerCase();
+  return !NON_SOURCE_NAMES.has(base);
 }
 
-// ── Helpers ──────────────────────────────────────────────
-function formatTitle(str: string) {
-  return str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
+/**
+ * Returns true only when EVERY registered item in the subcategory has
+ * either a flat `<item>.tsx` or a `<item>/index.tsx` on disk.
+ */
+function allComponentItemsHaveSource(
+  catSlug: string,
+  subSlug: string,
+  itemSlugs: string[],
+): boolean {
+  const dir = path.join(COMPONENT_BASE, catSlug, subSlug);
+  if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return false;
+  if (itemSlugs.length === 0) return false;
 
-function generateKeywords(
-  component?: ComponentMeta,
-  subcategory?: SubcategoryMeta,
-): string {
-  const base = [
-    "venumity ui",
-    "open source ui",
-    "free components",
-    "react components",
-    "nextjs components",
-    "tailwind css",
-    "shadcn ui",
-    "framer motion",
-    "mit license",
-    "ui library",
-    "copy paste components",
-  ];
-  const specific: string[] = [];
-  if (component) {
-    if (component.itemName) specific.push(component.itemName.toLowerCase());
-    if (component.category) specific.push(component.category.toLowerCase());
-    if (component.subcategory)
-      specific.push(component.subcategory.toLowerCase());
-    component.tags?.forEach((t) => specific.push(t.toLowerCase()));
-    component.techs?.forEach((t) => specific.push(t.toLowerCase()));
+  for (const itemSlug of itemSlugs) {
+    const flat = path.join(dir, `${itemSlug}.tsx`);
+    const hasFlat = fs.existsSync(flat) && isRealSourceFile(`${itemSlug}.tsx`);
+
+    const itemDir = path.join(dir, itemSlug);
+    const hasFolder =
+      fs.existsSync(itemDir) &&
+      fs.statSync(itemDir).isDirectory() &&
+      fs.existsSync(path.join(itemDir, "index.tsx"));
+
+    if (!hasFlat && !hasFolder) return false;
   }
-  if (subcategory) {
-    specific.push(subcategory.name.toLowerCase());
-    subcategory.tags?.forEach((t) => specific.push(t.toLowerCase()));
-    subcategory.items?.forEach((i) => specific.push(i.itemName.toLowerCase()));
-  }
-  const longTail = component?.itemName
-    ? [
-        `free ${component.itemName.toLowerCase()} component`,
-        `${component.itemName.toLowerCase()} react component`,
-        `${component.itemName.toLowerCase()} nextjs tailwind`,
-        `download ${component.itemName.toLowerCase()} ui component`,
-      ]
-    : [];
-  return [...new Set([...base, ...specific, ...longTail])].join(", ");
+
+  return true;
 }
 
-function generateStructuredData(
-  component: ComponentMeta,
-  path: string,
-  title: string,
-  description: string,
-  imageUrl: string,
-) {
-  const baseUrl = website || "https://ui.venumity.com";
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    name: title,
-    description,
-    url: `${baseUrl}/components/${path}`,
-    image: imageUrl,
-    author: {
-      "@type": "Person",
-      name: authorName || "Vinayak Gore",
-      url: gitRepo || "https://github.com/thevinayakgore",
-    },
-    publisher: { "@type": "Organization", name: "Venumity", url: baseUrl },
-    programmingLanguage: "TypeScript",
-    runtimePlatform: "Next.js",
-    about: { "@type": "Thing", name: "UI Components" },
-    license: "MIT",
-    dateModified: new Date().toISOString().split("T")[0],
-  };
-}
+/* -------------------------------------------------------------------------- */
+/*                                Static params                                */
+/* -------------------------------------------------------------------------- */
 
-// Static paths
 export async function generateStaticParams() {
-  const paths = getAllPaths();
-  return paths.map((slug) => ({ slug: slug.split("/") }));
+  const paths: { slug: string[] }[] = [];
+  COMPONENTS.forEach((cat) => {
+    cat.subcategories.forEach((sub) => {
+      paths.push({ slug: [cat.slug, sub.slug] });
+    });
+  });
+  return paths;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                  Metadata                                   */
+/* -------------------------------------------------------------------------- */
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const path = slug.join("/");
+  const [catSlug, subSlug] = slug;
+
+  const category = COMPONENTS.find((c) => c.slug === catSlug);
+  const subcategory = category?.subcategories.find((s) => s.slug === subSlug);
+
+  if (!category || !subcategory) return { title: "Not Found | Venumity UI" };
+
   const baseUrl = website || "https://ui.venumity.com";
-  const canonicalUrl = `${baseUrl}/components/${path}`;
-
-  // Subcategory listing page
-  if (isSubcategoryPath(path)) {
-    const info = getCategorySubcategoryFromPath(path);
-    if (!info) return fallbackMeta(slug);
-    const subcategory = getSubcategory(
-      info.category,
-      info.subcategory,
-    ) as SubcategoryMeta | null;
-    if (!subcategory) return fallbackMeta(slug);
-
-    const formattedName = formatTitle(subcategory.name);
-    const categoryName = formatTitle(info.category);
-    const itemNames =
-      subcategory.items?.map((i) => i.itemName).join(", ") ?? "";
-    const title = `${formattedName} Components – ${itemNames} | ${categoryName} | Venumity UI`;
-    const description =
-      subcategory.description ||
-      `Free ${formattedName.toLowerCase()} components: ${itemNames}. Built with Next.js, Tailwind CSS, and shadcn/ui. ${subcategory.items?.length ?? 0} ready-to-use, copy-paste components.`;
-
-    // ✅ Multiple absolute OG images
-    const images = subcategory.items?.length
-      ? subcategory.items.map((item) => ({
-          url: new URL(getOGThumbnailPath(item.itemName), baseUrl).toString(),
-          width: 1200,
-          height: 630,
-          alt: `${item.itemName} component preview`,
-        }))
-      : [
-          {
-            url: new URL("/logo.png", baseUrl).toString(),
-            width: 1000,
-            height: 1000,
-            alt: title,
-          },
-        ];
-
-    return {
-      title,
-      description,
-      keywords: generateKeywords(undefined, subcategory),
-      metadataBase: new URL(baseUrl),
-      alternates: { canonical: canonicalUrl },
-      openGraph: {
-        title,
-        description,
-        url: canonicalUrl,
-        siteName: "Venumity UI",
-        images,
-        locale: "en_US",
-        type: "website",
-      },
-      twitter: {
-        card: "summary_large_image",
-        title,
-        description,
-        images: images.map((img) => img.url),
-        creator: handle || "@thevinayakgore",
-        site: "@venumityui",
-      },
-      robots: {
-        index: true,
-        follow: true,
-        googleBot: {
-          index: true,
-          follow: true,
-          "max-video-preview": -1,
-          "max-image-preview": "large",
-          "max-snippet": -1,
-        },
-      },
-    };
-  }
-
-  // Component detail page
-  const component = getComponentByPath(path) as ComponentMeta | null;
-  if (!component) return fallbackMeta(slug);
-
-  const [categorySlug, subcategorySlug] = slug;
-  const subcategory = getSubcategory(
-    formatTitle(categorySlug),
-    formatTitle(subcategorySlug),
-  ) as SubcategoryMeta | null;
-  const componentName =
-    component.itemName || formatTitle(slug[slug.length - 1]);
-  const title = `${componentName} - Free ${formatTitle(subcategorySlug)} Component | Venumity UI`;
-  const techStack =
-    component.techs?.join(", ") || "Next.js, Tailwind CSS, and shadcn/ui";
+  const exampleList = subcategory.items
+    .map((i) => i.itemName)
+    .slice(0, 8)
+    .join(", ");
+  const title = `${subcategory.name} – ${category.name} Components | Venumity UI`;
   const description =
-    component.description ||
-    subcategory?.description ||
-    `Free, open-source ${componentName.toLowerCase()} component built with ${techStack}. MIT licensed, copy-paste ready.`;
-
-  // Absolute OG image for single component
-  const ogImage = new URL(
-    getOGThumbnailPath(componentName),
-    baseUrl,
-  ).toString();
-  const structuredData = generateStructuredData(
-    component,
-    path,
-    title,
-    description,
-    ogImage,
-  );
+    subcategory.description ||
+    `${subcategory.items.length} ${subcategory.name.toLowerCase()} components — ${exampleList}. Copy-paste ready for React, Next.js, and Tailwind CSS.`;
 
   return {
     title,
     description,
-    keywords: generateKeywords(component, subcategory || undefined),
+    keywords: [
+      subcategory.name,
+      category.name,
+      ...(subcategory.tags || []),
+      ...(category.tags || []),
+      "react component",
+      "nextjs",
+      "tailwind css",
+    ],
     metadataBase: new URL(baseUrl),
-    alternates: { canonical: canonicalUrl },
+    alternates: { canonical: `${baseUrl}/components/${catSlug}/${subSlug}` },
     openGraph: {
       title,
       description,
-      url: canonicalUrl,
+      url: `${baseUrl}/components/${catSlug}/${subSlug}`,
       siteName: "Venumity UI",
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: `${componentName} preview`,
-        },
-      ],
+      images: [{ url: "/logo.png", width: 1000, height: 1000, alt: title }],
       locale: "en_US",
-      type: "article",
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
-      creator: handle || "@thevinayakgore",
-      site: "@venumityui",
+      images: ["/logo.png"],
+      creator: "@thevinayakgore",
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-    other: { "script:ld+json": JSON.stringify(structuredData) },
-    verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
-      yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "",
-      other: {
-        "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
-      },
-    },
-    category: component.category || "UI Components",
-    authors: [
-      {
-        name: authorName || "Vinayak Gore",
-        url: gitRepo || "https://github.com/thevinayakgore",
-      },
-    ],
-    publisher: "Venumity UI",
+    robots: { index: true, follow: true },
   };
 }
 
-function fallbackMeta(slug: string[]): Metadata {
-  const title = slug.map(formatTitle).join(" / ");
-  return {
-    title: `${title} | Venumity UI`,
-    description:
-      "Free, open-source UI components for Next.js – copy-paste ready.",
-  };
-}
+/* -------------------------------------------------------------------------- */
+/*                                   Page                                      */
+/* -------------------------------------------------------------------------- */
 
-// ── Page component ────────────────────────────────────────
-export default async function ComponentPage({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
+export default async function ComponentSubcategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const path = slug.join("/");
+  const [catSlug, subSlug] = slug;
+  if (!catSlug || !subSlug) return <NoComponent />;
 
-  const baseUrl = website || "https://ui.venumity.com";
-  const categorySlug = slug[0] ?? "";
-  const subcategorySlug = slug[1] ?? "";
-  const category = formatTitle(categorySlug);
-  const subcategory = formatTitle(subcategorySlug);
-  const componentName = formatTitle(slug[slug.length - 1] ?? "component");
-  const currentUrl = `${baseUrl}/components/${path}`;
+  const category = COMPONENTS.find((c) => c.slug === catSlug);
+  const subcategory = category?.subcategories.find((s) => s.slug === subSlug);
+  if (!category || !subcategory) return <NoComponent />;
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: baseUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: category,
-        item: `${baseUrl}/components/${categorySlug}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: subcategory,
-        item: `${baseUrl}/components/${categorySlug}/${subcategorySlug}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
-        name: componentName,
-        item: currentUrl,
-      },
-    ],
-  };
-
-  let component = null;
-  let subcategoryData = null;
-  let error: "not-found" | "unknown" | null = null;
-
-  try {
-    if (isSubcategoryPath(path)) {
-      const info = getCategorySubcategoryFromPath(path);
-      if (info) {
-        subcategoryData = getSubcategory(info.category, info.subcategory);
-        if (!subcategoryData || subcategoryData.items.length === 0)
-          error = "not-found";
-      } else error = "not-found";
-    } else {
-      component = getComponentByPath(path);
-      if (!component) error = "not-found";
-    }
-  } catch {
-    error = "unknown";
-  }
-
-  if (error === "not-found")
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl">Not found - {path}</h1>
-      </div>
-    );
-  if (error)
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl">Error loading component</h1>
-      </div>
-    );
-
-  return (
-    <>
-      <Script id="breadcrumb-jsonld" type="application/ld+json">
-        {JSON.stringify(breadcrumbSchema)}
-      </Script>
-      <PageClient
-        component={component}
-        slugPath={path}
-        subcategoryData={subcategoryData}
-      />
-    </>
+  // Strict rule: every registered item must have a real source file on disk
+  const itemSlugs = subcategory.items.map((i) => i.slug);
+  const available = allComponentItemsHaveSource(
+    category.slug,
+    subcategory.slug,
+    itemSlugs,
   );
+  if (!available) return <NoComponent />;
+
+  return <PageClient category={category} subcategory={subcategory} />;
 }

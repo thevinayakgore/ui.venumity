@@ -1,6 +1,6 @@
-"use client";
-import LeftSidebar from "@/components/site/common/left-sidebar/sidebar";
-import RightSidebar from "@/components/site/common/right-sidebar/right-sidebar";
+// app/docs/layout.tsx
+import RightSidebar from "@/components/site/common/rightsidebar";
+import LeftSidebar from "@/components/site/common/leftsidebar/sidebar";
 
 export default function ContentLayout({
   children,
@@ -8,14 +8,10 @@ export default function ContentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mx-auto w-full">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] xl:grid-cols-[1fr_4fr_1fr] m-auto max-w-400 w-full">
-        <LeftSidebar />
-        <div id="content" className="p-3 md:p-5 lg:p-10 overflow-hidden w-full">
-          {children}
-        </div>
-        <RightSidebar />
-      </div>
+    <section className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] xl:grid-cols-[1fr_4fr_1fr] mx-auto max-w-400 w-full">
+      <LeftSidebar />
+      <div className="overflow-auto w-full">{children}</div>
+      <RightSidebar />
     </section>
   );
 }

@@ -1,15 +1,14 @@
 // registry/site/docs.ts
+import { toKebabCase } from "@/utils/slug-kebab";
+
 export interface DocsPage {
   page: string;
-  slug: string;
-  contentPath: string; // Path to .md file in registry/docs/
   tags?: string[];
-  published?: boolean;
+  newItem?: boolean;
 }
 
 export interface DocsSection {
   title: string;
-  type: "docs";
   icon: string;
   pages: DocsPage[];
 }
@@ -21,43 +20,49 @@ export interface DocsSection {
 export const DOCS_DATA: DocsSection[] = [
   {
     title: "Documents",
-    type: "docs",
     icon: "Terminal",
     pages: [
       {
-        page: "Getting Started",
-        slug: "getting-started",
-        contentPath: "/registry/docs/getting-started.md", // Add /
-        published: true,
-        tags: ["docs", "starter"],
-      },
-      {
         page: "Introduction",
-        slug: "introduction",
-        contentPath: "/registry/docs/introduction.md", // Add /
-        published: true,
-        tags: ["docs", "intro"],
+        tags: ["docs", "start", "intro", "library", "react"],
       },
       {
-        page: "Installation",
-        slug: "installation",
-        contentPath: "/registry/docs/installation.md", // Add /
-        published: true,
-        tags: ["setup"],
+        page: "Overview",
+        newItem: true,
+        tags: [
+          "guide",
+          "structure",
+          "components",
+          "opensource",
+          "pullrequest",
+          "contributing",
+        ],
       },
       {
         page: "Add Resources",
-        slug: "add-resources",
-        contentPath: "/registry/docs/add-resources.md", // Add /
-        published: true,
-        tags: ["resource", "learningmaterials", "buildtogether"],
+        tags: [
+          "resources",
+          "learning",
+          "developer",
+          "tutorials",
+          "community",
+          "collaboration",
+        ],
       },
       {
         page: "CLI Guide",
-        slug: "cli-guide",
-        contentPath: "/registry/docs/cli-guide.md", // Add /
-        published: true,
-        tags: ["cli", "guide", "installcomponents", "buildfaster"],
+        tags: [
+          "cli",
+          "tools",
+          "command",
+          "terminal",
+          "productivity",
+          "installation",
+        ],
+      },
+      {
+        page: "Contributors",
+        newItem: true,
       },
     ],
   },
@@ -66,9 +71,7 @@ export const DOCS_DATA: DocsSection[] = [
 // Helper function to get page by slug
 export function getPageBySlug(slug: string): DocsPage | undefined {
   for (const section of DOCS_DATA) {
-    const page = section.pages.find(
-      (p) => p.slug === slug && p.published !== false,
-    );
+    const page = section.pages.find((p) => toKebabCase(p.page) === slug);
     if (page) return page;
   }
   return undefined;
@@ -77,7 +80,7 @@ export function getPageBySlug(slug: string): DocsPage | undefined {
 // Helper function to get section for a page
 export function getSectionForPage(slug: string): DocsSection | undefined {
   for (const section of DOCS_DATA) {
-    const page = section.pages.find((p) => p.slug === slug);
+    const page = section.pages.find((p) => toKebabCase(p.page) === slug);
     if (page) return section;
   }
   return undefined;
@@ -89,10 +92,8 @@ export function getPageNavigation(slug: string): {
   nextPage: DocsPage | null;
   section: DocsSection | null;
 } {
-  const allPages = DOCS_DATA.flatMap((s) =>
-    s.pages.filter((p) => p.published !== false),
-  );
-  const currentIndex = allPages.findIndex((p) => p.slug === slug);
+  const allPages = DOCS_DATA.flatMap((s) => s.pages);
+  const currentIndex = allPages.findIndex((p) => toKebabCase(p.page) === slug);
 
   return {
     prevPage: currentIndex > 0 ? allPages[currentIndex - 1] : null,

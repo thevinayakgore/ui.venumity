@@ -1,1139 +1,156 @@
 // registry/components.ts
-import { toKebabCase } from "@/utils/slug-kebab";
+import { createComponents } from "./factories";
+import type { ComponentCategory } from "@/types/components";
 
-function createComponents(
-  data: {
-    category: string;
-    icon: string;
-    tags?: string[];
-    techs?: string[];
-    subcategories: {
-      name: string;
-      description?: string;
-      icon?: string;
-      newItem?: boolean;
-      thumbnail?: string;
-      tags: string[];
-      techs: string[];
-      items: {
-        itemName: string;
-        tags?: string[];
-        techs?: string[];
-        video?: string;
-        githubUsername?: string;
-      }[];
-    }[];
-  }[],
-) {
-  return data.map((categoryData) => ({
-    name: categoryData.category,
-    icon: categoryData.icon,
-    tags: categoryData.tags || [],
-    techs: categoryData.techs || [],
-    subcategories: categoryData.subcategories.map((subcategoryData) => ({
-      name: subcategoryData.name,
-      description: subcategoryData.description,
-      icon: subcategoryData.icon,
-      newItem: subcategoryData.newItem,
-      thumbnail: subcategoryData.thumbnail,
-      tags: subcategoryData.tags,
-      techs: subcategoryData.techs,
-      items: subcategoryData.items.map((itemData) => {
-        const categoryKebab = toKebabCase(categoryData.category);
-        const subcategoryKebab = toKebabCase(subcategoryData.name);
-        const itemKebab = toKebabCase(itemData.itemName);
-
-        return {
-          ...itemData,
-          tags: [
-            ...new Set([...(itemData.tags || []), ...subcategoryData.tags]),
-          ],
-          techs: [
-            ...new Set([...(itemData.techs || []), ...subcategoryData.techs]),
-          ],
-          category: categoryKebab,
-          subcategory: subcategoryKebab,
-          folderPath: `${categoryKebab}/${subcategoryKebab}/${itemKebab}`,
-          githubUsername: itemData.githubUsername,
-        };
-      }),
-    })),
-  }));
-}
-
-// Commented Components are under progress...
-export const COMPONENTS = createComponents([
+export const COMPONENTS: ComponentCategory[] = createComponents([
+  // ─── AI FEATURES ─────────────────────────────────────────
   {
     category: "AI Features",
     icon: "sparkles",
+    tags: ["ai", "ml", "assistant", "intelligent"],
     subcategories: [
-      // {
-      //   name: "AI Analytics",
-      //   description: "Boost data-driven decisions with smart AI analytics dashboards featuring real-time insights and predictive metrics for SaaS platforms.",
-      //   tags: ["ai", "analytics", "insights", "metrics", "dashboard"],
-      //   techs: [
-      //     "Next.js",
-      //     "TypeScript",
-      //     "Tailwind CSS",
-      //     "Recharts",
-      //     "Shadcn UI",
-      //   ],
-      //   items: [{ itemName: "Analytics", githubUsername: "thevinayakgore" }],
-      // },
+      //       {
+      //         name: "AI Analytics",
+      //         description:
+      //           "Boost data-driven decisions with smart AI analytics dashboards.",
+      //         tags: ["ai", "analytics", "insights", "metrics", "dashboard"],
+      //         props: [
+      //           {
+      //             name: "className",
+      //             type: "string",
+      //             description: "Additional classes.",
+      //           },
+      //         ],
+      //         items: [{ itemName: "Analytics" }],
+      //       },
       {
-        name: "AI Chats Panel",
+        name: "AI Chat Panels",
         description:
-          "Transform user engagement with intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
+          "Intelligent chat interfaces featuring NLP, real-time messaging, and smart assistant capabilities.",
         tags: ["ai", "chat", "assistant", "conversation", "messaging"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
         items: [
-          {
-            itemName: "Gemini Style Chat Shell",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Cursor Style AI Prompt Panel",
-            githubUsername: "thevinayakgore",
-          },
+          { itemName: "Gemini Style Chat Shell" },
+          { itemName: "Cursor Style AI Prompt Panel" },
         ],
       },
-      // {
-      //   name: "AI Commands",
-      //   description: "Supercharge productivity with smart command palettes and AI-powered navigation systems that reduce user friction and accelerate task completion.",
-      //   tags: ["ai", "commands", "command-palette", "actions", "productivity"],
-      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-      //   items: [{ itemName: "Command Bar", githubUsername: "thevinayakgore" }],
-      // },
-      // {
-      //   name: "AI Forms",
-      //   description: "Revolutionize data collection with intelligent forms featuring AI validation, contextual suggestions, and automated workflows.",
-      //   tags: ["ai", "forms", "input", "autofill", "validation"],
-      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-      //   items: [{ itemName: "Forms", githubUsername: "thevinayakgore" }],
-      // },
-      // {
-      //   name: "AI Generators",
-      //   description: "Accelerate content creation with cutting-edge AI generation tools for text, code, and media in marketing and development suites.",
-      //   tags: ["ai", "generator", "content", "automation", "creative"],
-      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-      //   items: [{ itemName: "Content Generators", githubUsername: "thevinayakgore" }],
-      // },
-      // {
-      //   name: "AI Searches",
-      //   description: "Drive discovery with intelligent search interfaces featuring semantic understanding and predictive results for e-commerce platforms.",
-      //   tags: ["ai", "search", "semantic", "command", "discovery"],
-      //   techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-      //   items: [{ itemName: "Searches", githubUsername: "thevinayakgore" }],
-      // },
+      //       {
+      //         name: "AI Commands",
+      //         description:
+      //           "Smart command palettes and AI-powered navigation systems.",
+      //         tags: ["ai", "commands", "command-palette", "actions", "productivity"]
+      //         items: [{ itemName: "Command Bar" }],
+      //       },
+      //       {
+      //         name: "AI Forms",
+      //         description:
+      //           "Intelligent forms featuring AI validation and automated workflows.",
+      //         tags: ["ai", "forms", "input", "autofill", "validation"]
+      //         items: [{ itemName: "Forms" }],
+      //       },
+      //       {
+      //         name: "AI Generators",
+      //         description: "AI generation tools for text, code, and media.",
+      //         tags: ["ai", "generator", "content", "automation", "creative"]
+      //         items: [{ itemName: "Content Generators" }],
+      //       },
+      //       {
+      //         name: "AI Searches",
+      //         description:
+      //           "Intelligent search interfaces featuring semantic understanding.",
+      //         tags: ["ai", "search", "semantic", "command", "discovery"]
+      //         items: [{ itemName: "Searches" }],
+      //       },
       {
-        name: "AI Suggestions",
+        name: "AI Chat Suggestion",
         newItem: true,
         description:
-          "Increase user retention with context-aware suggestion systems that anticipate needs and guide workflows using behavioral analytics.",
-        tags: ["ai", "suggestions", "recommendations", "predictive", "ux"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
-        items: [
+          "AI chat suggestion interface with floating cards, boxed lists, skeleton loading, typewriter text reveals, click-outside closing, and automatic chat scrolling.",
+        tags: [
+          "ai",
+          "chat",
+          "prompts",
+          "skeleton",
+          "auto-reply",
+          "typewriter",
+          "suggestions",
+        ],
+        props: [
           {
-            itemName: "Chat Card Suggestion",
-            githubUsername: "thevinayakgore",
+            name: "variant",
+            type: '"floating" | "box"',
+            default: '"floating"',
+            description:
+              "Controls the suggestion layout. Use floating for a 2-column card grid or box for a vertical list.",
+            example: 'variant="box"',
+          },
+          {
+            name: "messages",
+            type: "ChatMessage[]",
+            default: "[]",
+            description: "Initial chat messages rendered inside the chat area.",
+            example: '[{ id: "1", sender: "user", text: "Hello" }]',
+          },
+          {
+            name: "suggestions",
+            type: "SuggestionChip[]",
+            default: "[]",
+            description:
+              "AI prompt suggestions displayed above the input with skeleton loading and typewriter reveal.",
+            example: '[{ text: "Summarize this chat" }]',
+          },
+          {
+            name: "autoReply",
+            type: "string",
+            default: '"Got it — I\'ll get back to you shortly!"',
+            description:
+              "Assistant reply automatically added after a user sends a message or selects a suggestion.",
+          },
+          {
+            name: "placeholder",
+            type: "string",
+            default: '"Type a message or ask anything"',
+            description: "Placeholder text for the chat input field.",
+          },
+          {
+            name: "inputAvatar",
+            type: "string",
+            default: '"/vinu.jpeg"',
+            description:
+              "Avatar image URL used for user and assistant message bubbles.",
+          },
+          {
+            name: "className",
+            type: "string",
+            description:
+              "Additional classes applied to the outer component wrapper.",
+            example: 'className="max-w-3xl"',
           },
         ],
+        items: [{ itemName: "Floating Cards" }, { itemName: "Suggestion Box" }],
       },
       {
         name: "AI Summary",
         description:
-          "Deliver instant clarity with intelligent summarization tools that distill complex information into actionable insights.",
-        tags: ["ai", "summary", "insights", "layout", "content"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Motion"],
-        items: [
-          { itemName: "Summary Block", githubUsername: "thevinayakgore" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Badges",
-    icon: "badge-check",
-    subcategories: [
-      {
-        name: "Status Badges",
-        thumbnail: "connection-status-badge",
-        description:
-          "Maximize communication efficiency with professional status indicators that instantly convey system health and user activity.",
-        tags: ["status", "system", "connection", "priority", "user"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          { itemName: "Basic Badge", githubUsername: "thevinayakgore" },
-          { itemName: "User Status Badge", githubUsername: "thevinayakgore" },
-          { itemName: "System Status Badge", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Priority Status Badge",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Connection Status Badge",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Background Effects",
-    icon: "square-terminal",
-    subcategories: [
-      {
-        name: "Gradient Spotlight",
-        description:
-          "Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.",
+          "AI-powered summary interfaces that transform long documents into clear insights, key topics, and actionable takeaways.",
         tags: [
-          "background",
-          "gradient",
-          "spotlight",
-          "animation",
-          "effects",
-          "ui",
-          "visual",
-          "hero",
-          "landing",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
-        items: [
-          {
-            itemName: "Background Gradient Spotlight",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Buttons",
-    icon: "pointer",
-    subcategories: [
-      {
-        name: "Action Buttons",
-        description:
-          "Interactive action button components designed to improve user workflows with smooth motion-driven interactions.",
-        tags: [
-          "button",
-          "magnetic",
-          "action",
-          "interactive",
-          "delete",
-          "drag",
-          "animation",
-          "motion",
-        ],
-        thumbnail: "delete-confirm-button",
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
-        items: [
-          {
-            itemName: "Delete Confirm Button",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Magnetic Drag Button",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Cards",
-    icon: "square-slash",
-    subcategories: [
-      {
-        name: "Profile Cards",
-        description:
-          "Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.",
-        tags: [
-          "profile",
-          "user",
-          "identity",
-          "card",
-          "avatar",
+          "ai",
+          "summary",
+          "insights",
           "dashboard",
-          "saas",
-          "team",
-        ],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Simple Profile Card", githubUsername: "thevinayakgore" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Charts",
-    icon: "chart-pie",
-    subcategories: [
-      {
-        name: "Area Charts",
-        thumbnail: "percent-area-chart",
-        description:
-          "Unlock trend analysis with professional area visualizations that highlight growth patterns and volume metrics.",
-        tags: ["area", "trend", "data", "shaded", "growth"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Area Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Gradient Area Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Multi Layer Area Chart",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Percent Area Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Spline Area Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Stacked Area Chart", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Bar Charts",
-        thumbnail: "mixed-line-bar-chart",
-        description:
-          "Drive data-driven decisions with comparative bar visualizations that excel at categorical analysis.",
-        tags: ["bar", "comparison", "histogram", "data", "analytics"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Bar Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Grouped Bar Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Horizontal Bar Chart",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Stacked Bar Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Mixed Line Bar Chart",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Line Charts",
-        thumbnail: "label-line-chart",
-        description:
-          "Capture performance trends with precision line visualizations designed for time-series analysis.",
-        tags: ["line", "time", "pattern", "graph", "data"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Line Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Linear Line Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Step Line Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Multiple Line Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Dots Line Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Custom Dots Line Chart",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Dots Color Line Chart",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Label Line Chart",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Custom Label Line Chart",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Pie Charts",
-        description:
-          "Simplify proportion analysis with intuitive pie and donut visualizations that highlight distribution patterns.",
-        tags: ["pie", "proportion", "distribution", "graph", "segments"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Pie Chart", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Radar Charts",
-        thumbnail: "filled-radar-chart",
-        description:
-          "Reveal multidimensional insights with advanced radar visualizations for comparative analysis and skill mapping.",
-        tags: ["radar", "spider", "analysis", "skill", "comparison"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Radar Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Filled Radar Chart", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Radial Charts",
-        thumbnail: "stacked-radial-chart",
-        description:
-          "Visualize progress and distribution with radial chart components built for circular data representation.",
-        tags: [
-          "radial",
-          "circular",
-          "donut",
-          "progress",
-          "kpi",
-          "metrics",
-          "distribution",
-          "dashboard",
-        ],
-        techs: [
-          "Next.js",
-          "Recharts",
-          "TypeScript",
-          "Tailwind CSS",
-          "shadcnui",
-        ],
-        items: [
-          { itemName: "Basic Radial Chart", githubUsername: "thevinayakgore" },
-          { itemName: "Label Radial Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Center Text Radial Chart",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Shape Radial Chart", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Stacked Radial Chart",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Scatter Plots",
-        description:
-          "Uncover hidden relationships with correlation-focused scatter visualizations for statistical analysis.",
-        tags: ["scatter", "dot", "correlation", "statistic", "analysis"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Scatter Plot", githubUsername: "thevinayakgore" },
-          { itemName: "3D Scatter Plot", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Sparklines",
-        thumbnail: "range-sparkline",
-        description:
-          "Enhance data density with compact sparkline visualizations for at-a-glance trend analysis.",
-        tags: ["sparkline", "mini", "inline", "micro", "trend"],
-        techs: ["Next.js", "Recharts", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Line Sparkline", githubUsername: "thevinayakgore" },
-          { itemName: "Area Sparkline", githubUsername: "thevinayakgore" },
-          { itemName: "Bar Sparkline", githubUsername: "thevinayakgore" },
-          { itemName: "Winloss Sparkline", githubUsername: "thevinayakgore" },
-          { itemName: "Scatter Sparkline", githubUsername: "thevinayakgore" },
-          { itemName: "Range Sparkline", githubUsername: "thevinayakgore" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Commerce",
-    icon: "indian-rupee",
-    subcategories: [
-      // {
-      //   name: "Checkout Forms",
-      //   description: "Conversion-focused checkout form layouts designed to streamline purchase flow and improve completion rates.",
-      //   tags: ["checkout", "forms", "payment", "conversion", "ecommerce", "ux"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Basic Checkout Form", githubUsername: "thevinayakgore" },
-      //     { itemName: "Compact Checkout Form", githubUsername: "thevinayakgore" },
-      //     { itemName: "Floating Checkout Form", githubUsername: "thevinayakgore" },
-      //     { itemName: "Multi Step Checkout Form", githubUsername: "thevinayakgore" },
-      //     { itemName: "Split Screen Checkout Form", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Discount Badges",
-      //   description: "Eye-catching discount and offer badge components that highlight promotions and drive urgency.",
-      //   tags: [
-      //     "discount",
-      //     "badge",
-      //     "offer",
-      //     "promotion",
-      //     "pricing",
-      //     "ecommerce",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Simple Discount Badge", githubUsername: "thevinayakgore" },
-      //     { itemName: "Minimal Discount Badge", githubUsername: "thevinayakgore" },
-      //     { itemName: "Countdown Discount Badge", githubUsername: "thevinayakgore" },
-      //     { itemName: "Collapse Discount Badge", githubUsername: "thevinayakgore" },
-      //     { itemName: "Animated Discount Badge", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Offer Banners",
-      //   description: "Promotional banner components designed to announce offers, campaigns, and limited-time deals.",
-      //   tags: ["banner", "promotion", "offer", "marketing", "cta", "ecommerce"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Simple Offer Banner", githubUsername: "thevinayakgore" },
-      //     { itemName: "Countdown Offer Banner", githubUsername: "thevinayakgore" },
-      //     { itemName: "Interactive Offer Banner", githubUsername: "thevinayakgore" },
-      //     { itemName: "Scrolling Offer Banner", githubUsername: "thevinayakgore" },
-      //     { itemName: "Split Offer Banner", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Payment Options",
-      //   description: "Flexible payment selection components that present multiple payment methods clearly and securely.",
-      //   tags: [
-      //     "payment",
-      //     "checkout",
-      //     "billing",
-      //     "methods",
-      //     "ecommerce",
-      //     "finance",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Minimal Payment Options", githubUsername: "thevinayakgore" },
-      //     { itemName: "Payment Methods Cards", githubUsername: "thevinayakgore" },
-      //     { itemName: "Payment Methods Selector", githubUsername: "thevinayakgore" },
-      //     { itemName: "Saved Cards Payment Options", githubUsername: "thevinayakgore" },
-      //     { itemName: "Split Payment Options", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Pricing Cards",
-      //   description: "Structured pricing card components that communicate plan value clearly for SaaS and subscription products.",
-      //   tags: [
-      //     "pricing",
-      //     "plans",
-      //     "subscription",
-      //     "saas",
-      //     "comparison",
-      //     "cards",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Simple Pricing Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Minimal Pricing Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Feature Comparison Pricing", githubUsername: "thevinayakgore" },
-      //     { itemName: "Tiered Pricing Card", githubUsername: "thevinayakgore" },
-      //     { itemName: "Toggle Pricing Card", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      {
-        name: "Pricing Tables",
-        newItem: true,
-        description:
-          "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
-        tags: ["pricing", "comparison", "subscription", "features"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          {
-            itemName: "Simple Pricing Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Standard Pricing Table",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Tiered Pricing Card", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Product Cards",
-        description:
-          "Commerce-ready card components designed to showcase products with clarity and impact.",
-        tags: ["product", "ecommerce", "card", "catalog"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          {
-            itemName: "Interactive Product Card",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Detailed Product Card",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      // {
-      //   name: "Product Display",
-      //   description: "High-impact product display sections built to showcase product details, visuals, and key selling points.",
-      //   tags: ["product", "showcase", "details", "ecommerce", "ui", "display"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Compact Product Display", githubUsername: "thevinayakgore" },
-      //     { itemName: "Minimal Product Display", githubUsername: "thevinayakgore" },
-      //     { itemName: "Interactive Product Display", githubUsername: "thevinayakgore" },
-      //     { itemName: "Tech Product Display", githubUsername: "thevinayakgore" },
-      //     { itemName: "Luxury Product Display", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Product Grids",
-      //   description: "Responsive product grid layouts optimized for browsing large catalogs with filtering and masonry styles.",
-      //   tags: [
-      //     "product-grid",
-      //     "catalog",
-      //     "listing",
-      //     "ecommerce",
-      //     "responsive",
-      //     "layout",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Minimal Product Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Product Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Filters Product Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Featured Product Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Masonry Product Grid", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Shopping Carts",
-      //   description: "Shopping cart components that manage product selection, quantities, and checkout progression.",
-      //   tags: ["cart", "shopping", "checkout", "ecommerce", "order", "summary"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Compact Shopping Cart", githubUsername: "thevinayakgore" },
-      //     { itemName: "Progress Shopping Cart", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Shopping Cart", githubUsername: "thevinayakgore" },
-      //     { itemName: "Sidebar Shopping Cart", githubUsername: "thevinayakgore" },
-      //     { itemName: "Recommendations Shopping Cart", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Wishlist Buttons",
-      //   description: "Interactive wishlist button components that allow users to save products for later.",
-      //   tags: [
-      //     "wishlist",
-      //     "favorites",
-      //     "like",
-      //     "ecommerce",
-      //     "interaction",
-      //     "ui",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Animated Wishlist Button", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Wishlist Button", githubUsername: "thevinayakgore" },
-      //     { itemName: "Floating Wishlist Button", githubUsername: "thevinayakgore" },
-      //     { itemName: "Tooltip Wishlist Button", githubUsername: "thevinayakgore" },
-      //     { itemName: "Toggle Wishlist Button", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-    ],
-  },
-  {
-    category: "Dashboards",
-    icon: "chart-no-axes-combined",
-    subcategories: [
-      {
-        name: "Financial",
-        thumbnail: "analytics-dashboard",
-        newItem: true,
-        description:
-          "Professional financial dashboard layouts for tracking income, expenses, savings, and key performance metrics.",
-        tags: [
-          "finance",
-          "personal-finance",
           "analytics",
-          "metrics",
-          "charts",
-          "reports",
-          "fintech",
+          "content",
+          "productivity",
         ],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          {
-            itemName: "Personal Finance Dashboard",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Analytics Dashboard",
-            githubUsername: "thevinayakgore",
-          },
-        ],
+        items: [{ itemName: "AI Summary Page" }],
       },
     ],
   },
-  {
-    category: "Data Display",
-    icon: "database-zap",
-    subcategories: [
-      {
-        name: "Accordions",
-        thumbnail: "nested-accordion",
-        description:
-          "Data-focused accordion components for organizing large or hierarchical datasets into expandable sections.",
-        tags: [
-          "accordion",
-          "data-display",
-          "collapsible",
-          "expandable",
-          "hierarchical",
-          "dashboard",
-          "ui-pattern",
-        ],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          {
-            itemName: "Basic Accordion",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Multiple Open Accordion",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Nested Accordion",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Tables",
-        description:
-          "Powerful table components for displaying, sorting, and managing structured data efficiently.",
-        tags: [
-          "table",
-          "data-table",
-          "sortable",
-          "data-display",
-          "dashboard",
-          "admin",
-          "analytics",
-          "enterprise",
-        ],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          {
-            itemName: "Fixed Column Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Sortable Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Editable Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Filters Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Real Time Filterable Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Saved Views Filterable Table",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Expandable Row Table",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Feedbacks",
-    icon: "messages-square",
-    subcategories: [
-      {
-        name: "Alerts",
-        thumbnail: "action-alert",
-        description:
-          "Enhance user experience with professional alert systems that communicate critical information effectively.",
-        tags: ["alert", "notification", "banner", "action", "animated"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          { itemName: "Standard Alert", githubUsername: "thevinayakgore" },
-          { itemName: "Action Alert", githubUsername: "thevinayakgore" },
-          { itemName: "Modal Alert", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Popups",
-        description:
-          "Boost engagement metrics with strategic popup implementations that capture attention without disrupting flow.",
-        tags: ["popup", "modal", "overlay", "interactive"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          { itemName: "Popup 1", githubUsername: "thevinayakgore" },
-          { itemName: "Popup 2", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Snackbars",
-        thumbnail: "snackbar-2",
-        description:
-          "Deliver seamless feedback with non-intrusive snackbar notifications that confirm actions and provide updates.",
-        tags: ["snackbar", "temporary", "action", "nonblocking"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [
-          { itemName: "Snackbar 1", githubUsername: "thevinayakgore" },
-          { itemName: "Snackbar 2", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Toasts",
-        description:
-          "Improve system communication with elegant toast notifications that provide timely feedback.",
-        tags: ["toast", "feedback", "ephemeral", "nonintrusive"],
-        techs: ["nextjs", "tailwindcss", "typescript", "shadcnui", "motion"],
-        items: [{ itemName: "Toast 1", githubUsername: "thevinayakgore" }],
-      },
-    ],
-  },
-  {
-    category: "Layouts",
-    icon: "layout-template",
-    subcategories: [
-      {
-        name: "Containers",
-        thumbnail: "premium-container",
-        description:
-          "Establish visual consistency with professional container systems that structure content with precision.",
-        tags: ["container", "page", "wrapper", "responsive", "structure"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Basic Container", githubUsername: "thevinayakgore" },
-          { itemName: "Standard Container", githubUsername: "thevinayakgore" },
-          { itemName: "Premium Container", githubUsername: "thevinayakgore" },
-        ],
-      },
-      // {
-      //   name: "Grid Systems",
-      //   description: "Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.",
-      //   tags: ["masonry", "grid", "layout", "gallery", "cards"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Basic Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Grid", githubUsername: "thevinayakgore" },
-      //     { itemName: "Animated Grid", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      {
-        name: "Masonry Layouts",
-        thumbnail: "masonry-image-gallery",
-        description:
-          "Grid-based masonry layouts that arrange variable-height content into balanced columns for galleries and feeds.",
-        tags: ["masonry", "grid", "layout", "gallery", "cards"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-        items: [
-          {
-            itemName: "Basic Masonry Layout",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Standard Masonry Layout",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Masonry Image Gallery",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      // {
-      //   name: "Sidebars",
-      //   description: "Optimize navigation efficiency with intelligent sidebar systems that adapt to user workflows.",
-      //   tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [{ itemName: "Sidebar 1", githubUsername: "thevinayakgore" }],
-      // },
-      // {
-      //   name: "Split Layouts",
-      //   description: "Responsive split-screen layouts designed to present parallel content side by side for comparisons and dashboards.",
-      //   tags: [
-      //     "split-layout",
-      //     "two-column",
-      //     "responsive",
-      //     "comparison",
-      //     "dashboard",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Basic Split Layout", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Split Layout", githubUsername: "thevinayakgore" },
-      //     { itemName: "Animated Split Layout", githubUsername: "thevinayakgore" },
-      //     { itemName: "Premium Split Layout", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Stacks",
-      //   description: "Vertical stacking layouts that organize content in a clear top-to-bottom flow for feeds and forms.",
-      //   tags: [
-      //     "stack",
-      //     "vertical-layout",
-      //     "spacing",
-      //     "content-flow",
-      //     "responsive",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
-      //   items: [
-      //     { itemName: "Basic Stack", githubUsername: "thevinayakgore" },
-      //     { itemName: "Standard Stack", githubUsername: "thevinayakgore" },
-      //     { itemName: "Moderate Stack", githubUsername: "thevinayakgore" },
-      //     { itemName: "Complex Stack", githubUsername: "thevinayakgore" },
-      //     { itemName: "Animated Stack", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-    ],
-  },
-  {
-    category: "Loaders",
-    icon: "loader",
-    subcategories: [
-      {
-        name: "Button Loaders",
-        thumbnail: "shiny-button-loader",
-        description:
-          "Improve perceived performance with intelligent button loaders that provide immediate feedback during operations.",
-        tags: ["button", "loader", "loading", "async", "feedback"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Button Loader", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Outline Button Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Animated Button Loader",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Shiny Button Loader", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Grid Loaders",
-        description:
-          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
-        tags: ["pulse", "loader", "activity", "animation", "waiting"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Grid Loader 1", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Inline Loaders",
-        thumbnail: "basic-inline-loader",
-        description:
-          "Maintain interface continuity with subtle inline loaders that indicate background activity without disruption.",
-        tags: ["inline", "loader", "text", "micro", "compact"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS"],
-        items: [
-          { itemName: "Basic Inline Loader", githubUsername: "thevinayakgore" },
-          { itemName: "Pulse Inline Loader", githubUsername: "thevinayakgore" },
-          { itemName: "Text Inline Loader", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Page Loaders",
-        thumbnail: "logo-page-loader",
-        description:
-          "Create polished transitions with professional page loaders that manage user expectations during critical waits.",
-        tags: ["page", "loader", "fullscreen", "route", "blocking"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          {
-            itemName: "Centered Page Loader",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Full Page Loader", githubUsername: "thevinayakgore" },
-          { itemName: "Logo Page Loader", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Progress Loaders",
-        description:
-          "Track operation completion with visual progress indicators that manage user expectations during longer waits.",
-        tags: ["progress", "loader", "loading", "indicator", "status"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          {
-            itemName: "Linear Progress Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Circular Progress Loader",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Pulse Loaders",
-        thumbnail: "multi-layer-pulse-loader",
-        description:
-          "Indicate system activity with subtle pulse animations that communicate processing without interrupting flow.",
-        tags: ["pulse", "loader", "activity", "animation", "waiting"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          {
-            itemName: "Basic Pulse Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Multi Layer Pulse Loader",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Skeletons",
-        thumbnail: "dashboard-skeleton-loader",
-        description:
-          "Improve perceived performance with skeleton loaders that preview content structure while data loads.",
-        tags: ["skeleton", "loader", "placeholder", "content", "ui"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          {
-            itemName: "Basic Skeleton Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Card Skeleton Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Profile Skeleton Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Table Skeleton Loader",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Dashboard Skeleton Loader",
-            githubUsername: "thevinayakgore",
-          },
-        ],
-      },
-      {
-        name: "Spinners",
-        thumbnail: "gradient-spinner",
-        description:
-          "Classic spinner animations that provide clear visual feedback during loading states.",
-        tags: ["spinner", "loader", "loading", "waiting", "animation"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Spinner", githubUsername: "thevinayakgore" },
-          { itemName: "Ring Spinner", githubUsername: "thevinayakgore" },
-          { itemName: "Gradient Spinner", githubUsername: "thevinayakgore" },
-        ],
-      },
-      {
-        name: "Wave Loaders",
-        thumbnail: "premium-wave-loader",
-        description:
-          "Dynamic wave animations that create engaging loading experiences for modern applications.",
-        tags: ["wave", "loader", "loading", "animation", "waiting"],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-        items: [
-          { itemName: "Basic Wave Loader", githubUsername: "thevinayakgore" },
-          {
-            itemName: "Gradient Wave Loader",
-            githubUsername: "thevinayakgore",
-          },
-          { itemName: "Premium Wave Loader", githubUsername: "thevinayakgore" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Navigations",
-    icon: "send",
-    subcategories: [
-      // {
-      //   name: "Floating Menus",
-      //   description: "Accelerate user actions with dynamic floating menus that provide instant access to key functions.",
-      //   tags: ["menu", "dock", "speed", "radial", "navigation"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-      //   items: [
-      //     { itemName: "Dock Menu", githubUsername: "thevinayakgore" },
-      //     { itemName: "Speed Dial Menu", githubUsername: "thevinayakgore" },
-      //     { itemName: "Radial Menu", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      {
-        name: "Footers",
-        description:
-          "Maximize site engagement with comprehensive footer systems that improve navigation and conversion.",
-        tags: ["footer", "sitemap", "bottom", "legal", "branding"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Simple Footer", githubUsername: "thevinayakgore" },
-          { itemName: "Standard Footer", githubUsername: "thevinayakgore" },
-        ],
-      },
-      // {
-      //   name: "Menu",
-      //   description: "Streamline user journeys with intuitive menu systems that simplify complex navigation.",
-      //   tags: ["menu", "dropdown", "mega", "nav", "command"],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-      //   items: [
-      //     { itemName: "Dropdown Menu", githubUsername: "thevinayakgore" },
-      //     { itemName: "Mega Menu", githubUsername: "thevinayakgore" },
-      //     { itemName: "Nav Menu", githubUsername: "thevinayakgore" },
-      //     { itemName: "Command Palette", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      {
-        name: "Navbars",
-        thumbnail: "sticky-glass-navbar",
-        description:
-          "Establish strong navigation foundations with professional navbar systems that guide users effectively.",
-        tags: ["navbar", "header", "navigation", "top", "branding"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Standard Navbar", githubUsername: "thevinayakgore" },
-          { itemName: "Sticky Glass Navbar", githubUsername: "thevinayakgore" },
-        ],
-      },
-      // {
-      //   name: "Pagination",
-      //   description: "Navigation controls that help users move efficiently through large datasets and content collections.",
-      //   tags: [
-      //     "pagination",
-      //     "navigation",
-      //     "paging",
-      //     "tables",
-      //     "lists",
-      //     "infinite-scroll",
-      //     "ui",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-      //   items: [
-      //     { itemName: "Basic Pagination", githubUsername: "thevinayakgore" },
-      //     { itemName: "Compact Pagination", githubUsername: "thevinayakgore" },
-      //     { itemName: "Table Pagination", githubUsername: "thevinayakgore" },
-      //     { itemName: "Load More Pagination", githubUsername: "thevinayakgore" },
-      //     { itemName: "Infinite Scroll", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-      // {
-      //   name: "Tabs",
-      //   description: "Tab components for organizing content into separate views without page reloads.",
-      //   tags: [
-      //     "tabs",
-      //     "navigation",
-      //     "switching",
-      //     "content",
-      //     "ui",
-      //   ],
-      //   techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-      //   items: [
-      //     { itemName: "Basic Tab", githubUsername: "thevinayakgore" },
-      //     { itemName: "Pills Tab", githubUsername: "thevinayakgore" },
-      //     { itemName: "Scrollable Tab", githubUsername: "thevinayakgore" },
-      //   ],
-      // },
-    ],
-  },
+
+  //   // ─── SECTIONS ────────────────────────────────────────────
   {
     category: "Sections",
     icon: "layout-grid",
+    tags: ["section", "block", "page", "layout"],
     subcategories: [
       {
         name: "Auth Forms",
@@ -1152,28 +169,10 @@ export const COMPONENTS = createComponents([
           "saas",
           "form",
         ],
-        techs: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
         items: [
           {
             itemName: "Standard Sign In Form",
-            githubUsername: "thevinayakgore",
           },
-          // {
-          //   itemName: "Minimal Sign Up Form",
-          //   githubUsername: "thevinayakgore",
-          // },
-          // {
-          //   itemName: "Split Screen Auth Form",
-          //   githubUsername: "thevinayakgore",
-          // },
-          // {
-          //   itemName: "OTP Verification Form",
-          //   githubUsername: "thevinayakgore",
-          // },
-          // {
-          //   itemName: "Forgot Password Form",
-          //   githubUsername: "thevinayakgore",
-          // },
         ],
       },
       {
@@ -1181,49 +180,20 @@ export const COMPONENTS = createComponents([
         newItem: true,
         thumbnail: "analytics-stats-bento",
         description:
-          "A modern responsive bento grid layout for showcasing features, dashboards, and product highlights.",
-        tags: [
-          "grid",
-          "layout",
-          "responsive",
-          "ui",
-          "dashboard",
-          "modern",
-          "cards",
-          "showcase",
-          "design",
-          "components",
-        ],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
+          "Explore modern, responsive bento grid layouts for dashboards, product overviews, feature showcases, and analytics interfaces.",
+        tags: ["grid", "bento", "layout", "overview", "features", "analytics"],
         items: [
-          {
-            itemName: "Product Overview Bento",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Analytics Stats Bento",
-            githubUsername: "thevinayakgore",
-          },
-          {
-            itemName: "Aurora Feature Bento",
-            githubUsername: "thevinayakgore",
-          },
+          { itemName: "Product Overview Bento" },
+          { itemName: "Analytics Stats Bento" },
+          { itemName: "Aurora Feature Bento" },
         ],
       },
       {
-        name: "FAQ",
-        newItem: true,
-        thumbnail: "icon-style-faq",
+        name: "Profiles",
         description:
-          "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
-        tags: ["faq", "accordion", "support", "schema", "collapsible"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI"],
-        items: [
-          { itemName: "Single Open FAQ", githubUsername: "thevinayakgore" },
-          { itemName: "Multiple Open FAQ", githubUsername: "thevinayakgore" },
-          { itemName: "Masonry Grid FAQ", githubUsername: "thevinayakgore" },
-          { itemName: "Icon Style FAQ", githubUsername: "thevinayakgore" },
-        ],
+          "Profile card components designed to present user identities, roles, and key metadata in a clean, engaging layout.",
+        tags: ["profile", "user", "identity", "section", "avatar", "member"],
+        items: [{ itemName: "User Profile" }],
       },
       {
         name: "Testimonials",
@@ -1231,40 +201,895 @@ export const COMPONENTS = createComponents([
         description:
           "Build trust and accelerate conversions with compelling testimonial displays that showcase social proof.",
         tags: ["testimonial", "social", "reviews", "trust", "carousel"],
-        techs: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Motion"],
         items: [
-          { itemName: "Minimal Testimonial", githubUsername: "thevinayakgore" },
-          { itemName: "Social Testimonial", githubUsername: "thevinayakgore" },
+          { itemName: "Minimal Testimonial" },
+          { itemName: "Social Testimonial" },
+          { itemName: "Company Testimonial" },
+          { itemName: "Carousel Testimonial 1" },
+          { itemName: "Carousel Testimonial 2" },
+        ],
+      },
+    ],
+  },
+
+  //   // ─── COMMERCE ────────────────────────────────────────────
+  {
+    category: "Commerce",
+    icon: "indian-rupee",
+    tags: ["commerce", "ecommerce", "shop", "payment"],
+    subcategories: [
+      //       {
+      //         name: "Checkout Forms",
+      //         description: "Conversion-focused checkout form layouts.",
+      //         items: [
+      //           { itemName: "Basic Checkout Form" },
+      //           {
+      //             itemName: "Compact Checkout Form",
+      //           },
+      //           {
+      //             itemName: "Floating Checkout Form",
+      //           },
+      //           {
+      //             itemName: "Multi Step Checkout Form",
+      //           },
+      //           {
+      //             itemName: "Split Screen Checkout Form",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Discount Badges",
+      //         description: "Discount and offer badge components.",
+      //         items: [
+      //           {
+      //             itemName: "Simple Discount Badge",
+      //           },
+      //           {
+      //             itemName: "Minimal Discount Badge",
+      //           },
+      //           {
+      //             itemName: "Countdown Discount Badge",
+      //           },
+      //           {
+      //             itemName: "Collapse Discount Badge",
+      //           },
+      //           {
+      //             itemName: "Animated Discount Badge",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Offer Banners",
+      //         description: "Promotional banner components.",
+      //         tags: ["banner", "promotion", "offer", "marketing", "cta"],
+      //         items: [
+      //           { itemName: "Simple Offer Banner" },
+      //           {
+      //             itemName: "Countdown Offer Banner",
+      //           },
+      //           {
+      //             itemName: "Interactive Offer Banner",
+      //           },
+      //           {
+      //             itemName: "Scrolling Offer Banner",
+      //           },
+      //           { itemName: "Split Offer Banner" },
+      //         ],
+      //       },
+      //       {
+      //         name: "Payment Options",
+      //         description: "Flexible payment selection components.",
+      //         tags: ["payment", "checkout", "billing", "methods", "finance"],
+      //         items: [
+      //           {
+      //             itemName: "Minimal Payment Options",
+      //           },
+      //           {
+      //             itemName: "Payment Methods Cards",
+      //           },
+      //           {
+      //             itemName: "Payment Methods Selector",
+      //           },
+      //           {
+      //             itemName: "Saved Cards Payment Options",
+      //           },
+      //           {
+      //             itemName: "Split Payment Options",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Pricing Cards",
+      //         description: "Structured pricing card components.",
+      //         tags: ["pricing", "plans", "subscription", "saas", "cards"],
+      //         items: [
+      //           { itemName: "Simple Pricing Card" },
+      //           {
+      //             itemName: "Minimal Pricing Card",
+      //           },
+      //           {
+      //             itemName: "Feature Comparison Pricing",
+      //           },
+      //           { itemName: "Tiered Pricing Card" },
+      //           { itemName: "Toggle Pricing Card" },
+      //         ],
+      //       },
+      {
+        name: "Pricing Tables",
+        newItem: true,
+        description:
+          "Accelerate revenue growth with conversion-optimized pricing tables that maximize subscription sign-ups.",
+        tags: ["pricing", "comparison", "subscription", "features"],
+        items: [
           {
-            itemName: "Standard Testimonial",
-            githubUsername: "thevinayakgore",
+            itemName: "Simple Pricing Table",
           },
-          { itemName: "Company Testimonial", githubUsername: "thevinayakgore" },
           {
-            itemName: "Carousel Testimonial 1",
-            githubUsername: "thevinayakgore",
+            itemName: "Standard Pricing Table",
           },
           {
-            itemName: "Carousel Testimonial 2",
-            githubUsername: "thevinayakgore",
+            itemName: "Tiered Pricing Table",
+          },
+        ],
+      },
+      {
+        name: "Product Cards",
+        description:
+          "Commerce-ready card components designed to showcase products with clarity and impact.",
+        tags: ["product", "ecommerce", "card", "catalog"],
+        items: [
+          {
+            itemName: "Interactive Product Card",
+          },
+          {
+            itemName: "Detailed Product Card",
+          },
+        ],
+      },
+      //       {
+      //         name: "Product Display",
+      //         description: "High-impact product display sections.",
+      //         tags: ["product", "showcase", "details", "ecommerce", "display"],
+      //         items: [
+      //           {
+      //             itemName: "Compact Product Display",
+      //           },
+      //           {
+      //             itemName: "Minimal Product Display",
+      //           },
+      //           {
+      //             itemName: "Interactive Product Display",
+      //           },
+      //           {
+      //             itemName: "Tech Product Display",
+      //           },
+      //           {
+      //             itemName: "Luxury Product Display",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Product Grids",
+      //         description: "Responsive product grid layouts.",
+      //         tags: ["product-grid", "catalog", "listing", "ecommerce", "responsive"],
+      //         items: [
+      //           {
+      //             itemName: "Minimal Product Grid",
+      //           },
+      //           {
+      //             itemName: "Standard Product Grid",
+      //           },
+      //           {
+      //             itemName: "Filters Product Grid",
+      //           },
+      //           {
+      //             itemName: "Featured Product Grid",
+      //           },
+      //           {
+      //             itemName: "Masonry Product Grid",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Shopping Carts",
+      //         description: "Shopping cart components.",
+      //         tags: ["cart", "shopping", "checkout", "ecommerce", "order"],
+      //         items: [
+      //           {
+      //             itemName: "Compact Shopping Cart",
+      //           },
+      //           {
+      //             itemName: "Progress Shopping Cart",
+      //           },
+      //           {
+      //             itemName: "Standard Shopping Cart",
+      //           },
+      //           {
+      //             itemName: "Sidebar Shopping Cart",
+      //           },
+      //           {
+      //             itemName: "Recommendations Shopping Cart",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Wishlist Buttons",
+      //         description: "Interactive wishlist button components.",
+      //         tags: ["wishlist", "favorites", "like", "ecommerce", "interaction"],
+      //         items: [
+      //           {
+      //             itemName: "Animated Wishlist Button",
+      //           },
+      //           {
+      //             itemName: "Standard Wishlist Button",
+      //           },
+      //           {
+      //             itemName: "Floating Wishlist Button",
+      //           },
+      //           {
+      //             itemName: "Tooltip Wishlist Button",
+      //           },
+      //           {
+      //             itemName: "Toggle Wishlist Button",
+      //           },
+      //         ],
+      //       },
+    ],
+  },
+
+  //   // ─── BACKGROUND EFFECTS ──────────────────────────────────
+  {
+    category: "Background Effects",
+    icon: "square-terminal",
+    tags: ["background", "effects", "visual", "gradient"],
+    subcategories: [
+      {
+        name: "Gradient Spotlight",
+        description:
+          "Modern background effects featuring dynamic gradient spotlight animations for depth, focus, and visual hierarchy.",
+        tags: [
+          "background",
+          "gradient",
+          "spotlight",
+          "animation",
+          "effects",
+          "ui",
+          "visual",
+          "hero",
+          "landing",
+        ],
+        items: [
+          {
+            itemName: "Background Gradient Spotlight",
           },
         ],
       },
     ],
   },
-  // {
-  //   category: "Typography",
-  //   icon: "type",
-  //   subcategories: [
-  //     {
-  //       name: "Text Effects",
-  //       description: "Comprehensive typography components designed to standardize text presentation across applications.",
-  //       tags: ["typography", "text", "fonts", "ui", "design"],
-  //       techs: ["Next.js", "Tailwind CSS", "TypeScript", "Motion"],
-  //       items: [
-  //         { itemName: "------", githubUsername: "thevinayakgore" },
-  //       ],
-  //     },
-  //   ],
-  // },
-] as const);
+
+  //   // ─── LAYOUTS ─────────────────────────────────────────────
+  {
+    category: "Layouts",
+    icon: "layout-template",
+    tags: ["layout", "structure", "grid"],
+    subcategories: [
+      {
+        name: "Containers",
+        thumbnail: "premium-container",
+        description:
+          "Professional, responsive container systems for structuring page content with consistent spacing, alignment, and max-width control.",
+        tags: [
+          "layout",
+          "wrapper",
+          "spacing",
+          "container",
+          "alignment",
+          "structure",
+        ],
+        items: [
+          { itemName: "Basic Container" },
+          { itemName: "Standard Container" },
+          { itemName: "Premium Container" },
+        ],
+      },
+      // {
+      //   name: "Grid Systems",
+      //   description:
+      //     "Flexible grid-based layout components for creating balanced columns, structured content sections, galleries, and responsive card layouts.",
+      //   tags: [
+      //     "grid",
+      //     "columns",
+      //     "layout",
+      //     "gallery",
+      //     "cards",
+      //     "masonry",
+      //     "animated",
+      //     "responsive",
+      //   ],
+      //   items: [
+      //     { itemName: "Basic Grid" },
+      //     { itemName: "Standard Grid" },
+      //     { itemName: "Animated Grid" },
+      //   ],
+      // },
+      {
+        name: "Masonry Layouts",
+        thumbnail: "masonry-image-gallery",
+        description:
+          "Responsive masonry layout components for building image galleries, content feeds, portfolios, and Pinterest-style card layouts.",
+        tags: [
+          "masonry",
+          "grid",
+          "gallery",
+          "portfolio",
+          "feed",
+          "cards",
+          "images",
+        ],
+        items: [
+          { itemName: "Basic Masonry Layout" },
+          { itemName: "Standard Masonry Layout" },
+          { itemName: "Masonry Image Gallery" },
+        ],
+      },
+      //       {
+      //         name: "Sidebars",
+      //         description: "Intelligent sidebar systems.",
+      //         tags: ["sidebar", "admin", "navigation", "collapsible", "drawer"],
+      //         items: [{ itemName: "Sidebar 1" }],
+      //       },
+      //       {
+      //         name: "Split Layouts",
+      //         description: "Responsive split-screen layouts.",
+      //         tags: [
+      //           "split-layout",
+      //           "two-column",
+      //           "responsive",
+      //           "comparison",
+      //           "dashboard",
+      //         ],
+      //         items: [
+      //           { itemName: "Basic Split Layout" },
+      //           {
+      //             itemName: "Standard Split Layout",
+      //           },
+      //           {
+      //             itemName: "Animated Split Layout",
+      //           },
+      //           {
+      //             itemName: "Premium Split Layout",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Stacks",
+      //         description: "Vertical stacking layouts.",
+      //         tags: [
+      //           "stack",
+      //           "vertical-layout",
+      //           "spacing",
+      //           "content-flow",
+      //           "responsive",
+      //         ],
+      //         items: [
+      //           { itemName: "Basic Stack" },
+      //           { itemName: "Standard Stack" },
+      //           { itemName: "Moderate Stack" },
+      //           { itemName: "Complex Stack" },
+      //           { itemName: "Animated Stack" },
+      //         ],
+      //       },
+    ],
+  },
+
+  //   // ─── NAVIGATIONS ─────────────────────────────────────────
+  {
+    category: "Navigations",
+    icon: "send",
+    tags: ["navigation", "menu", "navbar", "footer"],
+    subcategories: [
+      //       {
+      //         name: "Floating Menus",
+      //         description: "Dynamic floating menus for instant access.",
+      //         tags: ["menu", "dock", "speed", "radial", "navigation"],
+      //         items: [
+      //           { itemName: "Dock Menu" },
+      //           { itemName: "Speed Dial Menu" },
+      //           { itemName: "Radial Menu" },
+      //         ],
+      //       },
+      {
+        name: "Footers",
+        description:
+          "Maximize site engagement with comprehensive footer systems that improve navigation and conversion.",
+        tags: ["footer", "sitemap", "bottom", "legal", "branding"],
+        items: [{ itemName: "Simple Footer" }, { itemName: "Standard Footer" }],
+      },
+      //       {
+      //         name: "Menu",
+      //         description: "Intuitive menu systems.",
+      //         tags: ["menu", "dropdown", "mega", "nav", "command"],
+      //         items: [
+      //           { itemName: "Dropdown Menu" },
+      //           { itemName: "Mega Menu" },
+      //           { itemName: "Nav Menu" },
+      //           { itemName: "Command Palette" },
+      //         ],
+      //       },
+      {
+        name: "Navbars",
+        thumbnail: "sticky-glass-navbar",
+        description:
+          "Establish strong navigation foundations with professional navbar systems that guide users effectively.",
+        tags: ["navbar", "header", "navigation", "top", "branding"],
+        items: [
+          { itemName: "Standard Navbar" },
+          { itemName: "Sticky Glass Navbar" },
+        ],
+      },
+      //       {
+      //         name: "Pagination",
+      //         description: "Navigation controls for datasets.",
+      //         tags: ["pagination", "navigation", "paging", "infinite-scroll", "ui"],
+      //         items: [
+      //           { itemName: "Basic Pagination" },
+      //           { itemName: "Compact Pagination" },
+      //           { itemName: "Table Pagination" },
+      //           {
+      //             itemName: "Load More Pagination",
+      //           },
+      //           { itemName: "Infinite Scroll" },
+      //         ],
+      //       },
+      //       {
+      //         name: "Tabs",
+      //         description: "Tab components for content views.",
+      //         tags: ["tabs", "navigation", "switching", "content", "ui"],
+      //         items: [
+      //           { itemName: "Basic Tab" },
+      //           { itemName: "Pills Tab" },
+      //           { itemName: "Scrollable Tab" },
+      //         ],
+      //       },
+    ],
+  },
+
+  //   // ─── DASHBOARDS ──────────────────────────────────────────
+  {
+    category: "Dashboards",
+    icon: "chart-no-axes-combined",
+    tags: ["dashboard", "analytics", "admin", "finance"],
+    subcategories: [
+      {
+        name: "Financial",
+        newItem: true,
+        kind: "multi",
+        description:
+          "Professional financial dashboard layouts for tracking income and expenses.",
+        tags: ["finance", "personal-finance", "analytics", "metrics", "charts"],
+        items: [
+          { itemName: "Analytics Dashboard" },
+          { itemName: "Personal Finance Dashboard" },
+        ],
+      },
+    ],
+  },
+
+  //   // ─── PAGE SECTIONS ───────────────────────────────────────
+  //   {
+  //     category: "Page Sections",
+  //     icon: "layout-panel-top",
+  //     tags: ["page", "section", "landing", "marketing"],
+  //     subcategories: [
+  //       {
+  //         name: "About Section",
+  //         description: "Versatile about sections for your story.",
+  //         tags: ["about", "story", "team", "company", "section"],
+  //         items: [
+  //           { itemName: "Basic About Section" },
+  //           {
+  //             itemName: "Minimal About Section",
+  //           },
+  //           {
+  //             itemName: "Minimal About Section 2",
+  //           },
+  //           { itemName: "Minimal Profile" },
+  //           {
+  //             itemName: "Skills Grid About Section",
+  //           },
+  //           {
+  //             itemName: "Split About Image Focus",
+  //           },
+  //           { itemName: "Split Image About" },
+  //           {
+  //             itemName: "Statistics About Section",
+  //           },
+  //           { itemName: "Story Telling About" },
+  //           { itemName: "Team About Section" },
+  //           {
+  //             itemName: "Timeline About Journey",
+  //           },
+  //           {
+  //             itemName: "Timeline About Section",
+  //           },
+  //           {
+  //             itemName: "Timeline About Section 2",
+  //           },
+  //           {
+  //             itemName: "Values About Section",
+  //           },
+  //           {
+  //             itemName: "Values Columns About Section",
+  //           },
+  //           { itemName: "Values Driven About" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Contact Section",
+  //         description: "Contact sections with forms, maps, and layout variants.",
+  //         tags: ["contact", "form", "map", "section", "support"],
+  //         items: [
+  //           { itemName: "Basic Contact Form" },
+  //           { itemName: "Card Grid Contact" },
+  //           { itemName: "Compact Contact Bar" },
+  //           {
+  //             itemName: "Compact Inline Status",
+  //           },
+  //           { itemName: "Compact Micro Faq" },
+  //           {
+  //             itemName: "Contact Side Info Panel",
+  //           },
+  //           { itemName: "Faq Contact" },
+  //           { itemName: "Map Contact" },
+  //           { itemName: "Map Contact 2" },
+  //           { itemName: "Minimal Contact" },
+  //           { itemName: "Multi Step Contact" },
+  //           { itemName: "Simple Contact Card" },
+  //           {
+  //             itemName: "Simple Contact Card 2",
+  //           },
+  //           {
+  //             itemName: "Social Media Contact",
+  //           },
+  //           {
+  //             itemName: "Support Tiers Contact",
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         name: "CTA Section",
+  //         description: "Conversion-focused call-to-action sections.",
+  //         tags: ["cta", "call-to-action", "conversion", "section", "marketing"],
+  //         items: [
+  //           { itemName: "Basic Cta" },
+  //           { itemName: "Comparison Cta" },
+  //           { itemName: "Countdown Cta" },
+  //           { itemName: "Email Capture Cta" },
+  //           { itemName: "Features Cta" },
+  //           { itemName: "Gradient Cta" },
+  //           { itemName: "Input Field Cta" },
+  //           { itemName: "Primary Cta Banner" },
+  //           { itemName: "Progress Hint Cta" },
+  //           { itemName: "Simple Cta" },
+  //           { itemName: "Social Proof Cta" },
+  //           { itemName: "Split Cta" },
+  //           { itemName: "Subtle Cta Strip" },
+  //           { itemName: "Testimonials Cta" },
+  //           { itemName: "Two Actions Cta" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Features Section",
+  //         description: "Feature showcase sections.",
+  //         tags: ["features", "showcase", "grid", "section", "marketing"],
+  //         items: [
+  //           {
+  //             itemName: "Alternating Features",
+  //           },
+  //           { itemName: "Bento Features" },
+  //           {
+  //             itemName: "Comparison Columns Features",
+  //           },
+  //           { itemName: "Comparison Features" },
+  //           {
+  //             itemName: "Comparison Table Features",
+  //           },
+  //           { itemName: "Grid Features" },
+  //           { itemName: "Grid Features 2" },
+  //           {
+  //             itemName: "Highlighted Card Features",
+  //           },
+  //           { itemName: "Icons Row Features" },
+  //           {
+  //             itemName: "Interactive Features Showcase",
+  //           },
+  //           {
+  //             itemName: "Minimal Features Grid",
+  //           },
+  //           {
+  //             itemName: "Side By Side Features",
+  //           },
+  //           {
+  //             itemName: "Steps Layout Features",
+  //           },
+  //           { itemName: "Tab Features" },
+  //           { itemName: "Tabs Features" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Footer Section",
+  //         description: "Comprehensive footer sections.",
+  //         tags: ["footer", "section", "sitemap", "newsletter", "social"],
+  //         items: [
+  //           {
+  //             itemName: "Compact Sitemap Footer",
+  //           },
+  //           { itemName: "Contact Footer" },
+  //           {
+  //             itemName: "Footer Centered Minimal",
+  //           },
+  //           {
+  //             itemName: "Footer Simple Columns",
+  //           },
+  //           { itemName: "Legal Strip Footer" },
+  //           { itemName: "Minimal Footer" },
+  //           { itemName: "Newsletter Footer" },
+  //           { itemName: "Newsletter Footer 2" },
+  //           {
+  //             itemName: "Simple Footer Section",
+  //           },
+  //           {
+  //             itemName: "Standard Footer Section",
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         name: "Hero Section",
+  //         description: "High-impact hero sections.",
+  //         tags: ["hero", "section", "landing", "headline", "cta"],
+  //         items: [
+  //           { itemName: "Animated Hero" },
+  //           {
+  //             itemName: "Animated Particles Hero",
+  //           },
+  //           { itemName: "Centered Hero" },
+  //           { itemName: "Centered Hero 2" },
+  //           {
+  //             itemName: "Centered Hero Primary Cta",
+  //           },
+  //           { itemName: "Email Capture Hero" },
+  //           { itemName: "Gradient Hero" },
+  //           { itemName: "Image Hero" },
+  //           {
+  //             itemName: "Inline Video Cta Hero",
+  //           },
+  //           { itemName: "Split Hero" },
+  //           {
+  //             itemName: "Split Hero Preview Card",
+  //           },
+  //           { itemName: "Stats Counter Hero" },
+  //           { itemName: "Stats Row Hero" },
+  //           { itemName: "Tagline Strip Hero" },
+  //           { itemName: "Video Hero" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Navbar Section",
+  //         description: "Navbar sections for pages.",
+  //         tags: ["navbar", "section", "header", "navigation", "responsive"],
+  //         items: [
+  //           { itemName: "Centered Navbar" },
+  //           {
+  //             itemName: "Compact Pills Navbar",
+  //           },
+  //           { itemName: "Cta Badge Navbar" },
+  //           { itemName: "Dashboard Navbar" },
+  //           { itemName: "Dropdown Navbar" },
+  //           { itemName: "Logo Links Navbar" },
+  //           {
+  //             itemName: "Secondary Row Navbar",
+  //           },
+  //           { itemName: "Simple Navbar" },
+  //           { itemName: "Transparent Navbar" },
+  //           {
+  //             itemName: "Underline Active Navbar",
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         name: "Pricing Section",
+  //         description: "Pricing sections with toggles.",
+  //         tags: ["pricing", "section", "plans", "comparison", "subscription"],
+  //         items: [
+  //           { itemName: "Comparison Pricing" },
+  //           {
+  //             itemName: "Pricing Feature Comparison",
+  //           },
+  //           {
+  //             itemName: "Pricing Notes Column",
+  //           },
+  //           { itemName: "Pricing Single Card" },
+  //           { itemName: "Pricing Toggle Hint" },
+  //           { itemName: "Pricing Two Tiers" },
+  //           { itemName: "Single Plan Pricing" },
+  //           {
+  //             itemName: "Three Column Pricing",
+  //           },
+  //           { itemName: "Toggle Pricing" },
+  //           { itemName: "Usage Based Pricing" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Team Section",
+  //         description: "Team showcase sections.",
+  //         tags: ["team", "section", "people", "company", "showcase"],
+  //         items: [
+  //           { itemName: "Cards Team" },
+  //           { itemName: "Grid Team" },
+  //           { itemName: "List Team" },
+  //           { itemName: "Minimal Team" },
+  //           { itemName: "Quote Team" },
+  //         ],
+  //       },
+  //       {
+  //         name: "Testimonial Section",
+  //         description: "Testimonial sections with carousels.",
+  //         tags: ["testimonial", "section", "reviews", "social-proof", "carousel"],
+  //         items: [
+  //           {
+  //             itemName: "Carousel Testimonials",
+  //           },
+  //           { itemName: "Grid Testimonials" },
+  //           {
+  //             itemName: "Masonry Testimonials",
+  //           },
+  //           {
+  //             itemName: "Metrics Testimonials",
+  //           },
+  //           {
+  //             itemName: "Testimonial Cards Grid",
+  //           },
+  //           {
+  //             itemName: "Testimonial Carousel Dots",
+  //           },
+  //           {
+  //             itemName: "Testimonial Highlight Single",
+  //           },
+  //           {
+  //             itemName: "Testimonial Logo Row",
+  //           },
+  //           {
+  //             itemName: "Testimonial Quote Stack",
+  //           },
+  //           { itemName: "Video Testimonials" },
+  //         ],
+  //       },
+  //     ],
+  //   },
+
+  //   // ─── SUPPORT ─────────────────────────────────────────────
+  {
+    category: "Support",
+    icon: "life-buoy",
+    tags: ["support", "help", "contact", "faq"],
+    subcategories: [
+      //       {
+      //         name: "Contacts",
+      //         description: "Contact information components.",
+      //         tags: ["contact", "info", "card", "grid", "support"],
+      //         items: [
+      //           {
+      //             itemName: "3D Tilt Card Staggered Items",
+      //           },
+      //           { itemName: "Basic Grid" },
+      //           { itemName: "Basic Grid 2" },
+      //           {
+      //             itemName: "Card Grid Contact Info",
+      //           },
+      //           { itemName: "Compact Bar" },
+      //           { itemName: "Compact Cards" },
+      //           { itemName: "Detailed Card" },
+      //           {
+      //             itemName: "Drag To Reveal Card Stack",
+      //           },
+      //           {
+      //             itemName: "Expandable Channel Selector",
+      //           },
+      //           {
+      //             itemName: "Floating Contact Info",
+      //           },
+      //           {
+      //             itemName: "Hover Reveal Details",
+      //           },
+      //           {
+      //             itemName: "Interactive Dashboard",
+      //           },
+      //           {
+      //             itemName: "Interactive Map Contact Info",
+      //           },
+      //           { itemName: "Modern Layout" },
+      //           {
+      //             itemName: "Pulsing Online Status",
+      //           },
+      //           { itemName: "Sidebar Style" },
+      //           { itemName: "Split Contact Info" },
+      //           { itemName: "Status Chip" },
+      //           { itemName: "Studio Overview" },
+      //           { itemName: "Support Channels" },
+      //         ],
+      //       },
+      {
+        name: "FAQ",
+        thumbnail: "icon-style-faq",
+        description:
+          "Reduce support overhead with intelligent FAQ sections that answer questions before they're asked.",
+        tags: ["faq", "accordion", "collapsible", "support", "help"],
+        items: [
+          { itemName: "Single Open FAQ" },
+          { itemName: "Multiple Open FAQ" },
+          { itemName: "Masonry grid FAQ" },
+          { itemName: "Icon Style FAQ" },
+        ],
+      },
+      //       {
+      //         name: "Help Widget",
+      //         description: "Floating help widgets, chat assistants.",
+      //         tags: ["help", "widget", "chat", "assistant", "support"],
+      //         items: [
+      //           { itemName: "AI Assistant" },
+      //           { itemName: "Basic Help Widgets" },
+      //           {
+      //             itemName: "Chat Widget Help Widgets",
+      //           },
+      //           {
+      //             itemName: "Comprehensive Dashboard",
+      //           },
+      //           { itemName: "Contextual Help" },
+      //           {
+      //             itemName: "Draggable Support Dock Mini Inbox",
+      //           },
+      //           {
+      //             itemName: "Floating Action Button",
+      //           },
+      //           {
+      //             itemName: "Knowledge Tree Help Widgets",
+      //           },
+      //           {
+      //             itemName: "Multi State Floating Launcher",
+      //           },
+      //           { itemName: "Quick Help Widgets" },
+      //           { itemName: "Side Panel" },
+      //           {
+      //             itemName: "Ticket Status Help Widgets",
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: "Support Card",
+      //         description: "Support card components.",
+      //         tags: ["support", "card", "team", "ticket", "sla"],
+      //         items: [
+      //           { itemName: "Basic Information" },
+      //           { itemName: "Basic Support Card" },
+      //           { itemName: "Emergency Contact" },
+      //           { itemName: "Interactive Request" },
+      //           {
+      //             itemName: "Pricing Support Card",
+      //           },
+      //           {
+      //             itemName: "Service Level Agreement",
+      //           },
+      //           { itemName: "Status Support Card" },
+      //           { itemName: "Team Contact" },
+      //           {
+      //             itemName: "Team Member Support Card",
+      //           },
+      //           {
+      //             itemName: "Ticket Detail Support Card",
+      //           },
+      //           { itemName: "What Happens Next" },
+      //         ],
+      //       },
+    ],
+  },
+]);

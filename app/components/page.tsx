@@ -1,9 +1,9 @@
 // app/components/page.tsx
 import { Metadata } from "next";
-import { Components } from "./page.client";
 import { website } from "@/lib/brand";
-import { COMPONENTS } from "@/registry/components";
+import Components from "./page.client";
 import { toKebabCase } from "@/utils/slug-kebab";
+import { COMPONENTS } from "@/registry/components";
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = website || "https://ui.venumity.com";
@@ -18,8 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
 
-  const title =
-    "React & Next.js UI Components – Copy-Paste Library | Venumity UI";
+  const title = "Amazing React & Next.js Components | Venumity UI";
   const description = `Browse ${allComponentNames.length} free, open-source UI components and subcategories. Build faster with copy-paste React, Next.js, and Tailwind CSS components.`;
 
   // Absolute OG images for the first 20 component items

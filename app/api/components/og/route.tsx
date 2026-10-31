@@ -1,10 +1,10 @@
 // app/api/components/og/route.ts
+import { website } from "@/lib/brand";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import { COMPONENTS } from "@/registry/components";
-import { getOGThumbnailPath } from "@/registry/component-utils";
 import { toKebabCase } from "@/utils/slug-kebab";
-import { website } from "@/lib/brand";
+import { COMPONENTS } from "@/registry/components";
+import { getOGThumbnailPath } from "@/registry/registry-utils";
 
 export const runtime = "edge";
 

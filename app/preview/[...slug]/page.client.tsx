@@ -1,11 +1,11 @@
 // app/preview/[...slug]/page.client.tsx
 "use client";
-import { useState, useEffect, useMemo } from "react";
 import { toKebabCase } from "@/utils/slug-kebab";
-import NotFound from "@/app/components/not-found";
-import ComponentPreview from "@/app/components/content/preview";
-import { resolvePreviewBySlug } from "@/registry/component-utils";
-import ThemeToggle from "@/components/site/navigations/theme-toggle";
+import NotFound from "@/components/site/common/not-found";
+import { useState, useEffect, useMemo } from "react";
+import ThemeToggle from "@/components/site/navigations/theme";
+import { resolvePreviewBySlug } from "@/registry/registry-utils";
+import ComponentPreview from "@/components/site/content/preview";
 
 interface PreviewClientProps {
   slugPath: string;
@@ -14,10 +14,14 @@ interface PreviewClientProps {
 export default function PreviewClient({ slugPath }: PreviewClientProps) {
   const [mounted, setMounted] = useState(false);
 
-  const resolved = useMemo(
-    () => resolvePreviewBySlug(slugPath),
-    [slugPath],
-  );
+  const resolved = useMemo(() => resolvePreviewBySlug(slugPath), [slugPath]);
+
+  // Take the LAST segment of slugPath — this is either a variant slug
+  // (single-open-accordion) or the special "demo"
+  const previewName = useMemo(() => {
+    const parts = slugPath.split("/").filter(Boolean);
+    return toKebabCase(parts[parts.length - 1] || "");
+  }, [slugPath]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -34,9 +38,7 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!mounted) {
-    return <PreviewLoading />;
-  }
+  if (!mounted) return <PreviewLoading />;
 
   if (!resolved) {
     return (
@@ -51,7 +53,8 @@ export default function PreviewClient({ slugPath }: PreviewClientProps) {
       <ComponentPreview
         category={resolved.category}
         subcategory={resolved.subcategory}
-        componentName={toKebabCase(resolved.itemName)}
+        componentName={previewName}
+        source={resolved.source}
       />
       <ThemeToggle />
     </div>
@@ -68,7 +71,7 @@ function PreviewLoading() {
         </div>
         <div className="text-center space-y-2">
           <p className="text-foreground font-medium">Loading preview</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm md:text-base text-foreground/50">
             Preparing the component environment...
           </p>
         </div>

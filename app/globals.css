@@ -90,7 +90,7 @@
   --popover-foreground: oklch(0.141 0.005 285.823);
 
   /* Brand primary orange */
-  --primary: oklch(0.73 0.21 47);
+  --primary: oklch(70.09% 0.20117 44.755);
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.967 0.001 286.375);
@@ -102,7 +102,7 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
 
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(62.826% 0.25721 28.495);
 
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
@@ -142,8 +142,8 @@
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
 
-  --primary: oklch(0.73 0.21 47);
-  --primary-foreground: oklch(0.21 0.006 285.885);
+  --primary: oklch(70.09% 0.20117 44.755);
+  --primary-foreground: oklch(100% 0.00011 271.152);
 
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -154,7 +154,7 @@
   --accent: oklch(0.274 0.006 286.033);
   --accent-foreground: oklch(0.985 0 0);
 
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: oklch(62.826% 0.25721 28.495);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -233,6 +233,14 @@ body {
   html {
     @apply font-sans;
   }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* ==========================================================================
@@ -243,6 +251,66 @@ body {
   to {
     transform: translate(calc(-50% - 0.5rem));
   }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes scroll-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scroll-vertical-reverse {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll-reverse var(--animation-duration, 40s) linear infinite;
+}
+
+.animate-scroll-vertical {
+  animation: scroll-vertical var(--animation-duration, 40s) linear infinite;
+}
+
+.animate-scroll-vertical-reverse {
+  animation: scroll-vertical-reverse var(--animation-duration, 40s) linear
+    infinite;
+}
+
+.animate-scroll:hover,
+.animate-scroll-reverse:hover,
+.animate-scroll-vertical:hover,
+.animate-scroll-vertical-reverse:hover {
+  animation-play-state: paused;
 }
 
 /* ==========================================================================
@@ -600,14 +668,14 @@ body {
 .prose img[src*="img.shields.io"],
 .prose img[src*="badge"] {
   display: inline-block !important;
-  height: 25px !important;
+  height: 30px !important;
   width: auto !important;
-  max-height: 25px !important;
+  max-height: 30px !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   margin: 0 !important;
-  padding: 2 !important;
+  padding: 1 !important;
   vertical-align: middle !important;
 }
 
@@ -631,4 +699,20 @@ body {
   align-items: center !important;
   gap: 2px !important;
   padding: 0 !important;
+}
+
+
+@keyframes hue-anim {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(-70deg);
+  }
+}
+
+.animate-hue {
+  animation: hue-anim 3s infinite linear;
 }

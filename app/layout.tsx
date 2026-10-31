@@ -12,11 +12,14 @@ import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Footer from "@/components/site/navigations/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/utility/theme-provider";
 import { SearchProvider } from "@/components/site/navigations/search";
+import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -120,13 +123,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={cn("font-sans", manrope.variable)}
+      data-scroll-behavior="smooth"
+      className={cn("font-sans", instrumentSans.variable)}
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
@@ -192,12 +194,12 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-medium antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
+          enableSystem
           attribute="class"
           defaultTheme="dark"
-          enableSystem
           disableTransitionOnChange
         >
           <TooltipProvider>

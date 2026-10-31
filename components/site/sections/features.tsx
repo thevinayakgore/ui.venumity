@@ -1,12 +1,12 @@
 // components/site/sections/features.tsx
 "use client";
-import React, { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import React, { useMemo } from "react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { toKebabCase } from "@/utils/slug-kebab";
 import { COMPONENTS } from "@/registry/components";
 import { Camera } from "@/components/utility/camera";
 import { FEATURED_COMPONENTS } from "@/app/api/featured-components/route";
@@ -18,7 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toKebabCase } from "@/utils/slug-kebab";
 
 // ─── Type definitions ────────────────────────────────────────
 type IconElement =
@@ -267,30 +266,44 @@ function MobileFirstDesign() {
   );
 }
 
-function CustomizationInfo() {
+function CommanLineInterface() {
   return (
     <div className="relative space-y-3 sm:space-y-5 p-3 sm:p-5 md:p-8 bg-foreground/3 backdrop-blur-lg rounded-xl sm:rounded-2xl w-full">
       {/* Core message */}
       <div className="space-y-2 sm:space-y-3">
         <p className="text-sm sm:text-base md:text-lg font-medium tracking-wide">
-          Every component is built with{" "}
-          <span className="text-rose-500 font-semibold">Tailwind CSS</span> and{" "}
-          <span className="text-rose-500 font-semibold">Motion</span> on top of{" "}
-          <span className="text-rose-500 font-semibold">shadcn/ui</span>, you
-          own the design.
+          <span className="text-rose-500 font-semibold">CLI Command</span> — no
+          setup, no config.
         </p>
         <p className="text-xs sm:text-sm text-foreground/60 leading-relaxed">
-          No locked‑in styles, no fighting specificity, just drop the component
-          in and make it yours.
+          The CLI auto-detects and installs every required dependency, shadcn/ui
+          primitive, and helper file. Just run it and start building.
         </p>
       </div>
 
-      {/* Key selling point */}
-      <div className="space-y-1 text-xs sm:text-sm text-foreground/60 w-full">
-        <span className="block text-rose-500 font-semibold">
-          ✦ No vendor lock‑in
-        </span>
-        <p>Components are copy‑paste, not dependency‑heavy packages.</p>
+      {/* CLI Commands */}
+      <div className="space-y-5 w-full">
+        <p className="text-xs uppercase tracking-wider font-semibold">
+          Quick Start
+        </p>
+        <div className="space-y-2 font-mono text-[0.7rem] sm:text-xs text-foreground/80">
+          <div className="flex items-center gap-2 px-3 py-2 bg-background border border-dashed border-rose-500/60 rounded-md">
+            <span className="text-lg md:text-xl font-light text-rose-500 select-none leading-none">
+              $
+            </span>
+            <span className="leading-snug">
+              npx venumityui@latest add chat-card-suggestion
+            </span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-2 bg-background border border-dashed border-rose-500/60 rounded-md">
+            <span className="text-lg md:text-xl font-light text-rose-500 select-none leading-none">
+              $
+            </span>
+            <span className="leading-snug">
+              npx venumityui@latest add --all
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -480,35 +493,21 @@ export default function Features() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-pencil-ruler-icon lucide-pencil-ruler w-full h-full"
+          className="lucide lucide-shield-check-icon lucide-shield-check w-full h-full"
         >
-          <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13" />
-          <path d="m8 6 2-2" />
-          <path d="m18 16 2-2" />
-          <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17" />
-          <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-          <path d="m15 5 4 4" />
+          <path d="M12 19h8" />
+          <path d="m4 17 6-6-6-6" />
         </svg>
       ),
       elements: [
         {
           type: "path",
-          d: "M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13",
+          d: "M12 19h8",
         },
-        { type: "path", d: "m8 6 2-2" },
-        { type: "path", d: "m18 16 2-2" },
-        {
-          type: "path",
-          d: "m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17",
-        },
-        {
-          type: "path",
-          d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
-        },
-        { type: "path", d: "m15 5 4 4" },
+        { type: "path", d: "m4 17 6-6-6-6" },
       ],
-      title: "Customizable",
-      content: <CustomizationInfo />,
+      title: "Use CLI Mode",
+      content: <CommanLineInterface />,
       iconColor: "text-rose-500",
       textColor: "from-rose-500 via-rose-500/60",
       bg: "from-rose-500/15 to-background",
@@ -561,20 +560,17 @@ export default function Features() {
   return (
     <section className="bg-foreground/5 backdrop-blur-sm w-full">
       <div className="flex flex-col gap-5 md:gap-10 lg:gap-20 p-3 sm:p-5 md:p-10 lg:py-20 m-auto max-w-400 w-full">
-        <div className="flex flex-col items-center justify-center m-auto text-center max-w-fit px-3 sm:px-0">
-          <h2
-            className={cn(
-              "text-transparent bg-clip-text bg-linear-to-tl from-transparent via-foreground to-transparent font-semibold text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
-            )}
-          >
-            <span className="tracking-tighter">Quality</span>{" "}
-            <span className="dancing text-5xl sm:text-6xl md:text-7xl lg:text-9xl text-foreground opacity-15">
-              Features
-            </span>
-          </h2>
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-foreground/40 px-3 sm:px-0">
-            No more re-inventing the wheel, focus on your product, not the UI
-            boilerplate.
+        <div className="flex flex-col items-center justify-center m-auto gap-5 w-fit">
+          <p className="tracking-tight text-center text-3xl md:text-4xl lg:text-5xl">
+            Features of
+          </p>
+          <p className="cinzel tracking-wide text-5xl md:text-7xl lg:text-9xl font-semibold text-transparent bg-clip-text bg-linear-to-br from-foreground/5 via-foreground/90 to-foreground/5 pb-2 w-fit">
+            Library
+          </p>
+          <p className="text-center text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground max-w-3xl">
+            Get beautifully designed, production-ready components and layouts so
+            which reduces time for rebuilding the basics and more time creating
+            your product in more better way.
           </p>
         </div>
 

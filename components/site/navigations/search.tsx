@@ -1,5 +1,17 @@
 // components/site/navigations/search.tsx
 "use client";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { DOCS_DATA } from "@/registry/site/docs";
+import { toKebabCase } from "@/utils/slug-kebab";
+import Shimmer from "@/components/utility/shimmer";
+import { COMPONENTS } from "@/registry/components";
+import { PRIMITIVES } from "@/registry/primitives";
+import { Separator } from "@/components/ui/separator";
+import { AnimatePresence, motion } from "motion/react";
+import { insetButtonVariants } from "@/components/ui/inset-button";
 import {
   createContext,
   useContext,
@@ -7,27 +19,23 @@ import {
   useEffect,
   useRef,
   useCallback,
+  useMemo,
   type ReactNode,
 } from "react";
-import { useRouter } from "next/navigation";
 import {
   Search as SearchIcon,
   ArrowRight,
   CircleFadingArrowUp,
   Mic,
+  Layers,
+  Boxes,
+  FileText,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
-import { COMPONENTS } from "@/registry/components";
-import { toKebabCase } from "@/utils/slug-kebab";
-import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
 
 // ----------------------- TYPES -----------------------
 type SearchResultType =
   | "component"
+  | "primitive"
   | "docs"
   | "resource"
   | "faq"
@@ -53,6 +61,13 @@ interface SearchContextType {
   closeSearch: () => void;
 }
 
+interface InitialItem {
+  id: string;
+  name: string;
+  category: string;
+  path: string;
+}
+
 // ----------------------- CONTEXT -----------------------
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
@@ -62,7 +77,6 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   const openSearch = useCallback(() => setIsOpen(true), []);
   const closeSearch = useCallback(() => setIsOpen(false), []);
 
-  // Global keyboard shortcut (⌘K / Ctrl+K) AND (⌘S / Ctrl+S)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
@@ -144,7 +158,7 @@ declare global {
   }
 }
 
-// ----------------------- SEARCH LOGIC (UPDATED - uses API) -----------------------
+// ----------------------- SEARCH LOGIC -----------------------
 interface ApiSearchResult {
   type?: string;
   title: string;
@@ -152,25 +166,7 @@ interface ApiSearchResult {
   category?: string;
   url: string;
 }
-function getResultColor(type: SearchResultType): string {
-  const colorMap: Record<SearchResultType, string> = {
-    component: "text-primary",
-    docs: "text-green-500",
-    resource: "text-yellow-400",
-    faq: "text-purple-500",
-    sidebar: "text-pink-500",
-    changelog: "text-blue-400",
-    video: "text-red-400",
-    contributor: "text-cyan-400",
-    category: "text-orange-400",
-    subcategory: "text-teal-400",
-  };
-  return colorMap[type] || "text-foreground/70";
-}
 
-// ============================================================
-// IMPORTANT FIX: Use the API endpoint instead of local search
-// ============================================================
 async function searchAllContent(query: string): Promise<SearchResult[]> {
   try {
     const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
@@ -180,12 +176,11 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
       return [];
     }
 
-    // Map API results to the SearchResult format expected by the UI
     return data.results.map((item: ApiSearchResult, index: number) => {
-      // Determine the type mapping
       let type: SearchResultType = "component";
       const typeMap: Record<string, SearchResultType> = {
         component: "component",
+        primitive: "primitive",
         resource: "resource",
         changelog: "changelog",
         docs: "docs",
@@ -210,6 +205,72 @@ async function searchAllContent(query: string): Promise<SearchResult[]> {
   }
 }
 
+// ----------------------- INITIAL SECTIONS -----------------------
+function useInitialSections() {
+  return useMemo(() => {
+    const docsItems: InitialItem[] = [];
+    DOCS_DATA.forEach((section) => {
+      section.pages.forEach((page) => {
+        docsItems.push({
+          id: `d-${toKebabCase(page.page)}`,
+          name: page.page,
+          category: section.title,
+          path: `/docs/${toKebabCase(page.page)}`,
+        });
+      });
+    });
+
+    const primitiveItems: InitialItem[] = [];
+    PRIMITIVES.forEach((category) => {
+      category.subcategories.forEach((subcategory) => {
+        primitiveItems.push({
+          id: `p-${category.slug}-${subcategory.slug}`,
+          name: subcategory.name,
+          category: category.name,
+          path: `/primitives/${category.slug}/${subcategory.slug}`,
+        });
+      });
+    });
+
+    const componentItems: InitialItem[] = [];
+    COMPONENTS.forEach((category) => {
+      category.subcategories.forEach((subcategory) => {
+        componentItems.push({
+          id: `c-${category.slug}-${subcategory.slug}`,
+          name: subcategory.name,
+          category: category.name,
+          path: `/components/${category.slug}/${subcategory.slug}`,
+        });
+      });
+    });
+
+    docsItems.sort((a, b) => a.name.localeCompare(b.name));
+    primitiveItems.sort((a, b) => a.name.localeCompare(b.name));
+    componentItems.sort((a, b) => a.name.localeCompare(b.name));
+
+    return [
+      {
+        key: "docs",
+        label: "Docs",
+        icon: FileText,
+        items: docsItems,
+      },
+      {
+        key: "primitives",
+        label: "Primitives",
+        icon: Boxes,
+        items: primitiveItems,
+      },
+      {
+        key: "components",
+        label: "Components",
+        icon: Layers,
+        items: componentItems,
+      },
+    ];
+  }, []);
+}
+
 // ----------------------- SEARCH MODAL -----------------------
 function SearchModal({
   isOpen,
@@ -226,13 +287,11 @@ function SearchModal({
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const router = useRouter();
 
-  // ---------- Voice recognition state ----------
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const cleanupTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  // ---------------------------------------------
 
   const clearVoiceTimeout = useCallback(() => {
     if (voiceTimeoutRef.current) {
@@ -248,15 +307,13 @@ function SearchModal({
     }
   }, []);
 
-  // Flatten subcategories for empty-state display
-  const allSubcategories = COMPONENTS.flatMap((category) =>
-    category.subcategories.map((subcategory) => ({
-      id: `${category.name}-${subcategory.name}`,
-      name: subcategory.name,
-      category: category.name,
-      path: `/components/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`,
-    })),
-  ).sort((a, b) => a.name.localeCompare(b.name));
+  const initialSections = useInitialSections();
+
+  // Flatten for keyboard navigation (order = section order)
+  const initialFlat = useMemo(
+    () => initialSections.flatMap((s) => s.items),
+    [initialSections],
+  );
 
   const handleResultClick = useCallback(
     (result: SearchResult) => {
@@ -271,7 +328,7 @@ function SearchModal({
     [router, onClose],
   );
 
-  const handleSubcategoryClick = useCallback(
+  const handleInitialClick = useCallback(
     (path: string) => {
       router.push(path);
       onClose();
@@ -348,14 +405,12 @@ function SearchModal({
     setIsListening(true);
     try {
       recognitionRef.current.start();
-      // Set 5-second timeout for inactivity
       voiceTimeoutRef.current = setTimeout(() => {
         if (recognitionRef.current) {
           recognitionRef.current.stop();
         }
         setIsListening(false);
         setToast("You have to speak something to search !");
-        // Close modal after 2 seconds to let user read toast
         cleanupTimeoutRef.current = setTimeout(() => {
           onClose();
           setToast(null);
@@ -368,7 +423,6 @@ function SearchModal({
     }
   }, [isListening, onClose, clearVoiceTimeout]);
 
-  // Clean up when modal closes
   useEffect(() => {
     if (!isOpen) {
       clearVoiceTimeout();
@@ -383,29 +437,30 @@ function SearchModal({
     }
   }, [isOpen, clearVoiceTimeout, clearCleanupTimeout, isListening]);
 
-  // Keyboard navigation (unchanged)
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
 
+      const listLength =
+        query.length === 0 ? initialFlat.length : results.length;
+
       if (event.key === "ArrowDown") {
         event.preventDefault();
-        const maxIndex =
-          query.length === 0 ? allSubcategories.length - 1 : results.length - 1;
-        setSelectedIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
+        if (listLength === 0) return;
+        setSelectedIndex((prev) => (prev < listLength - 1 ? prev + 1 : 0));
       }
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        const maxIndex =
-          query.length === 0 ? allSubcategories.length - 1 : results.length - 1;
-        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
+        if (listLength === 0) return;
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : listLength - 1));
       }
       if (event.key === "Enter") {
         event.preventDefault();
         if (isLoading) return;
 
-        if (query.length === 0 && allSubcategories.length > 0) {
-          handleSubcategoryClick(allSubcategories[selectedIndex].path);
+        if (query.length === 0 && initialFlat.length > 0) {
+          handleInitialClick(initialFlat[selectedIndex].path);
         } else if (results.length > 0) {
           handleResultClick(results[selectedIndex]);
         }
@@ -424,13 +479,12 @@ function SearchModal({
     isLoading,
     selectedIndex,
     query,
-    allSubcategories,
+    initialFlat,
     handleResultClick,
-    handleSubcategoryClick,
+    handleInitialClick,
     onClose,
   ]);
 
-  // Scroll selected item into view
   useEffect(() => {
     if (itemRefs.current[selectedIndex]) {
       itemRefs.current[selectedIndex]?.scrollIntoView({
@@ -440,14 +494,12 @@ function SearchModal({
     }
   }, [selectedIndex]);
 
-  // Focus input on open / clear on close - FIXED with setTimeout
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
 
     if (!isOpen) {
-      // Use setTimeout to avoid synchronous setState cascade
       const timeoutId = setTimeout(() => {
         setResults([]);
         setQuery("");
@@ -462,7 +514,7 @@ function SearchModal({
     }
   }, [isOpen, isListening]);
 
-  // Debounced search (UPDATED - uses API)
+  // Debounced search
   useEffect(() => {
     const handleSearch = async () => {
       if (query.trim().length < 2) {
@@ -495,224 +547,219 @@ function SearchModal({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-100!" onClick={onClose}>
-          {/* GLASS CONTAINER - EXACT ORIGINAL DESIGN */}
           <motion.div
-            className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-3 bg-foreground/5 backdrop-blur-xl rounded-4xl! shadow-2xl w-full max-w-130"
+            className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 md:p-2.5 lg:p-4 md:bg-foreground/5 md:backdrop-blur-xl md:rounded-4xl! md:shadow-2xl w-full md:max-w-130 h-full md:h-fit"
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0.5, scale: 0.5, y: 500, x: 500 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
             exit={{ opacity: 0.5, scale: 0.5, y: 500, x: -500 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="relative p-3 pt-5 bg-muted border rounded-3xl! shadow-xl/10 w-full h-full">
-              {/* Decorative dots */}
-              <div className="absolute top-1.5 left-1/4 translate-x-16 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
-              <div className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-muted-foreground/30 dark:bg-popover rounded-full h-2 w-1/5" />
-              <div className="absolute top-1.5 left-1/2 translate-x-13 bg-muted-foreground/30 dark:bg-popover rounded-full size-2" />
-
-              <div className="relative flex flex-col items-center justify-between p-3 bg-background border border-foreground/15 rounded-2xl! overflow-hidden w-full h-130">
-                {/* Search Input with Voice Button */}
-                <header className="relative z-50 font-semibold tracking-wide bg-popover border rounded-lg w-full h-12">
-                  <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
-                  <Input
-                    ref={inputRef}
-                    type="text"
-                    placeholder="Start searching here..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="pl-10 pr-16 bg-transparent! placeholder:text-foreground/40 text-foreground/90 h-full text-base border-none rounded-none shadow-none focus-visible:ring-0"
-                    autoComplete="off"
-                    spellCheck="false"
-                  />
-                  {/* Microphone button with pulse animation when listening */}
-                  <button
-                    type="button"
-                    onClick={toggleListening}
-                    className={cn(
-                      "absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-muted rounded-full transition-all duration-500 flex items-center justify-center",
-                    )}
-                    title={
-                      isListening ? "Stop listening" : "Start voice search"
-                    }
-                  >
-                    {isListening ? (
-                      <div className="relative">
-                        <Mic className="size-4 text-primary! relative z-30" />
-                        <span className="absolute inset-0 z-0 bg-primary/80! animate-ping rounded-full w-full h-full" />
-                        <span className="absolute inset-0 z-0 bg-primary/80! scale-110 animate-ping rounded-full w-full h-full" />
-                      </div>
-                    ) : (
-                      <Mic className="size-4" />
-                    )}
-                  </button>
-                </header>
-
-                {/* Results Container */}
-                <section className="absolute inset-0 z-0 flex flex-col justify-start overflow-y-auto text-center w-full h-full">
-                  {isLoading ? (
-                    <div className="flex flex-col items-center justify-center text-muted-foreground px-5 w-full h-full">
-                      <div className="animate-spin rounded-full size-10 border-2 border-primary border-t-transparent mb-4" />
-                      <p className="text-sm">Searching across all content...</p>
-                    </div>
-                  ) : results.length > 0 ? (
-                    <div className="space-y-2 px-3 py-18 text-start w-full">
-                      {results.map((result, index) => (
-                        <motion.div
-                          key={result.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05 }}
-                        >
-                          <Link
-                            ref={(el) => {
-                              itemRefs.current[index] = el;
-                            }}
-                            href={result.path}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleResultClick(result);
-                            }}
-                            onMouseEnter={() => setSelectedIndex(index)}
-                            className={cn(
-                              "flex items-center gap-5 py-3 px-5 border border-foreground/10 bg-muted/10 text-foreground rounded-md transition-all duration-200 group w-full",
-                              selectedIndex === index &&
-                                "bg-primary/10 border-primary/30",
-                            )}
-                          >
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <h3 className="text-base truncate">
-                                  {result.title}
-                                </h3>
-                                <span
-                                  className={`uppercase font-mono tracking-tight font-medium text-xs ${getResultColor(result.type)}`}
-                                >
-                                  {result.type}
-                                </span>
-                              </div>
-                              {result.description && (
-                                <p className="text-xs text-muted-foreground truncate">
-                                  {result.description}
-                                </p>
-                              )}
-                              <p
-                                className={`font-mono tracking-tight font-normal text-xs ${selectedIndex === index ? "text-primary" : "text-foreground/50"} lowercase mt-1`}
-                              >
-                                #_{result.category}
-                              </p>
-                            </div>
-                            <ArrowRight
-                              className={`size-4 ${selectedIndex === index ? "text-primary translate-x-2" : "text-muted-foreground group-hover:text-primary group-hover:translate-x-2"} transition-all duration-500`}
-                            />
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </div>
-                  ) : query.length >= 2 ? (
-                    <div className="flex flex-col items-center justify-center text-center text-muted-foreground px-5 w-full h-full">
-                      <SearchIcon className="size-10 mb-4 opacity-50" />
-                      <p className="text-sm">
-                        No results found for &quot;{query}&ldquo;
-                      </p>
-                      <p className="text-xs mt-2">
-                        Try different keywords or check spelling
-                      </p>
-                    </div>
-                  ) : query.length > 0 ? (
-                    <div className="flex items-center justify-center text-muted-foreground px-5 w-full h-full">
-                      <p className="text-sm">
-                        Type at least 2 characters to search
-                      </p>
+            <div className="relative flex flex-col items-center justify-between p-3 bg-background border border-foreground/15 md:rounded-2xl! overflow-hidden w-full h-full md:h-130">
+              <header className="relative z-50 font-medium tracking-wide bg-popover border rounded-lg w-full h-12">
+                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
+                <Input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Start searching here..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="pl-10 pr-16 bg-transparent! placeholder:text-foreground/40 text-foreground/90 h-full text-base border-none rounded-none shadow-none focus-visible:ring-0"
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  className={cn(
+                    "absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-muted rounded-full transition-all duration-500 flex items-center justify-center",
+                  )}
+                  title={isListening ? "Stop listening" : "Start voice search"}
+                >
+                  {isListening ? (
+                    <div className="relative">
+                      <Mic className="size-4 text-primary! relative z-30" />
+                      <span className="absolute inset-0 z-0 bg-primary/80! animate-ping rounded-full w-full h-full" />
+                      <span className="absolute inset-0 z-0 bg-primary/80! scale-110 animate-ping rounded-full w-full h-full" />
                     </div>
                   ) : (
-                    // Subcategories list (empty state)
-                    <div className="flex flex-col gap-1 text-start px-3 py-18 overflow-y-auto w-full h-full">
-                      {allSubcategories.map((subcategory, index) => (
+                    <Mic className="size-4" />
+                  )}
+                </button>
+              </header>
+
+              <section className="absolute inset-0 z-0 flex flex-col justify-start overflow-y-auto text-center w-full h-full">
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center text-muted-foreground px-5 w-full h-full">
+                    <div className="animate-spin rounded-full size-10 border-2 border-foreground border-t-transparent mb-4" />
+                    <p className="text-sm">Searching across all content...</p>
+                  </div>
+                ) : results.length > 0 ? (
+                  <div className="space-y-2 px-3 py-18 text-start w-full">
+                    {results.map((result, index) => (
+                      <motion.div
+                        key={result.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
                         <Link
-                          key={subcategory.id}
                           ref={(el) => {
                             itemRefs.current[index] = el;
                           }}
-                          href={subcategory.path}
+                          href={result.path}
                           onClick={(e) => {
                             e.preventDefault();
-                            handleSubcategoryClick(subcategory.path);
+                            handleResultClick(result);
                           }}
                           onMouseEnter={() => setSelectedIndex(index)}
                           className={cn(
-                            "flex items-center justify-between text-sm px-3 py-2 rounded-md text-foreground/40 border border-transparent transition-all duration-200",
+                            "flex items-center gap-5 py-3 px-5 border border-foreground/10 bg-muted/10 text-foreground rounded-md transition-all duration-200 group w-full",
                             selectedIndex === index &&
-                              "bg-primary/10 border-primary/30 text-primary/90",
+                              "bg-foreground/5 dark:bg-foreground/10 border-foreground/15",
                           )}
                         >
-                          <span className="flex items-center gap-3">
-                            <CircleFadingArrowUp
-                              className={`size-4 ${selectedIndex === index && "rotate-90 scale-110"} transition-all duration-500`}
-                            />
-                            <div className="flex-1 font-medium truncate min-w-0">
-                              {subcategory.name}
-                            </div>
-                          </span>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-base truncate">
+                              {result.title}
+                            </h3>
+                            {result.description && (
+                              <p className="text-xs text-muted-foreground truncate">
+                                {result.description}
+                              </p>
+                            )}
+                          </div>
                           <ArrowRight
-                            className={`size-4 ${selectedIndex === index ? "opacity-100 scale-120" : "opacity-60"} transition-all duration-500`}
+                            className={`size-5 ${selectedIndex === index ? "text-foreground translate-x-2" : "text-muted-foreground group-hover:text-foreground group-hover:translate-x-2"} transition-all duration-500`}
                           />
                         </Link>
-                      ))}
-                    </div>
-                  )}
-                </section>
-
-                {/* Footer */}
-                <footer className="flex flex-col items-center gap-2 p-2 z-50 bg-popover border rounded-lg overflow-hidden w-full">
-                  <div className="flex items-start justify-between m-auto text-[0.6rem] leading-none w-full">
-                    <div className="flex items-center justify-end px-3 bg-background border dark:border-foreground/15 rounded-sm w-fit h-7">
-                      <span>Use</span>
-                      <kbd className="px-1 py-0.5 mx-1 bg-popover border rounded text-[0.55rem]">
-                        ↑
-                      </kbd>
-                      <kbd className="px-1 py-0.5 mr-1 bg-popover border rounded text-[0.55rem]">
-                        ↓
-                      </kbd>
-                      to navigate
-                      <span>
-                        <kbd className="px-1.5 py-0.5 mx-1 bg-popover border rounded text-[0.55rem]">
-                          Enter
-                        </kbd>
-                        to select
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-end bg-background border dark:border-foreground/15 rounded-sm overflow-hidden w-fit h-7">
-                      {query.length === 0 ? (
-                        <span className="flex items-center justify-center px-2.5">
-                          {selectedIndex + 1}/{allSubcategories.length}
-                        </span>
-                      ) : (
-                        query.length >= 2 &&
-                        !isLoading &&
-                        results.length > 0 && (
-                          <span className="flex items-center justify-center px-2.5">
-                            {selectedIndex + 1}/{results.length}
-                          </span>
-                        )
-                      )}
-                      <button
-                        onClick={onClose}
-                        className="px-3 bg-muted dark:bg-popover leading-none text-[0.6rem] border-l cursor-pointer w-fit h-full"
-                      >
-                        ESC
-                      </button>
-                    </div>
+                      </motion.div>
+                    ))}
                   </div>
-                </footer>
-              </div>
+                ) : query.length >= 2 ? (
+                  <div className="flex flex-col items-center justify-center text-center text-muted-foreground px-5 w-full h-full">
+                    <SearchIcon className="size-10 mb-4 opacity-50" />
+                    <p className="text-sm">
+                      No results found for &quot;{query}&ldquo;
+                    </p>
+                    <p className="text-xs mt-2">
+                      Try different keywords or check spelling
+                    </p>
+                  </div>
+                ) : query.length > 0 ? (
+                  <div className="flex items-center justify-center text-muted-foreground px-5 w-full h-full">
+                    <p className="text-sm">
+                      Type at least 2 characters to search
+                    </p>
+                  </div>
+                ) : (
+                  // ─── Initial sections: Components / Primitives / Docs ───
+                  <div className="flex flex-col gap-5 text-start px-3 py-18 w-full">
+                    {initialSections.map((section) => {
+                      const Icon = section.icon;
+                      if (section.items.length === 0) return null;
+                      return (
+                        <div key={section.key} className="flex flex-col gap-1">
+                          <div className="flex items-center justify-between p-3 mb-2 border-y border-dashed border-foreground/15 w-full">
+                            <span className="flex items-center gap-3 text-sm uppercase tracking-wider font-medium">
+                              <Icon className="size-4" />
+                              {section.label}
+                            </span>
+                            <span className="flex items-center justify-center min-w-7.5 h-7 p-1 bg-foreground/5 dark:bg-foreground/10 border text-xs font-mono text-foreground/50 rounded-sm">
+                              {section.items.length}
+                            </span>
+                          </div>
+                          {section.items.map((item) => {
+                            const flatIndex = initialFlat.indexOf(item);
+                            const isSelected = selectedIndex === flatIndex;
+                            return (
+                              <Link
+                                key={item.id}
+                                ref={(el) => {
+                                  itemRefs.current[flatIndex] = el;
+                                }}
+                                href={item.path}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleInitialClick(item.path);
+                                }}
+                                onMouseEnter={() => setSelectedIndex(flatIndex)}
+                                className={cn(
+                                  "flex items-center justify-between text-sm px-3 py-2 rounded-md text-foreground/40 border border-transparent transition-all duration-200",
+                                  isSelected &&
+                                    "bg-foreground/5 dark:bg-foreground/10 border-foreground/15 text-foreground",
+                                )}
+                              >
+                                <span className="flex items-center gap-3 min-w-0 flex-1">
+                                  <CircleFadingArrowUp
+                                    className={`size-4 shrink-0 ${isSelected && "rotate-90 scale-110"} transition-all duration-500`}
+                                  />
+                                  <span className="flex-1 font-medium truncate min-w-0">
+                                    {item.name}
+                                  </span>
+                                </span>
+                                <ArrowRight
+                                  className={`size-4 shrink-0 ml-2 ${isSelected ? "opacity-100 scale-120" : "opacity-60"} transition-all duration-500`}
+                                />
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
 
-              {/* Toast notification */}
-              {toast && (
-                <div className="absolute bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 text-center bg-red-500 text-white p-3 rounded-md text-base text-shadow-lg text-shadow-black/20 tracking-wide shadow-lg shadow-red-500/40 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300 w-[75%]">
-                  {toast}
+              <footer className="z-50 bg-foreground/5 dark:bg-foreground/10 backdrop-blur-lg border border-foreground/10 rounded-lg overflow-hidden w-full">
+                <div className="flex items-start justify-between m-auto text-xs md:text-sm leading-none w-full h-full">
+                  <div className="flex items-center justify-end p-3 bg-background border-r border-foreground/20 w-fit h-full">
+                    <span>Use</span>
+                    <kbd className="px-1 py-0.5 mx-1 bg-popover border rounded text-[0.55rem]">
+                      ↑
+                    </kbd>
+                    <kbd className="px-1 py-0.5 mr-1 bg-popover border rounded text-[0.55rem]">
+                      ↓
+                    </kbd>
+                    to navigate
+                    <span>
+                      <kbd className="px-1.5 py-0.5 mx-1 bg-popover border rounded text-[0.55rem]">
+                        Enter
+                      </kbd>
+                      to select
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-end bg-background border-l border-foreground/20 w-fit h-full">
+                    {query.length === 0 ? (
+                      <span className="flex items-center justify-center p-3">
+                        {initialFlat.length > 0 ? selectedIndex + 1 : 0}/
+                        {initialFlat.length}
+                      </span>
+                    ) : (
+                      query.length >= 2 &&
+                      !isLoading &&
+                      results.length > 0 && (
+                        <span className="flex items-center justify-center p-3">
+                          {selectedIndex + 1}/{results.length}
+                        </span>
+                      )
+                    )}
+                    <button
+                      onClick={onClose}
+                      className="p-3 bg-destructive text-white font-semibold leading-none border-l w-fit h-full"
+                    >
+                      ESC
+                    </button>
+                  </div>
                 </div>
-              )}
+              </footer>
             </div>
+
+            {toast && (
+              <div className="absolute bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 text-center bg-red-500 text-white p-3 rounded-md text-base text-shadow-lg text-shadow-black/20 tracking-wide shadow-lg shadow-red-500/40 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300 w-[75%]">
+                {toast}
+              </div>
+            )}
           </motion.div>
         </div>
       )}
@@ -720,26 +767,30 @@ function SearchModal({
   );
 }
 
-// ----------------------- TRIGGER (unchanged) -----------------------
+// ----------------------- TRIGGER -----------------------
 export function SearchTrigger() {
   const { openSearch } = useSearch();
 
   return (
-    <Button
-      size="sm"
-      variant="outline"
+    <button
       onClick={openSearch}
-      className="relative group flex items-center justify-between pl-2! pr-0.5! h-8! bg-foreground/5! border-foreground/15! transition-all duration-500 cursor-pointer rounded-sm"
+      className="relative group flex items-center justify-between gap-1 pl-2 pr-1 h-9! bg-foreground/5 dark:bg-foreground/10 text-foreground border border-foreground/15 rounded-[7.5px]"
     >
       <SearchIcon className="size-3.5! shrink-0" />
       <Separator
         orientation="vertical"
-        className="h-4 my-auto bg-foreground/40 mx-1 rotate-8"
+        className="h-4.5 my-auto bg-foreground/40 mx-1 rotate-8"
       />
       <Mic className="size-3.5! shrink-0 mr-1" />
-      <kbd className="pointer-events-none hidden lg:flex h-6 select-none items-center gap-0.5 rounded bg-foreground/7! border border-foreground/15 px-1.5 font-mono text-[10px] font-medium">
-        <span className="text-xs">⌘</span>K
+      <kbd
+        className={insetButtonVariants(
+          "relative pointer-events-none hidden lg:flex font-mono text-xs font-medium overflow-hidden",
+          "sm",
+        )}
+      >
+        <span className="text-sm leading-0">⌘</span>K
+        <Shimmer className="via-white/40 w-5!" />
       </kbd>
-    </Button>
+    </button>
   );
 }

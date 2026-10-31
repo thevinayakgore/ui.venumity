@@ -5,7 +5,6 @@
  * NOW SHOWS THE COMPLETE CODE AS-IS (no extraction, no filtering)
  */
 export function getCodeTabContent(sourceCode: string): string {
-  // Just return the full source code as-is
   return sourceCode;
 }
 
@@ -16,21 +15,16 @@ export function getCodeTabContent(sourceCode: string): string {
 export function getFullSnippet(sourceCode: string): string {
   const lines = sourceCode.split("\n");
 
-  // Remove separator lines and comment lines
   const cleanedLines = lines.filter((line) => {
     const trimmed = line.trim();
-    // Remove separator lines
     if (/^\/\/\s*=+\s*$/.test(trimmed)) return false;
-    // Remove "Full Snippet" and "Full Demo" comment lines
     if (trimmed.includes("Full Snippet") || trimmed.includes("Full Demo"))
       return false;
     return true;
   });
 
-  // Remove the final export block at the end
   let resultLines = [...cleanedLines];
 
-  // Find and remove the final export block at the end
   for (let i = resultLines.length - 1; i >= 0; i--) {
     const trimmed = resultLines[i].trim();
     if (trimmed === "export {" || trimmed.startsWith("export {")) {
@@ -39,9 +33,7 @@ export function getFullSnippet(sourceCode: string): string {
     }
   }
 
-  const fullSnippet = resultLines.join("\n").trim();
-
-  return fullSnippet;
+  return resultLines.join("\n").trim();
 }
 
 /**
@@ -69,30 +61,21 @@ export function filterShadcnImports(code: string): string {
 
 /** Extract external npm dependencies - Excludes Next.js, React, and related packages */
 export function extractDependencies(code: string): string[] {
-  // Match both import styles:
-  // 1. import something from "package"
-  // 2. import { something } from "package"
-  // 3. import * as something from "package"
   const importRegex =
     /import\s+(?:{[^}]*}|\* as \w+|\w+)\s+from\s+["']([^"']+)["']/g;
   const deps = new Set<string>();
   let match;
 
-  // Packages to exclude (these are already installed or part of the framework)
   const excludePackages = new Set([
-    // React
     "react",
     "react-dom",
     "react/jsx-runtime",
     "@types/react",
     "@types/react-dom",
-
-    // Next.js
     "next",
     "next-themes",
     "nextjs",
     "next-theme",
-    "next-themes",
     "@next",
     "@next/",
     "next/navigation",
@@ -108,44 +91,46 @@ export function extractDependencies(code: string): string[] {
     "next/sitemap",
     "next/route",
     "next/middleware",
-
-    // Other framework internals
     "@react",
     "@react-",
   ]);
 
   while ((match = importRegex.exec(code)) !== null) {
     const mod = match[1];
-
-    // Skip local imports and internal imports
     if (mod.startsWith(".") || mod.startsWith("@/")) continue;
 
-    // Extract the package name
     const pkg = mod.startsWith("@")
       ? mod.split("/").slice(0, 2).join("/")
       : mod.split("/")[0];
 
-    // Skip if package is in exclude list
     if (excludePackages.has(pkg)) continue;
     if (excludePackages.has(mod)) continue;
-
-    // Skip if package name contains "next" (case insensitive)
     if (/next/i.test(pkg)) continue;
-
-    // Skip if package is a type definition
     if (pkg.startsWith("@types/")) continue;
 
     deps.add(pkg);
   }
 
-  // Remove any remaining excluded packages (safety check)
-  const result = Array.from(deps).filter((pkg) => {
-    if (excludePackages.has(pkg)) return false;
-    if (/next/i.test(pkg)) return false;
-    if (pkg.startsWith("@types/")) return false;
-    return true;
-  });
+  return Array.from(deps)
+    .filter((pkg) => {
+      if (excludePackages.has(pkg)) return false;
+      if (/next/i.test(pkg)) return false;
+      if (pkg.startsWith("@types/")) return false;
+      return true;
+    })
+    .sort();
+}
 
-  // Return sorted dependencies
-  return result.sort();
+export function extractNamedExports(code: string): string[] {
+  const regex = /import\s+\{\s*([^}]+)\s*\}\s+from\s+["'][^"']+["']/g;
+  const names = new Set<string>();
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(code)) !== null) {
+    match[1]
+      .split(",")
+      .map((s) => s.trim().split(/\s+as\s+/)[0])
+      .filter(Boolean)
+      .forEach((n) => names.add(n));
+  }
+  return Array.from(names);
 }

@@ -1,55 +1,37 @@
 // app/components/page.client.tsx
 "use client";
-import { useEffect, useState, useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { Flame, Loader2, Terminal } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import BadgeTextAnimate from "@/components/ui/badge-text-animate";
-import { toKebabCase } from "@/utils/slug-kebab";
-import { COMPONENTS } from "@/registry/components";
-import {
-  getSubcategoryTags,
-  getSubcategoryTechs,
-} from "@/registry/component-utils";
-import { getCategoryCardThumbnailPath } from "@/registry/component-utils";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { COMPONENTS } from "@/registry/components";
+import { formatCount } from "@/utils/format-count";
+import { Flame, Loader2, Terminal } from "lucide-react";
+import type { ComponentSubcategory } from "@/types/components";
+import { useEffect, useState, useRef, useCallback } from "react";
+import BadgeTextAnimate from "@/components/ui/badge-text-animate";
+import { getThumbnailCandidates } from "@/registry/registry-utils";
 
 const LEFT_WORDS = [
-  "Tech",
-  "Dev",
-  "Build",
-  "Code",
-  "Ship",
-  "Design",
-  "Scale",
-  "Create",
+  "Tech", "Dev", "Build", "Code", "Ship", "Design", "Scale", "Create",
 ];
 
 const RIGHT_WORDS = [
-  "Helpers",
-  "Vibes",
-  "Blocks",
-  "Tools",
-  "Faster",
-  "Systems",
-  "Products",
-  "Interfaces",
+  "Helpers", "Vibes", "Blocks", "Tools", "Faster", "Systems", "Products", "Interfaces",
 ];
 
 const PAGE_SIZE = 30;
 
 export interface CategoryCard {
   id: string;
-  title: string;
-  thumbnail?: string;
-  description: string;
-  type: "category" | "subcategory";
-  parentCategory?: string;
   path: string;
-  itemCount: number;
+  title: string;
   tags: string[];
-  techs?: string[];
+  itemCount: number;
+  description: string;
+  parentCategory?: string;
+  thumbnailCandidates: string[];
+  type: "category" | "subcategory";
 }
 
 export interface CategoryCardProps {
@@ -57,53 +39,36 @@ export interface CategoryCardProps {
   onClick: (path: string) => void;
 }
 
-// Build cards from registry (no cache)
 export function getCategoryCards(): CategoryCard[] {
   const cards: CategoryCard[] = [];
 
   COMPONENTS.forEach((category) => {
-    if (category.subcategories.length > 0) {
-      category.subcategories.forEach((subcategory) => {
-        const itemCount = subcategory.items?.length || 0;
+    category.subcategories.forEach((subcategory: ComponentSubcategory) => {
+      const itemCount = subcategory.items?.length || 0;
+      if (itemCount === 0) return;
 
-        const path = `/${toKebabCase(category.name)}/${toKebabCase(subcategory.name)}`;
+      const path = `/${category.slug}/${subcategory.slug}`;
+      const description =
+        subcategory.description ||
+        `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-        const allTags =
-          subcategory.tags ||
-          getSubcategoryTags(
-            toKebabCase(category.name),
-            toKebabCase(subcategory.name),
-          ) ||
-          [];
+      const thumbnailCandidates = getThumbnailCandidates(
+        category.name,
+        subcategory,
+      );
 
-        const allTechs =
-          subcategory.techs ||
-          getSubcategoryTechs(
-            toKebabCase(category.name),
-            toKebabCase(subcategory.name),
-          ) ||
-          [];
-
-        const description =
-          subcategory.description ||
-          `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
-
-        const thumbnailPath = getCategoryCardThumbnailPath(subcategory);
-
-        cards.push({
-          id: `${category.name}-${subcategory.name}`,
-          title: subcategory.name,
-          description: description,
-          type: "subcategory",
-          parentCategory: category.name,
-          path: path,
-          itemCount: itemCount,
-          tags: allTags,
-          techs: allTechs,
-          thumbnail: thumbnailPath,
-        });
+      cards.push({
+        id: `${category.slug}-${subcategory.slug}`,
+        title: subcategory.name,
+        path,
+        itemCount,
+        description,
+        thumbnailCandidates,
+        type: "subcategory",
+        tags: subcategory.tags || [],
+        parentCategory: category.name,
       });
-    }
+    });
   });
 
   return [...cards].sort((a, b) =>
@@ -112,22 +77,37 @@ export function getCategoryCards(): CategoryCard[] {
 }
 
 export function CategoryCard({ card, onClick }: CategoryCardProps) {
-  const [imageError, setImageError] = useState(false);
+  // Track which candidate image we are currently trying
+  const [candidateIndex, setCandidateIndex] = useState(0);
+
+  const currentThumbnail = card.thumbnailCandidates[candidateIndex];
+  const hasNoMoreImages = candidateIndex >= card.thumbnailCandidates.length;
+
+  // Reset candidate index if the card changes
+  useEffect(() => {
+    const timer = setTimeout(() => setCandidateIndex(0), 0);
+    return () => clearTimeout(timer);
+  }, [card.id]);
 
   const handleImageError = () => {
-    setImageError(true);
+    setCandidateIndex((prev) => prev + 1);
   };
+
+  const showFallback = hasNoMoreImages || !currentThumbnail;
 
   return (
     <button
       onClick={() => onClick(card.path)}
-      className="relative cursor-pointer text-start p-2 group bg-foreground/5 rounded-4xl overflow-hidden hover:shadow-xl/10 transition-all duration-500 w-full h-fit"
+      className="relative w-full h-fit cursor-pointer overflow-hidden rounded-4xl border-2 text-start transition-all group p-0.5 hover:border-primary"
     >
-      <div className="relative flex flex-col transition-all duration-500 w-full h-full">
-        <div className="aspect-square relative shadow-xl/15 w-full max-h-70 overflow-hidden rounded-2xl transition-all duration-500">
-          {!imageError && card.thumbnail ? (
+      <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl bg-accent p-1 transition-all duration-500 dark:bg-card">
+        <div
+          className="relative aspect-square border max-h-70 w-full overflow-hidden rounded-[1.3rem] transition-all duration-500"
+        >
+          {!showFallback ? (
             <Image
-              src={card.thumbnail}
+              key={currentThumbnail}
+              src={currentThumbnail}
               alt={card.title}
               width={5000}
               height={5000}
@@ -135,60 +115,61 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
               unoptimized
               loading="eager"
               onError={handleImageError}
-              className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
+              className="h-full w-full object-cover transition-all duration-500 group-hover:scale-110"
             />
           ) : (
-            <div className="bg-linear-to-br from-accent via-background to-background w-full h-full" />
+            <div className="h-full w-full bg-background" />
           )}
 
+          {/* Letter-avatar fallback overlay */}
           <div
-            className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
-              imageError || !card.thumbnail ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-500 group-hover:scale-120 ${
+              showFallback ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
             <div className="relative z-10 flex flex-col items-center justify-center">
-              <span className="text-7xl font-bold drop-shadow-lg">
+              <span className="text-4xl font-bold md:text-6xl lg:text-8xl">
                 {card.title.charAt(0)}
               </span>
-              <span className="text-sm mt-2">{card.title}</span>
+              <span className="mt-2 text-sm">{card.title}</span>
             </div>
           </div>
         </div>
 
         <div className="p-4 pt-5">
-          <div className="flex items-start justify-between font-semibold">
-            <h2 className="text-xl whitespace-nowrap truncate">{card.title}</h2>
-            <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary/80">
+          <div className="flex items-start justify-between font-medium">
+            <h2 className="truncate whitespace-nowrap text-xl">{card.title}</h2>
+            <span className="rounded bg-primary/10 px-2 py-1 text-xs text-primary/80">
               {card.itemCount > 0 && card.itemCount <= 9 && "0"}
               {card.itemCount}
             </span>
           </div>
 
-          <p className="text-sm tracking-wide line-clamp-2 opacity-40 mt-2 mb-5">
+          <p className="mt-2 mb-5 line-clamp-2 text-sm text-muted-foreground tracking-wide">
             {card.description}
           </p>
 
           <div className="flex flex-wrap gap-1.5">
             {card.tags && card.tags.length > 0 ? (
               <>
-                {card.tags.slice(0, 2).map((item, index) => (
+                {card.tags.slice(0, 2).map((tag, index) => (
                   <Badge
-                    key={`${item}-${index}`}
-                    className="bg-foreground/5! txet-[0.7rem]! text-foreground/50! capitalize font-semibold tracking-wide px-2! h-6.5! leading-none rounded-sm border border-foreground/10 w-fit"
+                    key={`${tag}-${index}`}
+                    className="h-6.5! w-fit rounded-sm border border-foreground/10 bg-foreground/5! px-2! text-[0.7rem]! leading-none font-semibold tracking-wide text-foreground/50! capitalize"
                   >
-                    {item}
+                    {tag}
                   </Badge>
                 ))}
 
                 {card.tags.length > 2 && (
-                  <Badge className="bg-foreground/5! txet-[0.7rem]! text-foreground/50! font-semibold tracking-wide px-2! h-6.5! leading-none rounded-sm border border-foreground/10 w-fit">
+                  <Badge className="h-6.5! w-fit rounded-sm border border-foreground/10 bg-foreground/5! px-2! text-[0.7rem]! leading-none font-semibold tracking-wide text-foreground/50!">
                     +{card.tags.length - 2}
                   </Badge>
                 )}
               </>
             ) : (
               card.parentCategory && (
-                <span className="text-[10px] px-1.5 py-1 leading-none rounded bg-foreground/5 border border-foreground/10 text-muted-foreground w-fit">
+                <span className="w-fit rounded border border-foreground/10 bg-foreground/5 px-1.5 py-1 text-[10px] leading-none text-muted-foreground">
                   {card.parentCategory}
                 </span>
               )
@@ -196,16 +177,14 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent transition-all duration-500 h-px w-full" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm opacity-0 group-hover:opacity-50 bg-linear-to-l from-transparent via-primary to-transparent rounded-full transition-all duration-500 h-1.5 w-2/3" />
     </button>
   );
 }
 
-// ====================
-// MAIN COMPONENT
-// ====================
-export function Components() {
+// ========================================================
+// ==================== MAIN COMPONENT ====================
+// ========================================================
+export default function Components() {
   const router = useRouter();
   const [allCards, setAllCards] = useState<CategoryCard[]>([]);
   const [displayedCards, setDisplayedCards] = useState<CategoryCard[]>([]);
@@ -243,7 +222,6 @@ export function Components() {
       try {
         const cards = getCategoryCards();
         setAllCards(cards);
-        // Load first batch immediately
         setDisplayedCards(cards.slice(0, PAGE_SIZE));
         setPage(1);
         setHasMore(cards.length > PAGE_SIZE);
@@ -252,18 +230,15 @@ export function Components() {
       } finally {
         setInitialLoading(false);
       }
-    }, 1200); // initial loader visible ~1.2s
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Intersection observer for infinite scroll
   const loadMore = useCallback(() => {
     if (loadingMore || !hasMore) return;
-
     setLoadingMore(true);
 
-    // Small delay so the loader is visible briefly
     setTimeout(() => {
       const nextPage = page + 1;
       const start = page * PAGE_SIZE;
@@ -304,16 +279,10 @@ export function Components() {
     router.push(`/components${path}`);
   };
 
-  const formatDownloads = (num: number): string => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
-    if (num >= 1000) return (num / 1000).toFixed(1) + "K";
-    return num.toString();
-  };
-
   return (
-    <main className="w-full">
-      <header className="mb-5 md:mb-10 w-full">
-        <div className="hidden lg:flex items-center justify-between mb-5 w-full">
+    <section className="w-full">
+      <header className="relative mb-5 xl:mb-10 w-full">
+        <div className="hidden lg:flex items-start justify-between w-full h-45 xl:h-55">
           <Badge
             variant="secondary"
             className="gap-1.5 h-8 pl-2 pr-3 font-semibold! tracking-wider! bg-foreground/5 border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4!"
@@ -325,45 +294,45 @@ export function Components() {
               interval={4000}
             />
           </Badge>
-          <div className="space-y-1">
+          <div className="space-y-1 text-center z-30">
             <Link
-              href="https://www.npmjs.com/package/venumityui"
               target="_blank"
+              href="https://www.npmjs.com/package/venumityui"
             >
               <Badge
                 variant="secondary"
-                className="group gap-1.5 h-8 pl-2 pr-3 font-bold! tracking-wider! bg-foreground/5 hover:bg-blue-500 hover:text-white border-foreground/10 shadow-xl/5! rounded-sm [&>svg]:size-4! transition-all duration-500"
+                className="gap-1.5 h-8 px-2 font-bold! tracking-wider! bg-foreground/5 border-foreground/15 shadow-xl/5! rounded-sm [&>svg]:size-4! transition-all duration-500"
               >
                 <Terminal className="size-3.5" />
-                <span>CLI -</span>
+                <span>CLI</span>
                 {downloadsLoading ? (
-                  <Loader2 className="size-3.5 animate-spin text-blue-500 group-hover:text-white transition-all duration-500" />
+                  <Loader2 className="size-3.5 animate-spin text-blue-500" />
                 ) : (
-                  <span className="text-sm font-semibold text-blue-500 group-hover:text-white transition-all duration-500">
-                    {formatDownloads(downloads || 0)}
+                  <span className="text-sm font-semibold text-primary">
+                    {formatCount(downloads || 0)}
                   </span>
                 )}
               </Badge>
             </Link>
-            <p className="text-[0.7rem] text-foreground/40 italic font-semibold tracking-wide">
-              Weekly Downloads
+            <p className="text-[0.7rem] text-muted-foreground/70 font-semibold tracking-wide">
+              Downloads
             </p>
           </div>
         </div>
 
-        <h1 className="satisfy text-5xl md:text-7xl py-3 tracking-tight text-transparent bg-clip-text bg-linear-to-br from-foreground via-transparent">
-          Components
+        <h1 className="lg:absolute bottom-0 left-0 -ml-1 lg:-ml-2 pr-5 tracking-tight font-bold text-5xl md:text-7xl lg:text-[12rem] xl:text-[15rem] text-transparent bg-clip-text bg-linear-to-br from-foreground/15 via-foreground/10 to-transparent w-fit">
+          Blocks
         </h1>
-
-        <p className="text-sm md:text-base tracking-wide opacity-40 max-w-lg w-full">
-          A curated collection of reusable UI components designed to help you
-          build faster and more consistently.
+        <div className="hidden lg:block absolute bottom-0 left-0 bg-linear-to-t from-background via-background/30 to-transparent w-full h-full" />
+        <p className="relative z-10 text-sm md:text-base text-muted-foreground max-w-2xl w-full">
+          Curated collection of reusable UI components designed to help you
+          build faster and more consistently. Explore and Do share your own
+          blocks with the community.
         </p>
       </header>
 
-      {/* Initial loading skeleton */}
       {initialLoading && (
-        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 w-full">
+        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 w-full">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -378,11 +347,6 @@ export function Components() {
                   </div>
                   <div className="h-4 w-full bg-foreground/5 rounded"></div>
                   <div className="h-4 w-3/4 bg-foreground/5 rounded"></div>
-                  <div className="flex gap-1.5">
-                    <div className="h-5 w-12 bg-foreground/5 rounded"></div>
-                    <div className="h-5 w-10 bg-foreground/5 rounded"></div>
-                    <div className="h-5 w-8 bg-foreground/5 rounded"></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -390,10 +354,9 @@ export function Components() {
         </section>
       )}
 
-      {/* Cards grid */}
       {!initialLoading && displayedCards.length > 0 && (
         <>
-          <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 w-full">
+          <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 w-full">
             {displayedCards.map((card) => (
               <CategoryCard
                 key={card.id}
@@ -403,8 +366,10 @@ export function Components() {
             ))}
           </section>
 
-          {/* Infinite scroll trigger / loader */}
-          <div ref={loaderRef} className="w-full py-10 flex justify-center">
+          <div
+            ref={loaderRef}
+            className="flex justify-center py-5 md:py-10 lg:pt-15 w-full"
+          >
             {loadingMore && (
               <div className="flex items-center gap-3 text-primary">
                 <Loader2 className="size-7 animate-spin" />
@@ -414,7 +379,7 @@ export function Components() {
               </div>
             )}
             {!hasMore && displayedCards.length > 0 && (
-              <p className="text-xs text-foreground/40 font-medium">
+              <p className="text-xs md:text-sm tracking-wide text-foreground/40">
                 You&apos;ve reached the end of the list.
               </p>
             )}
@@ -422,7 +387,6 @@ export function Components() {
         </>
       )}
 
-      {/* Empty state */}
       {!initialLoading && displayedCards.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <div className="size-20 rounded-full bg-foreground/5 flex items-center justify-center mb-4">
@@ -435,6 +399,6 @@ export function Components() {
           </p>
         </div>
       )}
-    </main>
+    </section>
   );
 }

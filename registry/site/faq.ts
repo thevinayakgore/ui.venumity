@@ -63,55 +63,55 @@ export const CATEGORIES: Category[] = [
 export const FAQ_DATA = [
   {
     icon: Globe,
-    question: "What is Venumity UI?",
+    question: "What is Venumity UI ?",
     answer:
       "Venumity UI is a modern component library featuring beautifully crafted UI components, sections, blocks, templates, and layouts designed for Next.js, React, Tailwind CSS, and modern web applications.",
   },
   {
     icon: Zap,
-    question: "What can I find on Venumity UI?",
+    question: "What can I find on Venumity UI ?",
     answer:
       "You can discover reusable UI components, landing page sections, animations, navigation systems, hero sections, testimonials, pricing blocks, footers, interactive elements, and other production-ready interface components.",
   },
   {
     icon: LayoutTemplate,
-    question: "Are all components open source?",
+    question: "Are all components open source ?",
     answer:
       "Yes. Venumity UI focuses on free and open-source components that you can inspect, customize, learn from, and use in your own projects.",
   },
   {
     icon: Package,
-    question: "Are the components reusable and customizable?",
+    question: "Are the components reusable and customizable ?",
     answer:
       "Absolutely. Every component is built to be reusable, responsive, customizable, and easy to integrate into Next.js, React, and Tailwind CSS projects.",
   },
   {
     icon: Rocket,
-    question: "Who is Venumity UI built for?",
+    question: "Who is Venumity UI built for ?",
     answer:
       "Venumity UI is designed for developers, designers, freelancers, startups, agencies, and creators who want to build beautiful interfaces faster.",
   },
   {
     icon: MonitorSmartphone,
-    question: "Are the components responsive?",
+    question: "Are the components responsive ?",
     answer:
       "Yes. Components and templates are designed with responsive layouts and adaptive design principles to work seamlessly across mobile, tablet, and desktop devices.",
   },
   {
     icon: PenTool,
-    question: "Can I use Venumity UI for commercial projects?",
+    question: "Can I use Venumity UI for commercial projects ?",
     answer:
       "Yes. The open-source components can be used in personal, freelance, startup, agency, and commercial projects according to the applicable license.",
   },
   {
     icon: Gauge,
-    question: "Does Venumity UI focus on performance?",
+    question: "Does Venumity UI focus on performance ?",
     answer:
       "Performance is a key priority. Components are built with clean structures, optimized patterns, accessibility considerations, and scalable implementation practices.",
   },
   {
     icon: MessageCircleMore,
-    question: "How often is Venumity UI updated?",
+    question: "How often is Venumity UI updated ?",
     answer:
       "New open-source components, sections, animations, improvements, and developer resources are added regularly to keep the library modern and useful.",
   },

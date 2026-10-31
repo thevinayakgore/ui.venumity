@@ -1,15 +1,12 @@
 // app/components/layout.tsx
 import type { Metadata } from "next";
-import ContentLayoutClient from "./layout.client";
 import { brandName, website } from "@/lib/brand";
+import ContentLayoutClient from "./layout.client";
 
 export const metadata: Metadata = {
   title: `Components - ${brandName}`,
   description: `Explore ${brandName} modern, accessible, and fully customizable UI components built for scalable web applications.`,
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
   metadataBase: new URL(website || "http://localhost:3000"),
 };
 
