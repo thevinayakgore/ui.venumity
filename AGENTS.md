@@ -18,7 +18,7 @@ Venumity UI is an **MIT-licensed, open-source React component library** built wi
 **GitHub:** https://github.com/thevinayakgore/ui.venumity
 **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 **License:** MIT
-**Last updated:** 2026-10-31
+**Last updated:** 2026-11-02
 **Total components:** 37
 **Total primitives:** 90
 **Total categories:** 8
@@ -1339,7 +1339,7 @@ Install:      npx venumityui@latest add user-profile
 
 ### Changelog
 
-- [🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture](https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture) — Nov-02-2026
+- [🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture](https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture) — Oct-31-2026
 - [🚀 New in CLI v1.0.4 - Multi–Package Manager Support](https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support) — Sep-26-2026
 - [🚀 Venumity UI CLI v1.0.0](https://ui.venumity.com/changelog#venumity-ui-cli-v1-0-0) — Jun-19-2026
 - [🎨 Site Redesign, SEO & llms.txt Added](https://ui.venumity.com/changelog#site-redesign-seo-llms-txt-added) — Jun-19-2026
@@ -1440,4 +1440,4 @@ Preview:   https://ui.venumity.com/thumbnails/user-profile.webp
 
 ---
 
-_Generated on 2026-10-31. Do not edit manually._
+_Generated on 2026-11-02. Do not edit manually._

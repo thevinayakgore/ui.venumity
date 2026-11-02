@@ -10,8 +10,7 @@
     "prebuild": "npm run generate-llms && npm run generate-agents",
     "webp": "tsx scripts/webp.ts",
     "generate-llms": "tsx scripts/generate-llms.ts",
-    "generate-agents": "tsx scripts/generate-agent-files.ts",
-    "generate-types": "tsx scripts/generate-cli-types.ts && tsx scripts/generate-registry-types.ts"
+    "generate-agents": "tsx scripts/generate-agent-files.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

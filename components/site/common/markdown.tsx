@@ -4,11 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { formatDate } from "@/utils/format-date";
 import { useEffect, useState, useRef } from "react";
-import { Separator } from "@/components/ui/separator";
+import { SquareArrowOutUpRight } from "lucide-react";
 import CodeBlock from "@/components/utility/code-block";
-import { CalendarClock, SquareArrowOutUpRight } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -21,7 +19,6 @@ interface MarkdownRendererProps {
   title?: string;
   coverImage?: string;
   tags?: string[];
-  lastUpdated?: string | Date;
   officialUrl?: string;
   showHeader?: boolean;
   authors?: string[];
@@ -33,7 +30,6 @@ export function MarkdownRenderer({
   title,
   coverImage,
   tags: rawTags,
-  lastUpdated,
   officialUrl,
   showHeader = true,
   authors,
@@ -389,47 +385,36 @@ export function MarkdownRenderer({
             {title}
           </h1>
 
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 leading-none">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-sm sm:text-base lowercase text-blue-600"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-
           {isResourcesPage && (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0 text-sm font-medium tracking-wide">
-              <span className="flex items-center gap-1.5">
-                <CalendarClock className="size-4" />
-                Last updated - {formatDate(lastUpdated)}
-              </span>
+            <div className="flex flex-col gap-3 pl-0.5 mt-2 text-sm tracking-wide">
               {officialUrl && (
-                <>
-                  <Separator
-                    orientation="vertical"
-                    className="mx-3 bg-foreground/40!"
-                  />
-                  <Link
-                    href={officialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-blue-600 hover:underline underline-offset-2"
-                  >
-                    <SquareArrowOutUpRight className="size-4" />
-                    Official Docs
-                  </Link>
-                </>
+                <Link
+                  href={officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 p-1.5 pl-2 pr-3 text-sm font-semibold bg-primary text-white ring-[1.5px] ring-primary inset-shadow-sm inset-shadow-white/60 rounded-sm overflow-hidden w-fit"
+                >
+                  <SquareArrowOutUpRight className="size-4" />
+                  Official Docs
+                </Link>
+              )}
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 leading-none">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-sm sm:text-base lowercase text-blue-600"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               )}
             </div>
           )}
 
           {authors && authors.length > 0 && (
-            <div className="flex flex-col items-start gap-3 text-sm font-semibold text-muted-foreground">
+            <div className="flex flex-col items-start gap-3 text-sm font-medium text-muted-foreground">
               <span className="whitespace-nowrap">
                 This document prepared by -
               </span>
@@ -453,7 +438,7 @@ export function MarkdownRenderer({
                         />
                       </Link>
                     </TooltipTrigger>
-                    <TooltipContent className="flex items-center gap-0! py-1.25! font-semibold">
+                    <TooltipContent className="flex items-center gap-0! py-1.25! font-medium">
                       <span className="text-sm mb-0.5">@</span>
                       <span>{author}</span>
                     </TooltipContent>
@@ -471,7 +456,7 @@ export function MarkdownRenderer({
                 width={2000}
                 height={2000}
                 loading="eager"
-                className="aspect-video object-cover group-hover:scale-110 transition-all duration-500 border rounded-xl overflow-hidden w-full h-full"
+                className="aspect-video object-cover group-hover:scale-110 transition-all duration-500 border rounded-3xl overflow-hidden w-full h-full"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   target.src = "/brand-logo.png";

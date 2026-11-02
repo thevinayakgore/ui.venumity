@@ -155,7 +155,7 @@ export default function Navbar() {
           className="mx-1.5 h-8 my-auto bg-foreground/30!"
         />
 
-        <div className="flex items-center gap-0.5 pl-px bg-foreground/5 dark:bg-foreground/10 border border-foreground/15 rounded-md overflow-hidden w-fit">
+        <div className="flex items-center gap-0.5 pl-px bg-foreground/5 dark:bg-foreground/10 border border-foreground/15 rounded-md rounded-r-lg overflow-hidden w-fit">
           <Icons
             names={["github"]}
             iconClassName="p-1.75 size-8 hover:bg-foreground! hover:text-secondary! transition-all duration-300 rounded-sm"
@@ -163,7 +163,7 @@ export default function Navbar() {
 
           <Separator
             orientation="vertical"
-            className="mx-0.75 h-6 my-auto bg-foreground/30!"
+            className="mx-0.75 h-5 my-auto bg-foreground/30!"
           />
 
           <Icons

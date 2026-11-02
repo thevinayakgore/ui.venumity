@@ -27,18 +27,16 @@ interface PageClientProps {
   nextPage: PrevNextPage | null;
   nextCategorySlug: string;
   nextPageSlug: string | null;
-  formattedLastUpdated: string;
 }
 
 export default function PageClient({
-  markdownContent,
   page,
   category,
   prevPage,
   nextPage,
-  nextCategorySlug,
   nextPageSlug,
-  formattedLastUpdated,
+  markdownContent,
+  nextCategorySlug,
 }: PageClientProps) {
   // Build paths for the new catch-all routing
   const prevUrl = prevPage
@@ -63,7 +61,6 @@ export default function PageClient({
             content={markdownContent}
             authors={page.authorNames}
             officialUrl={page.officialUrl}
-            lastUpdated={formattedLastUpdated}
           />
           {/* Navigation buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 md:gap-4 font-medium py-5 sm:py-10 border-t border-foreground/10 w-full">

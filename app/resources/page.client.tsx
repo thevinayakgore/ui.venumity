@@ -157,7 +157,7 @@ export default function Resources({
 
         {!initialLoading && displayedPages.length > 0 && (
           <>
-            <div className="columns-1 md:columns-2 gap-3 w-full">
+            <div className="columns-1 md:columns-3 gap-3 w-full">
               {displayedPages.map(({ page: resPage, categorySlug }) => (
                 <div
                   key={`${categorySlug}-${resPage.title}`}

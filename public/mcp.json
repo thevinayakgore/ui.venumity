@@ -4,7 +4,7 @@
   "name": "venumity-ui",
   "title": "Venumity UI Component Registry",
   "description": "Open-source React + Next.js + Tailwind CSS component library with copy-paste components and primitives. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
-  "version": "2026-10-31",
+  "version": "2026-11-02",
   "homepage": "https://ui.venumity.com",
   "repository": "https://github.com/thevinayakgore/ui.venumity",
   "license": "MIT",
@@ -2725,5 +2725,5 @@
     "categories": 8,
     "primitiveCategories": 7
   },
-  "generatedAt": "2026-10-31T14:09:10.880Z"
+  "generatedAt": "2026-11-02T08:28:51.201Z"
 }

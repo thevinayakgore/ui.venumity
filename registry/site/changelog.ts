@@ -24,8 +24,8 @@ export const CHANGELOGS: ChangelogCategory[] = [
       {
         title:
           "🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture",
-        date: "Nov-02-2026",
-        covers: ["redesign", "primitives", "resources"],
+        date: "Oct-31-2026",
+        covers: ["banner", "redesign", "primitives"],
         gallery: [
           "audio",
           "attachment",

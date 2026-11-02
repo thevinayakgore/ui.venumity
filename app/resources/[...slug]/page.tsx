@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import { website } from "@/lib/brand";
 import PageClient from "./page.client";
 import { toKebabCase } from "@/utils/slug-kebab";
-import { formatDate } from "@/utils/format-date";
 import NoComponent from "@/app/no-component/page";
 import {
   getCategoryBySlug,
@@ -156,13 +155,10 @@ export default async function ResourcePage({
 
   // Read content
   let markdownContent = null;
-  let formattedLastUpdated = "";
   
   try {
     const fullPath = path.join(RESOURCES_BASE, catSlug, `${pageSlug}.md`);
     markdownContent = fs.readFileSync(fullPath, "utf-8");
-    const stats = fs.statSync(fullPath);
-    formattedLastUpdated = formatDate(stats.mtime);
   } catch (err) {
     console.error("Failed to read markdown", err);
   }
@@ -176,7 +172,6 @@ export default async function ResourcePage({
     nextPageSlug={nextPageSlug}
     markdownContent={markdownContent}
     nextCategorySlug={nextCategorySlug}
-      formattedLastUpdated={formattedLastUpdated}
     />
   );
 }

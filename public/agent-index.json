@@ -4,7 +4,7 @@
   "author": "Vinayak Gore",
   "authorUrl": "https://github.com/thevinayakgore",
   "license": "MIT",
-  "generatedAt": "2026-10-31T14:09:10.879Z",
+  "generatedAt": "2026-11-02T08:28:51.200Z",
   "cli": {
     "command": "npx venumityui@latest",
     "install": "npx venumityui@latest add <slug>",
@@ -333,7 +333,7 @@
   "changelog": [
     {
       "title": "🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture",
-      "date": "Nov-02-2026",
+      "date": "Oct-31-2026",
       "url": "https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture"
     },
     {

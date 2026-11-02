@@ -599,7 +599,7 @@ _Additional examples: `Gradient Spinner`_
 ## Changelog
 
 ### 2026
-- **🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture** — Nov-02-2026 — https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture
+- **🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture** — Oct-31-2026 — https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture
 - **🚀 New in CLI v1.0.4 - Multi–Package Manager Support** — Sep-26-2026 — https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support
 - **🚀 Venumity UI CLI v1.0.0** — Jun-19-2026 — https://ui.venumity.com/changelog#venumity-ui-cli-v1-0-0
 - **🎨 Site Redesign, SEO & llms.txt Added** — Jun-19-2026 — https://ui.venumity.com/changelog#site-redesign-seo-llms-txt-added
