@@ -39,7 +39,7 @@ export function MarkdownRenderer({
   const tags = Array.isArray(rawTags) ? rawTags : [];
 
   const pathname = usePathname();
-  const isResourcesPage = pathname?.startsWith("/resources/");
+  const isResourcePage = pathname?.startsWith("/resources/") || pathname?.startsWith("/docs/");
 
   useEffect(() => {
     const convertMarkdown = (md: string) => {
@@ -385,7 +385,7 @@ export function MarkdownRenderer({
             {title}
           </h1>
 
-          {isResourcesPage && (
+          {isResourcePage && (
             <div className="flex flex-col gap-3 pl-0.5 mt-2 text-sm tracking-wide">
               {officialUrl && (
                 <Link
@@ -448,7 +448,7 @@ export function MarkdownRenderer({
             </div>
           )}
 
-          {isResourcesPage && coverImage && (
+          {isResourcePage && coverImage && (
             <div className="my-5 w-full h-full">
               <Image
                 src={coverImage || "/brand-logo.png"}
@@ -467,11 +467,11 @@ export function MarkdownRenderer({
         </header>
       )}
 
-      <article ref={articleRef} className="prose mt-5 md:pt-2 border-t w-full">
+      <article ref={articleRef} className={`prose ${isResourcePage && "mt-5 md:pt-2 border-t"} w-full`}>
         {renderContent()}
       </article>
 
-      {isResourcesPage && (
+      {isResourcePage && (
         <div className="my-5 md:my-10 pt-5 md:pt-10 border-t w-full">
           <p className="px-5 py-3 bg-accent/60 backdrop-blur-sm border border-x-5 italic font-serif text-xs md:text-sm font-medium tracking-wide text-foreground/70 w-full">
             This content is provided for learning purposes only. While we aim to

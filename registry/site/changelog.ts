@@ -23,6 +23,25 @@ export const CHANGELOGS: ChangelogCategory[] = [
     items: [
       {
         title:
+          "✅ Added Legal Pgaes",
+        date: "Nov-05-2026",
+        links: [
+          {
+            name: "MIT License",
+            href: "/legal/license",
+          },
+          {
+            name: "Terms and Conditions",
+            href: "/legal/terms",
+          },
+          {
+            name: "Privacy Policy",
+            href: "/legal/privacy",
+          },
+        ],
+      },
+      {
+        title:
           "🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture",
         date: "Oct-31-2026",
         covers: ["banner", "redesign", "primitives"],
