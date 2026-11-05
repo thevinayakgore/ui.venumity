@@ -60,7 +60,7 @@ export default function ChangelogClient({ entries }: ChangelogClientProps) {
   }, [sorted]);
 
   return (
-    <section className="relative flex flex-col gap-5 md:gap-10 p-3 sm:p-5 md:pb-10 overflow-auto m-auto max-w-3xl w-full h-full">
+    <section className="relative flex flex-col gap-5 p-3 sm:p-5 md:pb-10 overflow-auto m-auto max-w-3xl w-full h-full">
       {/* Header */}
       <header className="flex flex-col gap-5 w-full">
         <h1 className="text-3xl md:text-4xl font-medium tracking-tight">

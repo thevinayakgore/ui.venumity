@@ -482,29 +482,29 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap items-center gap-1 p-1 bg-background border border-foreground/20 font-medium list-none rounded-full">
               <FooterLink
-                href="https://pro.venumity.com/legal/license"
+                href="/legal/privacy"
                 className={insetButtonVariants(
                   "bg-transparent! text-foreground! hover:bg-primary! hover:text-white! inset-shadow-none! hover:inset-shadow-sm! rounded-full",
                 )}
-              >
-                <Scale className="size-3 sm:size-4" />
-                License
-              </FooterLink>
-              <FooterLink
-                href="https://pro.venumity.com/legal/privacy"
-                className={insetButtonVariants("text-white! rounded-full")}
               >
                 <HatGlasses className="size-3 sm:size-4" />
                 Privacy
               </FooterLink>
               <FooterLink
-                href="https://pro.venumity.com/legal/terms"
+                href="/legal/terms"
                 className={insetButtonVariants(
                   "bg-transparent! text-foreground! hover:bg-primary! hover:text-white! inset-shadow-none! hover:inset-shadow-sm! rounded-full",
                 )}
               >
                 <HeartHandshake className="size-3 sm:size-4" />
                 Terms
+              </FooterLink>
+              <FooterLink
+                href="/legal/license"
+                className={insetButtonVariants("text-white! rounded-full")}
+              >
+                <Scale className="size-3 sm:size-4" />
+                License
               </FooterLink>
             </div>
           </div>
