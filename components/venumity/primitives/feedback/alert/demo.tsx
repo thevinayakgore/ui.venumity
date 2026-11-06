@@ -32,7 +32,7 @@ export default function AlertDemo() {
           You’re currently receiving email notifications for every new comment.
         </AlertDescription>
         <AlertAction>
-          <Button size="sm" animation="ripple" className="text-white">
+          <Button size="xs" animation="ripple" className="text-white">
             Ok, Got it
           </Button>
         </AlertAction>
