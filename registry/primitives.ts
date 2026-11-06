@@ -36,14 +36,6 @@ export default function ShinyButton() {
             default: '"default"',
             description:
               "Visual and interaction preset applied to the button. The magnetic preset enables hover-follow and drag behavior.",
-            options: [
-              "default",
-              "shiny",
-              "pulse",
-              "gradient",
-              "magnetic",
-              "ripple",
-            ],
           },
           {
             name: "size",
@@ -51,15 +43,6 @@ export default function ShinyButton() {
             default: '"default"',
             description:
               "Controls the button height, padding, icon sizing, and text size.",
-            options: [
-              "xs",
-              "sm",
-              "default",
-              "lg",
-              "icon",
-              "icon-sm",
-              "icon-lg",
-            ],
           },
           {
             name: "asChild",
@@ -113,7 +96,6 @@ export default function ShinyButton() {
             default: '"button"',
             description:
               "Native HTML button type. Use submit when this button submits a form.",
-            options: ["button", "submit", "reset"],
           },
           {
             name: "style",
@@ -173,6 +155,69 @@ export default function ShinyButton() {
   <CommandInput placeholder="Type a command…" />
   <CommandList>…</CommandList>
 </CommandDialog>`,
+        props: [
+          {
+            name: "size",
+            type: '"sm" | "default" | "lg" | null',
+            default: '"default"',
+            description: "Sets command size, input height, and list height.",
+            example: 'size="lg"',
+          },
+          {
+            name: "variant",
+            type: '"default" | "ghost" | null',
+            default: '"default"',
+            description: "Sets the command appearance.",
+            example: 'variant="ghost"',
+          },
+          {
+            name: "animation",
+            type: '"none" | "scale" | "slide" | "elastic"',
+            default: '"scale"',
+            description: "Sets the root animation preset.",
+            example: 'animation="slide"',
+          },
+          {
+            name: "side",
+            type: '"top" | "bottom" | "left" | "right"',
+            default: '"top"',
+            description: "Sets slide direction, not positioning.",
+            example: 'side="bottom"',
+          },
+          {
+            name: "animateItems",
+            type: "boolean",
+            default: "true",
+            description: "Enables staggered item animations.",
+            example: "animateItems={false}",
+          },
+          {
+            name: "animate",
+            type: "boolean",
+            default: "true",
+            description:
+              "Enables one CommandItem's animation when animateItems is true.",
+            example: "animate={false}",
+          },
+          {
+            name: "motionOverrides",
+            type: "CommandProps['motionOverrides']",
+            description: "Overrides root motion settings. Command only.",
+            example: "motionOverrides={{ transition: { duration: 0.2 } }}",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="rounded-2xl"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Component content. Required for CommandDialog.",
+            example: "<CommandItem>Calendar</CommandItem>",
+          },
+        ],
       },
       {
         name: "Context Menu",
@@ -185,22 +230,96 @@ export default function ShinyButton() {
           { itemName: "Nested Context Menu" },
         ],
         usage: `import {
-  ContextMenu,
-  ContextMenuItem,
-  ContextMenuContent,
-  ContextMenuTrigger,
-  ContextMenuSeparator,
-} from "./index";
-
-<ContextMenu>
-  <ContextMenuTrigger>Right-click here</ContextMenuTrigger>
-  <ContextMenuContent>
-    <ContextMenuItem>Open</ContextMenuItem>
-    <ContextMenuItem>New</ContextMenuItem>
-    <ContextMenuSeparator />
-    <ContextMenuItem destructive>Delete</ContextMenuItem>
-  </ContextMenuContent>
-</ContextMenu>`,
+          ContextMenu,
+          ContextMenuItem,
+          ContextMenuContent,
+          ContextMenuTrigger,
+          ContextMenuSeparator,
+        } from "./index";
+        
+        <ContextMenu>
+          <ContextMenuTrigger>Right-click here</ContextMenuTrigger>
+          <ContextMenuContent>
+            <ContextMenuItem>Open</ContextMenuItem>
+            <ContextMenuItem>New</ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem destructive>Delete</ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>`,
+        props: [
+          {
+            name: "onOpenChange",
+            type: "(open: boolean) => void",
+            description: "Called when the root menu opens or closes.",
+            example: "onOpenChange={setOpen}",
+          },
+          {
+            name: "asChild",
+            type: "boolean",
+            default: "false",
+            description: "Uses the trigger's child element as its root.",
+            example: "asChild",
+          },
+          {
+            name: "align",
+            type: '"start" | "center" | "end"',
+            default: 'Content: inherited; SubContent: "start"',
+            description: "Sets popup alignment.",
+            example: 'align="start"',
+          },
+          {
+            name: "side",
+            type: '"top" | "right" | "bottom" | "left"',
+            default: 'Content: inherited; SubContent: "right"',
+            description: "Sets the preferred popup side.",
+            example: 'side="right"',
+          },
+          {
+            name: "sideOffset",
+            type: "number",
+            default: "Content: 4; SubContent: 2",
+            description: "Sets the popup offset in pixels.",
+            example: "sideOffset={8}",
+          },
+          {
+            name: "collisionPadding",
+            type: "number",
+            default: "12",
+            description: "Sets popup collision padding in pixels.",
+            example: "collisionPadding={16}",
+          },
+          {
+            name: "container",
+            type: 'React.ComponentProps<typeof BaseContextMenu.Portal>["container"]',
+            description: "Sets the portal container for popup content.",
+            example: "container={containerRef}",
+          },
+          {
+            name: "inset",
+            type: "boolean",
+            description:
+              "Adds left padding to items, labels, and submenu triggers.",
+            example: "inset",
+          },
+          {
+            name: "destructive",
+            type: "boolean",
+            description: "Applies destructive styling to ContextMenuItem.",
+            example: "destructive",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to supported components.",
+            example: 'className="rounded-xl"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Content rendered inside supported components.",
+            example: "<ContextMenuItem>Open</ContextMenuItem>",
+          },
+        ],
         moreExamples: ["File Context Menu"],
       },
     ],
@@ -227,13 +346,55 @@ export default function ShinyButton() {
         ],
         usage: `import { Alert, AlertTitle, AlertDescription, AlertActions } from "./index";
       
-<Alert variant="success" animation="bounce" icon={<CheckCircle2 />}>
-  <AlertTitle>Saved</AlertTitle>
-  <AlertDescription>Your changes are live.</AlertDescription>
-  <AlertActions>
-    <button>Undo</button>
-  </AlertActions>
-</Alert>`,
+        <Alert variant="success" animation="bounce" icon={<CheckCircle2 />}>
+          <AlertTitle>Saved</AlertTitle>
+          <AlertDescription>Your changes are live.</AlertDescription>
+          <AlertActions>
+            <button>Undo</button>
+          </AlertActions>
+        </Alert>`,
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "destructive" | "success" | "warning" | "info" | null',
+            default: '"default"',
+            description: "Sets the alert color tone.",
+            example: 'variant="success"',
+          },
+          {
+            name: "animation",
+            type: '"none" | "fade" | "scale" | "slide" | "bounce" | "flip" | "blur" | "elastic"',
+            default: '"fade"',
+            description: "Sets the animation preset.",
+            example: 'animation="bounce"',
+          },
+          {
+            name: "side",
+            type: '"top" | "bottom" | "left" | "right"',
+            default: '"top"',
+            description: "Sets slide animation direction.",
+            example: 'side="bottom"',
+          },
+          {
+            name: "open",
+            type: "boolean",
+            description: "Controls visibility. Omit to always render.",
+            example: "open={isOpen}",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="rounded-xl"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description:
+              "Alert content, including icons, text, and AlertAction.",
+            example: "<AlertTitle>Saved</AlertTitle>",
+          },
+        ],
       },
       {
         name: "Spinner",
@@ -255,6 +416,49 @@ export default function ShinyButton() {
 <SpinnerOverlay label="Fetching dashboard…" tone="brand">
   <YourContent />
 </SpinnerOverlay>`,
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "ring" | "dots" | "pulse" | "gradient"',
+            default: '"default"',
+            description:
+              "Sets the spinner style. SpinnerOverlay always uses ring.",
+            example: 'variant="dots"',
+          },
+          {
+            name: "size",
+            type: '"sm" | "md" | "lg" | "xl"',
+            default: 'Spinner: "md"; SpinnerOverlay: "sm"',
+            description: "Sets spinner size. Gradient uses larger dimensions.",
+            example: 'size="lg"',
+          },
+          {
+            name: "tone",
+            type: '"neutral" | "success" | "warning" | "danger"',
+            default: '"neutral"',
+            description: "Sets spinner color. Does not affect gradient colors.",
+            example: 'tone="success"',
+          },
+          {
+            name: "label",
+            type: "string",
+            description: "Adds visible loading text and an accessible label.",
+            example: 'label="Saving…"',
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="gap-3"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description:
+              "SpinnerOverlay content shown blurred behind the spinner.",
+            example: "<Dashboard />",
+          },
+        ],
         moreExamples: ["Gradient Spinner"],
       },
     ],
@@ -315,7 +519,6 @@ export default function ShinyButton() {
             default: `"default"`,
             description:
               "Controls whether one item (default) or multiple items (multiple) can be open at the same time.",
-            options: ["default", "multiple"],
           },
           {
             name: "variant",
@@ -323,7 +526,6 @@ export default function ShinyButton() {
             default: `"minimal"`,
             description:
               "Visual style of the accordion. Minimal = plain dividers, Separated = card-like boxes with gaps, Default = bordered rounded box.",
-            options: ["minimal", "separated", "default"],
           },
           {
             name: "value",
@@ -383,6 +585,85 @@ export default function ShinyButton() {
 <AspectRatio ratio={3 / 2} animation="shimmer">
   <Aspect RatioImage src="/photo.jpg" alt="" />
 </AspectRatio Ratio>`,
+        props: [
+          {
+            name: "variant",
+            type: '"video" | "portrait" | "square" | "cinema" | "photo" | string',
+            default: '"video"',
+            description: "AspectRatio preset or custom ratio string.",
+            example: 'variant="3/2"',
+          },
+          {
+            name: "ratio",
+            type: "number",
+            description: "AspectRatio numeric ratio. Overrides variant.",
+            example: "ratio={3 / 2}",
+          },
+          {
+            name: "src",
+            type: "string",
+            description: "Image URL for AspectRatioImage.",
+            example: 'src="/photo.jpg"',
+          },
+          {
+            name: "alt",
+            type: "string",
+            description: "Alternative text for AspectRatioImage.",
+            example: 'alt="Mountain landscape"',
+          },
+          {
+            name: "fallback",
+            type: "React.ReactNode",
+            description: "Content shown until the image loads.",
+            example: 'fallback={<AnimationBar animation="shimmer" />}',
+          },
+          {
+            name: "animation",
+            type: '"none" | "shimmer" | "wipe-right" | "wipe-up" | "wipe-down" | "wipe-left"',
+            default: '"shimmer"',
+            description: "AnimationBar effect. Not an AspectRatio prop.",
+            example: 'animation="wipe-right"',
+          },
+          {
+            name: "duration",
+            type: "number",
+            default: "Shimmer: 1.65; wipe: 1.6",
+            description: "AnimationBar duration in seconds.",
+            example: "duration={2}",
+          },
+          {
+            name: "repeat",
+            type: '"infinite" | "none"',
+            default: '"infinite"',
+            description: "Controls AnimationBar repetition.",
+            example: 'repeat="none"',
+          },
+          {
+            name: "delay",
+            type: "number",
+            default: "0",
+            description: "AnimationBar delay in seconds.",
+            example: "delay={0.3}",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="rounded-2xl"',
+          },
+          {
+            name: "style",
+            type: "React.CSSProperties",
+            description: "Inline styles. Can override the container ratio.",
+            example: "style={{ aspectRatio: 1 }}",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Media or content inside AspectRatio.",
+            example: '<AspectRatioImage src="/photo.jpg" alt="Landscape" />',
+          },
+        ],
       },
       {
         name: "Attachment",
@@ -405,6 +686,92 @@ export default function ShinyButton() {
   fileSize={2456789}
   fileName="report.pdf"
 />`,
+        props: [
+          {
+            name: "variant",
+            type: '"compact" | "preview" | "upload" | "removable" | "download"',
+            default: '"compact"',
+            description: "Sets the attachment layout and default actions.",
+            example: 'variant="upload"',
+          },
+          {
+            name: "fileName",
+            type: "string",
+            required: true,
+            description: "File name used for the label and file-type icon.",
+            example: 'fileName="report.pdf"',
+          },
+          {
+            name: "fileSize",
+            type: "number | string",
+            description: "File size in bytes or preformatted text.",
+            example: "fileSize={2456789}",
+          },
+          {
+            name: "thumbnailSrc",
+            type: "string",
+            description: "Thumbnail URL for preview variant in idle status.",
+            example: 'thumbnailSrc="/preview.jpg"',
+          },
+          {
+            name: "progress",
+            type: "number",
+            default: "0",
+            description: "Upload percentage, from 0 to 100.",
+            example: "progress={62}",
+          },
+          {
+            name: "status",
+            type: '"idle" | "pending" | "uploading" | "processing" | "success" | "error"',
+            default: '"idle"',
+            description: "Sets the status icon, styling, and text.",
+            example: 'status="uploading"',
+          },
+          {
+            name: "errorMessage",
+            type: "string",
+            default: '"Upload failed. Try again."',
+            description: "Custom text shown in error status.",
+            example: 'errorMessage="File exceeds the size limit."',
+          },
+          {
+            name: "onRetry",
+            type: "() => void",
+            description: "Shows a retry button in error status.",
+            example: "onRetry={handleRetry}",
+          },
+          {
+            name: "removable",
+            type: "boolean",
+            default: 'variant === "removable"',
+            description: "Controls whether the remove button appears.",
+            example: "removable",
+          },
+          {
+            name: "onRemove",
+            type: "() => void",
+            description: "Called after the removal animation finishes.",
+            example: "onRemove={handleRemove}",
+          },
+          {
+            name: "downloadHref",
+            type: "string",
+            description: "URL opened by the row download action.",
+            example: 'downloadHref="/files/report.pdf"',
+          },
+          {
+            name: "onDownload",
+            type: "() => void",
+            description: "Callback for the row download action.",
+            example: "onDownload={handleDownload}",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the outer container.",
+            example: 'className="max-w-md"',
+          },
+        ],
       },
       {
         name: "Avatar",
@@ -431,6 +798,134 @@ export default function ShinyButton() {
   <Avatar><AvatarImage src="/a.jpg" /><AvatarFallback>A B</AvatarFallback></Avatar>
   <Avatar><AvatarImage src="/b.jpg" /><AvatarFallback>C D</AvatarFallback></Avatar>
 </AvatarGroup>`,
+        props: [
+          {
+            name: "size",
+            type: '"xs" | "sm" | "md" | "lg" | "xl"',
+            default: 'Avatar/AvatarGroup: "md"; AvatarUpload: "lg"',
+            description: "Sets avatar dimensions and text size.",
+            example: 'size="lg"',
+          },
+          {
+            name: "status",
+            type: '"online" | "offline" | "away" | "busy" | null',
+            default: "null",
+            description: "Sets the Avatar status dot.",
+            example: 'status="online"',
+          },
+          {
+            name: "showStatus",
+            type: "boolean",
+            default: "false",
+            description: "Shows an online dot when no status is set.",
+            example: "showStatus",
+          },
+          {
+            name: "tooltip",
+            type: "React.ReactNode",
+            description: "Tooltip content shown above Avatar.",
+            example: 'tooltip="Alice Johnson"',
+          },
+          {
+            name: "interactive",
+            type: "boolean",
+            default: "Avatar: Boolean(tooltip); AvatarGroup: true",
+            description: "Controls hover emphasis and tooltip visibility.",
+            example: "interactive={false}",
+          },
+          {
+            name: "animation",
+            type: '"none" | "fade" | "scale" | "pop" | "slide" | "reveal" | "ring"',
+            default: '"scale"',
+            description: "Sets the Avatar or AvatarGroup animation.",
+            example: 'animation="pop"',
+          },
+          {
+            name: "motionOverrides",
+            type: "AvatarProps['motionOverrides']",
+            description: "Overrides Avatar motion settings.",
+            example: "motionOverrides={{ transition: { duration: 0.2 } }}",
+          },
+          {
+            name: "src",
+            type: "string | null",
+            description: "Image URL. Null is supported by AvatarUpload only.",
+            example: 'src="/avatar.jpg"',
+          },
+          {
+            name: "alt",
+            type: "string",
+            default: 'AvatarImage: ""; AvatarUpload: "Profile photo"',
+            description: "Alternative text for the image.",
+            example: 'alt="Alice Johnson"',
+          },
+          {
+            name: "tone",
+            type: '"neutral" | "blue" | "emerald" | "amber" | "rose" | "violet" | "red" | "sky"',
+            default: 'Derived from text, otherwise "neutral"',
+            description: "Sets the AvatarFallback background tone.",
+            example: 'tone="violet"',
+          },
+          {
+            name: "delayMs",
+            type: "number",
+            default: "0",
+            description: "AvatarFallback display delay in milliseconds.",
+            example: "delayMs={300}",
+          },
+          {
+            name: "max",
+            type: "number",
+            default: "4",
+            description: "Visible AvatarGroup limit before the overflow count.",
+            example: "max={5}",
+          },
+          {
+            name: "initials",
+            type: "string",
+            description: "Fallback text for AvatarUpload.",
+            example: 'initials="Alice Johnson"',
+          },
+          {
+            name: "accept",
+            type: "string",
+            default: '"image/*"',
+            description: "Accepted AvatarUpload file types.",
+            example: 'accept="image/png,image/jpeg"',
+          },
+          {
+            name: "disabled",
+            type: "boolean",
+            default: "false",
+            description: "Disables AvatarUpload file selection.",
+            example: "disabled",
+          },
+          {
+            name: "onChange",
+            type: "(file: File | null) => void",
+            description: "Called when AvatarUpload selects a file.",
+            example: "onChange={handleFileChange}",
+          },
+          {
+            name: "uploadLabel",
+            type: "string",
+            default: '"Upload profile photo"',
+            description: "Accessible label for AvatarUpload.",
+            example: 'uploadLabel="Change profile photo"',
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="ring-2 ring-background"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Component content. Required for AvatarGroup.",
+            example: "<AvatarFallback>Alice Johnson</AvatarFallback>",
+          },
+        ],
       },
       {
         name: "Badge",
@@ -456,6 +951,71 @@ export default function ShinyButton() {
 <Badge variant="destructive" size="lg">Offline</Badge>
 <Badge shape="dot" tone="warning" aria-label="Away" />
 <Badge asChild><a href="#">Clickable</a></Badge>`,
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "secondary" | "outline" | "destructive" | "ghost" | "link" | "soft" | "gradient" | "ring" | "solid" | "shiny"',
+            default: '"default"',
+            description: "Sets the Badge visual style.",
+            example: 'variant="outline"',
+          },
+          {
+            name: "size",
+            type: '"sm" | "default" | "lg" | "xl" | "icon" | "icon-sm" | "status"',
+            default: '"default"',
+            description:
+              "Sets the Badge height, padding, text size, and icon size.",
+            example: 'size="lg"',
+          },
+          {
+            name: "shape",
+            type: '"pill" | "square" | "circle" | "dot"',
+            default: '"pill"',
+            description: "Sets the Badge shape.",
+            example: 'shape="dot"',
+          },
+          {
+            name: "tone",
+            type: '"neutral" | "success" | "warning" | "info" | "danger" | "brand" | "green" | "red" | "blue" | "yellow" | "orange" | "rose" | "indigo" | "pink"',
+            default: '"neutral"',
+            description: "Sets the semantic or color tone.",
+            example: 'tone="success"',
+          },
+          {
+            name: "asChild",
+            type: "boolean",
+            default: "false",
+            description:
+              "Renders Badge as a child element, such as a link or button.",
+            example: "asChild",
+          },
+          {
+            name: "color",
+            type: "string",
+            default: '"bg-green-500"',
+            description: "BadgePulse dot and ping color.",
+            example: 'color="bg-red-500"',
+          },
+          {
+            name: "dotSize",
+            type: "string",
+            default: '"size-2.5"',
+            description: "BadgePulse dot size.",
+            example: 'dotSize="size-3"',
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="uppercase"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Badge text, icons, or BadgePulse.",
+            example: "<BadgePulse /> Live",
+          },
+        ],
       },
       {
         name: "Skeleton",
@@ -477,6 +1037,49 @@ export default function ShinyButton() {
 <SkeletonImage pulse ratio="video" />
 <SkeletonText pulse width="w-40" />
 <SkeletonButton pulse size="sm" />`,
+        props: [
+          {
+            name: "tone",
+            type: '"neutral" | "soft" | "contrast"',
+            default: '"contrast"',
+            description: "Sets the Skeleton fill intensity.",
+            example: 'tone="soft"',
+          },
+          {
+            name: "pulse",
+            type: "boolean",
+            default: "false",
+            description: "Enables the opacity pulse animation.",
+            example: "pulse",
+          },
+          {
+            name: "width",
+            type: "string",
+            default: 'SkeletonText: "w-full"; SkeletonBadge: "w-16"',
+            description: "Width class for SkeletonText or SkeletonBadge.",
+            example: 'width="w-40"',
+          },
+          {
+            name: "size",
+            type: '"sm" | "md" | "lg"',
+            default: '"md"',
+            description: "Sets SkeletonAvatar or SkeletonButton size.",
+            example: 'size="lg"',
+          },
+          {
+            name: "ratio",
+            type: '"square" | "video" | "portrait"',
+            default: '"video"',
+            description: "Sets the SkeletonImage aspect ratio.",
+            example: 'ratio="square"',
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="mb-2"',
+          },
+        ],
       },
     ],
   },
@@ -503,6 +1106,110 @@ export default function ShinyButton() {
         usage: `import { Video } from "./index";
       
 <Video src="/video.mp4" poster="/poster.jpg" title="Product Launch" />`,
+        props: [
+          {
+            name: "src",
+            type: "string",
+            required: true,
+            description: "Video source URL.",
+            example: 'src="/video.mp4"',
+          },
+          {
+            name: "poster",
+            type: "string",
+            description: "Poster image URL shown before playback.",
+            example: 'poster="/poster.jpg"',
+          },
+          {
+            name: "title",
+            type: "string",
+            description: "Title overlay shown at the top of the player.",
+            example: 'title="Product Launch"',
+          },
+          {
+            name: "variant",
+            type: '"default" | "minimal" | "compact" | "theater" | "hero"',
+            default: '"default"',
+            description: "Sets the player layout and control behavior.",
+            example: 'variant="theater"',
+          },
+          {
+            name: "aspectRatio",
+            type: '"video" | "square" | "wide" | "vertical" | string',
+            default: '"video"',
+            description:
+              'Sets the player aspect ratio. Supports presets, strings such as "4/3", or plain numbers.',
+            example: 'aspectRatio="vertical"',
+          },
+          {
+            name: "tone",
+            type: '"neutral" | "brand" | "success" | "warning" | "danger"',
+            default: '"neutral"',
+            description: "Sets the progress bar fill color.",
+            example: 'tone="success"',
+          },
+          {
+            name: "autoPlay",
+            type: "boolean",
+            default: "false",
+            description: "Starts playback automatically.",
+            example: "autoPlay",
+          },
+          {
+            name: "loop",
+            type: "boolean",
+            default: "false",
+            description: "Restarts playback after it ends.",
+            example: "loop",
+          },
+          {
+            name: "muted",
+            type: "boolean",
+            default: "false",
+            description: "Starts the video muted.",
+            example: "muted",
+          },
+          {
+            name: "playsInline",
+            type: "boolean",
+            default: "true",
+            description: "Prevents fullscreen playback on mobile devices.",
+            example: "playsInline={false}",
+          },
+          {
+            name: "showSettings",
+            type: "boolean",
+            default: "true",
+            description: "Shows the settings menu for speed and quality.",
+            example: "showSettings={false}",
+          },
+          {
+            name: "showPip",
+            type: "boolean",
+            default: "true",
+            description: "Shows the picture-in-picture button when supported.",
+            example: "showPip={false}",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the player container.",
+            example: 'className="max-w-3xl"',
+          },
+          {
+            name: "style",
+            type: "React.CSSProperties",
+            description:
+              "Inline styles. Can override the container aspect ratio.",
+            example: "style={{ aspectRatio: '4 / 3' }}",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Custom overlay content inside the player.",
+            example: '<span className="absolute top-2 right-2">HD</span>',
+          },
+        ],
       },
       {
         name: "Audio",
@@ -530,6 +1237,121 @@ export default function ShinyButton() {
 <Audio src="/podcast.mp3" variant="podcast" showDownload />
 
 <Audio src="/ambient.mp3" variant="waveform" />`,
+        props: [
+          {
+            name: "src",
+            type: "string",
+            required: true,
+            description: "Audio source URL.",
+            example: 'src="/podcast.mp3"',
+          },
+          {
+            name: "title",
+            type: "string",
+            default: '"Audio"',
+            description: "Audio title.",
+            example: 'title="Ambient Sketch"',
+          },
+          {
+            name: "artist",
+            type: "string",
+            description: "Artist or creator name.",
+            example: 'artist="Venumity Studio"',
+          },
+          {
+            name: "artwork",
+            type: "string",
+            description: "Cover image URL for default and podcast variants.",
+            example: 'artwork="/cover.jpg"',
+          },
+          {
+            name: "duration",
+            type: "number",
+            description: "Fallback duration in seconds before metadata loads.",
+            example: "duration={180}",
+          },
+          {
+            name: "variant",
+            type: '"default" | "compact" | "minimal" | "waveform" | "podcast"',
+            default: '"default"',
+            description: "Sets the Audio player layout.",
+            example: 'variant="waveform"',
+          },
+          {
+            name: "size",
+            type: '"sm" | "default" | "lg"',
+            default: '"default"',
+            description: "Sets the text and play button size.",
+            example: 'size="lg"',
+          },
+          {
+            name: "tone",
+            type: '"neutral" | "brand" | "success" | "warning" | "danger"',
+            default: '"neutral"',
+            description: "Sets the border and progress fill color.",
+            example: 'tone="success"',
+          },
+          {
+            name: "animation",
+            type: '"none" | "pulse" | "bars" | "ring" | "scanline"',
+            default: '"bars"',
+            description: "Sets the playing indicator animation.",
+            example: 'animation="pulse"',
+          },
+          {
+            name: "showVolume",
+            type: "boolean",
+            default: "true",
+            description: "Shows the volume control.",
+            example: "showVolume={false}",
+          },
+          {
+            name: "showTime",
+            type: "boolean",
+            default: "true",
+            description: "Shows elapsed and total time.",
+            example: "showTime={false}",
+          },
+          {
+            name: "showDownload",
+            type: "boolean",
+            default: "false",
+            description: "Shows the download button.",
+            example: "showDownload",
+          },
+          {
+            name: "onDownload",
+            type: "() => void",
+            description: "Called when the download button is clicked.",
+            example: "onDownload={handleDownload}",
+          },
+          {
+            name: "onEnded",
+            type: "() => void",
+            description: "Called when audio playback ends.",
+            example: "onEnded={handleEnded}",
+          },
+          {
+            name: "autoPlay",
+            type: "boolean",
+            default: "false",
+            description: "Starts playback automatically.",
+            example: "autoPlay",
+          },
+          {
+            name: "loop",
+            type: "boolean",
+            default: "false",
+            description: "Restarts playback after it ends.",
+            example: "loop",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the player container.",
+            example: 'className="max-w-md"',
+          },
+        ],
       },
     ],
   },
@@ -570,6 +1392,68 @@ export default function ShinyButton() {
   cite="✨ Buddha"
   quote="An idea that is developed and put into action is more important than an idea that exists only as an idea."
 />`,
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "with-icons" | "expandable" | "dropdown" | "custom-separator"',
+            default: '"default"',
+            description: "Sets the Breadcrumb layout and separator behavior.",
+            example: 'variant="with-icons"',
+          },
+          {
+            name: "separator",
+            type: "React.ReactNode",
+            default: "Variant-specific icon or arrow",
+            description: "Custom separator between breadcrumb items.",
+            example: "separator={<span>→</span>}",
+          },
+          {
+            name: "maxItems",
+            type: "number",
+            default: "3",
+            description:
+              "Maximum visible items before collapsing. Minimum is 3.",
+            example: "maxItems={4}",
+          },
+          {
+            name: "underline",
+            type: '"none" | "slide" | "center" | "dot" | "dashed" | "double" | "pulse" | "grow-up" | "ink-fill"',
+            default: '"slide"',
+            description: "Sets the hover underline animation for links.",
+            example: 'underline="center"',
+          },
+          {
+            name: "href",
+            type: "string",
+            description: "BreadcrumbItem link URL. Omit for a non-link item.",
+            example: 'href="/dashboard"',
+          },
+          {
+            name: "icon",
+            type: "React.ReactNode",
+            description: "Icon shown when Breadcrumb variant is with-icons.",
+            example: 'icon={<Home className="size-3.5" />}',
+          },
+          {
+            name: "isCurrentPage",
+            type: "boolean",
+            default: "false",
+            description: "Marks the current BreadcrumbItem.",
+            example: "isCurrentPage",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="text-sm"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Breadcrumb items or item content.",
+            example: "<BreadcrumbItem>Home</BreadcrumbItem>",
+          },
+        ],
       },
     ],
   },
@@ -601,6 +1485,68 @@ export default function ShinyButton() {
   <BreadcrumbItem href="#">Docs</BreadcrumbItem>
   <BreadcrumbItem isCurrentPage>Breadcrumb</BreadcrumbItem>
 </Breadcrumb>`,
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "with-icons" | "expandable" | "dropdown" | "custom-separator"',
+            default: '"default"',
+            description: "Sets the Breadcrumb layout and separator behavior.",
+            example: 'variant="with-icons"',
+          },
+          {
+            name: "separator",
+            type: "React.ReactNode",
+            default: "Variant-specific icon or arrow",
+            description: "Custom separator between breadcrumb items.",
+            example: "separator={<span>→</span>}",
+          },
+          {
+            name: "maxItems",
+            type: "number",
+            default: "3",
+            description:
+              "Maximum visible items before collapsing. Minimum is 3.",
+            example: "maxItems={4}",
+          },
+          {
+            name: "underline",
+            type: '"none" | "slide" | "center" | "dot" | "dashed" | "double" | "pulse" | "grow-up" | "ink-fill"',
+            default: '"slide"',
+            description: "Sets the hover underline animation for links.",
+            example: 'underline="center"',
+          },
+          {
+            name: "href",
+            type: "string",
+            description: "BreadcrumbItem link URL. Omit for a non-link item.",
+            example: 'href="/dashboard"',
+          },
+          {
+            name: "icon",
+            type: "React.ReactNode",
+            description: "Icon shown when Breadcrumb variant is with-icons.",
+            example: 'icon={<Home className="size-3.5" />}',
+          },
+          {
+            name: "isCurrentPage",
+            type: "boolean",
+            default: "false",
+            description: "Marks the current BreadcrumbItem.",
+            example: "isCurrentPage",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Adds CSS classes to the component.",
+            example: 'className="text-sm"',
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            description: "Breadcrumb items or item content.",
+            example: "<BreadcrumbItem>Home</BreadcrumbItem>",
+          },
+        ],
       },
     ],
   },

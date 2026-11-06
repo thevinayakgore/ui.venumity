@@ -6,7 +6,6 @@ export interface PropDefinition {
   required?: boolean;
   description: string;
   example?: string;
-  options?: string[];
 }
 
 export interface ComponentItem {

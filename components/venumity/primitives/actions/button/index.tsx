@@ -5,7 +5,7 @@ import { motion, HTMLMotionProps } from "motion/react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "wensity-button relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 overflow-hidden",
+  "wensity-button relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 overflow-hidden",
   {
     variants: {
       variant: {
@@ -19,9 +19,10 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-5",
+        default: "h-9 gap-1.5 px-4 py-2",
+        sm: "h-8 gap-1.5 rounded-md px-3 text-xs",
+        xs: "h-6 gap-1 px-2 text-[0.65rem] rounded-sm",
+        lg: "h-10 gap-2 rounded-md px-5",
         icon: "h-9 w-9",
       },
     },
