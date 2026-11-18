@@ -1081,6 +1081,144 @@ export default function ShinyButton() {
           },
         ],
       },
+      {
+        name: "Table",
+        thumbnail: "filterable-table",
+        tags: [
+          "table",
+          "sortable",
+          "selectable",
+          "expandable",
+          "editable",
+          "filterable",
+          "paginated",
+          "footer",
+          "sticky",
+        ],
+        description:
+          "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+        items: [
+          { itemName: "Sortable Table" },
+          { itemName: "Selectable Table" },
+          { itemName: "Expandable Table" },
+          { itemName: "Editable Table" },
+          { itemName: "Filterable Table" },
+          { itemName: "Paginated Table" },
+          { itemName: "Footer Table" },
+        ],
+        usage: `<Table className="border rounded-2xl">
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Team</TableHead>
+      <TableHead align="end">Salary</TableHead>
+    </TableRow>
+  </TableHeader>
+  
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">Amara Okafor</TableCell>
+      <TableCell>Staff Engineer</TableCell>
+      <TableCell>Platform</TableCell>
+      <TableCell className="text-right">$148,000</TableCell>
+    </TableRow>
+  </TableBody>
+  
+  <TableCaption>
+    Team members — glide your cursor across rows.
+  </TableCaption>
+</Table>`,
+        props: [
+          {
+            name: "density",
+            type: '"compact" | "comfortable" | "spacious"',
+            default: '"comfortable"',
+            description: "Sets row height, padding, and text size.",
+            example: 'density="compact"',
+          },
+          {
+            name: "stickyHeader",
+            type: "boolean",
+            default: "false",
+            description: "Keeps the header fixed while the body scrolls.",
+            example: "stickyHeader",
+          },
+          {
+            name: "animatedSort",
+            type: "boolean",
+            default: "false",
+            description:
+              "Set on TableBody to animate row reordering when sort changes.",
+            example: "<TableBody animatedSort>",
+          },
+          {
+            name: "sortable / sortDirection / onSort",
+            type: "boolean / SortDirection / () => void",
+            default: "false / null / undefined",
+            description:
+              "Set on TableHead for sortable columns with an animated indicator.",
+            example:
+              '<TableHead sortable sortDirection="asc" onSort={handleSort}>',
+          },
+          {
+            name: "selectable / selected / onSelectedChange",
+            type: "boolean / boolean / (selected: boolean) => void",
+            default: "false / false / undefined",
+            description:
+              "Set on TableRow for row selection; pair with TableSelectCell.",
+            example:
+              "<TableRow selectable selected={checked} onSelectedChange={setChecked}>",
+          },
+          {
+            name: "expandable / expanded / onExpandedChange",
+            type: "boolean / boolean / (expanded: boolean) => void",
+            default: "false / false / undefined",
+            description:
+              "Set on TableRow for expansion; pair with TableExpandTriggerCell and TableExpandableContent.",
+            example:
+              "<TableRow expandable expanded={open} onExpandedChange={setOpen}>",
+          },
+          {
+            name: "checked / indeterminate / onCheckedChange",
+            type: "boolean / boolean / (checked: boolean) => void",
+            default: "false / false / undefined",
+            description:
+              "Props on TableSelectCell for checkbox state; indeterminate shows a dash.",
+            example:
+              "<TableSelectCell checked indeterminate onCheckedChange={toggleAll} />",
+          },
+          {
+            name: "open / colSpan",
+            type: "boolean / number",
+            default: "false / required",
+            description:
+              "Props on TableExpandableContent; animates height via grid-rows 0fr → 1fr.",
+            example:
+              "<TableExpandableContent open={open} colSpan={4}>…</TableExpandableContent>",
+          },
+          {
+            name: "search / onSearchChange",
+            type: "string / (v: string) => void",
+            description: "Props on TableToolbar for the search input.",
+            example: "<TableToolbar search={q} onSearchChange={setQ} />",
+          },
+          {
+            name: "page / totalPages / pageSize / total / onPageChange",
+            type: "number / number / number / number / (page: number) => void",
+            description:
+              "Props on TablePagination for range label and Previous / Next.",
+            example:
+              "<TablePagination page={page} totalPages={n} pageSize={4} total={rows.length} onPageChange={setPage} />",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Additional classes applied to the wrapper div.",
+            example: 'className="max-h-[600px] rounded-xl"',
+          },
+        ],
+      },
     ],
   },
 

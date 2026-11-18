@@ -66,7 +66,7 @@ export default function PropsTable({ props }: PropsTableProps) {
                 className="bg-transparent! text-muted-foreground"
               >
                 <TableCell className="whitespace-pre-wrap wrap-break-word border-r px-5 py-4 align-top font-mono text-sm">
-                  <span className="rounded-sm bg-foreground/10 px-3 py-1.5">
+                  <span className="px-2 py-1 bg-foreground/10 leading-7 rounded-sm">
                     {p.name}
                   </span>
                 </TableCell>

@@ -1,6 +1,6 @@
 # Venumity UI
 
-> Free, MIT-licensed React & Next.js component library — 37 production-ready UI components and 90 foundational primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
+> Free, MIT-licensed React & Next.js component library — 37 production-ready UI components and 97 foundational primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
 
 Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directly into the consumer's project — there is no compiled package to depend on, so every component is fully owned and editable once installed.
 
@@ -41,7 +41,7 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 - [Actions](https://ui.venumity.com/primitives/actions): 8 primitives — action, interactive, control
 - [Forms](https://ui.venumity.com/primitives/forms): 7 primitives — form, input
 - [Feedback](https://ui.venumity.com/primitives/feedback): 11 primitives — feedback, notify
-- [Data Display](https://ui.venumity.com/primitives/data-display): 42 primitives — data, display
+- [Data Display](https://ui.venumity.com/primitives/data-display): 49 primitives — data, display
 - [Media](https://ui.venumity.com/primitives/media): 10 primitives — media
 - [Typography](https://ui.venumity.com/primitives/typography): 6 primitives — typography, text
 - [Navigation](https://ui.venumity.com/primitives/navigation): 6 primitives — navigation, menu
@@ -63,5 +63,5 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 
 ## Optional
 
-- [Changelog](https://ui.venumity.com/changelog): version history, 10 entries
+- [Changelog](https://ui.venumity.com/changelog): version history, 11 entries
 - [Full detail dump](https://ui.venumity.com/llms-full.txt): every component, primitive, doc, resource, and changelog entry inlined in full markdown — fetch this instead of following individual links above when complete content in one request is preferred

@@ -4,7 +4,7 @@
   "author": "Vinayak Gore",
   "authorUrl": "https://github.com/thevinayakgore",
   "license": "MIT",
-  "generatedAt": "2026-11-02T08:28:51.200Z",
+  "generatedAt": "2026-11-18T11:06:39.525Z",
   "cli": {
     "command": "npx venumityui@latest",
     "install": "npx venumityui@latest add <slug>",
@@ -20,14 +20,14 @@
   },
   "counts": {
     "components": 37,
-    "primitives": 90,
+    "primitives": 97,
     "thumbnails": 108,
     "categories": 8,
     "primitiveCategories": 7,
     "faqs": 9,
     "docs": 5,
     "resources": 15,
-    "changelog": 10
+    "changelog": 11
   },
   "endpoints": {
     "llms": "https://ui.venumity.com/llms.txt",
@@ -331,6 +331,11 @@
     }
   ],
   "changelog": [
+    {
+      "title": "✅ Added Legal Pgaes",
+      "date": "Nov-05-2026",
+      "url": "https://ui.venumity.com/changelog#added-legal-pgaes"
+    },
     {
       "title": "🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture",
       "date": "Oct-31-2026",
@@ -2568,6 +2573,167 @@
       "techs": [],
       "pageUrl": "https://ui.venumity.com/primitives/data-display/skeleton/dashboard-skeleton",
       "previewUrl": "https://ui.venumity.com/preview/data-display/skeleton/dashboard-skeleton"
+    },
+    {
+      "itemName": "Sortable Table",
+      "slug": "sortable-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/sortable-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/sortable-table"
+    },
+    {
+      "itemName": "Selectable Table",
+      "slug": "selectable-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/selectable-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/selectable-table"
+    },
+    {
+      "itemName": "Expandable Table",
+      "slug": "expandable-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/expandable-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/expandable-table"
+    },
+    {
+      "itemName": "Editable Table",
+      "slug": "editable-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/editable-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/editable-table"
+    },
+    {
+      "itemName": "Filterable Table",
+      "slug": "filterable-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/filterable-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/filterable-table"
+    },
+    {
+      "itemName": "Paginated Table",
+      "slug": "paginated-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/paginated-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/paginated-table"
+    },
+    {
+      "itemName": "Footer Table",
+      "slug": "footer-table",
+      "category": "Data Display",
+      "categorySlug": "data-display",
+      "subcategory": "Table",
+      "subcategorySlug": "table",
+      "description": "Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.",
+      "tags": [
+        "table",
+        "sortable",
+        "selectable",
+        "expandable",
+        "editable",
+        "filterable",
+        "paginated",
+        "footer",
+        "sticky"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/data-display/table/footer-table",
+      "previewUrl": "https://ui.venumity.com/preview/data-display/table/footer-table"
     },
     {
       "itemName": "Default Video",

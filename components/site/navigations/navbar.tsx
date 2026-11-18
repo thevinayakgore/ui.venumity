@@ -122,9 +122,12 @@ export default function Navbar() {
               {hovered === idx && (
                 <motion.div
                   layoutId="hovered"
-                  className="absolute inset-0 -z-10 bg-background border border-foreground/15 rounded-md w-full h-full"
+                  aria-hidden="true"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  className="pointer-events-none absolute inset-0 -z-10 bg-background dark:bg-foreground/15 border border-foreground/15 dark:border-transparent shadow-lg/10 rounded-md w-full h-full"
                 />
               )}
+
               <span>{item.name}</span>
               {item.newLink && (
                 <div
@@ -139,7 +142,7 @@ export default function Navbar() {
               )}
               {(item.href.startsWith("http://") ||
                 item.href.startsWith("https://")) && (
-                <ArrowUpRight className="absolute top-0 right-0 z-20 group-hover/link:top-0.5 group-hover/link:right-0.5 size-3 opacity-0 group-hover/link:opacity-100 text-green-500 transition-all duration-500" />
+                <ArrowUpRight className="absolute top-0 right-0 z-20 group-hover/link:top-0.75 group-hover/link:right-0.75 size-3 opacity-0 group-hover/link:opacity-100 text-green-500 transition-all duration-500" />
               )}
             </Link>
           ))}
