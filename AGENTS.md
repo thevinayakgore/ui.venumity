@@ -18,9 +18,9 @@ Venumity UI is an **MIT-licensed, open-source React component library** built wi
 **GitHub:** https://github.com/thevinayakgore/ui.venumity
 **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 **License:** MIT
-**Last updated:** 2026-11-02
+**Last updated:** 2026-11-18
 **Total components:** 37
-**Total primitives:** 90
+**Total primitives:** 97
 **Total categories:** 8
 **Total thumbnails:** 108
 
@@ -72,7 +72,7 @@ The CLI auto-detects your Next.js project, initializes shadcn/ui if needed, and 
 ## Available primitive categories
 
 - **Actions** — 8 primitives
-- **Data Display** — 42 primitives
+- **Data Display** — 49 primitives
 - **Feedback** — 11 primitives
 - **Forms** — 7 primitives
 - **Media** — 10 primitives
@@ -953,6 +953,62 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/dashboard-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
+#### Sortable Table
+- **Slug:** `sortable-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/sortable-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/sortable-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Selectable Table
+- **Slug:** `selectable-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/selectable-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/selectable-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Expandable Table
+- **Slug:** `expandable-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/expandable-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/expandable-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Editable Table
+- **Slug:** `editable-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/editable-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/editable-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Filterable Table
+- **Slug:** `filterable-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/filterable-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/filterable-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Paginated Table
+- **Slug:** `paginated-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/paginated-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/paginated-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
+#### Footer Table
+- **Slug:** `footer-table`
+- **Subcategory:** Table
+- **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
+- **Docs:** https://ui.venumity.com/primitives/data-display/table/footer-table
+- **Preview:** https://ui.venumity.com/preview/data-display/table/footer-table
+- **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
+
 ### Feedback
 
 #### Default Alert
@@ -1339,6 +1395,7 @@ Install:      npx venumityui@latest add user-profile
 
 ### Changelog
 
+- [✅ Added Legal Pgaes](https://ui.venumity.com/changelog#added-legal-pgaes) — Nov-05-2026
 - [🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture](https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture) — Oct-31-2026
 - [🚀 New in CLI v1.0.4 - Multi–Package Manager Support](https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support) — Sep-26-2026
 - [🚀 Venumity UI CLI v1.0.0](https://ui.venumity.com/changelog#venumity-ui-cli-v1-0-0) — Jun-19-2026
@@ -1440,4 +1497,4 @@ Preview:   https://ui.venumity.com/thumbnails/user-profile.webp
 
 ---
 
-_Generated on 2026-11-02. Do not edit manually._
+_Generated on 2026-11-18. Do not edit manually._

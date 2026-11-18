@@ -43,8 +43,8 @@ export async function generateMetadata({
   const ogImage = `${website}/thumbnails/${toKebabCase(itemName)}.webp`;
 
   const title = isDemoPreview
-    ? `${subcategoryName} Demo – Live Preview - ${brandName}`
-    : `${itemName} – ${subcategoryName} - Live Preview - ${brandName}`;
+    ? `${subcategoryName} — ${brandName}`
+    : `${itemName} — ${brandName}`;
 
   const finalDescription = isDemoPreview
     ? `Live preview of the ${subcategoryName} demo from the ${categoryName} collection. ${description}`
