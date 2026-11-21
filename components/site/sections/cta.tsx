@@ -4,23 +4,102 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
+const UI_BASE = "https://ui.venumity.com";
+const THUMBNAILS_API = `${UI_BASE}/api/thumbnails`;
+const THUMBNAILS_CACHE_KEY = "venumity:thumbnails:v1";
+
 interface ThumbnailsResponse {
   total?: number;
   thumbnails?: string[];
+  names?: string[];
 }
 
-async function fetchThumbnails(): Promise<string[]> {
+function normalizeThumbnailUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) return "";
+
+  if (/^https?:\/\/localhost:\d+/i.test(trimmed)) {
+    return trimmed.replace(/^https?:\/\/localhost:\d+/i, UI_BASE);
+  }
+
+  if (trimmed.startsWith("/")) {
+    return `${UI_BASE}${trimmed}`;
+  }
+
+  return trimmed;
+}
+
+function readCachedThumbnails(): string[] {
+  if (typeof window === "undefined") return [];
   try {
-    const res = await fetch("/api/thumbnails", {
-      // Cache for 1 hour on the client; browser will reuse
-      next: undefined,
-      cache: "force-cache",
+    const raw = window.localStorage.getItem(THUMBNAILS_CACHE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as { urls?: unknown };
+    if (!Array.isArray(parsed.urls)) return [];
+    return parsed.urls.filter(
+      (u): u is string => typeof u === "string" && u.length > 0,
+    );
+  } catch {
+    return [];
+  }
+}
+
+function writeCachedThumbnails(urls: string[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      THUMBNAILS_CACHE_KEY,
+      JSON.stringify({ urls, updatedAt: Date.now() }),
+    );
+  } catch {
+    // Ignore storage quota or privacy-mode errors
+  }
+}
+
+function areArraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+function shuffleImages(list: string[]): string[] {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+async function fetchFreshThumbnails(): Promise<string[]> {
+  try {
+    const res = await fetch(THUMBNAILS_API, {
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
     const data = (await res.json()) as ThumbnailsResponse;
-    return Array.isArray(data.thumbnails) ? data.thumbnails : [];
+    const rawUrls =
+      Array.isArray(data.thumbnails) && data.thumbnails.length > 0
+        ? data.thumbnails
+        : (data.names ?? []).map(
+            (name) => `${UI_BASE}/thumbnails/${encodeURIComponent(name)}.webp`,
+          );
+
+    const unique = new Set<string>();
+    for (const raw of rawUrls) {
+      if (typeof raw !== "string") continue;
+      const normalized = normalizeThumbnailUrl(raw);
+      if (normalized) {
+        unique.add(normalized);
+      }
+    }
+
+    return Array.from(unique);
   } catch (err) {
-    console.warn("[footer] Failed to fetch thumbnails:", err);
+    console.warn("[cta] Failed to fetch thumbnails:", err);
     return [];
   }
 }
@@ -29,28 +108,34 @@ export default function CTA() {
   const [baseImages, setBaseImages] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
 
-  // ── Fetch thumbnails once on mount ────────────────────────
   useEffect(() => {
     let cancelled = false;
-
-    async function load() {
-      const urls = await fetchThumbnails();
+    async function syncThumbnails() {
+      await Promise.resolve();
       if (cancelled) return;
-      setBaseImages(urls);
-      setImages(urls);
+      const cached = readCachedThumbnails();
+      if (cached.length > 0) {
+        setBaseImages(cached);
+        setImages(cached);
+      }
+      const fresh = await fetchFreshThumbnails();
+      if (cancelled || fresh.length === 0) return;
+      if (!areArraysEqual(cached, fresh)) {
+        writeCachedThumbnails(fresh);
+        setBaseImages(fresh);
+        setImages(fresh);
+      }
     }
-
-    load();
+    void syncThumbnails();
     return () => {
       cancelled = true;
     };
   }, []);
 
-  // ── Reshuffle images every 10s ────────────────────────────
   useEffect(() => {
     if (baseImages.length === 0) return;
     const interval = setInterval(() => {
-      setImages(baseImages);
+      setImages(shuffleImages(baseImages));
     }, 10000);
     return () => clearInterval(interval);
   }, [baseImages]);
@@ -62,7 +147,6 @@ export default function CTA() {
           {/* Glow overlay */}
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 mt-[calc(-280/16*1rem)] select-none overflow-hidden pl-[35%] mix-blend-overlay">
             <div className="relative ml-[calc(-544/16*1rem)] w-[calc(1458/16*1rem)] max-w-none">
-              {/* Replace with your own glow asset or keep as gradient */}
               <div className="h-64 w-full bg-linear-to-r from-orange-400/30 to-amber-600/30 blur-3xl" />
             </div>
           </div>
@@ -71,9 +155,7 @@ export default function CTA() {
             <div className="space-y-5">
               <div className="text-balance text-3xl md:text-4xl lg:text-6xl tracking-tight leading-none">
                 <span className="pt-3 text-transparent bg-clip-text bg-linear-to-br from-white/70 via-white to-white/30">
-                  <span className="dancing text-5xl lg:text-8xl">
-                    Start
-                  </span>{" "}
+                  <span className="dancing text-5xl lg:text-8xl">Start</span>{" "}
                   building <br /> today, buddy
                 </span>{" "}
                 😎
@@ -124,7 +206,6 @@ export default function CTA() {
 
           {/* Large background logo/mark */}
           <div className="pointer-events-none absolute inset-y-0 select-none mask-[radial-gradient(55%_25%_at_70%_50%,#D9D9D9_12%,rgba(217,217,217,0.20)_67.6%,rgba(217,217,217,0)_100%)] sm:mask-[radial-gradient(60%_75%_at_55%_45%,#D9D9D9_12%,rgba(217,217,217,0.20)_67.6%,rgba(217,217,217,0)_100%)] -ml-[calc(410/16*1rem)] -mt-[calc(770/16*1rem)] aspect-1216/1484 h-[calc(1484/16*1rem)] w-[calc(1216/16*1rem)] sm:-ml-[calc(200/16*1rem)] sm:-mt-[calc(830/16*1rem)] sm:aspect-1216/1484 sm:h-[calc(1484/16*1rem)] sm:w-[calc(1216/16*1rem)] md:-ml-[calc(70/16*1rem)] md:-mt-[calc(770/16*1rem)] md:aspect-1216/1484 md:h-[calc(1484/16*1rem)] md:w-[calc(1216/16*1rem)] lg:-mt-[calc(830/16*1rem)] lg:ml-[calc(100/16*1rem)] lg:aspect-1316/1608 lg:h-[calc(1608/16*1rem)] lg:w-[calc(1316/16*1rem)]">
-            {/* You can replace this with your own logo mark or keep a canvas effect */}
             <div className="relative hidden md:block h-full">
               <div className="absolute inset-0 top-1/3 right-1/3 translate-y-20 rotate-20 opacity-20 flex items-center justify-center transition-all duration-[2s]">
                 <Image
@@ -132,9 +213,7 @@ export default function CTA() {
                   alt="Brand"
                   width={5000}
                   height={5000}
-                  priority
                   unoptimized
-                  loading="eager"
                   className="size-200"
                 />
               </div>
@@ -143,20 +222,12 @@ export default function CTA() {
 
           <div className="absolute -top-10 -right-20 z-100! scale-110 rotate-10 transform-gpu hidden xl:flex items-center gap-3 w-fit">
             <InfiniteMovingCards
-              items={
-                images.slice(0, 50).map((src) => ({ image: src })) as {
-                  image: string;
-                }[]
-              }
+              items={images.slice(0, 50).map((src) => ({ image: src }))}
               direction="down"
               speed="slow"
             />
             <InfiniteMovingCards
-              items={
-                images.slice(50, 100).map((src) => ({ image: src })) as {
-                  image: string;
-                }[]
-              }
+              items={images.slice(50, 100).map((src) => ({ image: src }))}
               direction="up"
               speed="slow"
             />

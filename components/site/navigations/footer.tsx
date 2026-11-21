@@ -11,7 +11,7 @@ import { RESOURCES } from "@/registry/resources";
 import { PRIMITIVES } from "@/registry/primitives";
 import { COMPONENTS } from "@/registry/components";
 import Shimmer from "@/components/utility/shimmer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
 import { GridLineVertical } from "@/components/utility/grid-lines";
@@ -29,115 +29,66 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-// ── Thumbnail cache constants ──────────────────────────────
-const THUMBNAILS_API = "/api/thumbnails";
-const CACHE_KEY = "venumity:thumbnails";
-
-interface ThumbnailCache {
-  thumbnails: string[];
-  fingerprint: number;
-  updatedAt: number;
-}
+const UI_BASE = "https://ui.venumity.com";
+const THUMBNAILS_API = `${UI_BASE}/api/thumbnails`;
+const THUMBNAILS_CACHE_KEY = "venumity:thumbnails:v1";
 
 interface ThumbnailsApiResponse {
-  total: number;
-  fingerprint: number;
-  updatedAt: string;
-  thumbnails: string[];
+  total?: number;
+  thumbnails?: string[];
+  names?: string[];
 }
 
-// ── Sync cache helpers ─────────────────────────────────────
-function readCache(): ThumbnailCache | null {
-  if (typeof window === "undefined") return null;
+function normalizeThumbnailUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) return "";
+
+  if (/^https?:\/\/localhost:\d+/i.test(trimmed)) {
+    return trimmed.replace(/^https?:\/\/localhost:\d+/i, UI_BASE);
+  }
+
+  if (trimmed.startsWith("/")) {
+    return `${UI_BASE}${trimmed}`;
+  }
+
+  return trimmed;
+}
+
+function readCachedThumbnails(): string[] {
+  if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as ThumbnailCache;
-    if (!Array.isArray(parsed.thumbnails)) return null;
-    return parsed;
+    const raw = window.localStorage.getItem(THUMBNAILS_CACHE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as { urls?: unknown };
+    if (!Array.isArray(parsed.urls)) return [];
+    return parsed.urls.filter(
+      (u): u is string => typeof u === "string" && u.length > 0,
+    );
   } catch {
-    return null;
+    return [];
   }
 }
 
-function writeCache(cache: ThumbnailCache) {
+function writeCachedThumbnails(urls: string[]): void {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    window.localStorage.setItem(
+      THUMBNAILS_CACHE_KEY,
+      JSON.stringify({ urls, updatedAt: Date.now() }),
+    );
   } catch {
-    /* ignore quota / disabled storage */
+    // Ignore storage quota or privacy-mode errors
   }
 }
 
-// ── Hook: cache-first + background refresh ─────────────────
-function useThumbnails() {
-  // Lazy initializer — reads localStorage synchronously on first render,
-  // no effect needed, no cascading renders.
-  const [thumbnails, setThumbnails] = useState<string[]>(() => {
-    const cached = readCache();
-    return cached?.thumbnails ?? [];
-  });
-
-  const mountedRef = useRef(true);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  // Background fetch — setState only happens inside the async callback,
-  // never synchronously in the effect body.
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      try {
-        const res = await fetch(THUMBNAILS_API, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data: ThumbnailsApiResponse = await res.json();
-
-        if (cancelled || !mountedRef.current) return;
-
-        const cached = readCache();
-
-        // Reconcile: only trust the server's list as the source of truth.
-        // If fingerprint AND length AND every URL match, keep the cached
-        // array (stable reference → no re-render). Otherwise replace it.
-        const sameFingerprint =
-          cached && cached.fingerprint === data.fingerprint;
-        const sameLength = cached?.thumbnails.length === data.thumbnails.length;
-        const sameUrls =
-          cached &&
-          cached.thumbnails.every((url, i) => url === data.thumbnails[i]);
-
-        if (sameFingerprint && sameLength && sameUrls && cached) {
-          setThumbnails(cached.thumbnails);
-        } else {
-          setThumbnails(data.thumbnails);
-          writeCache({
-            thumbnails: data.thumbnails,
-            fingerprint: data.fingerprint,
-            updatedAt: Date.now(),
-          });
-        }
-      } catch (err) {
-        // Non-critical: marquee just won't render on the first paint.
-        console.error("Failed to fetch thumbnails:", err);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return { thumbnails };
+function areArraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }
 
-// ── Shuffle ────────────────────────────────────────────────
 function shuffleImages(images: string[]) {
   const shuffled = [...images];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -145,6 +96,37 @@ function shuffleImages(images: string[]) {
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
+}
+
+async function fetchThumbnailsFromApi(): Promise<string[]> {
+  try {
+    const res = await fetch(THUMBNAILS_API, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = (await res.json()) as ThumbnailsApiResponse;
+    const rawUrls =
+      Array.isArray(data.thumbnails) && data.thumbnails.length > 0
+        ? data.thumbnails
+        : (data.names ?? []).map(
+            (name) => `${UI_BASE}/thumbnails/${encodeURIComponent(name)}.webp`,
+          );
+
+    const unique = new Set<string>();
+    for (const raw of rawUrls) {
+      if (typeof raw !== "string") continue;
+      const normalized = normalizeThumbnailUrl(raw);
+      if (normalized) {
+        unique.add(normalized);
+      }
+    }
+
+    return Array.from(unique);
+  } catch (err) {
+    console.warn("[footer] Failed to fetch thumbnails from API:", err);
+    return [];
+  }
 }
 
 // ── BottomFooter (unchanged) ───────────────────────────────
@@ -187,32 +169,41 @@ export const BottomFooter = () => {
 // ── Footer ─────────────────────────────────────────────────
 export default function Footer() {
   const pathname = usePathname();
-  const { thumbnails } = useThumbnails();
+  const [baseImages, setBaseImages] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
 
-  // Rotate shuffle every 10s. All setState calls happen inside the timer
-  // callback, not in the effect body, so ESLint is happy.
   useEffect(() => {
-    if (thumbnails.length === 0) return;
+    let cancelled = false;
+    async function syncThumbnails() {
+      // Yield once so state updates happen asynchronously after mount
+      await Promise.resolve();
+      if (cancelled) return;
+      const cached = readCachedThumbnails();
+      if (cached.length > 0) {
+        setBaseImages(cached);
+        setImages(cached);
+      }
+      const fresh = await fetchThumbnailsFromApi();
+      if (cancelled || fresh.length === 0) return;
+      if (!areArraysEqual(cached, fresh)) {
+        writeCachedThumbnails(fresh);
+        setBaseImages(fresh);
+        setImages(fresh);
+      }
+    }
+    void syncThumbnails();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
+  useEffect(() => {
+    if (baseImages.length === 0) return;
     const interval = setInterval(() => {
-      setImages(shuffleImages(thumbnails));
+      setImages(shuffleImages(baseImages));
     }, 10000);
-
     return () => clearInterval(interval);
-  }, [thumbnails]);
-
-  // Separate effect for the initial shuffle — also inside a timer to avoid
-  // the "setState synchronously in effect" warning.
-  useEffect(() => {
-    if (thumbnails.length === 0) return;
-
-    const id = setTimeout(() => {
-      setImages(shuffleImages(thumbnails));
-    }, 0);
-
-    return () => clearTimeout(id);
-  }, [thumbnails]);
+  }, [baseImages]);
 
   if (
     pathname?.startsWith("/404") ||
@@ -270,7 +261,6 @@ export default function Footer() {
         <div className="lg:p-3 w-full">
           {/* 3D Morquee Banner */}
           <section className="relative lg:border rounded-2xl lg:rounded-3xl overflow-hidden w-full lg:min-h-150">
-            {/* Marquee renders as soon as we have any images (cache or fresh) */}
             {images.length > 0 && (
               <ThreeDMarquee
                 className="hidden lg:block pointer-events-none absolute inset-0 bg-background! h-full w-full"
@@ -350,7 +340,7 @@ export default function Footer() {
                       <TooltipTrigger asChild>
                         <Link
                           target="_blank"
-                          href="https://ui.venumity.com/components"
+                          href={`${UI_BASE}/components`}
                           className={insetButtonVariants(
                             "relative group/btn text-sm md:text-base px-3 hover:shadow-lg shadow-primary/50 duration-500 overflow-hidden",
                             "lg",
