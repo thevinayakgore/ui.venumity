@@ -354,7 +354,6 @@ export default function PageClient({ category, subcategory }: Props) {
     !isMulti && !!subcategory.props && subcategory.props.length > 0;
   const moreExamples = subcategory.moreExamples ?? [];
 
-  // Wait for the appropriate fetch to complete
   const ready = isMulti
     ? !firstMultiItemFiles.loading
     : demo.loaded && firstItemSource.loaded;
@@ -434,7 +433,7 @@ export default function PageClient({ category, subcategory }: Props) {
       )}
 
       {!isMulti && examples.length > 0 && firstItemSource.code && (
-        <section className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-5 w-full">
           {demo.code && (
             <header className="md:px-3">
               <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
@@ -456,11 +455,11 @@ export default function PageClient({ category, subcategory }: Props) {
               />
             ))}
           </div>
-        </section>
+        </div>
       )}
 
       {!isMulti && moreExamples.length > 0 && hasCode && (
-        <section className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-5 w-full">
           <header className="md:px-3">
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
               More Examples
@@ -479,11 +478,11 @@ export default function PageClient({ category, subcategory }: Props) {
               />
             ))}
           </div>
-        </section>
+        </div>
       )}
 
       {showProps && hasCode && (
-        <section className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-5 w-full">
           <header className="md:px-3">
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
               Props
@@ -494,7 +493,7 @@ export default function PageClient({ category, subcategory }: Props) {
             </p>
           </header>
           <PropsTable props={subcategory.props || []} />
-        </section>
+        </div>
       )}
     </section>
   );

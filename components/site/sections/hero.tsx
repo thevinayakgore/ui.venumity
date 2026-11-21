@@ -64,7 +64,7 @@ export default function Hero() {
         <div className="relative z-100 lg:aspect-video xl:aspect-5/2.5 flex flex-col items-center justify-center m-auto bg-background rounded-lg xl:rounded-xl overflow-hidden max-w-400 w-full">
           <div className="flex flex-col items-center justify-center gap-3 sm:gap-5 z-70 p-3 sm:p-5 lg:p-10 text-center overflow-hidden w-full">
             <Link
-              href="/components/data-display/tables#expandable-row-table"
+              href="/primitives/data-display/table"
               className={cn(
                 buttonVariants({
                   variant: "outline",
@@ -90,7 +90,7 @@ export default function Hero() {
                 orientation="vertical"
                 className="hidden md:block mx-3 bg-foreground/30 h-7 my-auto"
               />
-              <span className="pl-3 md:pl-0">Fixed Column Table</span>
+              <span className="pl-3 md:pl-0">Filterable Table</span>
               <span
                 className={insetButtonVariants(
                   "relative md:ml-2 text-[0.7rem] font-semibold overflow-hidden rounded-full",

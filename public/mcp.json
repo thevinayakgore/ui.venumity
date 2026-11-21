@@ -4,7 +4,7 @@
   "name": "venumity-ui",
   "title": "Venumity UI Component Registry",
   "description": "Open-source React + Next.js + Tailwind CSS component library with copy-paste components and primitives. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
-  "version": "2026-11-18",
+  "version": "2026-11-21",
   "homepage": "https://ui.venumity.com",
   "repository": "https://github.com/thevinayakgore/ui.venumity",
   "license": "MIT",
@@ -279,7 +279,7 @@
         "install": "npx venumityui@latest add cursor-style-ai-prompt-panel",
         "source": "https://ui.venumity.com/components/ai-features/ai-chat-panels/cursor-style-ai-prompt-panel",
         "preview": "https://ui.venumity.com/preview/ai-features/ai-chat-panels/cursor-style-ai-prompt-panel",
-        "thumbnail": "https://ui.venumity.com/thumbnails/cursor-style-ai-prompt-panel.webp"
+        "thumbnail": "https://ui.venumity.com/thumbnails/ai-features.webp"
       },
       {
         "name": "Floating Cards",
@@ -303,7 +303,7 @@
         "install": "npx venumityui@latest add floating-cards",
         "source": "https://ui.venumity.com/components/ai-features/ai-chat-suggestion/floating-cards",
         "preview": "https://ui.venumity.com/preview/ai-features/ai-chat-suggestion/floating-cards",
-        "thumbnail": "https://ui.venumity.com/thumbnails/floating-cards.webp"
+        "thumbnail": "https://ui.venumity.com/thumbnails/ai-chat-suggestion.webp"
       },
       {
         "name": "Suggestion Box",
@@ -327,7 +327,7 @@
         "install": "npx venumityui@latest add suggestion-box",
         "source": "https://ui.venumity.com/components/ai-features/ai-chat-suggestion/suggestion-box",
         "preview": "https://ui.venumity.com/preview/ai-features/ai-chat-suggestion/suggestion-box",
-        "thumbnail": "https://ui.venumity.com/thumbnails/suggestion-box.webp"
+        "thumbnail": "https://ui.venumity.com/thumbnails/ai-chat-suggestion.webp"
       },
       {
         "name": "AI Summary Page",
@@ -643,7 +643,7 @@
         "install": "npx venumityui@latest add tiered-pricing-table",
         "source": "https://ui.venumity.com/components/commerce/pricing-tables/tiered-pricing-table",
         "preview": "https://ui.venumity.com/preview/commerce/pricing-tables/tiered-pricing-table",
-        "thumbnail": "https://ui.venumity.com/thumbnails/tiered-pricing-table.webp"
+        "thumbnail": "https://ui.venumity.com/thumbnails/commerce.webp"
       },
       {
         "name": "Interactive Product Card",
@@ -1090,7 +1090,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/variants",
-        "preview": "https://ui.venumity.com/preview/actions/button/variants"
+        "preview": "https://ui.venumity.com/preview/actions/button/variants",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Sizes",
@@ -1106,7 +1107,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/sizes",
-        "preview": "https://ui.venumity.com/preview/actions/button/sizes"
+        "preview": "https://ui.venumity.com/preview/actions/button/sizes",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Custom Icon",
@@ -1122,7 +1124,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/custom-icon",
-        "preview": "https://ui.venumity.com/preview/actions/button/custom-icon"
+        "preview": "https://ui.venumity.com/preview/actions/button/custom-icon",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Icon Motion",
@@ -1138,7 +1141,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/icon-motion",
-        "preview": "https://ui.venumity.com/preview/actions/button/icon-motion"
+        "preview": "https://ui.venumity.com/preview/actions/button/icon-motion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Scale Effect",
@@ -1154,7 +1158,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/scale-effect",
-        "preview": "https://ui.venumity.com/preview/actions/button/scale-effect"
+        "preview": "https://ui.venumity.com/preview/actions/button/scale-effect",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Bounce Effect",
@@ -1170,7 +1175,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/bounce-effect",
-        "preview": "https://ui.venumity.com/preview/actions/button/bounce-effect"
+        "preview": "https://ui.venumity.com/preview/actions/button/bounce-effect",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Shimmer Effect",
@@ -1186,7 +1192,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/shimmer-effect",
-        "preview": "https://ui.venumity.com/preview/actions/button/shimmer-effect"
+        "preview": "https://ui.venumity.com/preview/actions/button/shimmer-effect",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Ripple Effect",
@@ -1202,7 +1209,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/actions/button/ripple-effect",
-        "preview": "https://ui.venumity.com/preview/actions/button/ripple-effect"
+        "preview": "https://ui.venumity.com/preview/actions/button/ripple-effect",
+        "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
       },
       {
         "name": "Default Command",
@@ -1221,7 +1229,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/command/default-command",
-        "preview": "https://ui.venumity.com/preview/forms/command/default-command"
+        "preview": "https://ui.venumity.com/preview/forms/command/default-command",
+        "thumbnail": "https://ui.venumity.com/thumbnails/command.webp"
       },
       {
         "name": "Grouped Command",
@@ -1240,7 +1249,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/command/grouped-command",
-        "preview": "https://ui.venumity.com/preview/forms/command/grouped-command"
+        "preview": "https://ui.venumity.com/preview/forms/command/grouped-command",
+        "thumbnail": "https://ui.venumity.com/thumbnails/command.webp"
       },
       {
         "name": "Slide Command",
@@ -1259,7 +1269,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/command/slide-command",
-        "preview": "https://ui.venumity.com/preview/forms/command/slide-command"
+        "preview": "https://ui.venumity.com/preview/forms/command/slide-command",
+        "thumbnail": "https://ui.venumity.com/thumbnails/command.webp"
       },
       {
         "name": "Animated Dialog Command",
@@ -1278,7 +1289,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/command/animated-dialog-command",
-        "preview": "https://ui.venumity.com/preview/forms/command/animated-dialog-command"
+        "preview": "https://ui.venumity.com/preview/forms/command/animated-dialog-command",
+        "thumbnail": "https://ui.venumity.com/thumbnails/command.webp"
       },
       {
         "name": "Default Context Menu",
@@ -1296,7 +1308,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/context-menu/default-context-menu",
-        "preview": "https://ui.venumity.com/preview/forms/context-menu/default-context-menu"
+        "preview": "https://ui.venumity.com/preview/forms/context-menu/default-context-menu",
+        "thumbnail": "https://ui.venumity.com/thumbnails/context-menu.webp"
       },
       {
         "name": "Grouped Context Menu",
@@ -1314,7 +1327,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/context-menu/grouped-context-menu",
-        "preview": "https://ui.venumity.com/preview/forms/context-menu/grouped-context-menu"
+        "preview": "https://ui.venumity.com/preview/forms/context-menu/grouped-context-menu",
+        "thumbnail": "https://ui.venumity.com/thumbnails/context-menu.webp"
       },
       {
         "name": "Nested Context Menu",
@@ -1332,7 +1346,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/forms/context-menu/nested-context-menu",
-        "preview": "https://ui.venumity.com/preview/forms/context-menu/nested-context-menu"
+        "preview": "https://ui.venumity.com/preview/forms/context-menu/nested-context-menu",
+        "thumbnail": "https://ui.venumity.com/thumbnails/context-menu.webp"
       },
       {
         "name": "Default Alert",
@@ -1350,7 +1365,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/alert/default-alert",
-        "preview": "https://ui.venumity.com/preview/feedback/alert/default-alert"
+        "preview": "https://ui.venumity.com/preview/feedback/alert/default-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/alert.webp"
       },
       {
         "name": "Destructive Alert",
@@ -1368,7 +1384,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/alert/destructive-alert",
-        "preview": "https://ui.venumity.com/preview/feedback/alert/destructive-alert"
+        "preview": "https://ui.venumity.com/preview/feedback/alert/destructive-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/alert.webp"
       },
       {
         "name": "Tone Alert",
@@ -1386,7 +1403,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/alert/tone-alert",
-        "preview": "https://ui.venumity.com/preview/feedback/alert/tone-alert"
+        "preview": "https://ui.venumity.com/preview/feedback/alert/tone-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/alert.webp"
       },
       {
         "name": "Action Alert",
@@ -1404,7 +1422,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/alert/action-alert",
-        "preview": "https://ui.venumity.com/preview/feedback/alert/action-alert"
+        "preview": "https://ui.venumity.com/preview/feedback/alert/action-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/alert.webp"
       },
       {
         "name": "Animated Alert",
@@ -1422,7 +1441,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/alert/animated-alert",
-        "preview": "https://ui.venumity.com/preview/feedback/alert/animated-alert"
+        "preview": "https://ui.venumity.com/preview/feedback/alert/animated-alert",
+        "thumbnail": "https://ui.venumity.com/thumbnails/alert.webp"
       },
       {
         "name": "Default Spinner",
@@ -1440,7 +1460,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/default-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/default-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/default-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spinner.webp"
       },
       {
         "name": "Label Spinner",
@@ -1458,7 +1479,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/label-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/label-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/label-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spinner.webp"
       },
       {
         "name": "Ring Spinner",
@@ -1476,7 +1498,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/ring-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/ring-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/ring-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/ring-spinner.webp"
       },
       {
         "name": "Dots Spinner",
@@ -1494,7 +1517,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/dots-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/dots-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/dots-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spinner.webp"
       },
       {
         "name": "Pulse Spinner",
@@ -1512,7 +1536,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/pulse-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/pulse-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/pulse-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spinner.webp"
       },
       {
         "name": "Overlay Spinner",
@@ -1530,7 +1555,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/feedback/spinner/overlay-spinner",
-        "preview": "https://ui.venumity.com/preview/feedback/spinner/overlay-spinner"
+        "preview": "https://ui.venumity.com/preview/feedback/spinner/overlay-spinner",
+        "thumbnail": "https://ui.venumity.com/thumbnails/spinner.webp"
       },
       {
         "name": "Single Minimal Accordion",
@@ -1549,7 +1575,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/single-minimal-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/single-minimal-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/single-minimal-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Minimal Separated Accordion",
@@ -1568,7 +1595,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/minimal-separated-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/minimal-separated-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/minimal-separated-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Multiple Minimal Accordion",
@@ -1587,7 +1615,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/multiple-minimal-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/multiple-minimal-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/multiple-minimal-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Multiple Separated Accordion",
@@ -1606,7 +1635,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/multiple-separated-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/multiple-separated-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/multiple-separated-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Nested Minimal Accordion",
@@ -1625,7 +1655,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/nested-minimal-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/nested-minimal-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/nested-minimal-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Nested Separated Accordion",
@@ -1644,7 +1675,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/accordion/nested-separated-accordion",
-        "preview": "https://ui.venumity.com/preview/data-display/accordion/nested-separated-accordion"
+        "preview": "https://ui.venumity.com/preview/data-display/accordion/nested-separated-accordion",
+        "thumbnail": "https://ui.venumity.com/thumbnails/accordion.webp"
       },
       {
         "name": "Inbuilt Aspect Ratio",
@@ -1662,7 +1694,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/inbuilt-aspect-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/inbuilt-aspect-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/inbuilt-aspect-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Custom Ratio",
@@ -1680,7 +1713,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/custom-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/custom-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/custom-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Video Aspect Ratio",
@@ -1698,7 +1732,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/video-aspect-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/video-aspect-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/video-aspect-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Captioned Aspect Ratio",
@@ -1716,7 +1751,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/captioned-aspect-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/captioned-aspect-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/captioned-aspect-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Wipe Aspect Ratio",
@@ -1734,7 +1770,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/wipe-aspect-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/wipe-aspect-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/wipe-aspect-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Animated Aspect Ratio",
@@ -1752,7 +1789,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/aspect-ratio/animated-aspect-ratio",
-        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/animated-aspect-ratio"
+        "preview": "https://ui.venumity.com/preview/data-display/aspect-ratio/animated-aspect-ratio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/aspect-ratio.webp"
       },
       {
         "name": "Status Attachment",
@@ -1770,7 +1808,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/attachment/status-attachment",
-        "preview": "https://ui.venumity.com/preview/data-display/attachment/status-attachment"
+        "preview": "https://ui.venumity.com/preview/data-display/attachment/status-attachment",
+        "thumbnail": "https://ui.venumity.com/thumbnails/attachment.webp"
       },
       {
         "name": "File Type Attachment",
@@ -1788,7 +1827,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/attachment/file-type-attachment",
-        "preview": "https://ui.venumity.com/preview/data-display/attachment/file-type-attachment"
+        "preview": "https://ui.venumity.com/preview/data-display/attachment/file-type-attachment",
+        "thumbnail": "https://ui.venumity.com/thumbnails/attachment.webp"
       },
       {
         "name": "Upload Attachment",
@@ -1806,7 +1846,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/attachment/upload-attachment",
-        "preview": "https://ui.venumity.com/preview/data-display/attachment/upload-attachment"
+        "preview": "https://ui.venumity.com/preview/data-display/attachment/upload-attachment",
+        "thumbnail": "https://ui.venumity.com/thumbnails/attachment.webp"
       },
       {
         "name": "Removable Attachment",
@@ -1824,7 +1865,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/attachment/removable-attachment",
-        "preview": "https://ui.venumity.com/preview/data-display/attachment/removable-attachment"
+        "preview": "https://ui.venumity.com/preview/data-display/attachment/removable-attachment",
+        "thumbnail": "https://ui.venumity.com/thumbnails/attachment.webp"
       },
       {
         "name": "Preview Attachment",
@@ -1842,7 +1884,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/attachment/preview-attachment",
-        "preview": "https://ui.venumity.com/preview/data-display/attachment/preview-attachment"
+        "preview": "https://ui.venumity.com/preview/data-display/attachment/preview-attachment",
+        "thumbnail": "https://ui.venumity.com/thumbnails/attachment.webp"
       },
       {
         "name": "Size Avatar",
@@ -1861,7 +1904,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/size-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/size-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/size-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Status Avatar",
@@ -1880,7 +1924,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/status-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/status-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/status-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Tone Avatar",
@@ -1899,7 +1944,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/tone-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/tone-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/tone-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Group Avatar",
@@ -1918,7 +1964,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/group-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/group-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/group-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Tooltip Avatar",
@@ -1937,7 +1984,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/tooltip-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/tooltip-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/tooltip-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Upload Avatar",
@@ -1956,7 +2004,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/upload-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/upload-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/upload-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Animated Avatar",
@@ -1975,7 +2024,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/avatar/animated-avatar",
-        "preview": "https://ui.venumity.com/preview/data-display/avatar/animated-avatar"
+        "preview": "https://ui.venumity.com/preview/data-display/avatar/animated-avatar",
+        "thumbnail": "https://ui.venumity.com/thumbnails/avatar.webp"
       },
       {
         "name": "Size Badge",
@@ -1994,7 +2044,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/size-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/size-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/size-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Variant Badge",
@@ -2013,7 +2064,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/variant-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/variant-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/variant-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Tone Badge",
@@ -2032,7 +2084,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/tone-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/tone-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/tone-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Icon Badge",
@@ -2051,7 +2104,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/icon-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/icon-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/icon-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Shape Badge",
@@ -2070,7 +2124,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/shape-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/shape-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/shape-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Pulse Status Badge",
@@ -2089,7 +2144,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/pulse-status-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/pulse-status-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/pulse-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "System Status Badge",
@@ -2108,7 +2164,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/system-status-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/system-status-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/system-status-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/system-status-badge.webp"
       },
       {
         "name": "Priority Badge",
@@ -2127,7 +2184,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/priority-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/priority-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/priority-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Shiny Badge",
@@ -2146,7 +2204,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/shiny-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/shiny-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/shiny-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Interactive Badge",
@@ -2165,7 +2224,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/badge/interactive-badge",
-        "preview": "https://ui.venumity.com/preview/data-display/badge/interactive-badge"
+        "preview": "https://ui.venumity.com/preview/data-display/badge/interactive-badge",
+        "thumbnail": "https://ui.venumity.com/thumbnails/badge.webp"
       },
       {
         "name": "Text Skeleton",
@@ -2183,7 +2243,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/text-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/text-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/text-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Avatar Skeleton",
@@ -2201,7 +2262,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/avatar-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/avatar-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/avatar-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Button Skeleton",
@@ -2219,7 +2281,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/button-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/button-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/button-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Badge Skeleton",
@@ -2237,7 +2300,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/badge-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/badge-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/badge-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Card Skeleton",
@@ -2255,7 +2319,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/card-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/card-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/card-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Profile Skeleton",
@@ -2273,7 +2338,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/profile-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/profile-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/profile-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Table Skeleton",
@@ -2291,7 +2357,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/table-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/table-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/table-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Dashboard Skeleton",
@@ -2309,7 +2376,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/skeleton/dashboard-skeleton",
-        "preview": "https://ui.venumity.com/preview/data-display/skeleton/dashboard-skeleton"
+        "preview": "https://ui.venumity.com/preview/data-display/skeleton/dashboard-skeleton",
+        "thumbnail": "https://ui.venumity.com/thumbnails/skeleton.webp"
       },
       {
         "name": "Sortable Table",
@@ -2332,7 +2400,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/sortable-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/sortable-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/sortable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Selectable Table",
@@ -2355,7 +2424,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/selectable-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/selectable-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/selectable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Expandable Table",
@@ -2378,7 +2448,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/expandable-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/expandable-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/expandable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Editable Table",
@@ -2401,7 +2472,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/editable-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/editable-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/editable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Filterable Table",
@@ -2424,7 +2496,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/filterable-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/filterable-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/filterable-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Paginated Table",
@@ -2447,7 +2520,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/paginated-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/paginated-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/paginated-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Footer Table",
@@ -2470,7 +2544,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/data-display/table/footer-table",
-        "preview": "https://ui.venumity.com/preview/data-display/table/footer-table"
+        "preview": "https://ui.venumity.com/preview/data-display/table/footer-table",
+        "thumbnail": "https://ui.venumity.com/thumbnails/filterable-table.webp"
       },
       {
         "name": "Default Video",
@@ -2488,7 +2563,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/video/default-video",
-        "preview": "https://ui.venumity.com/preview/media/video/default-video"
+        "preview": "https://ui.venumity.com/preview/media/video/default-video",
+        "thumbnail": "https://ui.venumity.com/thumbnails/video.webp"
       },
       {
         "name": "Minimal Video",
@@ -2506,7 +2582,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/video/minimal-video",
-        "preview": "https://ui.venumity.com/preview/media/video/minimal-video"
+        "preview": "https://ui.venumity.com/preview/media/video/minimal-video",
+        "thumbnail": "https://ui.venumity.com/thumbnails/video.webp"
       },
       {
         "name": "Compact Video",
@@ -2524,7 +2601,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/video/compact-video",
-        "preview": "https://ui.venumity.com/preview/media/video/compact-video"
+        "preview": "https://ui.venumity.com/preview/media/video/compact-video",
+        "thumbnail": "https://ui.venumity.com/thumbnails/video.webp"
       },
       {
         "name": "Theater Video",
@@ -2542,7 +2620,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/video/theater-video",
-        "preview": "https://ui.venumity.com/preview/media/video/theater-video"
+        "preview": "https://ui.venumity.com/preview/media/video/theater-video",
+        "thumbnail": "https://ui.venumity.com/thumbnails/video.webp"
       },
       {
         "name": "Hero Video",
@@ -2560,7 +2639,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/video/hero-video",
-        "preview": "https://ui.venumity.com/preview/media/video/hero-video"
+        "preview": "https://ui.venumity.com/preview/media/video/hero-video",
+        "thumbnail": "https://ui.venumity.com/thumbnails/video.webp"
       },
       {
         "name": "Audio Player",
@@ -2579,7 +2659,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/audio/audio-player",
-        "preview": "https://ui.venumity.com/preview/media/audio/audio-player"
+        "preview": "https://ui.venumity.com/preview/media/audio/audio-player",
+        "thumbnail": "https://ui.venumity.com/thumbnails/audio.webp"
       },
       {
         "name": "Compact Audio",
@@ -2598,7 +2679,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/audio/compact-audio",
-        "preview": "https://ui.venumity.com/preview/media/audio/compact-audio"
+        "preview": "https://ui.venumity.com/preview/media/audio/compact-audio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/audio.webp"
       },
       {
         "name": "Minimal Audio",
@@ -2617,7 +2699,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/audio/minimal-audio",
-        "preview": "https://ui.venumity.com/preview/media/audio/minimal-audio"
+        "preview": "https://ui.venumity.com/preview/media/audio/minimal-audio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/audio.webp"
       },
       {
         "name": "Waveform Audio",
@@ -2636,7 +2719,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/audio/waveform-audio",
-        "preview": "https://ui.venumity.com/preview/media/audio/waveform-audio"
+        "preview": "https://ui.venumity.com/preview/media/audio/waveform-audio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/audio.webp"
       },
       {
         "name": "Podcast Audio",
@@ -2655,7 +2739,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/media/audio/podcast-audio",
-        "preview": "https://ui.venumity.com/preview/media/audio/podcast-audio"
+        "preview": "https://ui.venumity.com/preview/media/audio/podcast-audio",
+        "thumbnail": "https://ui.venumity.com/thumbnails/audio.webp"
       },
       {
         "name": "Verse Blockquote",
@@ -2674,7 +2759,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/verse-blockquote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/verse-blockquote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/verse-blockquote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Pull Quote",
@@ -2693,7 +2779,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/pull-quote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/pull-quote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/pull-quote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Tone Quote",
@@ -2712,7 +2799,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/tone-quote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/tone-quote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/tone-quote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Card Blockquote",
@@ -2731,7 +2819,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/card-blockquote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/card-blockquote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/card-blockquote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Shiny Quote",
@@ -2750,7 +2839,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/shiny-quote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/shiny-quote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/shiny-quote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Testimonial Blockquote",
@@ -2769,7 +2859,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/typography/blockquote/testimonial-blockquote",
-        "preview": "https://ui.venumity.com/preview/typography/blockquote/testimonial-blockquote"
+        "preview": "https://ui.venumity.com/preview/typography/blockquote/testimonial-blockquote",
+        "thumbnail": "https://ui.venumity.com/thumbnails/blockquote.webp"
       },
       {
         "name": "Default Breadcrumb",
@@ -2787,7 +2878,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/default-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/default-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/default-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       },
       {
         "name": "Icon Breadcrumb",
@@ -2805,7 +2897,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/icon-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/icon-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/icon-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       },
       {
         "name": "Expandable Breadcrumb",
@@ -2823,7 +2916,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/expandable-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/expandable-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/expandable-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       },
       {
         "name": "Dropdown Breadcrumb",
@@ -2841,7 +2935,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/dropdown-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/dropdown-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/dropdown-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       },
       {
         "name": "Custom Separator Breadcrumb",
@@ -2859,7 +2954,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/custom-separator-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/custom-separator-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/custom-separator-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       },
       {
         "name": "Animated Breadcrumb",
@@ -2877,7 +2973,8 @@
         ],
         "techs": [],
         "source": "https://ui.venumity.com/primitives/navigation/breadcrumb/animated-breadcrumb",
-        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/animated-breadcrumb"
+        "preview": "https://ui.venumity.com/preview/navigation/breadcrumb/animated-breadcrumb",
+        "thumbnail": "https://ui.venumity.com/thumbnails/breadcrumb.webp"
       }
     ]
   },
@@ -2887,5 +2984,5 @@
     "categories": 8,
     "primitiveCategories": 7
   },
-  "generatedAt": "2026-11-18T11:06:39.526Z"
+  "generatedAt": "2026-11-21T07:27:42.885Z"
 }

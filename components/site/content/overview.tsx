@@ -9,25 +9,22 @@ import ComponentPreview from "./preview";
 import { Button } from "@/components/ui/button";
 import { toKebabCase } from "@/utils/slug-kebab";
 import Shimmer from "@/components/utility/shimmer";
+import { Separator } from "@/components/ui/separator";
 import CodeBlock from "@/components/utility/code-block";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { rewriteVenumityImports } from "@/utils/import-rewrite";
 import { packageManagers, useGlobalPackageManager } from "@/utils/pm-config";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
-  rewriteComponentImports,
-  rewriteVenumityImports,
-} from "@/utils/import-rewrite";
-import {
   Copy,
+  Check,
   Terminal,
   RotateCcw,
   CheckCheck,
   Fullscreen,
   ChevronDown,
   PictureInPicture2,
-  Check,
 } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface OverviewProps {
   code?: string;
@@ -87,7 +84,6 @@ function CliCopyInline({ slug }: { slug: string }) {
         aria-label="Select package manager or copy command"
         className="flex items-center gap-0.5 text-xs p-0.75! h-9.5! tracking-wide bg-foreground/10! overflow-hidden rounded-md"
       >
-        {/* Main Copy Action (Left Side) */}
         <span
           onClick={(e) => {
             e.stopPropagation();
@@ -107,7 +103,6 @@ function CliCopyInline({ slug }: { slug: string }) {
           </span>
         </span>
 
-        {/* Dropdown Toggle (Right Side) */}
         <span
           onClick={() => setOpen((v) => !v)}
           className="flex items-center justify-center h-full"
@@ -194,19 +189,11 @@ export default function Overview({
     return parts[0] || toKebabCase(componentName);
   }, [slugPath, componentName]);
 
+  // Apply the rewrite
   const displayCode = useMemo(() => {
     if (!code) return "";
-
-    // If the page is a component, we want the relative imports to flatten to the actual component's subcategory slug.
-    // Using `resolvedSubcategory` is correct for the "self" imports.
-    const targetSlug = resolvedSubcategory || kebabItemName || "";
-
-    if (source === "primitives") {
-      return rewriteVenumityImports(code, targetSlug);
-    }
-
-    return rewriteComponentImports(code, targetSlug);
-  }, [code, source, resolvedSubcategory, kebabItemName]);
+    return rewriteVenumityImports(code, resolvedSubcategory || kebabItemName);
+  }, [code, resolvedSubcategory, kebabItemName]);
 
   const liveDemoUrl = useMemo(() => {
     return `/preview/${resolvedCategory}/${resolvedSubcategory}/${resolvedPreviewName}`;

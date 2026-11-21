@@ -10,14 +10,27 @@ import { Flame, Loader2, Terminal } from "lucide-react";
 import type { ComponentSubcategory } from "@/types/components";
 import { useEffect, useState, useRef, useCallback } from "react";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
-import { getThumbnailCandidates } from "@/registry/registry-utils";
 
 const LEFT_WORDS = [
-  "Tech", "Dev", "Build", "Code", "Ship", "Design", "Scale", "Create",
+  "Tech",
+  "Dev",
+  "Build",
+  "Code",
+  "Ship",
+  "Design",
+  "Scale",
+  "Create",
 ];
 
 const RIGHT_WORDS = [
-  "Helpers", "Vibes", "Blocks", "Tools", "Faster", "Systems", "Products", "Interfaces",
+  "Helpers",
+  "Vibes",
+  "Blocks",
+  "Tools",
+  "Faster",
+  "Systems",
+  "Products",
+  "Interfaces",
 ];
 
 const PAGE_SIZE = 30;
@@ -52,10 +65,20 @@ export function getCategoryCards(): CategoryCard[] {
         subcategory.description ||
         `${itemCount} component${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-      const thumbnailCandidates = getThumbnailCandidates(
-        category.name,
-        subcategory,
-      );
+      // Build candidates based on exact names
+      const candidates = [
+        subcategory.thumbnail
+          ? `/thumbnails/${subcategory.thumbnail}.webp`
+          : null,
+        subcategory.items?.[0]?.slug
+          ? `/thumbnails/${subcategory.items[0].slug}.webp`
+          : null,
+        subcategory.items?.[0]?.itemName
+          ? `/thumbnails/${subcategory.items[0].itemName.toLowerCase().replace(/ /g, "-")}.webp`
+          : null,
+        `/thumbnails/${subcategory.slug}.webp`,
+        `/thumbnails/${category.name.toLowerCase().replace(/ /g, "-")}.webp`,
+      ].filter(Boolean) as string[];
 
       cards.push({
         id: `${category.slug}-${subcategory.slug}`,
@@ -63,7 +86,7 @@ export function getCategoryCards(): CategoryCard[] {
         path,
         itemCount,
         description,
-        thumbnailCandidates,
+        thumbnailCandidates: candidates,
         type: "subcategory",
         tags: subcategory.tags || [],
         parentCategory: category.name,
@@ -77,23 +100,44 @@ export function getCategoryCards(): CategoryCard[] {
 }
 
 export function CategoryCard({ card, onClick }: CategoryCardProps) {
-  // Track which candidate image we are currently trying
-  const [candidateIndex, setCandidateIndex] = useState(0);
+  // 1. Fetch the list of existing thumbnails ONLY ONCE on mount
+  const [availableThumbs, setAvailableThumbs] = useState<Set<string> | null>(
+    null,
+  );
+  const [finalThumbnail, setFinalThumbnail] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
 
-  const currentThumbnail = card.thumbnailCandidates[candidateIndex];
-  const hasNoMoreImages = candidateIndex >= card.thumbnailCandidates.length;
-
-  // Reset candidate index if the card changes
   useEffect(() => {
-    const timer = setTimeout(() => setCandidateIndex(0), 0);
-    return () => clearTimeout(timer);
-  }, [card.id]);
+    async function load() {
+      try {
+        // This endpoint is heavily cached (revalidate = 3600)
+        const res = await fetch("/api/thumbnails");
+        if (res.ok) {
+          const data = await res.json();
+          // data.names is an array of just the filenames (e.g., "button", "accordion")
+          setAvailableThumbs(new Set(data.names));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    load();
+  }, []);
 
-  const handleImageError = () => {
-    setCandidateIndex((prev) => prev + 1);
-  };
+  // 2. Determine the correct thumbnail instantly without making extra network requests
+  useEffect(() => {
+    if (!availableThumbs) return;
+    const timeoutId = setTimeout(() => {
+      const found = card.thumbnailCandidates.find((candidate) => {
+        const name = candidate.replace("/thumbnails/", "").replace(".webp", "");
+        return availableThumbs.has(name);
+      });
+      setFinalThumbnail(found || null);
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [availableThumbs, card.thumbnailCandidates]);
 
-  const showFallback = hasNoMoreImages || !currentThumbnail;
+  const showFallback = !finalThumbnail || imgError;
 
   return (
     <button
@@ -101,20 +145,19 @@ export function CategoryCard({ card, onClick }: CategoryCardProps) {
       className="relative w-full h-fit cursor-pointer overflow-hidden rounded-4xl border-2 text-start transition-all group p-0.5 hover:border-primary"
     >
       <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl bg-accent p-1 transition-all duration-500 dark:bg-card">
-        <div
-          className="relative aspect-square border max-h-70 w-full overflow-hidden rounded-[1.3rem] transition-all duration-500"
-        >
-          {!showFallback ? (
+        <div className="relative aspect-square border max-h-70 w-full overflow-hidden rounded-[1.3rem] transition-all duration-500">
+          {/* Show Image only if we found a match AND the list is loaded */}
+          {!showFallback && availableThumbs ? (
             <Image
-              key={currentThumbnail}
-              src={currentThumbnail}
+              key={finalThumbnail!}
+              src={finalThumbnail!}
               alt={card.title}
               width={5000}
               height={5000}
               priority
               unoptimized
               loading="eager"
-              onError={handleImageError}
+              onError={() => setImgError(true)}
               className="h-full w-full object-cover transition-all duration-500 group-hover:scale-110"
             />
           ) : (

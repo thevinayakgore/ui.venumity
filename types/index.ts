@@ -33,30 +33,56 @@ export interface McpComponent {
   subcategorySlug: string;
   description: string;
   tags: string[];
-  install: string;
+  techs: string[];
+  install?: string;
   source: string;
   preview: string;
-  thumbnail: string;
-  video?: string;
+  thumbnail?: string;
   author?: string;
+  kind?: string;
 }
 
 export interface McpIndex {
-  tools: Array<{
+  schema_version: string;
+  protocol: string;
+  name: string;
+  title: string;
+  description: string;
+  version: string;
+  homepage: string;
+  repository: string;
+  license: string;
+  author: {
+    name: string;
+    url: string;
+  };
+  tools: {
     name: string;
     description: string;
     inputSchema: Record<string, unknown>;
-  }>;
+  }[];
   data: {
-    categories: Array<{
+    categories: {
       name: string;
       slug: string;
       count: number;
       subcategories: string[];
-    }>;
+    }[];
+    primitiveCategories: {
+      name: string;
+      slug: string;
+      count: number;
+      subcategories: string[];
+    }[];
     components: McpComponent[];
+    primitives: McpComponent[];
   };
-  counts: { components: number; categories: number };
+  counts: {
+    components: number;
+    primitives: number;
+    categories: number;
+    primitiveCategories: number;
+  };
   generatedAt: string;
 }
 

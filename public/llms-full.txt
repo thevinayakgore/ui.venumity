@@ -614,6 +614,7 @@ _Additional examples: `Gradient Spinner`_
 ## Changelog
 
 ### 2026
+- **⚡ Unified Directory & CLI Installation Update** — Nov-21-2026 — https://ui.venumity.com/changelog#unified-directory-cli-installation-update
 - **✅ Added Legal Pgaes** — Nov-05-2026 — https://ui.venumity.com/changelog#added-legal-pgaes
 - **🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture** — Oct-31-2026 — https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture
 - **🚀 New in CLI v1.0.4 - Multi–Package Manager Support** — Sep-26-2026 — https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support
@@ -675,7 +676,7 @@ export default function Page() {
 
 ## Public Component Thumbnails & Visual Preview API
 
-Venumity UI features a unified API route and responsive public gallery for dynamically serving high-resolution `.webp` visual previews of all components across the ecosystem (`ui.venumity`, `pro.venumity`, `www.venumity`).
+Venumity UI features a unified API route and responsive public gallery for dynamically serving high-resolution `.webp` visual previews of all components across the ecosystem.
 
 ### Live Public Endpoints & Gallery URLs:
 - **Masonry Visual Gallery:** https://ui.venumity.com/thumbnails

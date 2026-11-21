@@ -7,7 +7,6 @@ import { toKebabCase } from "../utils/slug-kebab";
 import { PRIMITIVES } from "../registry/primitives";
 import { COMPONENTS } from "../registry/components";
 import { CHANGELOGS } from "../registry/site/changelog";
-import { getThumbnailCandidates } from "../registry/registry-utils";
 import { RESOURCES as RESOURCE_CATEGORIES } from "../registry/resources";
 
 // ─────────────────────────────────────────────────────────────
@@ -58,6 +57,8 @@ interface PrimitiveRecord {
   techs: string[];
   pageUrl: string;
   previewUrl: string;
+  thumbnailUrl: string; // Added
+  thumbnailPageUrl: string; // Added
 }
 
 interface RawComponentItem {
@@ -112,16 +113,28 @@ function resolveThumbnailPath(
   subcategory: RawSubcategory,
   item: RawComponentItem,
   itemSlug: string,
+  availableThumbnails: string[],
 ): string {
-  const candidates = getThumbnailCandidates(categoryName, {
-    name: subcategory.name,
-    thumbnail: subcategory.thumbnail,
-    items: [{ itemName: item.itemName, slug: itemSlug }],
-  });
-  return candidates[0] ?? `/thumbnails/${itemSlug}.webp`;
+  const candidates = [
+    subcategory.thumbnail,
+    itemSlug,
+    toKebabCase(item.itemName),
+    toKebabCase(subcategory.name),
+    toKebabCase(categoryName),
+  ].filter(Boolean) as string[];
+
+  // Find the first candidate that exists in the public/thumbnails folder
+  for (const candidate of candidates) {
+    if (availableThumbnails.includes(candidate)) {
+      return `/thumbnails/${candidate}.webp`;
+    }
+  }
+
+  // Fallback (prevents build breaks)
+  return `/thumbnails/${toKebabCase(categoryName)}.webp`;
 }
 
-function collectComponents(): ComponentRecord[] {
+function collectComponents(availableThumbnails: string[]): ComponentRecord[] {
   const records: ComponentRecord[] = [];
 
   (COMPONENTS as unknown as RawCategory[]).forEach((category) => {
@@ -143,6 +156,7 @@ function collectComponents(): ComponentRecord[] {
           subcategory,
           item,
           slug,
+          availableThumbnails,
         );
 
         records.push({
@@ -176,7 +190,7 @@ function collectComponents(): ComponentRecord[] {
   return records;
 }
 
-function collectPrimitives(): PrimitiveRecord[] {
+function collectPrimitives(availableThumbnails: string[]): PrimitiveRecord[] {
   const records: PrimitiveRecord[] = [];
 
   (PRIMITIVES as unknown as RawCategory[]).forEach((category) => {
@@ -191,6 +205,14 @@ function collectPrimitives(): PrimitiveRecord[] {
           subcategory.description ||
           `${item.itemName} — a foundational ${subcategory.name.toLowerCase()} primitive from Venumity UI.`;
 
+        const thumbnailPath = resolveThumbnailPath(
+          category.name,
+          subcategory,
+          item,
+          slug,
+          availableThumbnails,
+        );
+
         records.push({
           itemName: item.itemName,
           slug,
@@ -204,6 +226,8 @@ function collectPrimitives(): PrimitiveRecord[] {
             subcategory.techs || ["Next.js", "TypeScript", "Tailwind CSS"],
           pageUrl: `${SITE_URL}/primitives/${categorySlug}/${subcategorySlug}/${slug}`,
           previewUrl: `${SITE_URL}/preview/${categorySlug}/${subcategorySlug}/${slug}`,
+          thumbnailUrl: `${SITE_URL}${thumbnailPath}`,
+          thumbnailPageUrl: `${SITE_URL}/thumbnails/${slug}`,
         });
       });
     });
@@ -261,6 +285,7 @@ function buildMcpIndex(
     techs: p.techs,
     source: p.pageUrl,
     preview: p.previewUrl,
+    thumbnail: p.thumbnailUrl,
   }));
 
   const categories = Array.from(new Set(components.map((c) => c.category))).map(
@@ -534,6 +559,8 @@ function buildAgentsMd(
       lines.push(`- **Description:** ${p.description}`);
       lines.push(`- **Docs:** ${p.pageUrl}`);
       lines.push(`- **Preview:** ${p.previewUrl}`);
+      lines.push(`- **Thumbnail:** ${p.thumbnailUrl}`);
+      lines.push(`- **Thumbnail page:** ${p.thumbnailPageUrl}`);
       if (p.tags.length > 0) {
         lines.push(`- **Tags:** ${p.tags.join(", ")}`);
       }
@@ -918,9 +945,9 @@ function buildAgentIndex(
 // ─────────────────────────────────────────────────────────────
 function main() {
   console.log("[agents] Collecting registry data...");
-  const components = collectComponents();
-  const primitives = collectPrimitives();
   const thumbnails = listThumbnails();
+  const components = collectComponents(thumbnails);
+  const primitives = collectPrimitives(thumbnails);
 
   console.log(
     `[agents] Found ${components.length} components, ${primitives.length} primitives, ${thumbnails.length} thumbnails, ${FAQ_DATA.length} FAQs, ${FLAT_CHANGELOG.length} changelog entries.`,

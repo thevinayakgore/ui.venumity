@@ -18,7 +18,7 @@ Venumity UI is an **MIT-licensed, open-source React component library** built wi
 **GitHub:** https://github.com/thevinayakgore/ui.venumity
 **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 **License:** MIT
-**Last updated:** 2026-11-18
+**Last updated:** 2026-11-21
 **Total components:** 37
 **Total primitives:** 97
 **Total categories:** 8
@@ -107,7 +107,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Install:** `npx venumityui@latest add cursor-style-ai-prompt-panel`
 - **Docs:** https://ui.venumity.com/components/ai-features/ai-chat-panels/cursor-style-ai-prompt-panel
 - **Preview:** https://ui.venumity.com/preview/ai-features/ai-chat-panels/cursor-style-ai-prompt-panel
-- **Thumbnail:** https://ui.venumity.com/thumbnails/cursor-style-ai-prompt-panel.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/ai-features.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/cursor-style-ai-prompt-panel
 - **Tags:** ai, chat, assistant, conversation, messaging
 
@@ -119,7 +119,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Install:** `npx venumityui@latest add floating-cards`
 - **Docs:** https://ui.venumity.com/components/ai-features/ai-chat-suggestion/floating-cards
 - **Preview:** https://ui.venumity.com/preview/ai-features/ai-chat-suggestion/floating-cards
-- **Thumbnail:** https://ui.venumity.com/thumbnails/floating-cards.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/ai-chat-suggestion.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/floating-cards
 - **Tags:** ai, chat, prompts, skeleton, auto-reply, typewriter, suggestions
 
@@ -131,7 +131,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Install:** `npx venumityui@latest add suggestion-box`
 - **Docs:** https://ui.venumity.com/components/ai-features/ai-chat-suggestion/suggestion-box
 - **Preview:** https://ui.venumity.com/preview/ai-features/ai-chat-suggestion/suggestion-box
-- **Thumbnail:** https://ui.venumity.com/thumbnails/suggestion-box.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/ai-chat-suggestion.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/suggestion-box
 - **Tags:** ai, chat, prompts, skeleton, auto-reply, typewriter, suggestions
 
@@ -195,7 +195,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Install:** `npx venumityui@latest add tiered-pricing-table`
 - **Docs:** https://ui.venumity.com/components/commerce/pricing-tables/tiered-pricing-table
 - **Preview:** https://ui.venumity.com/preview/commerce/pricing-tables/tiered-pricing-table
-- **Thumbnail:** https://ui.venumity.com/thumbnails/tiered-pricing-table.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/commerce.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/tiered-pricing-table
 - **Tags:** pricing, comparison, subscription, features
 
@@ -557,6 +557,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/variants
 - **Preview:** https://ui.venumity.com/preview/actions/button/variants
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/variants
 - **Tags:** button, click
 
 #### Sizes
@@ -565,6 +567,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/sizes
 - **Preview:** https://ui.venumity.com/preview/actions/button/sizes
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/sizes
 - **Tags:** button, click
 
 #### Custom Icon
@@ -573,6 +577,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/custom-icon
 - **Preview:** https://ui.venumity.com/preview/actions/button/custom-icon
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/custom-icon
 - **Tags:** button, click
 
 #### Icon Motion
@@ -581,6 +587,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/icon-motion
 - **Preview:** https://ui.venumity.com/preview/actions/button/icon-motion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/icon-motion
 - **Tags:** button, click
 
 #### Scale Effect
@@ -589,6 +597,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/scale-effect
 - **Preview:** https://ui.venumity.com/preview/actions/button/scale-effect
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/scale-effect
 - **Tags:** button, click
 
 #### Bounce Effect
@@ -597,6 +607,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/bounce-effect
 - **Preview:** https://ui.venumity.com/preview/actions/button/bounce-effect
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/bounce-effect
 - **Tags:** button, click
 
 #### Shimmer Effect
@@ -605,6 +617,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/shimmer-effect
 - **Preview:** https://ui.venumity.com/preview/actions/button/shimmer-effect
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/shimmer-effect
 - **Tags:** button, click
 
 #### Ripple Effect
@@ -613,6 +627,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive button primitives with motion-driven behaviors.
 - **Docs:** https://ui.venumity.com/primitives/actions/button/ripple-effect
 - **Preview:** https://ui.venumity.com/preview/actions/button/ripple-effect
+- **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/ripple-effect
 - **Tags:** button, click
 
 ### Data Display
@@ -623,6 +639,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/single-minimal-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/single-minimal-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/single-minimal-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Minimal Separated Accordion
@@ -631,6 +649,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/minimal-separated-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/minimal-separated-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/minimal-separated-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Multiple Minimal Accordion
@@ -639,6 +659,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/multiple-minimal-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/multiple-minimal-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/multiple-minimal-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Multiple Separated Accordion
@@ -647,6 +669,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/multiple-separated-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/multiple-separated-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/multiple-separated-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Nested Minimal Accordion
@@ -655,6 +679,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/nested-minimal-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/nested-minimal-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/nested-minimal-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Nested Separated Accordion
@@ -663,6 +689,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Accordion with the 3 variants (minimal, separated, default), single + multiple behavior, nested support, controlled + uncontrolled modes and per-item defaultOpen.
 - **Docs:** https://ui.venumity.com/primitives/data-display/accordion/nested-separated-accordion
 - **Preview:** https://ui.venumity.com/preview/data-display/accordion/nested-separated-accordion
+- **Thumbnail:** https://ui.venumity.com/thumbnails/accordion.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/nested-separated-accordion
 - **Tags:** accordion, collapsible, expandable, hierarchical, dashboard
 
 #### Inbuilt Aspect Ratio
@@ -671,6 +699,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/inbuilt-aspect-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/inbuilt-aspect-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/inbuilt-aspect-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Custom Ratio
@@ -679,6 +709,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/custom-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/custom-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/custom-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Video Aspect Ratio
@@ -687,6 +719,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/video-aspect-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/video-aspect-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/video-aspect-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Captioned Aspect Ratio
@@ -695,6 +729,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/captioned-aspect-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/captioned-aspect-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/captioned-aspect-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Wipe Aspect Ratio
@@ -703,6 +739,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/wipe-aspect-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/wipe-aspect-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/wipe-aspect-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Animated Aspect Ratio
@@ -711,6 +749,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Aspect-ratio container with 5 ratio presets, custom ratio support, and 8 structural fallback animations — shimmer scroll, clip-path wipes, scanline sweep, and stroke draw. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/aspect-ratio/animated-aspect-ratio
 - **Preview:** https://ui.venumity.com/preview/data-display/aspect-ratio/animated-aspect-ratio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/aspect-ratio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/animated-aspect-ratio
 - **Tags:** aspect-ratio, media, image, video
 
 #### Status Attachment
@@ -719,6 +759,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Attachment primitive with file-type icons, upload progress, retry, removal via height collapse, and preview thumbnails. Animations are restricted to wipes, draws, and collapses — no scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/attachment/status-attachment
 - **Preview:** https://ui.venumity.com/preview/data-display/attachment/status-attachment
+- **Thumbnail:** https://ui.venumity.com/thumbnails/attachment.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/status-attachment
 - **Tags:** attachment, file, upload, removable
 
 #### File Type Attachment
@@ -727,6 +769,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Attachment primitive with file-type icons, upload progress, retry, removal via height collapse, and preview thumbnails. Animations are restricted to wipes, draws, and collapses — no scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/attachment/file-type-attachment
 - **Preview:** https://ui.venumity.com/preview/data-display/attachment/file-type-attachment
+- **Thumbnail:** https://ui.venumity.com/thumbnails/attachment.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/file-type-attachment
 - **Tags:** attachment, file, upload, removable
 
 #### Upload Attachment
@@ -735,6 +779,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Attachment primitive with file-type icons, upload progress, retry, removal via height collapse, and preview thumbnails. Animations are restricted to wipes, draws, and collapses — no scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/attachment/upload-attachment
 - **Preview:** https://ui.venumity.com/preview/data-display/attachment/upload-attachment
+- **Thumbnail:** https://ui.venumity.com/thumbnails/attachment.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/upload-attachment
 - **Tags:** attachment, file, upload, removable
 
 #### Removable Attachment
@@ -743,6 +789,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Attachment primitive with file-type icons, upload progress, retry, removal via height collapse, and preview thumbnails. Animations are restricted to wipes, draws, and collapses — no scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/attachment/removable-attachment
 - **Preview:** https://ui.venumity.com/preview/data-display/attachment/removable-attachment
+- **Thumbnail:** https://ui.venumity.com/thumbnails/attachment.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/removable-attachment
 - **Tags:** attachment, file, upload, removable
 
 #### Preview Attachment
@@ -751,6 +799,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Attachment primitive with file-type icons, upload progress, retry, removal via height collapse, and preview thumbnails. Animations are restricted to wipes, draws, and collapses — no scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/data-display/attachment/preview-attachment
 - **Preview:** https://ui.venumity.com/preview/data-display/attachment/preview-attachment
+- **Thumbnail:** https://ui.venumity.com/thumbnails/attachment.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/preview-attachment
 - **Tags:** attachment, file, upload, removable
 
 #### Size Avatar
@@ -759,6 +809,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/size-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/size-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/size-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Status Avatar
@@ -767,6 +819,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/status-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/status-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/status-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Tone Avatar
@@ -775,6 +829,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/tone-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/tone-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/tone-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Group Avatar
@@ -783,6 +839,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/group-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/group-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/group-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Tooltip Avatar
@@ -791,6 +849,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/tooltip-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/tooltip-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/tooltip-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Upload Avatar
@@ -799,6 +859,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/upload-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/upload-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/upload-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Animated Avatar
@@ -807,6 +869,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Avatar primitive with 5 sizes, 4 statuses, 8 fallback tones, tooltips, groups, upload, and 7 purposeful motion presets.
 - **Docs:** https://ui.venumity.com/primitives/data-display/avatar/animated-avatar
 - **Preview:** https://ui.venumity.com/preview/data-display/avatar/animated-avatar
+- **Thumbnail:** https://ui.venumity.com/thumbnails/avatar.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/animated-avatar
 - **Tags:** avatar, profile, user, image, group
 
 #### Size Badge
@@ -815,6 +879,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/size-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/size-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/size-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Variant Badge
@@ -823,6 +889,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/variant-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/variant-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/variant-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Tone Badge
@@ -831,6 +899,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/tone-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/tone-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/tone-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Icon Badge
@@ -839,6 +909,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/icon-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/icon-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/icon-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Shape Badge
@@ -847,6 +919,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/shape-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/shape-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/shape-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Pulse Status Badge
@@ -855,6 +929,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/pulse-status-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/pulse-status-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/pulse-status-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### System Status Badge
@@ -863,6 +939,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/system-status-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/system-status-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/system-status-badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/system-status-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Priority Badge
@@ -871,6 +949,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/priority-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/priority-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/priority-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Shiny Badge
@@ -879,6 +959,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/shiny-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/shiny-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/shiny-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Interactive Badge
@@ -887,6 +969,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Badge primitive with 6 variants (default, secondary, outline, destructive, ghost, link), 5 sizes (sm, default, lg, icon, icon-sm), 4 shapes (pill, square, circle, dot), 5 semantic tones, auto-sized icons, removable/clickable patterns, and asChild support.
 - **Docs:** https://ui.venumity.com/primitives/data-display/badge/interactive-badge
 - **Preview:** https://ui.venumity.com/preview/data-display/badge/interactive-badge
+- **Thumbnail:** https://ui.venumity.com/thumbnails/badge.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/interactive-badge
 - **Tags:** badge, label, chip, tag, status
 
 #### Text Skeleton
@@ -895,6 +979,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/text-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/text-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/text-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Avatar Skeleton
@@ -903,6 +989,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/avatar-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/avatar-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/avatar-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Button Skeleton
@@ -911,6 +999,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/button-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/button-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/button-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Badge Skeleton
@@ -919,6 +1009,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/badge-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/badge-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/badge-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Card Skeleton
@@ -927,6 +1019,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/card-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/card-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/card-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Profile Skeleton
@@ -935,6 +1029,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/profile-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/profile-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/profile-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Table Skeleton
@@ -943,6 +1039,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/table-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/table-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/table-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Dashboard Skeleton
@@ -951,6 +1049,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Skeleton primitive with 5 variants (custom, text, avatar, card, table), 3 tones (neutral, soft, contrast), and preset compositions for Basic, Card grid, Table, Profile, and Dashboard layouts. Uses only shimmer sweep and opacity pulse.
 - **Docs:** https://ui.venumity.com/primitives/data-display/skeleton/dashboard-skeleton
 - **Preview:** https://ui.venumity.com/preview/data-display/skeleton/dashboard-skeleton
+- **Thumbnail:** https://ui.venumity.com/thumbnails/skeleton.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/dashboard-skeleton
 - **Tags:** skeleton, loading, placeholder, shimmer
 
 #### Sortable Table
@@ -959,6 +1059,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/sortable-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/sortable-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/sortable-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Selectable Table
@@ -967,6 +1069,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/selectable-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/selectable-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/selectable-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Expandable Table
@@ -975,6 +1079,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/expandable-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/expandable-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/expandable-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Editable Table
@@ -983,6 +1089,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/editable-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/editable-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/editable-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Filterable Table
@@ -991,6 +1099,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/filterable-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/filterable-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/filterable-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Paginated Table
@@ -999,6 +1109,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/paginated-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/paginated-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/paginated-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 #### Footer Table
@@ -1007,6 +1119,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Composable React table with sorting, multi-select, expandable rows, search, filters, pagination, sticky header, and table/grid/compact views.
 - **Docs:** https://ui.venumity.com/primitives/data-display/table/footer-table
 - **Preview:** https://ui.venumity.com/preview/data-display/table/footer-table
+- **Thumbnail:** https://ui.venumity.com/thumbnails/filterable-table.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/footer-table
 - **Tags:** table, sortable, selectable, expandable, editable, filterable, paginated, footer, sticky
 
 ### Feedback
@@ -1017,6 +1131,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Alert primitives with tones, sizes and 8 entrance animations.
 - **Docs:** https://ui.venumity.com/primitives/feedback/alert/default-alert
 - **Preview:** https://ui.venumity.com/preview/feedback/alert/default-alert
+- **Thumbnail:** https://ui.venumity.com/thumbnails/alert.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-alert
 - **Tags:** alert, notification, action, animated
 
 #### Destructive Alert
@@ -1025,6 +1141,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Alert primitives with tones, sizes and 8 entrance animations.
 - **Docs:** https://ui.venumity.com/primitives/feedback/alert/destructive-alert
 - **Preview:** https://ui.venumity.com/preview/feedback/alert/destructive-alert
+- **Thumbnail:** https://ui.venumity.com/thumbnails/alert.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/destructive-alert
 - **Tags:** alert, notification, action, animated
 
 #### Tone Alert
@@ -1033,6 +1151,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Alert primitives with tones, sizes and 8 entrance animations.
 - **Docs:** https://ui.venumity.com/primitives/feedback/alert/tone-alert
 - **Preview:** https://ui.venumity.com/preview/feedback/alert/tone-alert
+- **Thumbnail:** https://ui.venumity.com/thumbnails/alert.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/tone-alert
 - **Tags:** alert, notification, action, animated
 
 #### Action Alert
@@ -1041,6 +1161,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Alert primitives with tones, sizes and 8 entrance animations.
 - **Docs:** https://ui.venumity.com/primitives/feedback/alert/action-alert
 - **Preview:** https://ui.venumity.com/preview/feedback/alert/action-alert
+- **Thumbnail:** https://ui.venumity.com/thumbnails/alert.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/action-alert
 - **Tags:** alert, notification, action, animated
 
 #### Animated Alert
@@ -1049,6 +1171,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Alert primitives with tones, sizes and 8 entrance animations.
 - **Docs:** https://ui.venumity.com/primitives/feedback/alert/animated-alert
 - **Preview:** https://ui.venumity.com/preview/feedback/alert/animated-alert
+- **Thumbnail:** https://ui.venumity.com/thumbnails/alert.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/animated-alert
 - **Tags:** alert, notification, action, animated
 
 #### Default Spinner
@@ -1057,6 +1181,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/default-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/default-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-spinner
 - **Tags:** spinner, loader, loading, progress
 
 #### Label Spinner
@@ -1065,6 +1191,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/label-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/label-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/label-spinner
 - **Tags:** spinner, loader, loading, progress
 
 #### Ring Spinner
@@ -1073,6 +1201,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/ring-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/ring-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/ring-spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/ring-spinner
 - **Tags:** spinner, loader, loading, progress
 
 #### Dots Spinner
@@ -1081,6 +1211,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/dots-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/dots-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/dots-spinner
 - **Tags:** spinner, loader, loading, progress
 
 #### Pulse Spinner
@@ -1089,6 +1221,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/pulse-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/pulse-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/pulse-spinner
 - **Tags:** spinner, loader, loading, progress
 
 #### Overlay Spinner
@@ -1097,6 +1231,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Spinner primitive with 6 variants — default border spin, ring (12-line opacity), dots (translateY bounce), pulse (ring expansion), gradient (conic rotate). 4 sizes, 5 tones, optional label, plus a SpinnerOverlay wrapper.
 - **Docs:** https://ui.venumity.com/primitives/feedback/spinner/overlay-spinner
 - **Preview:** https://ui.venumity.com/preview/feedback/spinner/overlay-spinner
+- **Thumbnail:** https://ui.venumity.com/thumbnails/spinner.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/overlay-spinner
 - **Tags:** spinner, loader, loading, progress
 
 ### Forms
@@ -1107,6 +1243,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Command palette primitive with per-item stagger, selection pulse, direction-aware slide, and 8 motion presets including clip-path reveal and drifting aurora.
 - **Docs:** https://ui.venumity.com/primitives/forms/command/default-command
 - **Preview:** https://ui.venumity.com/preview/forms/command/default-command
+- **Thumbnail:** https://ui.venumity.com/thumbnails/command.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-command
 - **Tags:** command, palette, search, cmdk, spotlight
 
 #### Grouped Command
@@ -1115,6 +1253,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Command palette primitive with per-item stagger, selection pulse, direction-aware slide, and 8 motion presets including clip-path reveal and drifting aurora.
 - **Docs:** https://ui.venumity.com/primitives/forms/command/grouped-command
 - **Preview:** https://ui.venumity.com/preview/forms/command/grouped-command
+- **Thumbnail:** https://ui.venumity.com/thumbnails/command.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/grouped-command
 - **Tags:** command, palette, search, cmdk, spotlight
 
 #### Slide Command
@@ -1123,6 +1263,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Command palette primitive with per-item stagger, selection pulse, direction-aware slide, and 8 motion presets including clip-path reveal and drifting aurora.
 - **Docs:** https://ui.venumity.com/primitives/forms/command/slide-command
 - **Preview:** https://ui.venumity.com/preview/forms/command/slide-command
+- **Thumbnail:** https://ui.venumity.com/thumbnails/command.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/slide-command
 - **Tags:** command, palette, search, cmdk, spotlight
 
 #### Animated Dialog Command
@@ -1131,6 +1273,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Command palette primitive with per-item stagger, selection pulse, direction-aware slide, and 8 motion presets including clip-path reveal and drifting aurora.
 - **Docs:** https://ui.venumity.com/primitives/forms/command/animated-dialog-command
 - **Preview:** https://ui.venumity.com/preview/forms/command/animated-dialog-command
+- **Thumbnail:** https://ui.venumity.com/thumbnails/command.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/animated-dialog-command
 - **Tags:** command, palette, search, cmdk, spotlight
 
 #### Default Context Menu
@@ -1139,6 +1283,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Context menu primitive with 8 structural reveal animations — panel clip-path wipe plus staggered row reveals via wipe, typewriter, shimmer, stroke, scanline, and cascade. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/forms/context-menu/default-context-menu
 - **Preview:** https://ui.venumity.com/preview/forms/context-menu/default-context-menu
+- **Thumbnail:** https://ui.venumity.com/thumbnails/context-menu.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-context-menu
 - **Tags:** context-menu, right-click, menu, overlay
 
 #### Grouped Context Menu
@@ -1147,6 +1293,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Context menu primitive with 8 structural reveal animations — panel clip-path wipe plus staggered row reveals via wipe, typewriter, shimmer, stroke, scanline, and cascade. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/forms/context-menu/grouped-context-menu
 - **Preview:** https://ui.venumity.com/preview/forms/context-menu/grouped-context-menu
+- **Thumbnail:** https://ui.venumity.com/thumbnails/context-menu.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/grouped-context-menu
 - **Tags:** context-menu, right-click, menu, overlay
 
 #### Nested Context Menu
@@ -1155,6 +1303,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Context menu primitive with 8 structural reveal animations — panel clip-path wipe plus staggered row reveals via wipe, typewriter, shimmer, stroke, scanline, and cascade. No scale, blur, flip, fade, slide, or elastic.
 - **Docs:** https://ui.venumity.com/primitives/forms/context-menu/nested-context-menu
 - **Preview:** https://ui.venumity.com/preview/forms/context-menu/nested-context-menu
+- **Thumbnail:** https://ui.venumity.com/thumbnails/context-menu.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/nested-context-menu
 - **Tags:** context-menu, right-click, menu, overlay
 
 ### Media
@@ -1165,6 +1315,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Video player primitive with 5 variants (default, minimal, compact, theater, hero), 4 aspect ratios, pointer + keyboard seek, volume, PiP, fullscreen, and 5 structural loading indicators — spinner, pulse, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/video/default-video
 - **Preview:** https://ui.venumity.com/preview/media/video/default-video
+- **Thumbnail:** https://ui.venumity.com/thumbnails/video.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-video
 - **Tags:** video, player, media, fullscreen
 
 #### Minimal Video
@@ -1173,6 +1325,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Video player primitive with 5 variants (default, minimal, compact, theater, hero), 4 aspect ratios, pointer + keyboard seek, volume, PiP, fullscreen, and 5 structural loading indicators — spinner, pulse, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/video/minimal-video
 - **Preview:** https://ui.venumity.com/preview/media/video/minimal-video
+- **Thumbnail:** https://ui.venumity.com/thumbnails/video.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/minimal-video
 - **Tags:** video, player, media, fullscreen
 
 #### Compact Video
@@ -1181,6 +1335,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Video player primitive with 5 variants (default, minimal, compact, theater, hero), 4 aspect ratios, pointer + keyboard seek, volume, PiP, fullscreen, and 5 structural loading indicators — spinner, pulse, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/video/compact-video
 - **Preview:** https://ui.venumity.com/preview/media/video/compact-video
+- **Thumbnail:** https://ui.venumity.com/thumbnails/video.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/compact-video
 - **Tags:** video, player, media, fullscreen
 
 #### Theater Video
@@ -1189,6 +1345,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Video player primitive with 5 variants (default, minimal, compact, theater, hero), 4 aspect ratios, pointer + keyboard seek, volume, PiP, fullscreen, and 5 structural loading indicators — spinner, pulse, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/video/theater-video
 - **Preview:** https://ui.venumity.com/preview/media/video/theater-video
+- **Thumbnail:** https://ui.venumity.com/thumbnails/video.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/theater-video
 - **Tags:** video, player, media, fullscreen
 
 #### Hero Video
@@ -1197,6 +1355,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Video player primitive with 5 variants (default, minimal, compact, theater, hero), 4 aspect ratios, pointer + keyboard seek, volume, PiP, fullscreen, and 5 structural loading indicators — spinner, pulse, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/video/hero-video
 - **Preview:** https://ui.venumity.com/preview/media/video/hero-video
+- **Thumbnail:** https://ui.venumity.com/thumbnails/video.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/hero-video
 - **Tags:** video, player, media, fullscreen
 
 #### Audio Player
@@ -1205,6 +1365,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Audio player primitive with 5 variants (default, compact, minimal, waveform, podcast), 3 sizes, 5 tones, and 5 structural playing-indicator animations — pulse, bars, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/audio/audio-player
 - **Preview:** https://ui.venumity.com/preview/media/audio/audio-player
+- **Thumbnail:** https://ui.venumity.com/thumbnails/audio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/audio-player
 - **Tags:** audio, player, music, podcast, waveform
 
 #### Compact Audio
@@ -1213,6 +1375,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Audio player primitive with 5 variants (default, compact, minimal, waveform, podcast), 3 sizes, 5 tones, and 5 structural playing-indicator animations — pulse, bars, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/audio/compact-audio
 - **Preview:** https://ui.venumity.com/preview/media/audio/compact-audio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/audio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/compact-audio
 - **Tags:** audio, player, music, podcast, waveform
 
 #### Minimal Audio
@@ -1221,6 +1385,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Audio player primitive with 5 variants (default, compact, minimal, waveform, podcast), 3 sizes, 5 tones, and 5 structural playing-indicator animations — pulse, bars, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/audio/minimal-audio
 - **Preview:** https://ui.venumity.com/preview/media/audio/minimal-audio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/audio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/minimal-audio
 - **Tags:** audio, player, music, podcast, waveform
 
 #### Waveform Audio
@@ -1229,6 +1395,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Audio player primitive with 5 variants (default, compact, minimal, waveform, podcast), 3 sizes, 5 tones, and 5 structural playing-indicator animations — pulse, bars, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/audio/waveform-audio
 - **Preview:** https://ui.venumity.com/preview/media/audio/waveform-audio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/audio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/waveform-audio
 - **Tags:** audio, player, music, podcast, waveform
 
 #### Podcast Audio
@@ -1237,6 +1405,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Audio player primitive with 5 variants (default, compact, minimal, waveform, podcast), 3 sizes, 5 tones, and 5 structural playing-indicator animations — pulse, bars, ring, scanline, none.
 - **Docs:** https://ui.venumity.com/primitives/media/audio/podcast-audio
 - **Preview:** https://ui.venumity.com/preview/media/audio/podcast-audio
+- **Thumbnail:** https://ui.venumity.com/thumbnails/audio.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/podcast-audio
 - **Tags:** audio, player, music, podcast, waveform
 
 ### Navigation
@@ -1247,6 +1417,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/default-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/default-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/default-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 #### Icon Breadcrumb
@@ -1255,6 +1427,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/icon-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/icon-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/icon-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 #### Expandable Breadcrumb
@@ -1263,6 +1437,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/expandable-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/expandable-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/expandable-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 #### Dropdown Breadcrumb
@@ -1271,6 +1447,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/dropdown-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/dropdown-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/dropdown-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 #### Custom Separator Breadcrumb
@@ -1279,6 +1457,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/custom-separator-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/custom-separator-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/custom-separator-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 #### Animated Breadcrumb
@@ -1287,6 +1467,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Breadcrumb primitive with 8 single-axis underline animations, collapsed overflow, dropdown overflow, icons, and custom separators. No scale/blur/flip/fade anywhere.
 - **Docs:** https://ui.venumity.com/primitives/navigation/breadcrumb/animated-breadcrumb
 - **Preview:** https://ui.venumity.com/preview/navigation/breadcrumb/animated-breadcrumb
+- **Thumbnail:** https://ui.venumity.com/thumbnails/breadcrumb.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/animated-breadcrumb
 - **Tags:** breadcrumb, navigation, path, underline
 
 ### Typography
@@ -1297,6 +1479,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/verse-blockquote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/verse-blockquote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/verse-blockquote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 #### Pull Quote
@@ -1305,6 +1489,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/pull-quote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/pull-quote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/pull-quote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 #### Tone Quote
@@ -1313,6 +1499,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/tone-quote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/tone-quote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/tone-quote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 #### Card Blockquote
@@ -1321,6 +1509,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/card-blockquote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/card-blockquote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/card-blockquote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 #### Shiny Quote
@@ -1329,6 +1519,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/shiny-quote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/shiny-quote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/shiny-quote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 #### Testimonial Blockquote
@@ -1337,6 +1529,8 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Blockquote primitive with 7 variants (default, bordered, card, pull, testimonial, verse, highlight), 4 sizes, 5 tones, avatar + rating support, and a BlockquoteList helper for grids. 6 structural animations — stroke draw, underline, shimmer, scanline, corner, none.
 - **Docs:** https://ui.venumity.com/primitives/typography/blockquote/testimonial-blockquote
 - **Preview:** https://ui.venumity.com/preview/typography/blockquote/testimonial-blockquote
+- **Thumbnail:** https://ui.venumity.com/thumbnails/blockquote.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/testimonial-blockquote
 - **Tags:** blockquote, quote, testimonial, pull-quote, typography
 
 ---
@@ -1395,6 +1589,7 @@ Install:      npx venumityui@latest add user-profile
 
 ### Changelog
 
+- [⚡ Unified Directory & CLI Installation Update](https://ui.venumity.com/changelog#unified-directory-cli-installation-update) — Nov-21-2026
 - [✅ Added Legal Pgaes](https://ui.venumity.com/changelog#added-legal-pgaes) — Nov-05-2026
 - [🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture](https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture) — Oct-31-2026
 - [🚀 New in CLI v1.0.4 - Multi–Package Manager Support](https://ui.venumity.com/changelog#new-in-cli-v1-0-4-multi-package-manager-support) — Sep-26-2026
@@ -1497,4 +1692,4 @@ Preview:   https://ui.venumity.com/thumbnails/user-profile.webp
 
 ---
 
-_Generated on 2026-11-18. Do not edit manually._
+_Generated on 2026-11-21. Do not edit manually._

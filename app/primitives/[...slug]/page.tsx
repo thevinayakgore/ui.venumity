@@ -15,15 +15,11 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 /* -------------------------------------------------------------------------- */
-/*                        Filesystem availability check                        */
+/*                        Filesystem availability check                       */
 /* -------------------------------------------------------------------------- */
 
-const PRIMITIVE_BASE = path.join(
-  process.cwd(),
-  "components",
-  "venumity",
-  "primitives",
-);
+// Unified base path
+const VENUMITY_BASE = path.join(process.cwd(), "components", "venumity");
 
 const NON_SOURCE_NAMES = new Set(["demo", "default", "index"]);
 
@@ -35,20 +31,14 @@ function isRealSourceFile(fileName: string): boolean {
 
 /**
  * Returns true only when EVERY registered item in the subcategory has
- * either:
- *   - `<cat>/<sub>/<item-slug>.tsx`
- *   - `<cat>/<sub>/<item-slug>/index.tsx`
- *
- * `demo.tsx`, `default.tsx`, `index.tsx` at the subcategory level do NOT
- * count toward a source. If any item is missing a source, the whole page
- * renders <NoComponent />.
+ * either: `<cat>/<sub>/<item-slug>.tsx` or `<cat>/<sub>/<item-slug>/index.tsx`
  */
 function allPrimitiveItemsHaveSource(
   catSlug: string,
   subSlug: string,
   itemSlugs: string[],
 ): boolean {
-  const dir = path.join(PRIMITIVE_BASE, catSlug, subSlug);
+  const dir = path.join(VENUMITY_BASE, catSlug, subSlug);
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return false;
   if (itemSlugs.length === 0) return false;
 
@@ -64,7 +54,6 @@ function allPrimitiveItemsHaveSource(
       fs.existsSync(path.join(itemDir, "index.tsx"));
 
     if (!hasFlat && !hasFolder) {
-      // One missing item → the entire subcategory is treated as unavailable
       return false;
     }
   }
@@ -73,7 +62,7 @@ function allPrimitiveItemsHaveSource(
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                Static params                                */
+/*                                Static params                               */
 /* -------------------------------------------------------------------------- */
 
 export async function generateStaticParams() {
@@ -83,7 +72,7 @@ export async function generateStaticParams() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                  Metadata                                   */
+/*                                  Metadata                                  */
 /* -------------------------------------------------------------------------- */
 
 export async function generateMetadata({
@@ -147,7 +136,7 @@ export async function generateMetadata({
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                   Page                                      */
+/*                                   Page                                     */
 /* -------------------------------------------------------------------------- */
 
 export default async function PrimitiveSubcategoryPage({

@@ -23,6 +23,18 @@ export const CHANGELOGS: ChangelogCategory[] = [
     items: [
       {
         title:
+          "⚡ Unified Directory & CLI Installation Update",
+        date: "Nov-21-2026",
+        covers: ["cli-v1.0.6"],
+        links: [
+          {
+            name: "CLI v1.0.6",
+            href: "https://www.npmjs.com/package/venumityui?activeTab=readme",
+          },
+        ],
+      },
+      {
+        title:
           "✅ Added Legal Pgaes",
         date: "Nov-05-2026",
         links: [

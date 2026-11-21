@@ -8,16 +8,12 @@ import { PRIMITIVES } from "@/registry/primitives";
 import type { PrimitiveSubcategory } from "@/types/primitives";
 import { useEffect, useState, useRef, useCallback } from "react";
 import BadgeTextAnimate from "@/components/ui/badge-text-animate";
-import { getThumbnailCandidates } from "@/registry/registry-utils";
 
 const LEFT_WORDS = ["UI", "React", "Build", "Ship", "Design", "Code"];
 const RIGHT_WORDS = ["Primitives", "Blocks", "Basics", "Atoms", "Bits"];
 
 const PAGE_SIZE = 30;
 
-// ─────────────────────────────────────────────────────────────
-// Card data shape — mirrors CategoryCard on the components page
-// ─────────────────────────────────────────────────────────────
 export interface PrimitiveCard {
   id: string;
   path: string;
@@ -30,9 +26,6 @@ export interface PrimitiveCard {
   type: "subcategory";
 }
 
-// ─────────────────────────────────────────────────────────────
-// Build the full card list — same shape as getCategoryCards()
-// ─────────────────────────────────────────────────────────────
 export function getPrimitiveCards(): PrimitiveCard[] {
   const cards: PrimitiveCard[] = [];
 
@@ -46,10 +39,20 @@ export function getPrimitiveCards(): PrimitiveCard[] {
         subcategory.description ||
         `${itemCount} primitive${itemCount !== 1 ? "s" : ""} for ${subcategory.name.toLowerCase()}`;
 
-      const thumbnailCandidates = getThumbnailCandidates(
-        category.name,
-        subcategory,
-      );
+      // Build exact file paths
+      const candidates = [
+        subcategory.thumbnail
+          ? `/thumbnails/${subcategory.thumbnail}.webp`
+          : null,
+        subcategory.items?.[0]?.slug
+          ? `/thumbnails/${subcategory.items[0].slug}.webp`
+          : null,
+        subcategory.items?.[0]?.itemName
+          ? `/thumbnails/${subcategory.items[0].itemName.toLowerCase().replace(/ /g, "-")}.webp`
+          : null,
+        `/thumbnails/${subcategory.slug}.webp`,
+        `/thumbnails/${category.name.toLowerCase().replace(/ /g, "-")}.webp`,
+      ].filter(Boolean) as string[];
 
       cards.push({
         id: `${category.slug}-${subcategory.slug}`,
@@ -57,7 +60,7 @@ export function getPrimitiveCards(): PrimitiveCard[] {
         path,
         itemCount,
         description,
-        thumbnailCandidates,
+        thumbnailCandidates: candidates,
         type: "subcategory",
         tags: subcategory.tags || [],
         parentCategory: category.name,
@@ -70,9 +73,6 @@ export function getPrimitiveCards(): PrimitiveCard[] {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Card
-// ─────────────────────────────────────────────────────────────
 function PrimitiveCardView({
   card,
   onClick,
@@ -80,22 +80,44 @@ function PrimitiveCardView({
   card: PrimitiveCard;
   onClick: (path: string) => void;
 }) {
-  const [candidateIndex, setCandidateIndex] = useState(0);
+  // 1. Fetch the list of existing thumbnails ONLY ONCE on mount
+  const [availableThumbs, setAvailableThumbs] = useState<Set<string> | null>(
+    null,
+  );
+  const [finalThumbnail, setFinalThumbnail] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
 
-  const currentThumbnail = card.thumbnailCandidates[candidateIndex];
-  const hasNoMoreImages = candidateIndex >= card.thumbnailCandidates.length;
-
-  // Reset candidate index when the card changes
   useEffect(() => {
-    const timer = setTimeout(() => setCandidateIndex(0), 0);
-    return () => clearTimeout(timer);
-  }, [card.id]);
+    async function load() {
+      try {
+        // This endpoint is heavily cached (revalidate = 3600)
+        const res = await fetch("/api/thumbnails");
+        if (res.ok) {
+          const data = await res.json();
+          // data.names is an array of just the filenames (e.g., "button", "accordion")
+          setAvailableThumbs(new Set(data.names));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    load();
+  }, []);
 
-  const handleImageError = () => {
-    setCandidateIndex((prev) => prev + 1);
-  };
+  // 2. Determine the correct thumbnail instantly without making extra network requests
+  useEffect(() => {
+    if (!availableThumbs) return;
+    const timeoutId = setTimeout(() => {
+      const found = card.thumbnailCandidates.find((candidate) => {
+        const name = candidate.replace("/thumbnails/", "").replace(".webp", "");
+        return availableThumbs.has(name);
+      });
+      setFinalThumbnail(found || null);
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [availableThumbs, card.thumbnailCandidates]);
 
-  const showFallback = hasNoMoreImages || !currentThumbnail;
+  const showFallback = !finalThumbnail || imgError;
 
   return (
     <button
@@ -104,17 +126,17 @@ function PrimitiveCardView({
     >
       <div className="relative flex flex-col p-1 bg-accent dark:bg-card rounded-3xl overflow-hidden w-full h-full">
         <div className="aspect-square border relative w-full max-h-70 overflow-hidden rounded-[1.3rem] transition-all duration-500">
-          {!showFallback ? (
+          {!showFallback && availableThumbs ? (
             <Image
-              key={currentThumbnail}
-              src={currentThumbnail}
+              key={finalThumbnail!}
+              src={finalThumbnail!}
               alt={card.title}
               width={5000}
               height={5000}
               priority
               unoptimized
               loading="eager"
-              onError={handleImageError}
+              onError={() => setImgError(true)}
               className="object-cover group-hover:scale-110 transition-all duration-500 w-full h-full"
             />
           ) : (

@@ -2,9 +2,9 @@
 import { cn } from "cn";
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "../../actions/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/venumity/primitives/actions/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   MapPin,
@@ -41,7 +41,7 @@ export default function SimpleProfileCard() {
         {/* Cover Image */}
         <div className="relative border-b overflow-hidden h-35 md:h-40">
           <Image
-            src="/banner.png"
+            src="/banner2.webp"
             alt="Banner Image"
             width={2000}
             height={2000}
@@ -78,7 +78,9 @@ export default function SimpleProfileCard() {
                     <div className="text-sm font-semibold tracking-tight leading-none">
                       {value.toLocaleString()}
                     </div>
-                    <div className="text-[0.7rem] font-medium capitalize text-muted-foreground">{key}</div>
+                    <div className="text-[0.7rem] font-medium capitalize text-muted-foreground">
+                      {key}
+                    </div>
                   </div>
                 ))}
               </div>

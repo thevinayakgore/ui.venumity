@@ -5,9 +5,9 @@ import { McpIndex } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-static";
-export const revalidate = 3600; // refresh hourly; swap to 0 for always-fresh
+export const revalidate = 3600; // refresh hourly
 
-// Cache the file read in memory across requests within the same function instance.
+// Cache the file read in memory
 let cachedIndex: McpIndex | null = null;
 
 function loadIndex(): McpIndex | null {
@@ -74,7 +74,6 @@ export async function POST(request: NextRequest) {
 
   const { method, params = {} } = body;
 
-  // ── Tool: search_components ──────────────────────────────
   if (method === "search_components" || method === "tools/call") {
     const toolName = method === "tools/call" ? (params.name as string) : method;
 
@@ -95,7 +94,10 @@ export async function POST(request: NextRequest) {
 
       const q = query?.toLowerCase().trim();
 
-      let results = index.data.components;
+      let results = [
+        ...index.data.components.map(c => ({ ...c, kind: "component" })),
+        ...index.data.primitives.map(p => ({ ...p, kind: "primitive" })),
+      ];
 
       if (category) {
         results = results.filter((c) => c.categorySlug === category);
@@ -106,7 +108,7 @@ export async function POST(request: NextRequest) {
       if (tag) {
         const t = tag.toLowerCase();
         results = results.filter((c) =>
-          c.tags.some((x) => x.toLowerCase() === t),
+          c.tags?.some((x: string) => x.toLowerCase() === t),
         );
       }
       if (q) {
@@ -128,26 +130,27 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // ── Tool: get_component ────────────────────────────────
     if (toolName === "get_component") {
-      const { slug } = (params.arguments ?? params) as { slug?: string };
+      const { slug, kind = "component" } = (params.arguments ?? params) as { slug?: string; kind?: string };
       if (!slug) {
         return NextResponse.json(
           { error: "Missing required field: slug" },
           { status: 400 },
         );
       }
-      const component = index.data.components.find((c) => c.slug === slug);
+      
+      const list = kind === "primitive" ? index.data.primitives : index.data.components;
+      const component = list.find((c) => c.slug === slug);
+      
       if (!component) {
         return NextResponse.json(
-          { error: `No component found for slug "${slug}"` },
+          { error: `No ${kind} found for slug "${slug}"` },
           { status: 404 },
         );
       }
       return NextResponse.json({ result: component });
     }
 
-    // ── Tool: list_categories ──────────────────────────────
     if (toolName === "list_categories") {
       return NextResponse.json({ result: index.data.categories });
     }

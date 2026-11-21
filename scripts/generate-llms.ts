@@ -1,9 +1,9 @@
 // scripts/generate-llms.ts
 import { toKebabCase } from "../utils/slug-kebab";
 import { DOCS_DATA } from "../registry/site/docs";
+import { RESOURCES } from "../registry/resources";
 import { COMPONENTS } from "../registry/components";
 import { PRIMITIVES } from "../registry/primitives";
-import { RESOURCES } from "../registry/resources";
 import { CHANGELOGS } from "../registry/site/changelog";
 import * as fs from "fs";
 import * as path from "path";
@@ -441,7 +441,7 @@ function buildLlmsFull(): string {
   lines.push("## Public Component Thumbnails & Visual Preview API");
   lines.push("");
   lines.push(
-    "Venumity UI features a unified API route and responsive public gallery for dynamically serving high-resolution `.webp` visual previews of all components across the ecosystem (`ui.venumity`, `pro.venumity`, `www.venumity`).",
+    "Venumity UI features a unified API route and responsive public gallery for dynamically serving high-resolution `.webp` visual previews of all components across the ecosystem.",
   );
   lines.push("");
   lines.push("### Live Public Endpoints & Gallery URLs:");

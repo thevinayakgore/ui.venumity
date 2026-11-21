@@ -1,6 +1,5 @@
 // components/site/content/usage.tsx
 "use client";
-import { useMemo } from "react";
 import CodeBlock from "@/components/utility/code-block";
 import { rewriteVenumityImports } from "@/utils/import-rewrite";
 
@@ -10,11 +9,9 @@ interface UsageProps {
 }
 
 export default function Usage({ code, subcategorySlug }: UsageProps) {
-  const displayCode = useMemo(() => {
-    if (!code) return "";
-    if (!subcategorySlug) return code;
-    return rewriteVenumityImports(code, subcategorySlug);
-  }, [code, subcategorySlug]);
+  const displayCode = code
+    ? rewriteVenumityImports(code, subcategorySlug || "")
+    : "";
 
   if (!code || !subcategorySlug) {
     return (

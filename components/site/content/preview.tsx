@@ -31,8 +31,6 @@ class PreviewErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    // Log once so you can still see what happened in the console,
-    // but don't let it bubble to Next's overlay.
     console.error("[ComponentPreview] render error:", error, info);
     this.props.onError?.(error.message);
   }
@@ -64,8 +62,6 @@ const PREVIEW_MODULE_CACHE = new Map<string, React.ComponentType | null>();
  *  1. is a function or a forwardRef/memo object, AND
  *  2. looks like a component (has a name that starts with an uppercase letter,
  *     or is a forwardRef/memo wrapper — `.$$typeof` is present).
- *
- * This prevents helper functions and hooks from being picked up as previews.
  */
 function isRenderableComponent(value: unknown): boolean {
   if (typeof value === "function") {
@@ -73,9 +69,6 @@ function isRenderableComponent(value: unknown): boolean {
       (value as { name?: string; displayName?: string }).name ??
       (value as { displayName?: string }).displayName ??
       "";
-    // React components are typically PascalCase. If the function has no name
-    // we still allow it (arrow function default export), but only if it's
-    // not obviously a hook or utility.
     if (!name) return true;
     if (name.startsWith("use")) return false;
     if (name.startsWith("_")) return false;
@@ -83,7 +76,6 @@ function isRenderableComponent(value: unknown): boolean {
   }
   if (value && typeof value === "object") {
     const any = value as { $$typeof?: symbol };
-    // forwardRef / memo wrappers carry $$typeof
     return Boolean(any.$$typeof);
   }
   return false;
@@ -150,126 +142,63 @@ export default function ComponentPreview({
 
     let importedModule: Record<string, unknown> | null = null;
 
-    /* ---------- PRIMITIVES ---------- */
-    if ((!source || source === "primitives") && kebabSubcategory) {
-      // 1. Variant / extra file
+    // Helper to safely import from the new flat unified path
+    const tryImport = async (path: string) => {
       try {
-        importedModule = (await import(
-          `@/components/venumity/primitives/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}.tsx`
-        )) as Record<string, unknown>;
+        return (await import(`@/components/venumity/${path}`)) as Record<
+          string,
+          unknown
+        >;
       } catch {
-        importedModule = null;
+        return null;
+      }
+    };
+
+    if (kebabSubcategory) {
+      // 1. Exact Variant / Item File
+      // e.g. @/components/venumity/data-display/accordion/single-minimal-accordion.tsx
+      if (!importedModule && kebabComponentName) {
+        importedModule = await tryImport(
+          `${kebabCategory}/${kebabSubcategory}/${kebabComponentName}.tsx`,
+        );
       }
 
-      // 2. Multi-file folder
-      if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/primitives/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}/index.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
+      // 2. Multi-file Component Folder
+      // e.g. @/components/venumity/data-display/accordion/index.tsx
+      if (!importedModule && kebabComponentName) {
+        importedModule = await tryImport(
+          `${kebabCategory}/${kebabSubcategory}/${kebabComponentName}/index.tsx`,
+        );
       }
 
-      // 3. Named demo
+      // 3. Named Demo File
+      // e.g. @/components/venumity/data-display/accordion/my-demo.tsx
       if (!importedModule && kebabDemoName && kebabDemoName !== "default") {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/primitives/${kebabCategory}/${kebabSubcategory}/${kebabDemoName}.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
+        importedModule = await tryImport(
+          `${kebabCategory}/${kebabSubcategory}/${kebabDemoName}.tsx`,
+        );
       }
 
-      // 4. demo.tsx
+      // 4. Default demo.tsx
+      // e.g. @/components/venumity/data-display/accordion/demo.tsx
       if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/primitives/${kebabCategory}/${kebabSubcategory}/demo.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
+        importedModule = await tryImport(
+          `${kebabCategory}/${kebabSubcategory}/demo.tsx`,
+        );
       }
 
-      // 5. Subcategory index
+      // 5. Subcategory Root Index
+      // e.g. @/components/venumity/data-display/accordion/index.tsx
       if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/primitives/${kebabCategory}/${kebabSubcategory}/index.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
+        importedModule = await tryImport(
+          `${kebabCategory}/${kebabSubcategory}/index.tsx`,
+        );
       }
     }
 
-    /* ---------- COMPONENTS ---------- */
-    if (
-      (!source || source === "components") &&
-      !importedModule &&
-      kebabSubcategory
-    ) {
-      try {
-        importedModule = (await import(
-          `@/components/venumity/components/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}.tsx`
-        )) as Record<string, unknown>;
-      } catch {
-        importedModule = null;
-      }
-
-      if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/components/${kebabCategory}/${kebabSubcategory}/${kebabComponentName}/index.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
-      }
-
-      if (!importedModule && kebabDemoName && kebabDemoName !== "default") {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/components/${kebabCategory}/${kebabSubcategory}/${kebabDemoName}.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
-      }
-
-      if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/components/${kebabCategory}/${kebabSubcategory}/demo.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
-      }
-
-      if (!importedModule) {
-        try {
-          importedModule = (await import(
-            `@/components/venumity/components/${kebabCategory}/${kebabSubcategory}/index.tsx`
-          )) as Record<string, unknown>;
-        } catch {
-          importedModule = null;
-        }
-      }
-    }
-
-    /* ---------- ui/ fallback ---------- */
-    if (!importedModule) {
-      try {
-        importedModule = (await import(
-          `@/components/ui/${kebabComponentName}.tsx`
-        )) as Record<string, unknown>;
-      } catch {
-        importedModule = null;
-      }
+    // 6. Fallback to shadcn ui directory
+    if (!importedModule && kebabComponentName) {
+      importedModule = await tryImport(`ui/${kebabComponentName}.tsx`);
     }
 
     if (!importedModule) {
@@ -288,7 +217,7 @@ export default function ComponentPreview({
     PREVIEW_MODULE_CACHE.set(cacheKey, picked);
     setComponent(() => picked);
     setStatus("ready");
-  }, [category, subcategory, componentName, demoName, source, cacheKey]);
+  }, [category, subcategory, componentName, demoName, cacheKey]);
 
   useEffect(() => {
     const id = setTimeout(() => void loadComponent(), 0);

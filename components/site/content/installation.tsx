@@ -9,14 +9,14 @@ import CodeBlock from "@/components/utility/code-block";
 import { rewriteVenumityImports } from "@/utils/import-rewrite";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
-  PackageManagerName,
   packageManagers,
+  PackageManagerName,
   useGlobalPackageManager,
 } from "@/utils/pm-config";
 
 interface InstallationProps {
-  subcategorySlug: string;
   filePath: string;
+  subcategorySlug: string;
   registry?: "primitives" | "components";
   itemFiles?: { path: string; content: string }[];
 }
@@ -44,9 +44,6 @@ function SelfPanel({
   const [loading, setLoading] = useState(!useProvided);
   const [error, setError] = useState<string | null>(null);
 
-  // Derive the item folder name from filePath
-  // e.g. "dashboards/financial/personal-finance-dashboard/index.tsx"
-  //   → segment before the last: "personal-finance-dashboard"
   const itemSlug = useMemo(() => {
     const parts = filePath.split("/").filter(Boolean);
     if (parts.length === 0) return "";
@@ -56,10 +53,9 @@ function SelfPanel({
     return parts[parts.length - 1];
   }, [filePath]);
 
-  // Multi = more than one file OR more than just index.tsx
   const isMulti = files.length > 1;
 
-  // Rewrite `@/components/venumity/...` → `@/components/venumity/<subcategory-slug>`
+  // Apply the import rewrite to all files
   const displayFiles = useMemo(
     () =>
       files.map((f) => ({
@@ -72,8 +68,6 @@ function SelfPanel({
   const fileSteps = displayFiles.map((file, i) => {
     const isSingleFile = !isMulti;
 
-    // For single-file: title = "Add this page", fileName = "<item-slug>.tsx"
-    // For multi-file : title = "Copy-Paste : <file>", fileName = "<item-slug>/<file>"
     const stepTitle = isSingleFile
       ? "Add this page"
       : `Copy-Paste : ${file.path}`;
@@ -193,9 +187,7 @@ function StepItem({
         className={`flex-1 space-y-3 pl-5 md:pl-10 ${isLast ? "pb-0" : "pb-5"} border-l w-full`}
       >
         <div>
-          <span className="text-base font-medium text-foreground">
-            {title}
-          </span>
+          <span className="text-base font-medium text-foreground">{title}</span>
           {fileName && (
             <p className="text-sm text-foreground/50 font-mono mt-1">
               {fileName}
