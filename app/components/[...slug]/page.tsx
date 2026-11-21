@@ -14,12 +14,8 @@ interface PageProps {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const COMPONENT_BASE = path.join(
-  process.cwd(),
-  "components",
-  "venumity",
-  "components",
-);
+// Unified base path
+const VENUMITY_BASE = path.join(process.cwd(), "components", "venumity");
 
 const NON_SOURCE_NAMES = new Set(["demo", "default", "index"]);
 
@@ -38,7 +34,7 @@ function allComponentItemsHaveSource(
   subSlug: string,
   itemSlugs: string[],
 ): boolean {
-  const dir = path.join(COMPONENT_BASE, catSlug, subSlug);
+  const dir = path.join(VENUMITY_BASE, catSlug, subSlug);
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return false;
   if (itemSlugs.length === 0) return false;
 
@@ -59,7 +55,7 @@ function allComponentItemsHaveSource(
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                Static params                                */
+/*                                Static params                               */
 /* -------------------------------------------------------------------------- */
 
 export async function generateStaticParams() {
@@ -73,7 +69,7 @@ export async function generateStaticParams() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                  Metadata                                   */
+/*                                  Metadata                                  */
 /* -------------------------------------------------------------------------- */
 
 export async function generateMetadata({
@@ -132,7 +128,7 @@ export async function generateMetadata({
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                   Page                                      */
+/*                                   Page                                     */
 /* -------------------------------------------------------------------------- */
 
 export default async function ComponentSubcategoryPage({ params }: PageProps) {

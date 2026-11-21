@@ -2,7 +2,6 @@
 import { NextResponse } from "next/server";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { COMPONENTS } from "@/registry/components";
-import { PRIMITIVES } from "@/registry/primitives";
 
 export const dynamic = "force-static";
 export const revalidate = 60;
@@ -10,35 +9,38 @@ export const revalidate = 60;
 export async function GET() {
   try {
     const components = COMPONENTS.flatMap((cat) =>
-      cat.subcategories.flatMap((sub) =>
-        sub.items.map((item) => ({
+      cat.subcategories.flatMap((sub) => {
+        // Determine the thumbnail for the subcategory
+        const thumbCandidates = [
+          sub.thumbnail,
+          sub.items[0]?.itemName ? toKebabCase(sub.items[0].itemName) : null,
+          toKebabCase(sub.name),
+        ].filter(Boolean);
+
+        const thumbnailName = thumbCandidates[0] || null;
+
+        return sub.items.map((item) => ({
           name: toKebabCase(item.itemName || ""),
           displayName: item.itemName || "",
           category: cat.name || "",
+          categorySlug: cat.slug || "",
+          categoryIcon: cat.icon || "",
+          categoryTags: cat.tags || [],
           subcategory: sub.name || "",
-          path: `venumity/components/${cat.slug}/${sub.slug}/${item.slug}`,
+          subcategorySlug: sub.slug || "",
+          subcategoryDescription: sub.description || "",
+          subcategoryTags: sub.tags || [],
+          subcategoryKind: sub.kind || "variant",
+          thumbnail: thumbnailName ? `/api/thumbnails?name=${thumbnailName}` : null,
+          thumbnailCandidates: thumbCandidates.map((c) => `/api/thumbnails?name=${c}`),
+          path: `${cat.slug}/${sub.slug}/${item.slug}`,
           type: "component" as const,
-        })),
-      ),
+        }));
+      }),
     );
-
-    const primitives = PRIMITIVES.flatMap((cat) =>
-      cat.subcategories.flatMap((sub) =>
-        sub.items.map((item) => ({
-          name: toKebabCase(item.slug || item.itemName),
-          displayName: item.itemName || "",
-          category: cat.name || "",
-          subcategory: sub.name || "",
-          path: `venumity/primitives/${cat.slug}/${sub.slug}/${item.slug}`,
-          type: "primitive" as const,
-        })),
-      ),
-    );
-
-    const all = [...components, ...primitives];
 
     return NextResponse.json(
-      { components: all, total: all.length },
+      { components, total: components.length },
       {
         headers: {
           "Cache-Control": "public, max-age=60, s-maxage=60, must-revalidate",

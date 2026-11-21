@@ -10,10 +10,6 @@ import { PRIMITIVES } from "@/registry/primitives";
 import { CHANGELOGS } from "@/registry/site/changelog";
 import { NextRequest, NextResponse } from "next/server";
 
-/* -------------------------------------------------------------------------- */
-/*                                   Types                                    */
-/* -------------------------------------------------------------------------- */
-
 export type SearchType =
   | "component"
   | "primitive"
@@ -42,10 +38,6 @@ interface IndexItem {
   tags: string[];
   type: SearchType;
 }
-
-/* -------------------------------------------------------------------------- */
-/*                              Build the index                               */
-/* -------------------------------------------------------------------------- */
 
 function buildSearchIndex(): IndexItem[] {
   const items: IndexItem[] = [];
@@ -173,7 +165,7 @@ function buildSearchIndex(): IndexItem[] {
     });
   });
 
-  /* ---------- 4. Changelog — flatten year groups ---------- */
+  /* ---------- 4. Changelog ---------- */
   CHANGELOGS.forEach((group) => {
     group.items.forEach((entry) => {
       const anchor = toKebabCase(entry.title);
@@ -190,7 +182,7 @@ function buildSearchIndex(): IndexItem[] {
     });
   });
 
-  /* ---------- 5. Docs — route from page.page ---------- */
+  /* ---------- 5. Docs ---------- */
   DOCS_DATA.forEach((section) => {
     section.pages.forEach((page) => {
       const slug = toKebabCase(page.page);
@@ -244,10 +236,6 @@ function buildSearchIndex(): IndexItem[] {
   return items;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                Fuse setup                                  */
-/* -------------------------------------------------------------------------- */
-
 const searchIndex = buildSearchIndex();
 
 const fuse = new Fuse(searchIndex, {
@@ -269,10 +257,6 @@ const fuse = new Fuse(searchIndex, {
   isCaseSensitive: false,
 });
 
-/* -------------------------------------------------------------------------- */
-/*                                  Cache                                     */
-/* -------------------------------------------------------------------------- */
-
 const cache = new Map<string, { results: SearchResult[]; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000;
 
@@ -289,10 +273,6 @@ function getCached(key: string): SearchResult[] | null {
 function setCache(key: string, results: SearchResult[]) {
   cache.set(key, { results, timestamp: Date.now() });
 }
-
-/* -------------------------------------------------------------------------- */
-/*                              GET handler                                   */
-/* -------------------------------------------------------------------------- */
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

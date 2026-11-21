@@ -5,20 +5,9 @@ import path from "path";
 import { toKebabCase } from "@/utils/slug-kebab";
 import { NextRequest, NextResponse } from "next/server";
 
-const DEMO_BASE = path.join(process.cwd(), "components", "venumity");
+// All flattened under one root now
+const VENUMITY_BASE = path.join(process.cwd(), "components", "venumity");
 const SOURCE_BASE = path.join(process.cwd(), "components", "ui");
-const PRIMITIVE_BASE = path.join(
-  process.cwd(),
-  "components",
-  "venumity",
-  "primitives",
-);
-const COMPONENT_BASE = path.join(
-  process.cwd(),
-  "components",
-  "venumity",
-  "components",
-);
 
 // ── ETag / response helpers ──────────────────────────────
 function mtimeOf(fileOrFolder: string): string {
@@ -91,24 +80,22 @@ function readAllFiles(
   return files;
 }
 
-// Find the subcategory folder across ALL possible bases
+// Find the subcategory folder in the unified base
 function findSubcategoryDir(
   category: string,
   subcategory: string,
 ): string | null {
-  const candidatePaths = [
-    path.join(DEMO_BASE, toKebabCase(category), toKebabCase(subcategory)),
-    path.join(PRIMITIVE_BASE, toKebabCase(category), toKebabCase(subcategory)),
-    path.join(COMPONENT_BASE, toKebabCase(category), toKebabCase(subcategory)),
-  ];
+  const candidatePath = path.join(
+    VENUMITY_BASE,
+    toKebabCase(category),
+    toKebabCase(subcategory),
+  );
 
-  for (const p of candidatePaths) {
-    if (
-      fs.existsSync(/*turbopackIgnore: true*/ p) &&
-      fs.statSync(/*turbopackIgnore: true*/ p).isDirectory()
-    ) {
-      return p;
-    }
+  if (
+    fs.existsSync(/*turbopackIgnore: true*/ candidatePath) &&
+    fs.statSync(/*turbopackIgnore: true*/ candidatePath).isDirectory()
+  ) {
+    return candidatePath;
   }
   return null;
 }
@@ -279,7 +266,7 @@ function findSourceWithFallback(
 
   if (category && subcategory) {
     const demoParts = [toKebabCase(subcategory), toKebabCase(item)];
-    const demo = findComponent(DEMO_BASE, category, demoParts);
+    const demo = findComponent(VENUMITY_BASE, category, demoParts);
     if (demo) {
       return { ...demo, sourceType: "demo" };
     }
@@ -293,6 +280,64 @@ export async function GET(request: NextRequest) {
   try {
     const sp = request.nextUrl.searchParams;
     const action = sp.get("action");
+
+    if (!action) {
+      return NextResponse.json({
+        name: "Venumity Components API",
+        message: "Provide an action query parameter.",
+        actions: [
+          "cli-list",
+          "cli-source",
+          "source",
+          "primitive-source",
+          "primitive-demo",
+          "list",
+          "file",
+          "structure",
+          "component-folder",
+          "item-files",
+          "check",
+          "registry-summary",
+        ],
+      });
+    }
+
+    // ── action=registry-summary (components + primitives counts) ──
+    if (action === "registry-summary") {
+      const origin = request.nextUrl.origin;
+
+      const [compRes, primRes] = await Promise.all([
+        fetch(`${origin}/api/registry/components`, { cache: "no-store" }),
+        fetch(`${origin}/api/registry/primitives`, { cache: "no-store" }),
+      ]);
+
+      const compData = compRes.ok ? await compRes.json() : { components: [] };
+      const primData = primRes.ok
+        ? await primRes.json()
+        : { primitives: [], components: [] };
+
+      const componentsList = Array.isArray(compData.components)
+        ? compData.components
+        : [];
+      const primitivesList = Array.isArray(primData.primitives)
+        ? primData.primitives
+        : Array.isArray(primData.components)
+          ? primData.components
+          : [];
+
+      return NextResponse.json(
+        {
+          counts: {
+            components: componentsList.length,
+            primitives: primitivesList.length,
+            total: componentsList.length + primitivesList.length,
+          },
+          components: componentsList,
+          primitives: primitivesList,
+        },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
 
     // ── action=cli-list (for CLI whole-subcategory install) ──
     if (action === "cli-list") {
@@ -454,7 +499,7 @@ export async function GET(request: NextRequest) {
         return jsonError("category and item required", 400);
 
       const parts = [subcategory, item].filter(Boolean);
-      const demo = findComponent(DEMO_BASE, category, parts);
+      const demo = findComponent(VENUMITY_BASE, category, parts);
       if (!demo) return jsonError("Demo not found", 404);
       return jsonError("Use action=item-files instead", 400);
     }
@@ -476,35 +521,24 @@ export async function GET(request: NextRequest) {
     // ── action=primitive-source ────────────────────────────
     if (action === "primitive-source") {
       const filePath = sp.get("filePath") || "";
-      const registry = sp.get("registry") || "";
-
       if (!filePath) return jsonError("filePath required", 400);
 
-      const roots: string[] = [];
-      if (registry === "primitives") roots.push(PRIMITIVE_BASE);
-      else if (registry === "components") roots.push(COMPONENT_BASE);
-      else roots.push(PRIMITIVE_BASE, COMPONENT_BASE);
+      // Now we just use the unified VENUMITY_BASE
+      const full = path.join(/*turbopackIgnore: true*/ VENUMITY_BASE, filePath);
 
       let resolved: string | null = null;
-      for (const root of roots) {
-        const full = path.join(/*turbopackIgnore: true*/ root, filePath);
 
-        if (
-          fs.existsSync(/*turbopackIgnore: true*/ full) &&
-          fs.statSync(/*turbopackIgnore: true*/ full).isFile()
-        ) {
-          resolved = full;
-          break;
-        }
-
+      if (
+        fs.existsSync(/*turbopackIgnore: true*/ full) &&
+        fs.statSync(/*turbopackIgnore: true*/ full).isFile()
+      ) {
+        resolved = full;
+      } else {
         const dir = path.dirname(/*turbopackIgnore: true*/ full);
         const idx = path.join(/*turbopackIgnore: true*/ dir, "index.tsx");
         if (fs.existsSync(/*turbopackIgnore: true*/ idx)) {
           resolved = idx;
-          break;
-        }
-
-        if (
+        } else if (
           fs.existsSync(/*turbopackIgnore: true*/ dir) &&
           fs.statSync(/*turbopackIgnore: true*/ dir).isDirectory()
         ) {
@@ -516,7 +550,6 @@ export async function GET(request: NextRequest) {
           );
           if (firstTsx) {
             resolved = path.join(/*turbopackIgnore: true*/ dir, firstTsx.name);
-            break;
           }
         }
       }
@@ -527,16 +560,11 @@ export async function GET(request: NextRequest) {
         /*turbopackIgnore: true*/ resolved,
         "utf-8",
       );
-
       const etag = `"${mtimeOf(resolved)}-${path.basename(resolved)}-raw"`;
 
       return jsonWithETag(
         request,
-        {
-          code: rawCode,
-          name: path.basename(resolved),
-          path: filePath,
-        },
+        { code: rawCode, name: path.basename(resolved), path: filePath },
         etag,
       );
     }
@@ -546,39 +574,26 @@ export async function GET(request: NextRequest) {
       const category = sp.get("category") || "";
       const subcategory = sp.get("subcategory") || "";
       const demoName = sp.get("demo") || "demo";
-      const registry = sp.get("registry") || "";
 
       if (!category || !subcategory)
         return jsonError("category and subcategory required", 400);
 
-      const roots: string[] = [];
-      if (registry === "primitives") roots.push(PRIMITIVE_BASE);
-      else if (registry === "components") roots.push(COMPONENT_BASE);
-      else roots.push(PRIMITIVE_BASE, COMPONENT_BASE);
-
-      let resolved: string | null = null;
-      for (const root of roots) {
-        const baseDir = path.join(
-          /*turbopackIgnore: true*/ root,
-          toKebabCase(category),
-          toKebabCase(subcategory),
-        );
-        const candidates = [
-          path.join(
-            /*turbopackIgnore: true*/ baseDir,
-            `${toKebabCase(demoName)}.tsx`,
-          ),
-          path.join(/*turbopackIgnore: true*/ baseDir, "demo.tsx"),
-          path.join(/*turbopackIgnore: true*/ baseDir, "default.tsx"),
-        ];
-        const found = candidates.find((c) =>
-          fs.existsSync(/*turbopackIgnore: true*/ c),
-        );
-        if (found) {
-          resolved = found;
-          break;
-        }
-      }
+      const baseDir = path.join(
+        /*turbopackIgnore: true*/ VENUMITY_BASE,
+        toKebabCase(category),
+        toKebabCase(subcategory),
+      );
+      const candidates = [
+        path.join(
+          /*turbopackIgnore: true*/ baseDir,
+          `${toKebabCase(demoName)}.tsx`,
+        ),
+        path.join(/*turbopackIgnore: true*/ baseDir, "demo.tsx"),
+        path.join(/*turbopackIgnore: true*/ baseDir, "default.tsx"),
+      ];
+      const resolved = candidates.find((c) =>
+        fs.existsSync(/*turbopackIgnore: true*/ c),
+      );
 
       if (!resolved) return jsonError("Demo not found", 404);
 
@@ -586,7 +601,6 @@ export async function GET(request: NextRequest) {
         /*turbopackIgnore: true*/ resolved,
         "utf-8",
       );
-
       const etag = `"${mtimeOf(resolved)}-${path.basename(resolved)}-raw"`;
 
       return jsonWithETag(request, { code: rawCode, isDemo: true }, etag);
@@ -600,7 +614,7 @@ export async function GET(request: NextRequest) {
         return jsonError("category and subcategory required", 400);
 
       const subPath = path.join(
-        /*turbopackIgnore: true*/ DEMO_BASE,
+        /*turbopackIgnore: true*/ VENUMITY_BASE,
         toKebabCase(category),
         toKebabCase(subcategory),
       );
@@ -727,12 +741,13 @@ export async function GET(request: NextRequest) {
 
     // ── action=component-folder (unchanged) ───────────────
     if (action === "component-folder") {
-      const registry = sp.get("registry") || "components";
       const filePath = sp.get("folderPath") || "";
       if (!filePath) return jsonError("folderPath required", 400);
 
-      const root = registry === "primitives" ? PRIMITIVE_BASE : COMPONENT_BASE;
-      const folder = path.join(/*turbopackIgnore: true*/ root, filePath);
+      const folder = path.join(
+        /*turbopackIgnore: true*/ VENUMITY_BASE,
+        filePath,
+      );
       if (
         !fs.existsSync(/*turbopackIgnore: true*/ folder) ||
         !fs.statSync(/*turbopackIgnore: true*/ folder).isDirectory()
@@ -748,7 +763,6 @@ export async function GET(request: NextRequest) {
 
     // ── action=item-files (unchanged) ─────────────────────
     if (action === "item-files") {
-      const registry = sp.get("registry") || "components";
       const category = sp.get("category") || "";
       const subcategory = sp.get("subcategory") || "";
       const item = sp.get("item") || "";
@@ -756,9 +770,8 @@ export async function GET(request: NextRequest) {
       if (!category || !subcategory || !item)
         return jsonError("category, subcategory, item required", 400);
 
-      const root = registry === "primitives" ? PRIMITIVE_BASE : COMPONENT_BASE;
       const baseDir = path.join(
-        /*turbopackIgnore: true*/ root,
+        /*turbopackIgnore: true*/ VENUMITY_BASE,
         toKebabCase(category),
         toKebabCase(subcategory),
       );
@@ -841,7 +854,7 @@ export async function GET(request: NextRequest) {
       const demoParts = [subcategory, item].filter(Boolean);
       const hasDemo =
         category.length > 0
-          ? findComponent(DEMO_BASE, category, demoParts) !== null
+          ? findComponent(VENUMITY_BASE, category, demoParts) !== null
           : false;
       const hasSource = findSourceWithFallback(item) !== null;
 

@@ -63,5 +63,5 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 
 ## Optional
 
-- [Changelog](https://ui.venumity.com/changelog): version history, 11 entries
+- [Changelog](https://ui.venumity.com/changelog): version history, 12 entries
 - [Full detail dump](https://ui.venumity.com/llms-full.txt): every component, primitive, doc, resource, and changelog entry inlined in full markdown — fetch this instead of following individual links above when complete content in one request is preferred

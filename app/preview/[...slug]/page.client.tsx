@@ -1,8 +1,8 @@
 // app/preview/[...slug]/page.client.tsx
 "use client";
 import { toKebabCase } from "@/utils/slug-kebab";
-import NotFound from "@/components/site/common/not-found";
 import { useState, useEffect, useMemo } from "react";
+import NotFound from "@/components/site/common/not-found";
 import ThemeToggle from "@/components/site/navigations/theme";
 import { resolvePreviewBySlug } from "@/registry/registry-utils";
 import ComponentPreview from "@/components/site/content/preview";

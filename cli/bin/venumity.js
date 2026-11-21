@@ -4,6 +4,7 @@ import ora from "ora";
 import path from "path";
 import chalk from "chalk";
 import boxen from "boxen";
+import inquirer from "inquirer";
 import { Command } from "commander";
 import { fileURLToPath } from "url";
 import gradient from "gradient-string";
@@ -20,51 +21,53 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "https://ui.venumity.com";
 
 // ============================================================
-// IMPORT REWRITER & DEPENDENCY EXTRACTOR
+// API — SOURCE FETCH
 // ============================================================
-function processImports(code, currentSlug) {
-  const internalDeps = new Set();
-  let out = code;
+async function fetchSource(entry, variantSlug) {
+  // 1. If a specific variant is requested, fetch just that variant
+  if (variantSlug) {
+    const params = new URLSearchParams({
+      action: "cli-source",
+      category: entry.categorySlug,
+      subcategory: entry.subcategorySlug,
+      item: variantSlug,
+    });
+    const res = await fetch(`${API_BASE_URL}/api/components?${params}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return { mainCode: data.code, files: [] };
+  }
 
-  // 1. Rewrite absolute imports
-  out = out.replace(
-    /from\s+["']@\/components\/venumity\/(?:primitives|components)\/([^"']+)["']/g,
-    (_match, fullPath) => {
-      let cleanPath = fullPath
-        .replace(/\/index(\.tsx?)?$/, "")
-        .replace(/\.tsx?$/, "");
-      const parts = cleanPath.split("/").filter(Boolean);
-      const flatSlug = parts[parts.length - 1];
-      if (flatSlug !== "index" && flatSlug !== currentSlug) {
-        internalDeps.add(flatSlug);
-      }
-      return `from "@/components/venumity/${flatSlug === "index" ? currentSlug : flatSlug}"`;
-    },
-  );
+  // 2. Fetch the whole subcategory list to find the main primitive/component
+  const params = new URLSearchParams({
+    action: "cli-list",
+    category: entry.categorySlug,
+    subcategory: entry.subcategorySlug,
+  });
 
-  // 2. Rewrite relative imports
-  const selfTarget = `@/components/venumity/${currentSlug}`;
-  out = out.replace(
-    /from\s+["']((?:\.\.?\/)+)([^"']+)["']/g,
-    (_match, prefix, importPath) => {
-      const parts = importPath.split("/").filter(Boolean);
-      const flatSlug = parts[parts.length - 1];
+  const res = await fetch(`${API_BASE_URL}/api/components?${params}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
 
-      // Skip if importing index of the same file
-      if (flatSlug === "index") {
-        return `from "${selfTarget}"`;
-      }
+  if (!data.components || data.components.length === 0) {
+    throw new Error("No components found in this subcategory");
+  }
 
-      if (flatSlug === currentSlug) {
-        return `from "${selfTarget}"`;
-      }
+  // 3. ONLY pick the main component (index.tsx, main.tsx, or matching subcategory name)
+  // This prevents installing all the variant files alongside the primitive.
+  const mainComp =
+    data.components.find(
+      (c) =>
+        c.name === entry.subcategorySlug ||
+        c.name === "index" ||
+        c.name === "main",
+    ) || data.components[0];
 
-      internalDeps.add(flatSlug);
-      return `from "@/components/venumity/${flatSlug}"`;
-    },
-  );
-
-  return { code: out, internalDeps: Array.from(internalDeps) };
+  return {
+    mainCode: mainComp.code,
+    // Only return extra files if the main component is a folder (multi-file component)
+    files: mainComp.isFolder ? mainComp.files || [] : [],
+  };
 }
 
 // ============================================================
@@ -231,19 +234,68 @@ function toKebabCase(str) {
 // ============================================================
 async function fetchRegistry() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/registry/components`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const raw = data.components || [];
+    const [compRes, primRes] = await Promise.allSettled([
+      fetch(`${API_BASE_URL}/api/registry/components`),
+      fetch(`${API_BASE_URL}/api/registry/primitives`),
+    ]);
+
+    const combined = [];
+
+    if (compRes.status === "fulfilled") {
+      if (!compRes.value.ok) {
+        throw new Error(`Components registry HTTP ${compRes.value.status}`);
+      }
+      const compData = await compRes.value.json();
+      const compList = Array.isArray(compData.components)
+        ? compData.components
+        : [];
+      for (const item of compList) {
+        combined.push({
+          ...item,
+          type: item.type || "component",
+        });
+      }
+    }
+
+    if (primRes.status === "fulfilled") {
+      if (primRes.value.ok) {
+        const primData = await primRes.value.json();
+        const primList = Array.isArray(primData.primitives)
+          ? primData.primitives
+          : Array.isArray(primData.components)
+            ? primData.components
+            : [];
+        for (const item of primList) {
+          combined.push({
+            ...item,
+            type: "primitive",
+          });
+        }
+      } else if (primRes.value.status !== 404) {
+        console.log(
+          chalk.yellow(
+            `⚠️  Primitives registry returned HTTP ${primRes.value.status}`,
+          ),
+        );
+      }
+    }
+
+    if (combined.length === 0 && compRes.status === "rejected") {
+      throw new Error(compRes.reason?.message || "Failed to fetch registry");
+    }
 
     const byKey = new Map();
 
-    for (const entry of raw) {
+    for (const entry of combined) {
       const isPrimitive = entry.type === "primitive";
       const registryType = isPrimitive ? "primitives" : "components";
 
-      const categorySlug = toKebabCase(entry.category || "");
-      const subcategorySlug = toKebabCase(entry.subcategory || "");
+      const categoryLabel = entry.category || (isPrimitive ? "Primitives" : "");
+      const subcategoryLabel =
+        entry.subcategory || entry.displayName || entry.name || "";
+
+      const categorySlug = toKebabCase(categoryLabel);
+      const subcategorySlug = toKebabCase(subcategoryLabel);
       if (!categorySlug || !subcategorySlug) continue;
 
       const key = `${registryType}:${categorySlug}:${subcategorySlug}`;
@@ -251,10 +303,10 @@ async function fetchRegistry() {
       if (!byKey.has(key)) {
         byKey.set(key, {
           name: subcategorySlug,
-          displayName: entry.subcategory,
-          category: entry.category,
+          displayName: subcategoryLabel,
+          category: categoryLabel,
           categorySlug,
-          subcategory: entry.subcategory,
+          subcategory: subcategoryLabel,
           subcategorySlug,
           type: isPrimitive ? "primitive" : "component",
           registryType,
@@ -264,8 +316,9 @@ async function fetchRegistry() {
       }
 
       const bucket = byKey.get(key);
-      if (entry.slug && !bucket.variants.includes(entry.slug)) {
-        bucket.variants.push(entry.slug);
+      const variantSlug = toKebabCase(entry.slug || entry.name || "");
+      if (variantSlug && !bucket.variants.includes(variantSlug)) {
+        bucket.variants.push(variantSlug);
       }
       if (
         entry.displayName &&
@@ -280,60 +333,6 @@ async function fetchRegistry() {
     console.log(chalk.yellow(`⚠️  Could not fetch registry: ${error.message}`));
     return [];
   }
-}
-
-// ============================================================
-// API — SOURCE FETCH
-// ============================================================
-async function fetchSource(entry, variantSlug) {
-  // 1. If a specific variant is requested, fetch that single file
-  if (variantSlug) {
-    const params = new URLSearchParams({
-      action: "cli-source",
-      category: entry.categorySlug,
-      subcategory: entry.subcategorySlug,
-      item: variantSlug,
-    });
-    const res = await fetch(`${API_BASE_URL}/api/components?${params}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    return { mainCode: data.code, files: data.files || [] };
-  }
-
-  // 2. Fetch the whole subcategory via cli-list
-  const params = new URLSearchParams({
-    action: "cli-list",
-    category: entry.categorySlug,
-    subcategory: entry.subcategorySlug,
-  });
-
-  const res = await fetch(`${API_BASE_URL}/api/components?${params}`);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-
-  if (!data.components || data.components.length === 0) {
-    throw new Error("No components found in this subcategory");
-  }
-
-  if (data.components.length === 1) {
-    const comp = data.components[0];
-    return {
-      mainCode: comp.code,
-      files: comp.isFolder ? comp.files || [] : [],
-    };
-  }
-
-  // Multiple items in the subcategory: put the first as main, others as files
-  return {
-    mainCode: data.components[0].code,
-    files: data.components
-      .slice(1)
-      .flatMap((c) =>
-        c.isFolder
-          ? c.files || []
-          : [{ path: `${c.name}.tsx`, content: c.code }],
-      ),
-  };
 }
 
 // ============================================================
@@ -776,6 +775,109 @@ function resolveInput(input, registry) {
   return { entry: null, matchedBy: null, variantSlug: null };
 }
 
+function toKebabSymbolName(name) {
+  return String(name || "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function extractImportedSymbol(importClause) {
+  const cleaned = String(importClause || "")
+    .replace(/^type\s+/, "")
+    .trim();
+  const namedMatch = cleaned.match(/\{([^}]+)\}/);
+  if (namedMatch) {
+    const first = namedMatch[1]
+      .split(",")[0]
+      .replace(/^type\s+/, "")
+      .trim();
+    return first ? first.split(/\s+as\s+/i)[0].trim() : null;
+  }
+  const firstDefault = cleaned.split(",")[0].trim();
+  if (!firstDefault) return null;
+  if (firstDefault.startsWith("*")) {
+    const ns = firstDefault.match(/\*\s+as\s+(\w+)/i);
+    return ns ? ns[1] : null;
+  }
+  return firstDefault;
+}
+
+function rewriteAndExtractDeps(code, currentSlug, registry = []) {
+  const internalDeps = new Set();
+  const knownSlugs = new Set(
+    registry.flatMap((item) =>
+      [item.name, item.subcategorySlug, ...(item.variants || [])].filter(
+        Boolean,
+      ),
+    ),
+  );
+
+  // 1. Rewrite `@/components/venumity/...` imports
+  let out = code.replace(
+    /import\s+([\s\S]*?)\s+from\s+["']@\/components\/venumity\/?([^"']*)["']/g,
+    (_full, importClause, rawSubpath) => {
+      const cleanPath = (rawSubpath || "")
+        .replace(/^(?:primitives|components)\/?/, "")
+        .replace(/\/index(\.tsx?)?$/, "")
+        .replace(/\.tsx?$/, "");
+
+      const parts = cleanPath.split("/").filter(Boolean);
+      const lastPart = parts[parts.length - 1] || "";
+      const symbol = extractImportedSymbol(importClause);
+
+      let targetSlug = lastPart || currentSlug;
+
+      if (symbol && /^[A-Z]/.test(symbol)) {
+        const symbolSlug = toKebabSymbolName(symbol);
+        const isMismatch =
+          lastPart &&
+          lastPart !== symbolSlug &&
+          !lastPart.endsWith(`-${symbolSlug}`);
+
+        if (
+          symbolSlug &&
+          (!lastPart ||
+            (isMismatch &&
+              (knownSlugs.size === 0 || knownSlugs.has(symbolSlug))))
+        ) {
+          targetSlug = symbolSlug;
+        }
+      }
+
+      if (targetSlug && targetSlug !== "index" && targetSlug !== currentSlug) {
+        internalDeps.add(targetSlug);
+      }
+
+      return `import ${importClause} from "@/components/venumity/${targetSlug}"`;
+    },
+  );
+
+  // 2. Rewrite relative imports (`./foo` or `../bar`) to `@/components/venumity/<slug>`
+  out = out.replace(
+    /import\s+([\s\S]*?)\s+from\s+["'](\.\.?\/[^"']*)["']/g,
+    (_full, importClause, relPath) => {
+      const cleanedRel = relPath
+        .replace(/\/index(\.tsx?)?$/, "")
+        .replace(/\.tsx?$/, "");
+      const parts = cleanedRel
+        .split("/")
+        .filter((p) => p && p !== "." && p !== "..");
+      const targetSlug = parts[parts.length - 1] || currentSlug;
+
+      if (targetSlug && targetSlug !== "index" && targetSlug !== currentSlug) {
+        internalDeps.add(targetSlug);
+      }
+
+      return `import ${importClause} from "@/components/venumity/${targetSlug}"`;
+    },
+  );
+
+  return { code: out, internalDeps: Array.from(internalDeps) };
+}
+
 // ============================================================
 // COMMAND: ADD (updated with import rewrite & auto-resolve)
 // ============================================================
@@ -949,24 +1051,34 @@ async function addComponentAction(inputs, options) {
     const targetFile = path.join(venumityDir, `${targetSlug}.tsx`);
     const spinner = ora(`Fetching ${targetSlug}...`).start();
 
+    if (fs.existsSync(targetFile) && !options.overwrite) {
+      spinner.warn(
+        chalk.yellow(
+          `${targetSlug}.tsx already exists. Use --overwrite (-o) to replace it.`,
+        ),
+      );
+      continue;
+    }
+
     try {
       let { mainCode, files } = await fetchSource(entry, variantSlug);
 
-      const { code: rewrittenCode, internalDeps } = processImports(
+      const { code: rewrittenCode, internalDeps } = rewriteAndExtractDeps(
         mainCode,
         targetSlug,
+        registry,
       );
 
       fs.writeFileSync(targetFile, rewrittenCode, "utf8");
 
-      // Write additional files (nested folder contents)
       for (const file of files) {
         const filePath = path.join(venumityDir, file.path);
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
-        const { code: rewrittenFileCode } = processImports(
+        const { code: rewrittenFileCode } = rewriteAndExtractDeps(
           file.content,
           targetSlug,
+          registry,
         );
         fs.writeFileSync(filePath, rewrittenFileCode, "utf8");
       }

@@ -9,14 +9,14 @@ import Overview from "@/components/site/content/overview";
 import PropsTable from "@/components/site/content/props-table";
 import Installation from "@/components/site/content/installation";
 import type {
-  PrimitiveCategory,
   PrimitiveItem,
+  PrimitiveCategory,
   PrimitiveSubcategory,
 } from "@/types/primitives";
 import {
+  getCached,
   buildCacheKey,
   cachedFetchJson,
-  getCached,
 } from "@/utils/source-cache";
 
 interface Props {
@@ -245,7 +245,6 @@ export default function PageClient({ category, subcategory }: Props) {
   const showProps = !!subcategory.props && subcategory.props.length > 0;
   const moreExamples = subcategory.moreExamples ?? [];
 
-  // Wait for both fetches before deciding anything
   const ready = demo.loaded && firstItemSource.loaded;
 
   if (!ready) {
@@ -259,7 +258,6 @@ export default function PageClient({ category, subcategory }: Props) {
     );
   }
 
-  // If neither the demo nor the first item has code, hide the whole page.
   const hasCode = Boolean(demo.code || firstItemSource.code);
   if (!hasCode) return <NoComponent />;
 
