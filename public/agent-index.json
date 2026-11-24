@@ -4,7 +4,7 @@
   "author": "Vinayak Gore",
   "authorUrl": "https://github.com/thevinayakgore",
   "license": "MIT",
-  "generatedAt": "2026-11-21T09:05:48.340Z",
+  "generatedAt": "2026-11-24T15:38:42.468Z",
   "cli": {
     "command": "npx venumityui@latest",
     "install": "npx venumityui@latest add <slug>",
@@ -20,14 +20,14 @@
   },
   "counts": {
     "components": 37,
-    "primitives": 97,
-    "thumbnails": 108,
+    "primitives": 107,
+    "thumbnails": 115,
     "categories": 8,
-    "primitiveCategories": 7,
+    "primitiveCategories": 8,
     "faqs": 9,
     "docs": 5,
     "resources": 15,
-    "changelog": 12
+    "changelog": 13
   },
   "endpoints": {
     "llms": "https://ui.venumity.com/llms.txt",
@@ -331,6 +331,11 @@
     }
   ],
   "changelog": [
+    {
+      "title": "📊 New Charts : Bar Charts & Area Charts",
+      "date": "Nov-24-2026",
+      "url": "https://ui.venumity.com/changelog#new-charts-bar-charts-area-charts"
+    },
     {
       "title": "⚡ Unified Directory & CLI Installation Update",
       "date": "Nov-21-2026",
@@ -1487,6 +1492,206 @@
       "previewUrl": "https://ui.venumity.com/preview/actions/button/ripple-effect",
       "thumbnailUrl": "https://ui.venumity.com/thumbnails/button.webp",
       "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/ripple-effect"
+    },
+    {
+      "itemName": "Line Area Chart",
+      "slug": "line-area-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Area Chart",
+      "subcategorySlug": "area-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/area-chart/line-area-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/area-chart/line-area-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/line-area-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/line-area-chart"
+    },
+    {
+      "itemName": "Monotone Area Chart",
+      "slug": "monotone-area-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Area Chart",
+      "subcategorySlug": "area-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/area-chart/monotone-area-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/area-chart/monotone-area-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/monotone-area-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/monotone-area-chart"
+    },
+    {
+      "itemName": "Gradient Area Chart",
+      "slug": "gradient-area-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Area Chart",
+      "subcategorySlug": "area-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/area-chart/gradient-area-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/area-chart/gradient-area-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/gradient-area-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/gradient-area-chart"
+    },
+    {
+      "itemName": "Overlap Area Chart",
+      "slug": "overlap-area-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Area Chart",
+      "subcategorySlug": "area-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/area-chart/overlap-area-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/area-chart/overlap-area-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/overlap-area-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/overlap-area-chart"
+    },
+    {
+      "itemName": "Stacked Area Chart",
+      "slug": "stacked-area-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Area Chart",
+      "subcategorySlug": "area-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/area-chart/stacked-area-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/area-chart/stacked-area-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/stacked-area-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/stacked-area-chart"
+    },
+    {
+      "itemName": "Single Bar Chart",
+      "slug": "single-bar-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Bar Chart",
+      "subcategorySlug": "bar-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/bar-chart/single-bar-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/single-bar-chart"
+    },
+    {
+      "itemName": "Grouped Bar Chart",
+      "slug": "grouped-bar-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Bar Chart",
+      "subcategorySlug": "bar-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/bar-chart/grouped-bar-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/bar-chart/grouped-bar-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/grouped-bar-chart"
+    },
+    {
+      "itemName": "Horizontal Bar Chart",
+      "slug": "horizontal-bar-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Bar Chart",
+      "subcategorySlug": "bar-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/bar-chart/horizontal-bar-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/horizontal-bar-chart"
+    },
+    {
+      "itemName": "Mixed Bar Chart",
+      "slug": "mixed-bar-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Bar Chart",
+      "subcategorySlug": "bar-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/bar-chart/mixed-bar-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart"
+    },
+    {
+      "itemName": "Stacked Bar Chart",
+      "slug": "stacked-bar-chart",
+      "category": "Charts",
+      "categorySlug": "charts",
+      "subcategory": "Bar Chart",
+      "subcategorySlug": "bar-chart",
+      "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+      "tags": [
+        "area",
+        "chart",
+        "trend",
+        "time-series"
+      ],
+      "techs": [],
+      "pageUrl": "https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart",
+      "previewUrl": "https://ui.venumity.com/preview/charts/bar-chart/stacked-bar-chart",
+      "thumbnailUrl": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp",
+      "thumbnailPageUrl": "https://ui.venumity.com/thumbnails/stacked-bar-chart"
     },
     {
       "itemName": "Default Command",
@@ -3350,6 +3555,7 @@
     "alert",
     "analytics-dashboard",
     "analytics-stats-bento",
+    "area-chart",
     "area-sparkline",
     "aspect-ratio",
     "attachment",
@@ -3357,6 +3563,7 @@
     "avatar",
     "background-gradient-spotlight",
     "badge",
+    "bar-chart",
     "bar-sparkline",
     "basic-area-chart",
     "basic-badge",
@@ -3401,17 +3608,21 @@
     "interactive-product-card",
     "label-line-chart",
     "label-radial-chart",
+    "line-area-chart",
     "line-sparkline",
     "linear-line-chart",
     "linear-progress-loader",
     "logo-page-loader",
     "masonry-grid-faq",
     "masonry-image-gallery",
+    "mixed-bar-chart",
     "mixed-line-bar-chart",
+    "monotone-area-chart",
     "multi-layer-area-chart",
     "multi-layer-pulse-loader",
     "multiple-line-chart",
     "multiple-open-faq",
+    "overlap-area-chart",
     "paginated-table",
     "percent-area-chart",
     "personal-finance-dashboard",
@@ -3430,6 +3641,7 @@
     "simple-footer",
     "simple-pricing-table",
     "simple-profile-card",
+    "single-bar-chart",
     "single-open-faq",
     "skeleton",
     "snackbar-2",

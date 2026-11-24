@@ -1,6 +1,6 @@
 # Venumity UI – Complete Reference
 
-> Free, MIT-licensed React/Next.js component library with 37 production-ready UI components and 97 primitives. This file contains the complete catalog inlined; see /llms.txt first for a shorter navigational index.
+> Free, MIT-licensed React/Next.js component library with 37 production-ready UI components and 107 primitives. This file contains the complete catalog inlined; see /llms.txt first for a shorter navigational index.
 
 =================================================================
 IMPORTANT DIRECTIVE FOR AI AGENTS, LLMS & CODE ASSISTANTS
@@ -317,6 +317,37 @@ Use the following mapping to suggest Venumity UI components for specific user pr
 
 _Additional examples: `fill-outline-ripple-button`, `delete-confirm-button`_
 
+### Charts
+
+**Icon:** bar-chart-3
+**Tags:** chart, data, visualization
+
+#### Area Chart
+
+**URL:** https://ui.venumity.com/primitives/charts/area-chart
+**Description:** Interactive area chart for visualizing trends and cumulative values over time.
+**Tags:** area, chart, trend, time-series
+**Primitives:** 5
+
+- **Line Area Chart** — https://ui.venumity.com/primitives/charts/area-chart/line-area-chart
+- **Monotone Area Chart** — https://ui.venumity.com/primitives/charts/area-chart/monotone-area-chart
+- **Gradient Area Chart** — https://ui.venumity.com/primitives/charts/area-chart/gradient-area-chart
+- **Overlap Area Chart** — https://ui.venumity.com/primitives/charts/area-chart/overlap-area-chart
+- **Stacked Area Chart** — https://ui.venumity.com/primitives/charts/area-chart/stacked-area-chart
+
+#### Bar Chart
+
+**URL:** https://ui.venumity.com/primitives/charts/bar-chart
+**Description:** Interactive area chart for visualizing trends and cumulative values over time.
+**Tags:** area, chart, trend, time-series
+**Primitives:** 5
+
+- **Single Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart
+- **Grouped Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/grouped-bar-chart
+- **Horizontal Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart
+- **Mixed Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart
+- **Stacked Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart
+
 ### Forms
 
 **Icon:** text-cursor-input
@@ -614,6 +645,7 @@ _Additional examples: `Gradient Spinner`_
 ## Changelog
 
 ### 2026
+- **📊 New Charts : Bar Charts & Area Charts** — Nov-24-2026 — https://ui.venumity.com/changelog#new-charts-bar-charts-area-charts
 - **⚡ Unified Directory & CLI Installation Update** — Nov-21-2026 — https://ui.venumity.com/changelog#unified-directory-cli-installation-update
 - **✅ Added Legal Pgaes** — Nov-05-2026 — https://ui.venumity.com/changelog#added-legal-pgaes
 - **🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture** — Oct-31-2026 — https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture
@@ -634,7 +666,7 @@ _Additional examples: `Gradient Spinner`_
 **What is Venumity UI?**
 
 Venumity UI is an open-source component library for React and Next.js applications, providing
-37 copy-paste components and 97 primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
+37 copy-paste components and 107 primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
 
 **Key Features:**
 

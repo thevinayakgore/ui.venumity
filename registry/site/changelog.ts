@@ -22,6 +22,29 @@ export const CHANGELOGS: ChangelogCategory[] = [
     year: "2026",
     items: [
       {
+        title: "📊 New Charts : Bar Charts & Area Charts",
+        date: "Nov-24-2026",
+        covers: ["area-chart"],
+        gallery: [
+          "monotone-area-chart",
+          "gradient-area-chart",
+          "stacked-area-chart",
+          "stacked-bar-chart",
+          "single-bar-chart",
+          "mixed-bar-chart",
+        ],
+        links: [
+          {
+            name: "Bar Charts",
+            href: "/primitives/charts/area-chart",
+          },
+          {
+            name: "Area Charts",
+            href: "/primitives/charts/bar-chart",
+          },
+        ],
+      },
+      {
         title:
           "⚡ Unified Directory & CLI Installation Update",
         date: "Nov-21-2026",

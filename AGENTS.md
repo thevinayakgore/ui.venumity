@@ -18,11 +18,11 @@ Venumity UI is an **MIT-licensed, open-source React component library** built wi
 **GitHub:** https://github.com/thevinayakgore/ui.venumity
 **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 **License:** MIT
-**Last updated:** 2026-11-21
+**Last updated:** 2026-11-24
 **Total components:** 37
-**Total primitives:** 97
+**Total primitives:** 107
 **Total categories:** 8
-**Total thumbnails:** 108
+**Total thumbnails:** 115
 
 ---
 
@@ -72,6 +72,7 @@ The CLI auto-detects your Next.js project, initializes shadcn/ui if needed, and 
 ## Available primitive categories
 
 - **Actions** — 8 primitives
+- **Charts** — 10 primitives
 - **Data Display** — 49 primitives
 - **Feedback** — 11 primitives
 - **Forms** — 7 primitives
@@ -630,6 +631,108 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Thumbnail:** https://ui.venumity.com/thumbnails/button.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/ripple-effect
 - **Tags:** button, click
+
+### Charts
+
+#### Line Area Chart
+- **Slug:** `line-area-chart`
+- **Subcategory:** Area Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/area-chart/line-area-chart
+- **Preview:** https://ui.venumity.com/preview/charts/area-chart/line-area-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-area-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/line-area-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Monotone Area Chart
+- **Slug:** `monotone-area-chart`
+- **Subcategory:** Area Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/area-chart/monotone-area-chart
+- **Preview:** https://ui.venumity.com/preview/charts/area-chart/monotone-area-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/monotone-area-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/monotone-area-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Gradient Area Chart
+- **Slug:** `gradient-area-chart`
+- **Subcategory:** Area Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/area-chart/gradient-area-chart
+- **Preview:** https://ui.venumity.com/preview/charts/area-chart/gradient-area-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/gradient-area-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/gradient-area-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Overlap Area Chart
+- **Slug:** `overlap-area-chart`
+- **Subcategory:** Area Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/area-chart/overlap-area-chart
+- **Preview:** https://ui.venumity.com/preview/charts/area-chart/overlap-area-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/overlap-area-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/overlap-area-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Stacked Area Chart
+- **Slug:** `stacked-area-chart`
+- **Subcategory:** Area Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/area-chart/stacked-area-chart
+- **Preview:** https://ui.venumity.com/preview/charts/area-chart/stacked-area-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/stacked-area-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/stacked-area-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Single Bar Chart
+- **Slug:** `single-bar-chart`
+- **Subcategory:** Bar Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart
+- **Preview:** https://ui.venumity.com/preview/charts/bar-chart/single-bar-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/single-bar-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Grouped Bar Chart
+- **Slug:** `grouped-bar-chart`
+- **Subcategory:** Bar Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/grouped-bar-chart
+- **Preview:** https://ui.venumity.com/preview/charts/bar-chart/grouped-bar-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/grouped-bar-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Horizontal Bar Chart
+- **Slug:** `horizontal-bar-chart`
+- **Subcategory:** Bar Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart
+- **Preview:** https://ui.venumity.com/preview/charts/bar-chart/horizontal-bar-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/horizontal-bar-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Mixed Bar Chart
+- **Slug:** `mixed-bar-chart`
+- **Subcategory:** Bar Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart
+- **Preview:** https://ui.venumity.com/preview/charts/bar-chart/mixed-bar-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/mixed-bar-chart
+- **Tags:** area, chart, trend, time-series
+
+#### Stacked Bar Chart
+- **Slug:** `stacked-bar-chart`
+- **Subcategory:** Bar Chart
+- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart
+- **Preview:** https://ui.venumity.com/preview/charts/bar-chart/stacked-bar-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/stacked-bar-chart
+- **Tags:** area, chart, trend, time-series
 
 ### Data Display
 
@@ -1537,7 +1640,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 
 ## Thumbnail library
 
-Every component ships with a `.webp` thumbnail. There are **108 thumbnails** currently available.
+Every component ships with a `.webp` thumbnail. There are **115 thumbnails** currently available.
 
 - **Gallery page:** https://ui.venumity.com/thumbnails
 - **Direct image:** https://ui.venumity.com/thumbnails/<slug>.webp
@@ -1589,6 +1692,7 @@ Install:      npx venumityui@latest add user-profile
 
 ### Changelog
 
+- [📊 New Charts : Bar Charts & Area Charts](https://ui.venumity.com/changelog#new-charts-bar-charts-area-charts) — Nov-24-2026
 - [⚡ Unified Directory & CLI Installation Update](https://ui.venumity.com/changelog#unified-directory-cli-installation-update) — Nov-21-2026
 - [✅ Added Legal Pgaes](https://ui.venumity.com/changelog#added-legal-pgaes) — Nov-05-2026
 - [🎉 Major Release : New Primitives, Components & Resources with completely reimagined Architecture](https://ui.venumity.com/changelog#major-release-new-primitives-components-resources-with-completely-reimagined-architecture) — Oct-31-2026
@@ -1692,4 +1796,4 @@ Preview:   https://ui.venumity.com/thumbnails/user-profile.webp
 
 ---
 
-_Generated on 2026-11-21. Do not edit manually._
+_Generated on 2026-11-24. Do not edit manually._
