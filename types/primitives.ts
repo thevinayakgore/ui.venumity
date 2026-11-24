@@ -7,7 +7,6 @@ export interface PrimitiveItem {
   description?: string;
   tags?: string[];
   techs?: string[];
-  video?: string;
   category: string;
   subcategory: string;
   filePath: string;

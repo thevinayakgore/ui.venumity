@@ -4,7 +4,7 @@
   "name": "venumity-ui",
   "title": "Venumity UI Component Registry",
   "description": "Open-source React + Next.js + Tailwind CSS component library with copy-paste components and primitives. Use `search_components` to find components by category, tag, or tech, and `get_component` to fetch full metadata for one component.",
-  "version": "2026-11-21",
+  "version": "2026-11-24",
   "homepage": "https://ui.venumity.com",
   "repository": "https://github.com/thevinayakgore/ui.venumity",
   "license": "MIT",
@@ -176,6 +176,15 @@
         "count": 8,
         "subcategories": [
           "Button"
+        ]
+      },
+      {
+        "name": "Charts",
+        "slug": "charts",
+        "count": 10,
+        "subcategories": [
+          "Area Chart",
+          "Bar Chart"
         ]
       },
       {
@@ -1211,6 +1220,196 @@
         "source": "https://ui.venumity.com/primitives/actions/button/ripple-effect",
         "preview": "https://ui.venumity.com/preview/actions/button/ripple-effect",
         "thumbnail": "https://ui.venumity.com/thumbnails/button.webp"
+      },
+      {
+        "name": "Line Area Chart",
+        "slug": "line-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Chart",
+        "subcategorySlug": "area-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/area-chart/line-area-chart",
+        "preview": "https://ui.venumity.com/preview/charts/area-chart/line-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/line-area-chart.webp"
+      },
+      {
+        "name": "Monotone Area Chart",
+        "slug": "monotone-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Chart",
+        "subcategorySlug": "area-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/area-chart/monotone-area-chart",
+        "preview": "https://ui.venumity.com/preview/charts/area-chart/monotone-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/monotone-area-chart.webp"
+      },
+      {
+        "name": "Gradient Area Chart",
+        "slug": "gradient-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Chart",
+        "subcategorySlug": "area-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/area-chart/gradient-area-chart",
+        "preview": "https://ui.venumity.com/preview/charts/area-chart/gradient-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/gradient-area-chart.webp"
+      },
+      {
+        "name": "Overlap Area Chart",
+        "slug": "overlap-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Chart",
+        "subcategorySlug": "area-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/area-chart/overlap-area-chart",
+        "preview": "https://ui.venumity.com/preview/charts/area-chart/overlap-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/overlap-area-chart.webp"
+      },
+      {
+        "name": "Stacked Area Chart",
+        "slug": "stacked-area-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Area Chart",
+        "subcategorySlug": "area-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/area-chart/stacked-area-chart",
+        "preview": "https://ui.venumity.com/preview/charts/area-chart/stacked-area-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/stacked-area-chart.webp"
+      },
+      {
+        "name": "Single Bar Chart",
+        "slug": "single-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Chart",
+        "subcategorySlug": "bar-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart",
+        "preview": "https://ui.venumity.com/preview/charts/bar-chart/single-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp"
+      },
+      {
+        "name": "Grouped Bar Chart",
+        "slug": "grouped-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Chart",
+        "subcategorySlug": "bar-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/bar-chart/grouped-bar-chart",
+        "preview": "https://ui.venumity.com/preview/charts/bar-chart/grouped-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp"
+      },
+      {
+        "name": "Horizontal Bar Chart",
+        "slug": "horizontal-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Chart",
+        "subcategorySlug": "bar-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart",
+        "preview": "https://ui.venumity.com/preview/charts/bar-chart/horizontal-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp"
+      },
+      {
+        "name": "Mixed Bar Chart",
+        "slug": "mixed-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Chart",
+        "subcategorySlug": "bar-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart",
+        "preview": "https://ui.venumity.com/preview/charts/bar-chart/mixed-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp"
+      },
+      {
+        "name": "Stacked Bar Chart",
+        "slug": "stacked-bar-chart",
+        "category": "Charts",
+        "categorySlug": "charts",
+        "subcategory": "Bar Chart",
+        "subcategorySlug": "bar-chart",
+        "description": "Interactive area chart for visualizing trends and cumulative values over time.",
+        "tags": [
+          "area",
+          "chart",
+          "trend",
+          "time-series"
+        ],
+        "techs": [],
+        "source": "https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart",
+        "preview": "https://ui.venumity.com/preview/charts/bar-chart/stacked-bar-chart",
+        "thumbnail": "https://ui.venumity.com/thumbnails/mixed-bar-chart.webp"
       },
       {
         "name": "Default Command",
@@ -2980,9 +3179,9 @@
   },
   "counts": {
     "components": 37,
-    "primitives": 97,
+    "primitives": 107,
     "categories": 8,
-    "primitiveCategories": 7
+    "primitiveCategories": 8
   },
-  "generatedAt": "2026-11-21T09:05:48.343Z"
+  "generatedAt": "2026-11-24T15:38:42.470Z"
 }

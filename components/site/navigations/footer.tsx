@@ -473,18 +473,14 @@ export default function Footer() {
             <div className="flex flex-wrap items-center gap-1 p-1 bg-background border border-foreground/20 font-medium list-none rounded-full">
               <FooterLink
                 href="/legal/privacy"
-                className={insetButtonVariants(
-                  "bg-transparent! text-foreground! hover:bg-primary! hover:text-white! inset-shadow-none! hover:inset-shadow-sm! rounded-full",
-                )}
+                className={insetButtonVariants("text-white! rounded-full")}
               >
                 <HatGlasses className="size-3 sm:size-4" />
                 Privacy
               </FooterLink>
               <FooterLink
                 href="/legal/terms"
-                className={insetButtonVariants(
-                  "bg-transparent! text-foreground! hover:bg-primary! hover:text-white! inset-shadow-none! hover:inset-shadow-sm! rounded-full",
-                )}
+                className={insetButtonVariants("text-white! rounded-full")}
               >
                 <HeartHandshake className="size-3 sm:size-4" />
                 Terms

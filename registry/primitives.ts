@@ -119,6 +119,48 @@ export default function ShinyButton() {
     ],
   },
 
+  // ─── CHARTS ───────────────────────────────────────────────
+{
+  category: "Charts",
+  icon: "bar-chart-3",
+  description:
+    "Interactive charts and data visualization components for displaying trends, comparisons, and distributions.",
+  tags: ["chart", "data", "visualization"],
+  subcategories: [
+    {
+      name: "Area Chart",
+      description:
+        "Interactive area chart for visualizing trends and cumulative values over time.",
+      tags: ["area", "chart", "trend", "time-series"],
+      usage: ``,
+      props: [],
+      items: [
+        { itemName: "Line Area Chart" },
+        { itemName: "Monotone Area Chart" },
+        { itemName: "Gradient Area Chart" },
+        { itemName: "Overlap Area Chart" },
+        { itemName: "Stacked Area Chart" },
+      ],
+    },
+    {
+      name: "Bar Chart",
+      thumbnail: "mixed-bar-chart",
+      description:
+        "Interactive area chart for visualizing trends and cumulative values over time.",
+      tags: ["area", "chart", "trend", "time-series"],
+      usage: ``,
+      props: [],
+      items: [
+        { itemName: "Single Bar Chart" },
+        { itemName: "Grouped Bar Chart" },
+        { itemName: "Horizontal Bar Chart" },
+        { itemName: "Mixed Bar Chart" },
+        { itemName: "Stacked Bar Chart" },
+      ],
+    },
+  ],
+},
+
   // ─── FORMS ───────────────────────────────────────────────
   {
     category: "Forms",

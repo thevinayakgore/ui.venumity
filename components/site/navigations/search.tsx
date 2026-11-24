@@ -784,7 +784,7 @@ export function SearchTrigger() {
       <Mic className="size-3.5! shrink-0 mr-1" />
       <kbd
         className={insetButtonVariants(
-          "relative pointer-events-none hidden lg:flex font-mono text-xs font-medium overflow-hidden",
+          "relative pointer-events-none hidden lg:flex font-mono text-xs font-medium rounded-[5px] overflow-hidden",
           "sm",
         )}
       >
