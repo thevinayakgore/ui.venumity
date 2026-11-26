@@ -428,7 +428,7 @@ export function BarChartTooltip({
   return (
     <div
       className={cn(
-        "min-w-48 rounded-xl border border-foreground/15 bg-background/95 p-3 text-xs shadow-xl backdrop-blur-md supports-backdrop-filter:bg-background/80",
+        "min-w-44 p-3 bg-background/70 backdrop-blur-xs text-xs border border-foreground/15 shadow-xl rounded-xl",
         className,
       )}
     >

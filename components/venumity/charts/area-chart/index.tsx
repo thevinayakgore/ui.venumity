@@ -310,7 +310,7 @@ export function AreaChartTooltip({
   return (
     <div
       className={cn(
-        "min-w-44 rounded-xl border border-foreground/15 bg-background/95 p-3 text-xs shadow-xl backdrop-blur-md supports-backdrop-filter:bg-background/80",
+        "min-w-44 p-3 bg-background/70 backdrop-blur-xs text-xs border border-foreground/15 shadow-xl rounded-xl",
         className,
       )}
     >
@@ -458,12 +458,7 @@ export function AreaChartCanvas({ className, children }: AreaChartCanvasProps) {
   }, [series]);
 
   return (
-    <div
-      className={cn(
-        "h-60 w-full",
-        className,
-      )}
-    >
+    <div className={cn("h-60 w-full", className)}>
       <ChartContainer config={chartConfig} className="h-full w-full">
         <RechartsAreaChart
           accessibilityLayer

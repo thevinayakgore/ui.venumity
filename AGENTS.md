@@ -18,11 +18,11 @@ Venumity UI is an **MIT-licensed, open-source React component library** built wi
 **GitHub:** https://github.com/thevinayakgore/ui.venumity
 **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 **License:** MIT
-**Last updated:** 2026-11-24
+**Last updated:** 2026-11-26
 **Total components:** 37
-**Total primitives:** 107
+**Total primitives:** 115
 **Total categories:** 8
-**Total thumbnails:** 115
+**Total thumbnails:** 72
 
 ---
 
@@ -72,7 +72,7 @@ The CLI auto-detects your Next.js project, initializes shadcn/ui if needed, and 
 ## Available primitive categories
 
 - **Actions** — 8 primitives
-- **Charts** — 10 primitives
+- **Charts** — 18 primitives
 - **Data Display** — 49 primitives
 - **Feedback** — 11 primitives
 - **Forms** — 7 primitives
@@ -640,7 +640,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive area chart for visualizing trends and cumulative values over time.
 - **Docs:** https://ui.venumity.com/primitives/charts/area-chart/line-area-chart
 - **Preview:** https://ui.venumity.com/preview/charts/area-chart/line-area-chart
-- **Thumbnail:** https://ui.venumity.com/thumbnails/line-area-chart.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/area-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/line-area-chart
 - **Tags:** area, chart, trend, time-series
 
@@ -650,7 +650,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive area chart for visualizing trends and cumulative values over time.
 - **Docs:** https://ui.venumity.com/primitives/charts/area-chart/monotone-area-chart
 - **Preview:** https://ui.venumity.com/preview/charts/area-chart/monotone-area-chart
-- **Thumbnail:** https://ui.venumity.com/thumbnails/monotone-area-chart.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/area-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/monotone-area-chart
 - **Tags:** area, chart, trend, time-series
 
@@ -660,7 +660,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive area chart for visualizing trends and cumulative values over time.
 - **Docs:** https://ui.venumity.com/primitives/charts/area-chart/gradient-area-chart
 - **Preview:** https://ui.venumity.com/preview/charts/area-chart/gradient-area-chart
-- **Thumbnail:** https://ui.venumity.com/thumbnails/gradient-area-chart.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/area-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/gradient-area-chart
 - **Tags:** area, chart, trend, time-series
 
@@ -670,7 +670,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive area chart for visualizing trends and cumulative values over time.
 - **Docs:** https://ui.venumity.com/primitives/charts/area-chart/overlap-area-chart
 - **Preview:** https://ui.venumity.com/preview/charts/area-chart/overlap-area-chart
-- **Thumbnail:** https://ui.venumity.com/thumbnails/overlap-area-chart.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/area-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/overlap-area-chart
 - **Tags:** area, chart, trend, time-series
 
@@ -680,59 +680,139 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 - **Description:** Interactive area chart for visualizing trends and cumulative values over time.
 - **Docs:** https://ui.venumity.com/primitives/charts/area-chart/stacked-area-chart
 - **Preview:** https://ui.venumity.com/preview/charts/area-chart/stacked-area-chart
-- **Thumbnail:** https://ui.venumity.com/thumbnails/stacked-area-chart.webp
+- **Thumbnail:** https://ui.venumity.com/thumbnails/area-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/stacked-area-chart
 - **Tags:** area, chart, trend, time-series
 
 #### Single Bar Chart
 - **Slug:** `single-bar-chart`
 - **Subcategory:** Bar Chart
-- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
 - **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart
 - **Preview:** https://ui.venumity.com/preview/charts/bar-chart/single-bar-chart
 - **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/single-bar-chart
-- **Tags:** area, chart, trend, time-series
+- **Tags:** bar, chart, comparison, categorical
 
 #### Grouped Bar Chart
 - **Slug:** `grouped-bar-chart`
 - **Subcategory:** Bar Chart
-- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
 - **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/grouped-bar-chart
 - **Preview:** https://ui.venumity.com/preview/charts/bar-chart/grouped-bar-chart
 - **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/grouped-bar-chart
-- **Tags:** area, chart, trend, time-series
+- **Tags:** bar, chart, comparison, categorical
 
 #### Horizontal Bar Chart
 - **Slug:** `horizontal-bar-chart`
 - **Subcategory:** Bar Chart
-- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
 - **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart
 - **Preview:** https://ui.venumity.com/preview/charts/bar-chart/horizontal-bar-chart
 - **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/horizontal-bar-chart
-- **Tags:** area, chart, trend, time-series
+- **Tags:** bar, chart, comparison, categorical
 
 #### Mixed Bar Chart
 - **Slug:** `mixed-bar-chart`
 - **Subcategory:** Bar Chart
-- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
 - **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart
 - **Preview:** https://ui.venumity.com/preview/charts/bar-chart/mixed-bar-chart
 - **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/mixed-bar-chart
-- **Tags:** area, chart, trend, time-series
+- **Tags:** bar, chart, comparison, categorical
 
 #### Stacked Bar Chart
 - **Slug:** `stacked-bar-chart`
 - **Subcategory:** Bar Chart
-- **Description:** Interactive area chart for visualizing trends and cumulative values over time.
+- **Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
 - **Docs:** https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart
 - **Preview:** https://ui.venumity.com/preview/charts/bar-chart/stacked-bar-chart
 - **Thumbnail:** https://ui.venumity.com/thumbnails/mixed-bar-chart.webp
 - **Thumbnail page:** https://ui.venumity.com/thumbnails/stacked-bar-chart
-- **Tags:** area, chart, trend, time-series
+- **Tags:** bar, chart, comparison, categorical
+
+#### Standard Pie Chart
+- **Slug:** `standard-pie-chart`
+- **Subcategory:** Pie Chart
+- **Description:** Interactive pie and donut chart for visualizing proportional breakdowns and interactive slices.
+- **Docs:** https://ui.venumity.com/primitives/charts/pie-chart/standard-pie-chart
+- **Preview:** https://ui.venumity.com/preview/charts/pie-chart/standard-pie-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/donut-pie-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/standard-pie-chart
+- **Tags:** pie, donut, chart, proportion
+
+#### Donut Pie Chart
+- **Slug:** `donut-pie-chart`
+- **Subcategory:** Pie Chart
+- **Description:** Interactive pie and donut chart for visualizing proportional breakdowns and interactive slices.
+- **Docs:** https://ui.venumity.com/primitives/charts/pie-chart/donut-pie-chart
+- **Preview:** https://ui.venumity.com/preview/charts/pie-chart/donut-pie-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/donut-pie-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/donut-pie-chart
+- **Tags:** pie, donut, chart, proportion
+
+#### Natural Line Chart
+- **Slug:** `natural-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/natural-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/natural-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/natural-line-chart
+- **Tags:** line, chart, trend, time-series
+
+#### Linear Line Chart
+- **Slug:** `linear-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/linear-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/linear-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/linear-line-chart
+- **Tags:** line, chart, trend, time-series
+
+#### Step Line Chart
+- **Slug:** `step-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/step-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/step-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/step-line-chart
+- **Tags:** line, chart, trend, time-series
+
+#### Multiple Line Chart
+- **Slug:** `multiple-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/multiple-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/multiple-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/multiple-line-chart
+- **Tags:** line, chart, trend, time-series
+
+#### Dots Line Chart
+- **Slug:** `dots-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/dots-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/dots-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/dots-line-chart
+- **Tags:** line, chart, trend, time-series
+
+#### Label Line Chart
+- **Slug:** `label-line-chart`
+- **Subcategory:** Line Chart
+- **Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+- **Docs:** https://ui.venumity.com/primitives/charts/line-chart/label-line-chart
+- **Preview:** https://ui.venumity.com/preview/charts/line-chart/label-line-chart
+- **Thumbnail:** https://ui.venumity.com/thumbnails/line-chart.webp
+- **Thumbnail page:** https://ui.venumity.com/thumbnails/label-line-chart
+- **Tags:** line, chart, trend, time-series
 
 ### Data Display
 
@@ -1640,7 +1720,7 @@ Every component below can be installed with `npx venumityui@latest add <slug>`.
 
 ## Thumbnail library
 
-Every component ships with a `.webp` thumbnail. There are **115 thumbnails** currently available.
+Every component ships with a `.webp` thumbnail. There are **72 thumbnails** currently available.
 
 - **Gallery page:** https://ui.venumity.com/thumbnails
 - **Direct image:** https://ui.venumity.com/thumbnails/<slug>.webp
@@ -1796,4 +1876,4 @@ Preview:   https://ui.venumity.com/thumbnails/user-profile.webp
 
 ---
 
-_Generated on 2026-11-24. Do not edit manually._
+_Generated on 2026-11-26. Do not edit manually._

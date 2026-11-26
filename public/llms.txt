@@ -1,6 +1,6 @@
 # Venumity UI
 
-> Free, MIT-licensed React & Next.js component library — 37 production-ready UI components and 107 foundational primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
+> Free, MIT-licensed React & Next.js component library — 37 production-ready UI components and 115 foundational primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
 
 Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directly into the consumer's project — there is no compiled package to depend on, so every component is fully owned and editable once installed.
 
@@ -39,7 +39,7 @@ Maintained by Vinayak Gore (@thevinayakgore). Component source is copied directl
 
 - [Browse all primitives](https://ui.venumity.com/primitives): foundational, lower-level building blocks
 - [Actions](https://ui.venumity.com/primitives/actions): 8 primitives — action, interactive, control
-- [Charts](https://ui.venumity.com/primitives/charts): 10 primitives — chart, data, visualization
+- [Charts](https://ui.venumity.com/primitives/charts): 18 primitives — chart, data, visualization
 - [Forms](https://ui.venumity.com/primitives/forms): 7 primitives — form, input
 - [Feedback](https://ui.venumity.com/primitives/feedback): 11 primitives — feedback, notify
 - [Data Display](https://ui.venumity.com/primitives/data-display): 49 primitives — data, display
