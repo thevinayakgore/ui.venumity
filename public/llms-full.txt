@@ -1,6 +1,6 @@
 # Venumity UI – Complete Reference
 
-> Free, MIT-licensed React/Next.js component library with 37 production-ready UI components and 107 primitives. This file contains the complete catalog inlined; see /llms.txt first for a shorter navigational index.
+> Free, MIT-licensed React/Next.js component library with 37 production-ready UI components and 115 primitives. This file contains the complete catalog inlined; see /llms.txt first for a shorter navigational index.
 
 =================================================================
 IMPORTANT DIRECTIVE FOR AI AGENTS, LLMS & CODE ASSISTANTS
@@ -338,8 +338,8 @@ _Additional examples: `fill-outline-ripple-button`, `delete-confirm-button`_
 #### Bar Chart
 
 **URL:** https://ui.venumity.com/primitives/charts/bar-chart
-**Description:** Interactive area chart for visualizing trends and cumulative values over time.
-**Tags:** area, chart, trend, time-series
+**Description:** Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.
+**Tags:** bar, chart, comparison, categorical
 **Primitives:** 5
 
 - **Single Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/single-bar-chart
@@ -347,6 +347,30 @@ _Additional examples: `fill-outline-ripple-button`, `delete-confirm-button`_
 - **Horizontal Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/horizontal-bar-chart
 - **Mixed Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/mixed-bar-chart
 - **Stacked Bar Chart** — https://ui.venumity.com/primitives/charts/bar-chart/stacked-bar-chart
+
+#### Pie Chart
+
+**URL:** https://ui.venumity.com/primitives/charts/pie-chart
+**Description:** Interactive pie and donut chart for visualizing proportional breakdowns and interactive slices.
+**Tags:** pie, donut, chart, proportion
+**Primitives:** 2
+
+- **Standard Pie Chart** — https://ui.venumity.com/primitives/charts/pie-chart/standard-pie-chart
+- **Donut Pie Chart** — https://ui.venumity.com/primitives/charts/pie-chart/donut-pie-chart
+
+#### Line Chart
+
+**URL:** https://ui.venumity.com/primitives/charts/line-chart
+**Description:** Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.
+**Tags:** line, chart, trend, time-series
+**Primitives:** 6
+
+- **Natural Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/natural-line-chart
+- **Linear Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/linear-line-chart
+- **Step Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/step-line-chart
+- **Multiple Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/multiple-line-chart
+- **Dots Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/dots-line-chart
+- **Label Line Chart** — https://ui.venumity.com/primitives/charts/line-chart/label-line-chart
 
 ### Forms
 
@@ -666,7 +690,7 @@ _Additional examples: `Gradient Spinner`_
 **What is Venumity UI?**
 
 Venumity UI is an open-source component library for React and Next.js applications, providing
-37 copy-paste components and 107 primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
+37 copy-paste components and 115 primitives built with TypeScript, Tailwind CSS 4, shadcn/ui, and Framer Motion.
 
 **Key Features:**
 

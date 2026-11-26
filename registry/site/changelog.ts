@@ -22,6 +22,37 @@ export const CHANGELOGS: ChangelogCategory[] = [
     year: "2026",
     items: [
       {
+        title: "📊 New Charts : Line Charts & Pie Charts",
+        date: "Nov-26-2026",
+        covers: ["line-chart"],
+        gallery: [
+          "step-line-chart",
+          "multiple-line-chart",
+          "label-line-chart",
+        ],
+        links: [
+          {
+            name: "Line Charts",
+            href: "/primitives/charts/line-chart",
+          },
+          {
+            name: "Pie Charts",
+            href: "/primitives/charts/pie-chart",
+          },
+        ],
+      },
+      {
+        title: "🧹 Cleaned Unused Thumbnails",
+        date: "Nov-26-2026",
+        covers: ["api-thumbnails"],
+        links: [
+          {
+            name: "/api/thumbnails",
+            href: "/api/thumbnails",
+          },
+        ],
+      },
+      {
         title: "📊 New Charts : Bar Charts & Area Charts",
         date: "Nov-24-2026",
         covers: ["area-chart"],

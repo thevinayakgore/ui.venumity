@@ -120,46 +120,346 @@ export default function ShinyButton() {
   },
 
   // ─── CHARTS ───────────────────────────────────────────────
-{
-  category: "Charts",
-  icon: "bar-chart-3",
-  description:
-    "Interactive charts and data visualization components for displaying trends, comparisons, and distributions.",
-  tags: ["chart", "data", "visualization"],
-  subcategories: [
-    {
-      name: "Area Chart",
-      description:
-        "Interactive area chart for visualizing trends and cumulative values over time.",
-      tags: ["area", "chart", "trend", "time-series"],
-      usage: ``,
-      props: [],
-      items: [
-        { itemName: "Line Area Chart" },
-        { itemName: "Monotone Area Chart" },
-        { itemName: "Gradient Area Chart" },
-        { itemName: "Overlap Area Chart" },
-        { itemName: "Stacked Area Chart" },
-      ],
-    },
-    {
-      name: "Bar Chart",
-      thumbnail: "mixed-bar-chart",
-      description:
-        "Interactive area chart for visualizing trends and cumulative values over time.",
-      tags: ["area", "chart", "trend", "time-series"],
-      usage: ``,
-      props: [],
-      items: [
-        { itemName: "Single Bar Chart" },
-        { itemName: "Grouped Bar Chart" },
-        { itemName: "Horizontal Bar Chart" },
-        { itemName: "Mixed Bar Chart" },
-        { itemName: "Stacked Bar Chart" },
-      ],
-    },
-  ],
-},
+  {
+    category: "Charts",
+    icon: "bar-chart-3",
+    description:
+      "Interactive charts and data visualization components for displaying trends, comparisons, and distributions.",
+    tags: ["chart", "data", "visualization"],
+    subcategories: [
+      {
+        name: "Area Chart",
+        thumbnail: "area-chart",
+        description:
+          "Interactive area chart for visualizing trends and cumulative values over time.",
+        tags: ["area", "chart", "trend", "time-series"],
+        usage: `import { Tooltip } from "recharts";
+import {
+  AreaChart,
+  AreaChartCanvas,
+  AreaChartGrid,
+  AreaChartXAxis,
+  AreaChartYAxis,
+  AreaChartSeries,
+  AreaChartTooltip,
+} from "@/components/ui/area-chart";
+
+  <AreaChart>
+    <AreaChartCanvas>
+      <AreaChartGrid />
+      <AreaChartXAxis />
+      <AreaChartYAxis />
+      <Tooltip content={<AreaChartTooltip />} />
+      <AreaChartSeries />
+    </AreaChartCanvas>
+  </AreaChart>`,
+        props: [
+          {
+            name: "variant",
+            type: '"line" | "monotone" | "gradient" | "overlap" | "stacked"',
+            default: '"monotone"',
+            description:
+              "Controls curve interpolation, gradient stops, overlap opacity, or stacking behavior.",
+          },
+          {
+            name: "data",
+            type: "AreaChartDatum[]",
+            default: "VARIANT_CONFIGS[variant].data",
+            description:
+              "Array of data objects (Record<string, string | number>) plotted across the chart.",
+          },
+          {
+            name: "series",
+            type: "AreaChartSeriesConfig[]",
+            default: "VARIANT_CONFIGS[variant].series",
+            description:
+              "Series definitions with key, label, color, optional gradientTo hex color, and optional stackId.",
+          },
+          {
+            name: "xAxisKey",
+            type: "string",
+            default: '"name"',
+            description:
+              "Data key used for the category axis when no custom dataKey is passed to AreaChartXAxis.",
+          },
+          {
+            name: "className",
+            type: "string",
+            default: "undefined",
+            description:
+              "Custom Tailwind CSS classes applied to the outer container div.",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            default: "<AreaChartCanvas />",
+            description:
+              "Composable sub-components such as AreaChartCanvas, AreaChartGrid, AreaChartXAxis, AreaChartYAxis, AreaChartSeries, and AreaChartTooltip.",
+          },
+        ],
+        items: [
+          { itemName: "Line Area Chart" },
+          { itemName: "Monotone Area Chart" },
+          { itemName: "Gradient Area Chart" },
+          { itemName: "Overlap Area Chart" },
+          { itemName: "Stacked Area Chart" },
+        ],
+      },
+      {
+        name: "Bar Chart",
+        thumbnail: "mixed-bar-chart",
+        description:
+          "Interactive bar chart for comparing categorical values, groupings, horizontal budgets, mixed axes, and stacks.",
+        tags: ["bar", "chart", "comparison", "categorical"],
+        usage: `import { Tooltip } from "recharts";
+import {
+  BarChart,
+  BarChartCanvas,
+  BarChartGrid,
+  BarChartXAxis,
+  BarChartYAxis,
+  BarChartSeries,
+  BarChartTooltip,
+} from "@/components/ui/bar-chart";
+
+  <BarChart>
+    <BarChartCanvas>
+      <BarChartGrid />
+      <BarChartXAxis />
+      <BarChartYAxis />
+      <Tooltip content={<BarChartTooltip />} />
+      <BarChartSeries />
+    </BarChartCanvas>
+  </BarChart>`,
+        props: [
+          {
+            name: "variant",
+            type: '"single" | "grouped" | "horizontal" | "mixed" | "stacked"',
+            default: '"single"',
+            description:
+              "Selects the bar layout preset: single vertical, grouped, horizontal vertical-layout, mixed bar+line with dual Y-axes, or stacked.",
+          },
+          {
+            name: "data",
+            type: "BarChartDatum[]",
+            default: "VARIANT_CONFIGS[variant].data",
+            description:
+              "Array of data records (Record<string, string | number>) rendered by bars and optional line series.",
+          },
+          {
+            name: "series",
+            type: "BarChartSeriesConfig[]",
+            default: "VARIANT_CONFIGS[variant].series",
+            description:
+              "Series configs supporting key, label, color, className, gradientTo, stackId, type ('bar' | 'line'), yAxisId ('left' | 'right'), and radius.",
+          },
+          {
+            name: "xAxisKey",
+            type: "string",
+            default: "VARIANT_CONFIGS[variant].xAxisKey",
+            description:
+              "Key used for category ticks on XAxis (or YAxis when variant is 'horizontal').",
+          },
+          {
+            name: "className",
+            type: "string",
+            default: "undefined",
+            description:
+              "Custom Tailwind CSS classes applied to the outer wrapper div.",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            default: "<BarChartCanvas />",
+            description:
+              "Composable sub-components including BarChartCanvas, BarChartGrid, BarChartXAxis, BarChartYAxis, BarChartSeries, and BarChartTooltip.",
+          },
+        ],
+        items: [
+          { itemName: "Single Bar Chart" },
+          { itemName: "Grouped Bar Chart" },
+          { itemName: "Horizontal Bar Chart" },
+          { itemName: "Mixed Bar Chart" },
+          { itemName: "Stacked Bar Chart" },
+        ],
+      },
+      {
+        name: "Pie Chart",
+        thumbnail: "donut-pie-chart",
+        description:
+          "Interactive pie and donut chart for visualizing proportional breakdowns and interactive slices.",
+        tags: ["pie", "donut", "chart", "proportion"],
+        usage: `import { Tooltip } from "recharts";
+import {
+  PieChart,
+  PieChartCanvas,
+  PieChartSlices,
+  PieChartTooltip,
+} from "@/components/ui/pie-chart";
+
+  <PieChart>
+    <PieChartCanvas>
+      <PieChartSlices />
+      <Tooltip content={<PieChartTooltip />} />
+    </PieChartCanvas>
+  </PieChart>`,
+        props: [
+          {
+            name: "variant",
+            type: '"pie" | "donut"',
+            default: '"pie"',
+            description:
+              "Selects the pie layout preset: standard full pie or inner-radius donut ring.",
+          },
+          {
+            name: "data",
+            type: "PieChartDatum[]",
+            default: "Required",
+            description:
+              "Array of slice objects (Record<string, string | number>) supplied by the caller.",
+          },
+          {
+            name: "nameKey",
+            type: "string",
+            default: '"name"',
+            description:
+              "Property key from each datum used as the slice label/name.",
+          },
+          {
+            name: "valueKey",
+            type: "string",
+            default: '"value"',
+            description:
+              "Numeric property key from each datum used to size slices.",
+          },
+          {
+            name: "colorKey",
+            type: "string",
+            default: '"color"',
+            description:
+              "Property key from each datum providing per-slice fill colors.",
+          },
+          {
+            name: "sliceConfig",
+            type: "PieChartSliceConfig",
+            default: "undefined",
+            description:
+              "Configuration object for radii, paddingAngle, cornerRadius, stroke, label formatting, and active shape.",
+          },
+          {
+            name: "activeIndex",
+            type: "number",
+            default: "undefined",
+            description:
+              "Controlled index of the highlighted/expanded slice sector.",
+          },
+          {
+            name: "onSliceHover",
+            type: "(index: number | undefined) => void",
+            default: "undefined",
+            description:
+              "Callback triggered on mouse enter and leave of pie slices.",
+          },
+          {
+            name: "onSliceClick",
+            type: "(datum: PieChartDatum, index: number) => void",
+            default: "undefined",
+            description: "Callback fired when a pie slice is clicked.",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            default: "<PieChartCanvas />",
+            description:
+              "Composable sub-components including PieChartCanvas, PieChartSlices, and PieChartTooltip.",
+          },
+        ],
+        items: [
+          { itemName: "Standard Pie Chart" },
+          { itemName: "Donut Pie Chart" },
+        ],
+      },
+      {
+        name: "Line Chart",
+        thumbnail: "line-chart",
+        description:
+          "Interactive line chart for visualizing trends, curves, steps, multi-series comparisons, custom dots, and data labels over time.",
+        tags: ["line", "chart", "trend", "time-series"],
+        usage: `import { Tooltip } from "recharts";
+import {
+  LineChart,
+  LineChartCanvas,
+  LineChartGrid,
+  LineChartXAxis,
+  LineChartYAxis,
+  LineChartSeries,
+  LineChartTooltip,
+} from "@/components/ui/line-chart";
+
+  <LineChart>
+    <LineChartCanvas>
+      <LineChartGrid />
+      <LineChartXAxis />
+      <LineChartYAxis />
+      <Tooltip content={<LineChartTooltip />} />
+      <LineChartSeries />
+    </LineChartCanvas>
+  </LineChart>`,
+        props: [
+          {
+            name: "variant",
+            type: '"natural" | "linear" | "step" | "multiple" | "dots" | "label"',
+            default: '"natural"',
+            description:
+              "Controls default curve interpolation, multi-series mode, point dots, or point labels.",
+          },
+          {
+            name: "data",
+            type: "LineChartDatum[]",
+            default: "Required",
+            description:
+              "Array of data objects (Record<string, string | number>) supplied by the caller.",
+          },
+          {
+            name: "series",
+            type: "LineChartSeriesConfig[]",
+            default: "Required",
+            description:
+              "Series definitions supporting key, label, color, gradientTo, curveType, strokeWidth, strokeDasharray, dot/activeDot options, colorByDataKey, renderDot, and label options.",
+          },
+          {
+            name: "xAxisKey",
+            type: "string",
+            default: '"month"',
+            description:
+              "Key from each datum used for the category X-axis when not overridden on LineChartXAxis.",
+          },
+          {
+            name: "className",
+            type: "string",
+            default: "undefined",
+            description:
+              "Additional Tailwind CSS classes applied to the outer container div.",
+          },
+          {
+            name: "children",
+            type: "React.ReactNode",
+            default: "<LineChartCanvas />",
+            description:
+              "Composable sub-components including LineChartCanvas, LineChartGrid, LineChartXAxis, LineChartYAxis, LineChartSeries, and LineChartTooltip.",
+          },
+        ],
+        items: [
+          { itemName: "Natural Line Chart" },
+          { itemName: "Linear Line Chart" },
+          { itemName: "Step Line Chart" },
+          { itemName: "Multiple Line Chart" },
+          { itemName: "Dots Line Chart" },
+          { itemName: "Label Line Chart" },
+        ],
+      },
+    ],
+  },
 
   // ─── FORMS ───────────────────────────────────────────────
   {
@@ -181,7 +481,7 @@ export default function ShinyButton() {
         ],
         usage: `import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator, CommandShortcut, CommandDialog } 
         "./index";
-      
+  
 <Command animation="reveal" side="top">
   <CommandInput placeholder="Search…" />
   <CommandList>

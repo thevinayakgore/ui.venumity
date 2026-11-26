@@ -13,8 +13,8 @@ Venumity UI is an **open-source, MIT-licensed React component library**.
 - **Author:** Vinayak Gore (https://github.com/thevinayakgore)
 - **License:** MIT
 - **Components:** 37
-- **Primitives:** 107
-- **Thumbnails:** 115
+- **Primitives:** 115
+- **Thumbnails:** 72
 
 ---
 
@@ -72,7 +72,7 @@ npm run generate-thumbnails # Sync thumbnails from registry
 ## Component Registry
 
 All **37** components are registered in `registry/components.ts`.
-All **107** primitives are registered in `registry/primitives.ts`.
+All **115** primitives are registered in `registry/primitives.ts`.
 
 ---
 
@@ -104,7 +104,7 @@ The CLI is published on npm as **`venumityui`**. Always use `@latest`. Works wit
 ## Primitive Categories
 
 - **Actions** (8)
-- **Charts** (10)
+- **Charts** (18)
 - **Data Display** (49)
 - **Feedback** (11)
 - **Forms** (7)
@@ -116,7 +116,7 @@ The CLI is published on npm as **`venumityui`**. Always use `@latest`. Works wit
 
 ## Thumbnails
 
-115 thumbnails at `https://ui.venumity.com/thumbnails/<slug>.webp`.
+72 thumbnails at `https://ui.venumity.com/thumbnails/<slug>.webp`.
 Gallery: https://ui.venumity.com/thumbnails
 
 ---
@@ -161,4 +161,4 @@ Gallery: https://ui.venumity.com/thumbnails
 
 ---
 
-_Generated on 2026-11-24._
+_Generated on 2026-11-26._
